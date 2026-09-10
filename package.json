@@ -1,6 +1,6 @@
 {
   "name": "forgetrail",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "private": false,
   "description": "ForgeTrail: a persistent development system for building software with AI agents. CLI, Lite protocol, and methodology templates.",
   "license": "Apache-2.0",
