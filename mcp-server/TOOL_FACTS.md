@@ -2,7 +2,7 @@
 tool_facts_version: "0.1.0"
 name: ForgeTrail MCP Server
 developer: Catalyst Forge
-version: "0.2.2"
+version: "0.3.5"
 status: active
 license: Apache-2.0
 kind: mcp-server
@@ -258,8 +258,8 @@ tools:
       processes: false
     idempotent: true
 generated:
-  date: 2026-08-20
-  generator: hand-authored (tools inventory from forgetrail-mcp 0.2.2)
+  date: 2026-09-10
+  generator: hand-authored (tools inventory from forgetrail-mcp 0.3.5)
 credits:
   generated_with: https://toolfacts.dev
   built_by: "Catalyst Forge - https://www.catalystforge.com/"
@@ -270,7 +270,7 @@ credits:
 | | |
 |---|---|
 | **Developer** | Catalyst Forge |
-| **Version** | 0.2.2 |
+| **Version** | 0.3.5 |
 | **Status** | active |
 | **License** | Apache-2.0 |
 | **Kind** | mcp-server |
@@ -366,4 +366,4 @@ None required.
 ---
 *Generated with [ToolFacts](https://toolfacts.dev) · Built by [Catalyst Forge](https://www.catalystforge.com/)*
 
-[toolfacts-label]: https://toolfacts.dev/v#tf1.eNrFl8Fy2zYQhl9lhye7IymJL53RzVVjTxrV8shuc8hkPDC4pBCBAAuAUjWevHv_pUhJVdxceuCNAyyA_9tdLJYv2SabvhtlTlWcTbMbH0p-DMpY-n12Tw8cNhyyUZbzhq2v8T3NZiopu4uJWmNMwiQa7zD1dnI1ucJITCo1EQNKJ7MRG2s0uyhHXNdKr3h8NXmL4bVxOcYqXY9jf1ZoXDKi5iXjv1k3ab-39VrZcR285hhhloJysfYhYS6m3Pjs2yjTgXPGcmWjrA_8V2MwlE0_f8Esl0HWYiKx5YpT2GGx845bxJiMU3Ja7OyT97LP55fePRtlTa6SeEhDeimoJucnLgrWSYADq1wYGJByUGEsRziLK5Gp4UKZdpy2PqyPh3dYjC0KaGccjn2r2ifQZNMUGoZRE2rf-vDPTgdNColBkoC9kR0L67dPqVM3-Rq9owvjrHFMvz0s7sgH8rUgKktHaVSrtLokVSrjENeI-FSKlMupXqnIFBpYwr0HP9Svsncsr7N3k_-XfOadY0kqk3YEnXo9pcCpCS6SX49AoteqZOpyckQ3i-Xt-8fl9Yf503KxeBy1WNsVpxUH-rRYfryZLz5NKoypSIVvkI8noPDtvbjgtoG_neZhoJctICFhVz731pc7KjtBkBxIUXc_KyzvYnbxbvzz5SlKZBX0ao5jJcEH4XhoJRBcTyeFxraSCPmsnkX5847WvMNB55F4xM4WWT9oENSp9NzrpvV56qRREXwlw_HNT0iqUwCUtesmN2lg9REzGt-ckxI5hI2qOrV5JIHRTQhtFgX_FfroIvccyXkpC8q1JiIk4qIxmRTZFpdncZrJtbQmDo3aI-heT3dZKjk0YW_qmIvG2qPVedZ11fShrYqDIvXOf6XKdzU7cMEIHwrVvyGu8Sbeq5Q4DHX3O4T-xkj6QdO47kTtL44AnlS580ocfPuAo6P41WuJR46HaVCc7cqgoAHqUAEiJU9oQ6QYGEeiYV-Rz2DueHu_z8-PRq99UQzKAb-yKwzbnJ69TygSqsZburNe5cDQFqXClSgeKiBc1Ode-5geGopZEyJu1HfdwnoPeHs4Y6DXB2oIj_xrzqetSasOlPccS2CQ7NFCOg93BOwA_B_D3fn9-mEhv5PVEvomtXfsJFIUpZ1Ch_1f6flLnw-DJij-RsaFCajh0qLKEyZ9uty1NidR1U9SuC_8PTLa7p1k68nLbRyWiisC1_6M_Wg2NwN3G22rdOxg5x8e30uvKr896hnB68IsxMlrb39I8kct_wxxcCDRQs1ezKGkyNOMml9KnHoaKlWNy_ZFfvYap2Gf7zf-9g9m9jXP
+[toolfacts-label]: https://toolfacts.dev/v#tf1.eNrFl1Fv2zYQx7_KgU_JoLjthmGA3rKsCbqmceBk60NRBAx1klhTPO54smsE-e7DyXLiullf9qBXmyL_v7v_HY8PZmXKN4WJtkNTmnPiBm_Z-gAfzq7hBnmFbApT4QoDJWRTmjMrNmyywLDYFGaFnD1FU5rXs19mv5rCZLHSZ1Ma68SvdE3wDmPWI06TdS2e_Dx7bQqz9LEypelcOsm7s7iP4lXNg8Gv6HrZ7h3I2XCSmBzmbAojbGNOxGJKk6XyZB4L4xgrjOJtyPo94z-9Z6xM-enzY2GwYf22fDCCATsU3pjSRIo4IGbx0eppeVwvRLrPp4ddeFY2-MqKRsgtfWwU1Vd4h3WNThSY0VbKgNa1elDtA-ZNFuxUpqOE-ndEWRMvnw8fsTCbsrYh42NhfIVdIsEophTusTCp50RDDP8edcCs1hyIJuyV7lgHWt_JqG72JVOEIx-Djwh_3syvgBgoKaIN8CwNkpX2GGxjfcwC2bXYWbCxgtTajMB9wGwei6c4pBfZR5aX2cc__y_5GcWIaiovG3AtumUJjNJzzEDLApJ1S9sgjJ4s4Hy-uHh7uzh9d3m3mM9viwFr3aK0yPBxvnh_fjn_OOsqWNsMNfWx2gdtUK41BBe9r2x0OA30YgCEDqWligI1G2hGQVATg4WxPjuMMubs6M3Jb8f7KBktu_YSc1aDT8JxM0gAaRH2Gk0YJEFlxd6r8vsNLHGzJj7MxC12KViZNgl2X3pFrh9iLqM0qJk6_Tm_-mnWfQPAfTztKy8Tq8_CvZOesQKrciAxdUkGH2liXM88uIjpCzqBo4owQyRtCzYOS1RITtYheMkY6uODPJ1pWQafp0bdIbidnrFYOj1UKCKMzHUfwvOqQ9eN3fRm6IqTIu2C_0KXH3s2Y42M2qi-hTiN4q-tCPJUtT8i7CpG7RfFn6RR1LZwFHCvyx12YqbhAvcr_IOc5qPqw7TdYN161yrUUwfIIASOUZuBj6Aath35AOYK19dbf773bkl1PSlHw4ix9hgquCeSLGwTJLsJZCvw0YW-8rGBLJYFGXbeGy7Tp4HirOdM_P20sNwCXjydMdHtYzsEm-Gl4MPaSzuC4pZj0QcE3WOAjATJsu1QkH8Md0Xb76eF_E7WQEi9DDW2lynIOk5R_E97_r7zw6QG_XB2fVJ7zgI6ouoVpnO61trgSbD7Ft41_h2yo7RRt-7d3D4KDaFgTHTA_rzs0k88bQyj0vMEe_nu9q3OqvrssfcBd2lWYiFH4YckfyV9M-TJgVQL9FsxTy1Fr-ZATaN52tFAY1M2j5_1sddHZ0Vfcrrx47-gjDXT
