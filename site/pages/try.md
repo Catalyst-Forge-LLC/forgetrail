@@ -4,7 +4,7 @@ description: Prove ForgeTrail in one sitting with a Genesis spec and ForgeTrail 
 order: 1
 ---
 
-Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to **ForgeTrail Lite**, and let your coding agent forge the path and keep the trail.
+Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to **ForgeTrail Lite**, and let your coding agent create the tracking file the next chat will read.
 
 **You need:** any LLM chat and any coding agent that reads files.
 
@@ -12,10 +12,12 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to
 
 **Important:** Use a **new empty project folder**. Do not run this inside a clone of the ForgeTrail methodology repo.
 
+The first artifact to look for is `.forgetrail/workflow_tracking.json`. How a second session uses it: [Continuity](/docs/continuity).
+
 ## Kickoff
 
 1. Write `docs/GENESIS.md` (what, not how) in a new empty folder.
-2. Add Lite: `pnpm dlx forgetrail install --lite --with-genesis-stub`, or copy [FORGETRAIL_LITE.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/content/FORGETRAIL_LITE.md) to `.forgetrail/FORGETRAIL_LITE.md`.
+2. Add Lite: copy [FORGETRAIL_LITE.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/content/FORGETRAIL_LITE.md) to `.forgetrail/FORGETRAIL_LITE.md`. Node optional: `pnpm dlx forgetrail install --lite --with-genesis-stub`.
 3. Paste the kickoff line from the [Try docs](/docs/try). Approve the Phase 1 brief before any scaffold.
 
 <div class="cta-row">

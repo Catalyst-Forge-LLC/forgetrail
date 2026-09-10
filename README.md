@@ -10,31 +10,39 @@
 
 **Forge the path. Keep the trail.**
 
-A persistent development system for building software with AI agents.
+Keep project decisions, development state, and lessons in the repository so your next AI-assisted session can continue with context.
+
+After one sitting you should have `.forgetrail/workflow_tracking.json` with the phase you are in, a decision, and a `nextSession` line. A labeled two-session walk-through is in [`content/examples/two-session-continuity.md`](content/examples/two-session-continuity.md).
 
 **Docs:** [forgetrail.dev/docs](https://forgetrail.dev/docs) · **Site:** [forgetrail.dev](https://forgetrail.dev)
 
-## Install
+## Start with Lite
 
-Node.js 20+. Prefer `pnpm dlx` on Windows.
+You need a new empty project folder and a coding agent that can read files. Node is optional.
+
+1. Write `docs/GENESIS.md` (what, not how).
+2. Copy [`content/FORGETRAIL_LITE.md`](content/FORGETRAIL_LITE.md) to `.forgetrail/FORGETRAIL_LITE.md`, or run `pnpm dlx forgetrail install --lite --with-genesis-stub` (Node.js 20+).
+3. Paste the kickoff line from [TRY_FORGETRAIL.md](TRY_FORGETRAIL.md). Approve the Phase 1 brief before any scaffold.
+
+The shortest supported first task is: create tracking, draft `docs/PHASE_1_BRIEF.md`, and wait for approval. You do not have to run all seven phases. Full recipe: [Try](https://forgetrail.dev/docs/try).
+
+## Lite, CLI, and MCP
+
+| Path | Who uses it | What it is |
+| --- | --- | --- |
+| **Lite** | First path | One protocol file. The agent writes tracking. |
+| **CLI** (`forgetrail`) | Node.js 20+ | Installer. Writes Lite or the full template tree. Does not run the agent. |
+| **MCP** (`forgetrail-mcp`) | Cursor or Claude | Methodology tools. Tracking still lives in the app repo. |
 
 ```bash
 pnpm dlx forgetrail install --lite --with-genesis-stub
 ```
 
-or `npx forgetrail install --lite --with-genesis-stub`. MCP: `npx -y forgetrail-mcp` (set `FORGETRAIL_ROOT`). Do not add `forgetrail` to an app's `dependencies`.
-
-## Quick start
-
-1. Write a `docs/GENESIS.md` (what, not how) in a **new empty project folder**.
-2. Add Lite: the command above, or copy [`content/FORGETRAIL_LITE.md`](content/FORGETRAIL_LITE.md) to `.forgetrail/FORGETRAIL_LITE.md`.
-3. Paste the kickoff line from [TRY_FORGETRAIL.md](TRY_FORGETRAIL.md). Approve the Phase 1 brief before any scaffold.
-
-No Node required if you copy Lite by hand. Full recipe: [Try](https://forgetrail.dev/docs/try).
+MCP: `npx -y forgetrail-mcp` with `FORGETRAIL_ROOT` set. Prefer `pnpm dlx` on Windows. Do not add `forgetrail` to an app's `dependencies`. Do not merge the two packages.
 
 ## What you get
 
-A 7-phase playbook, a live `.forgetrail/workflow_tracking.json`, and templates pre-loaded with production lessons. Each project leaves a trail of decisions, gotchas, and breadcrumbs that future work follows. Flags, MCP, and the phase table live in the [docs](https://forgetrail.dev/docs).
+A 7-phase playbook, a live `.forgetrail/workflow_tracking.json`, and templates pre-loaded with first-party production lessons. Each project leaves a trail of decisions, gotchas, and breadcrumbs that future work follows. Those lesson notes are not independent adoption evidence. Flags, MCP, and the phase table live in the [docs](https://forgetrail.dev/docs).
 
 <!-- xfacts-nutrition-label -->
 

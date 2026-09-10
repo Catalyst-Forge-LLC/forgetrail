@@ -2,43 +2,57 @@
 title: Introduction
 ---
 
-**ForgeTrail** is a persistent development system for building software with AI agents.
+**ForgeTrail** keeps project decisions, development state, and lessons in the repository so the next AI-assisted session can continue with context.
 
 **Forge the path. Keep the trail.**
 
-Most AI coding sessions forget everything the moment you close the tab. ForgeTrail keeps the phase you are in, the decisions you made, and the gotchas you hit inside the repo, so the next session picks up the trail.
+Most AI coding sessions forget everything when you close the tab. ForgeTrail keeps the phase you are in, the decisions you made, and the gotchas you hit inside the app repo.
 
-It is not a library, a SaaS, or a plugin. It is a methodology encoded into files your agent reads, follows, and updates as you build. Distilled from real production apps.
+It is not a library, a SaaS, or a plugin. It is a methodology encoded into files your agent reads, follows, and updates. Distilled from Catalyst Forge production work.
 
-## The problem
+## The persisted outcome
 
-AI writes code quickly. It does not build a product on its own.
+After a first sitting you should see:
 
-- **Context evaporates between sessions.** Every new chat starts from zero. You spend the first twenty minutes re-explaining architecture, decisions, and what you already tried.
-- **No structure, no momentum.** Features land in random order. Hardening gets skipped. Fragile code ships.
-- **You manage the AI instead of building.** Prompt engineering, context stuffing, and copy-pasting file contents eat the productivity gains.
-- **Decisions get lost and mistakes repeat.** You solved a hard bug in session 3. In session 6 the agent reintroduces it because it does not know the history.
+- `.forgetrail/FORGETRAIL_LITE.md` (or MCP tools serving the same protocol)
+- `.forgetrail/workflow_tracking.json`
+- `docs/GENESIS.md` and, once drafted, `docs/PHASE_1_BRIEF.md`
 
-## Two packages
+The installer can place the Lite file. The agent writes tracking, the brief, decisions, and session notes. Those updates are not automatic. Empty tracking after a busy session is a protocol miss.
 
-| Package | Job |
-| --- | --- |
-| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | CLI that writes Lite or the full template tree into an app folder |
-| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | MCP server for Cursor, Claude, and other clients |
+A labeled two-session walk-through, including a `lite-1` excerpt, is on [Continuity](/docs/continuity).
 
-Do not add `forgetrail` to an app's `dependencies`. The trail lives in the app's files.
+## The problem those files solve
+
+- **Context evaporates between sessions.** Every new chat starts from zero unless the repo holds the trail.
+- **No structure, no momentum.** Features land in random order. Hardening gets skipped.
+- **You manage the AI instead of building.** Re-explaining architecture eats the session.
+- **Decisions get lost and mistakes repeat.** A gotcha from session 3 returns in session 6 if nobody wrote it down.
+
+## Three paths, one trail
+
+| Path | Who uses it | Host needs | What runs |
+| --- | --- | --- | --- |
+| **Lite** | First-time and small-project users | A coding agent that can read files. Node is optional. | You copy or install one protocol file. The agent follows it and writes tracking. |
+| **CLI** (`forgetrail`) | People who want files placed by a command | Node.js 20+ | An installer. Lite, or the full template tree. It does not run the agent. |
+| **MCP** (`forgetrail-mcp`) | People who want methodology tools in the IDE | Node.js 20+, an MCP client, `FORGETRAIL_ROOT` | Tools for kickoff, resume, and lessons. The app still owns `.forgetrail/workflow_tracking.json`. |
+
+Recommended first path: [Try](/docs/try). Stay on Lite until you want IDE tools or a vendored template tree.
+
+Do not add `forgetrail` to an app's `dependencies`. Do not merge `forgetrail` and `forgetrail-mcp`.
 
 ## Two surfaces
 
 | Surface | What it is |
 | --- | --- |
 | [forgetrail.dev](https://forgetrail.dev) | Product story: home, Try, About |
-| [forgetrail.dev/docs](https://forgetrail.dev/docs) | This guide: install, CLI, MCP, phases |
+| [forgetrail.dev/docs](https://forgetrail.dev/docs) | This guide: install, CLI, MCP, phases, continuity |
 
 GitHub remains the source of truth for methodology files.
 
 ## Next
 
-- [Install](/docs/install) — npm, pnpm dlx, or a checkout
-- [Try](/docs/try) — Genesis plus Lite, no MCP required
-- [MCP](/docs/mcp) — always-current tools in the IDE
+- [Try](/docs/try): Genesis plus Lite, no MCP required
+- [Continuity](/docs/continuity): two sessions, one tracking file
+- [Install](/docs/install): npm, pnpm dlx, or a checkout
+- [MCP](/docs/mcp): always-current tools in the IDE

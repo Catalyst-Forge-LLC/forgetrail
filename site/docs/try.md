@@ -31,10 +31,16 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to
 
 Stuck? Open a [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/forgetrail/issues/new?template=try-forgetrail-checklist.md) issue.
 
-The same recipe lives in [TRY_FORGETRAIL.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/TRY_FORGETRAIL.md) on GitHub. Short kickoff: [Try](/try).
+The same recipe lives in [TRY_FORGETRAIL.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/TRY_FORGETRAIL.md) on GitHub. Short kickoff: [Try](/try). What the next session reads: [Continuity](/docs/continuity).
+
+Required on this path: the Lite file, a Genesis spec or the §5 intake, tracking, and a Phase 1 brief you approve. Situational: Node (only if you use the CLI), MCP, and a full template tree.
+
+The CLI can place the Lite file. The agent creates `.forgetrail/workflow_tracking.json`. That write is not automatic.
 
 ## Graduation
 
-1. Stay on Lite for small tools.
-2. Add [MCP](/docs/mcp) when you live in Cursor or Claude.
+1. Stay on Lite for small tools. Enough for many projects.
+2. Add [MCP](/docs/mcp) when you live in Cursor or Claude and want tools in the IDE.
 3. Full `_forgetrail/` only when you need vendored templates: `pnpm dlx forgetrail install`.
+
+Lite, CLI, and MCP compared: [Introduction](/docs).

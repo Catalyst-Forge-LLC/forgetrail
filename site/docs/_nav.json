@@ -4,8 +4,9 @@
 			"title": "Getting started",
 			"items": [
 				{ "id": "introduction", "title": "Introduction" },
-				{ "id": "install", "title": "Install" },
-				{ "id": "try", "title": "Try" }
+				{ "id": "try", "title": "Try" },
+				{ "id": "continuity", "title": "Continuity" },
+				{ "id": "install", "title": "Install" }
 			]
 		},
 		{

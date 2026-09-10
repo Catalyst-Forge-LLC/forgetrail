@@ -75,6 +75,7 @@ Already have a long PRD? Save it as `docs/GENESIS.md` and use the kickoff line a
 |------|------|
 | [`content/GENESIS_SPEC_PROMPT.md`](content/GENESIS_SPEC_PROMPT.md) | Prompt to paste into any LLM chat |
 | [`content/examples/GENESIS_SAMPLE_mars-habitat-roster.md`](content/examples/GENESIS_SAMPLE_mars-habitat-roster.md) | Fictional sample Genesis |
+| [`content/examples/two-session-continuity.md`](content/examples/two-session-continuity.md) | Labeled two-session tracking example |
 | [`content/FORGETRAIL_LITE.md`](content/FORGETRAIL_LITE.md) | Portable agent protocol |
 | [`content/GENESIS_STUB.md`](content/GENESIS_STUB.md) | Stub written by `--with-genesis-stub` |
 | [`README.md`](README.md) | Full methodology overview |

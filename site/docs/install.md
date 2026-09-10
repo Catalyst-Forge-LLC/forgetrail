@@ -2,7 +2,9 @@
 title: Install
 ---
 
-Requires **Node.js 20+** for the CLI and MCP. The [Try](/docs/try) path does not require Node.
+The first useful outcome is files in your app folder, especially `.forgetrail/workflow_tracking.json`. See [Continuity](/docs/continuity) before you pick an installer.
+
+Requires **Node.js 20+** for the CLI and MCP. The [Try](/docs/try) path does not require Node. Copy Lite by hand if you want zero install.
 
 ## CLI
 
