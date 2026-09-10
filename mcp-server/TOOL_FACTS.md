@@ -336,7 +336,7 @@ None required.
 | `getPhaseGuidance` | Return methodology guidance for a development phase (1-7) |
 | `searchLessons` | Search the ForgeTrail lesson database by keyword |
 | `getTemplate` | Return a ForgeTrail document template from docs/*.md |
-| `runAudit` | Return a structured audit prompt for the current project (does not scan the workspace itself) |
+| `runAudit` | Return a structured audit prompt for the current project (does not scan the workspace itself). Following that prompt is a later host or agent step. |
 | `getChecklist` | Return a project checklist for a milestone or the full checklist |
 | `getTrackingSchema` | Return the workflow_tracking.json schema reference |
 | `getAntiPatterns` | Return documented anti-patterns from the methodology |
