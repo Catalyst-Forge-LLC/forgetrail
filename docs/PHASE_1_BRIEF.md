@@ -55,6 +55,9 @@ _Confirmed choices only after user sign-off. Mirror the same choices into `CONTE
 | Auth / storage  |          |                               |             |
 | Styling         |          |                               |             |
 | Deploy / CI     |          |                               |             |
+| Git host        |          |                               |             |
+| DNS             |          |                               | Cloudflare unless already specified |
+| Registrar       |          |                               |             |
 | Package manager |          |                               |             |
 
 ---

@@ -21,3 +21,7 @@ order: 3
 Distilled from [Exec Foundry](https://execfoundry.com) and refined across about a dozen further projects. Built by [Catalyst Forge](https://catalystforge.com).
 
 Open source under [Apache License 2.0](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/LICENSE). Community support via GitHub issues (best-effort, no SLA). Commercial help: [catalystforge.com](https://catalystforge.com).
+
+## Works alongside
+
+ForgeTrail stays the lifecycle and memory layer. Optional neighbors on the [Catalyst Forge tools shelf](https://catalystforge.com/tools/) cover jobs such as a Markdown site (FilePress), named local ports (LocalSlip), a local status board (LocalHelm), and editorial or readiness skills. None of those are required to try ForgeTrail.

@@ -12,3 +12,5 @@ Most AI chats forget. ForgeTrail keeps **phase state**, **decisions**, and **got
 | **Per-project retros** | Lessons in one repo's instruction file | ForgeTrail propagation is cross-project |
 
 ForgeTrail earns its weight when you build **repeatedly**. For a single gated change, Spec Kit or OpenSpec may be enough.
+
+Optional Catalyst Forge neighbors (FilePress, LocalSlip, LocalHelm, editorial skills, xFacts) sit beside ForgeTrail for specific jobs. They are not required. See the [tools shelf](https://catalystforge.com/tools/).

@@ -1,6 +1,6 @@
 # Greenfield product intake (Phase 1 helper)
 
-Use alongside **`getChecklist`** section `before-session-1`. That checklist covers *problem, stack, assets, hero flow* at a high level. This document adds **delivery and product-shape** questions so Phase 1 does not miss exports, tenancy, or “how literal is the spec.”
+Use alongside **`getChecklist`** section `before-session-1`. That checklist covers *problem, stack, assets, hero flow* at a high level. This document adds **delivery and product-shape** questions so Phase 1 does not miss exports, tenancy, hosting, or “how literal is the spec.”
 
 **Already have a written spec (e.g. `docs/GENESIS.md`)?** Feed it into **`ingestPlanArtifact`** first, then use this document only to fill gaps (delivery, tenancy, compliance, live search) it may not cover. If the user has only an idea, **`getGenesisSpecPrompt`** (or human recipe **`TRY_FORGETRAIL.md`**) produces a portable spec via an external LLM chat before you run through these questions.
 
@@ -53,7 +53,7 @@ Use alongside **`getChecklist`** section `before-session-1`. That checklist cove
 Ask this **before** locking PocketBase + auth into the stack. Wrong answer here = weeks of unused auth flow or, worse, a "local app" that silently depends on a backend that is inconvenient to run locally.
 
 - **Does any state need to outlive the current browser?** Accounts, cross-device sync, shared data between users, admin/curator editing a catalog multiple users read — **yes**. Personal notes, offline-first tools, a single-user dashboard that reloads the same local data — **no**.
-- If **no** (A-local): drop PocketBase + auth; `localStorage` / `IndexedDB` for persistence; **`adapter-static`** is viable; no runtime secrets; deploy on free static hosts.
+- If **no** (A-local): drop PocketBase + auth; `localStorage` / `IndexedDB` for persistence; **`adapter-static`** is viable; no runtime secrets; deploy on free static hosts. An **interactive** A-local app still uses SvelteKit. **FilePress** is for a Markdown site (docs, writing, event page) or an optional `site/` beside the app, not a replacement for the app.
 - If **yes** (A-persistent): full Default-A stack — SvelteKit + PocketBase + `adapter-node`; accounts, sessions, server-only writes.
 - Record the choice in **`PHASE_1_BRIEF.md` §4** (`State persistence:` row) and **`decisions[]`**. **ForgeTrail Lite** §7 (A-local vs A-persistent) has the longer write-up.
 
@@ -69,8 +69,34 @@ Skip this section entirely if content is hand-authored or pulled from a conventi
 
 Ask which **provider and model** (e.g. `ollama/ibm/granite4.1:8b`, `openai/gpt-4o-mini`, or BYO only). Record pattern, provider, env var names, paths, and validator in **`PHASE_1_BRIEF.md`** (content-generation section) and **`decisions[]`**. **ForgeTrail Lite** §7.1 has skeletons for OpenAI, Ollama, seed, and BYO-LLM.
 
+If the choice is **local Ollama**, you may offer **ollanet** (host manager) and later **Finetuna** (runtime tuner). Keep **`setup-ollama`** / **`test-ollama`** as the in-repo health path. Optional: `getCompanionSuggestions` situations `local-ollama` / `ollama-vram`.
+
+---
+
+## 9. Registrar, DNS, git, and hosting
+
+Ask only what is still open. If the user already named a provider, record it and do not migrate them.
+
+- **Git host** — GitHub unless they already use something else.
+- **Registrar** — wherever the domain already lives (Namecheap, Cloudflare Registrar, …).
+- **DNS** — if unspecified, prefer **Cloudflare** (free plan: DNS, edge TLS, basic protection). Typical pattern: domain at any registrar, nameservers pointed at Cloudflare.
+- **Production host** — static site (FilePress or `adapter-static`): **Cloudflare Pages** + Wrangler, $0. App that needs a server: DigitalOcean (or similar) origin **behind** Cloudflare DNS.
+
+Record git host, DNS, registrar, and deploy target in **`PHASE_1_BRIEF.md` §4** and **`decisions[]`**.
+
+---
+
+## 10. Workstation and personal capture (optional)
+
+Do **not** put these in the first user-facing message. Ask only if they did not already come up.
+
+- **Other local apps?** If this machine already runs (or will run) two or more local apps, offer **LocalSlip** (named ports) and **LocalHelm** (status board). Skip on a first single-app machine.
+- **Spoken ideas?** If they capture ideas by voice or want a local journal beside the repo, offer **DictaWhisper**. Audio stays on their computer. It is a personal tool, not part of the app stack.
+
+These are optional companions (`getCompanionSuggestions`). Decline is success.
+
 ---
 
 ## Why this exists
 
-`before-session-1` alone does not spell out **project archetype (product vs internal tool vs one-shot)**, **exports** (including slide decks), **multi-tenant consulting**, **hybrid vs full spec**, **live web search needs**, **state persistence (local vs accounts)**, or **LLM-content generation pattern** — common sources of rework if captured only late in Phase 1.
+`before-session-1` alone does not spell out **project archetype (product vs internal tool vs one-shot)**, **exports** (including slide decks), **multi-tenant consulting**, **hybrid vs full spec**, **live web search needs**, **state persistence (local vs accounts)**, **LLM-content generation pattern**, or **registrar / DNS / git / hosting** — common sources of rework if captured only late in Phase 1.

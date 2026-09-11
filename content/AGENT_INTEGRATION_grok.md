@@ -10,7 +10,7 @@ Grok Build (the agentic TUI/CLI from xAI) has excellent native primitives that m
 | `spawn_subagent` (explore/plan/general, capability_mode, isolation: worktree, background, resume_from, personas) | All phases, especially 4, 5, 7 | Use for parallel audits (black-hat, UX, code quality), research, stabilize debugging, and exploratory spikes. Call `suggestSubagentDecomposition` first. Prefer read-only for analysis subagents. |
 | `todo_write` + TODO panel   | All phases                 | Mirror open exit criteria and next actions from `.forgetrail/workflow_tracking.json`. Use as the visible "what's next" while tracking.json is the durable record. |
 | Skills (`/create-skill`, SKILL.md) | All sessions             | Install the `forgetrail` skill (see `SKILL.md` in content/skills/forgetrail). It keeps phase discipline, tracking rules, and subagent patterns always active. |
-| Native MCP (search_tool + use_tool) | Methodology delivery    | Register the ForgeTrail MCP server. Tools appear as `forgetrail__*`. Use `getNewProjectKickoff`, `getPhaseGuidance`, `runAudit`, `searchLessons`, `validateTracking`, etc. |
+| Native MCP (search_tool + use_tool) | Methodology delivery    | Register the ForgeTrail MCP server. Tools appear as `forgetrail__*`. Use `getNewProjectKickoff`, `getPhaseGuidance`, `getCompanionSuggestions`, `runAudit`, `searchLessons`, `validateTracking`, etc. |
 | Headless (`grok -p ... --output-format json`) | Automation / CI       | Call kickoff/resume tools and have the agent produce structured phase state. Add exit-criteria validation in pipelines. |
 | `docx` / `pptx` / `xlsx` skills + image/video gen | Phase 1 intake, Phase 6/7 deliverables | Use for exports (PDF/DOCX/PPTX), landing pages, brand assets, and marketing materials called out in greenfield intake. |
 | Sessions + memory + AGENTS.md | Cross-session continuity | `.forgetrail/workflow_tracking.json` + `CONTEXT_PROMPT.md` are the ForgeTrail equivalents. Update them at session end. |
@@ -58,6 +58,8 @@ Then simply say things like:
 - "Use forgetrail discipline for this feature"
 
 The skill will remind you of phases, tracking, subagents, etc.
+
+Optional house neighbors (one per current job, never required): Smell Check, Detangler, Misemphasis, Cold-eye, TemperPass, Gap Last. Call **`getCompanionSuggestions`** when a trigger matches.
 
 ## Headless / Automation Tips
 

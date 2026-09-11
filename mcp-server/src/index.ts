@@ -10,6 +10,11 @@ import { stripForgeTrailTemplateToShell } from "./templateStrip.js";
 import { validateTrackingData, formatValidationResult } from "./trackingValidate.js";
 import { ingestPlanArtifact } from "./planIngest.js";
 import { toolResult } from "./mcpFormat.js";
+import {
+  formatCompanionSuggestions,
+  formatPhaseCompanionFooter,
+  loadCompanionCatalog,
+} from "./companionSuggestions.js";
 
 // ---------------------------------------------------------------------------
 // Resolve the ForgeTrail content root.
@@ -286,6 +291,7 @@ const trackingSchema = readFile(TRACKING_SCHEMA_PATH);
 
 const docFiles = listDir(DOCS_DIR);
 const promptFiles = listDir(PROMPTS_DIR);
+const companionCatalog = loadCompanionCatalog(MCP_CONTENT_DIR);
 
 // Build a flat lesson index across all docs + workflow
 const lessonIndex: { text: string; source: string }[] = [];
@@ -354,6 +360,7 @@ server.tool(
         recommendedTools: [
           "getNewProjectKickoff",
           "getPhaseGuidance",
+          "getCompanionSuggestions",
           "suggestSubagentDecomposition",
           "validateTracking",
           "ingestPlanArtifact",
@@ -368,7 +375,7 @@ server.tool(
 server.tool(
   "getPhaseGuidance",
   "Get ForgeTrail methodology guidance for a specific development phase (1-7). " +
-    "Returns entry/exit criteria, playbook, prompt patterns, and anti-patterns.",
+    "Returns entry/exit criteria, playbook, prompt patterns, anti-patterns, and an optional companions footer.",
   { phase: z.string().describe("Phase number (1-7) or keyword like 'architecture', 'scaffolding', 'hardening'") },
   async ({ phase }) => {
     const phaseMap: Record<string, string> = {
@@ -414,6 +421,13 @@ server.tool(
         "Prefer the host's plan mode for all Phase 1 work. On user approval, call **`ingestPlanArtifact`** with the approved plan text " +
         "to map into `docs/PHASE_1_BRIEF.md` + `decisions[]`, or call **`getPlanModePatterns`** for the full handoff flow. " +
         "Do not scaffold until the brief is locked.";
+    }
+
+    if (companionCatalog) {
+      const footer = formatPhaseCompanionFooter(companionCatalog, num);
+      if (footer) {
+        result += "\n\n---\n\n" + footer;
+      }
     }
 
     return { content: [{ type: "text" as const, text: result }] };
@@ -1030,7 +1044,7 @@ server.tool(
 server.tool(
   "getGreenfieldIntakePrompt",
   "Phase 1 helper: structured questions about exports (PDF/DOCX/PPTX, etc.), tenancy (e.g. consultants with many clients), " +
-    "hybrid vs full spec, compliance tier, and hero flow. Complements getChecklist(before-session-1). " +
+    "hybrid vs full spec, compliance tier, hero flow, and registrar/DNS/git/hosting. Complements getChecklist(before-session-1). " +
     "Agent should capture answers in PHASE_1_BRIEF.md and .forgetrail/workflow_tracking.json decisions[]. " +
     "For a pre-written portable spec instead of in-session Q&A, see getGenesisSpecPrompt.",
   {},
@@ -1320,6 +1334,85 @@ server.tool(
   }
 );
 
+// -- Tool: getCompanionSuggestions -----------------------------------------
+
+const companionSituationIds = (companionCatalog?.situations.map((s) => s.id) ??
+  []) as [string, ...string[]];
+
+server.tool(
+  "getCompanionSuggestions",
+  "Return optional Catalyst Forge companion tools for a ForgeTrail phase or situation " +
+    "(FilePress, LocalSlip, LocalHelm, practice skills, xFacts, and others). " +
+    "Suggestions only: never required, never install unless the user asked. " +
+    "Omit filters to list situation ids. Use format=json for structured output.",
+  {
+    phase: z
+      .string()
+      .optional()
+      .describe("Phase number 1–7 or keyword (architecture, scaffolding, hardening, …)"),
+    situation: (companionSituationIds.length > 0
+      ? z.enum(companionSituationIds)
+      : z.string()
+    )
+      .optional()
+      .describe(
+        "Situation id from companion-tools.json (e.g. markdown-site, multi-app-local, ship-label)"
+      ),
+    format: z
+      .enum(["text", "json"])
+      .optional()
+      .describe("text (default) or json for structured headless output"),
+  },
+  async ({ phase, situation, format }) => {
+    if (!companionCatalog) {
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: "companion-tools.json not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
+          },
+        ],
+      };
+    }
+
+    let phaseNum: string | undefined;
+    if (phase) {
+      const phaseMap: Record<string, string> = {
+        architecture: "1",
+        planning: "1",
+        scaffolding: "2",
+        scaffold: "2",
+        build: "2",
+        stabilization: "3",
+        bugs: "3",
+        "bug fixing": "3",
+        features: "4",
+        iteration: "4",
+        "feature iteration": "4",
+        refactoring: "5",
+        "code health": "5",
+        refactor: "5",
+        strategy: "6",
+        alignment: "6",
+        roadmap: "6",
+        strategic: "6",
+        hardening: "7",
+        production: "7",
+        launch: "7",
+        "production prep": "7",
+      };
+      phaseNum = phaseMap[phase.toLowerCase()] ?? phase.replace(/\D/g, "") ?? undefined;
+      if (phaseNum === "") phaseNum = undefined;
+    }
+
+    const payload = formatCompanionSuggestions(companionCatalog, {
+      phase: phaseNum,
+      situation,
+    });
+    return toolResult(format, payload);
+  }
+);
+
 // -- Tool: getPlanModePatterns ---------------------------------------------
 
 server.tool(
@@ -1440,8 +1533,9 @@ function printStartupHintsToStderr(): void {
     "  getForgeTrailCursorLessonsRules (Cursor: lessons gate + MCP reminder rules)",
     "  getScaffoldInstallParams (Phase 2: PocketBase scripted install defaults)",
     "  getGenesisSpecPrompt (pre-Phase-1: copy-paste prompt for an external LLM chat to draft a GENESIS.md build spec)",
-    "  getGreenfieldIntakePrompt (Phase 1: exports, tenancy, hybrid spec, hero flow)",
+    "  getGreenfieldIntakePrompt (Phase 1: exports, tenancy, hybrid spec, hero flow, hosting)",
     '  getPhaseGuidance (phase "1"–"7" or e.g. "scaffolding")',
+    "  getCompanionSuggestions (phase or situation: optional sibling tools)",
     '  getTemplate with name "list", then a template name (e.g. PHASE_1_BRIEF)',
     '  searchLessons with a keyword',
     "  validateTracking (check .forgetrail/workflow_tracking.json health)",

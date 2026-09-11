@@ -146,3 +146,5 @@ and one-line fix suggestions. For each finding, include the checklist item numbe
 | **HIGH**    | Should fix before launch. Embarrassing UX, broken flow, or unhandled error visible to users.      |
 | **MEDIUM**  | Fix soon after launch. Degraded experience, missing polish, or edge case that affects some users. |
 | **LOW**     | Improvement opportunity. Better error messages, tighter validation, or minor UX refinements.      |
+
+Optional neighbor: Cold-eye for a newcomer-readiness verdict. Not a substitute for this checklist. Do not install unless the user asked.

@@ -1,10 +1,10 @@
 # Companion tools — weave Catalyst Forge siblings into ForgeTrail
 
 **Spec kind:** Delivery  
-**Status:** Draft (review before implementation)  
+**Status:** Partial (M1–M4 landed 2026-09-11; review leftovers in §9)  
 **Date:** 2026-09-11  
-**Related:** [TODO.md](../TODO.md), [WORKFLOW.md](../WORKFLOW.md) §1b–§1e, [content/GREENFIELD_INTAKE.md](../content/GREENFIELD_INTAKE.md), [content/FORGETRAIL_LITE.md](../content/FORGETRAIL_LITE.md), [docs/DEPLOYMENT.md](../docs/DEPLOYMENT.md), [specs/completed/forgetrail-new-user-experience.md](completed/forgetrail-new-user-experience.md), [specs/canonical/forgetrail-modern-agents-evolution.md](canonical/forgetrail-modern-agents-evolution.md), [https://catalystforge.com/tools/](https://catalystforge.com/tools/)  
-**Surfaces:** WORKFLOW, Lite, intake, DEPLOYMENT template, audit prompts, agent-integration guides, forgetrail skill, MCP (`getPhaseGuidance` and/or a new suggestions tool), optional site docs
+**Related:** [TODO.md](../../TODO.md), [WORKFLOW.md](../../WORKFLOW.md) §1b–§1f, [content/COMPANION_TOOLS.md](../../content/COMPANION_TOOLS.md), [content/GREENFIELD_INTAKE.md](../../content/GREENFIELD_INTAKE.md), [content/FORGETRAIL_LITE.md](../../content/FORGETRAIL_LITE.md), [docs/DEPLOYMENT.md](../../docs/DEPLOYMENT.md), [forgetrail-new-user-experience.md](../completed/forgetrail-new-user-experience.md), [https://catalystforge.com/tools/](https://catalystforge.com/tools/)  
+**Surfaces:** WORKFLOW, Lite, intake, DEPLOYMENT template, audit prompts, agent-integration guides, forgetrail skill, MCP (`getPhaseGuidance` footer + `getCompanionSuggestions`), site docs
 
 ---
 
@@ -12,7 +12,7 @@
 
 **What is painful today:** ForgeTrail still talks as if the only optional neighbor is [gstack](https://github.com/garrytan/gstack). Since that guidance landed, Catalyst Forge has shipped a shelf of sibling tools that solve recurring jobs ForgeTrail already names: publish a Markdown site, keep local ports stable, review prose, name assumptions, reconstruct a failure, label a shipped tool, back up unpushed git, capture a chat as files.
 
-Those siblings exist, are free, and are already used *inside this repo* (FilePress + Wrangler for forgetrail.dev; LocalBerth for the site port; xFacts labels; LocalHelm in the npm-name-hold rule). App projects that adopt ForgeTrail never hear about them at the moment the job appears. Agents invent ad-hoc static-site stacks, collide on ports, skip editorial review, or treat Ollama as a single `setup-ollama` script.
+Those siblings exist, are free, and are already used *inside this repo* (FilePress + Wrangler for forgetrail.dev; LocalSlip for the site port; xFacts labels; LocalHelm in the npm-name-hold rule). App projects that adopt ForgeTrail never hear about them at the moment the job appears. Agents invent ad-hoc static-site stacks, collide on ports, skip editorial review, or treat Ollama as a single `setup-ollama` script.
 
 **Friction / current workaround (if any):** A human who already knows the house shelf picks tools by memory. Everyone else either overbuilds or never finds the fit. The public catalog is [catalystforge.com/tools](https://catalystforge.com/tools/) (also `/tools.md` and `/tools.json`). ForgeTrail does not map that shelf onto phases, archetypes, or intake answers.
 
@@ -46,12 +46,12 @@ Those siblings exist, are free, and are already used *inside this repo* (FilePre
 | Lite §4.8 and intake §8 cover local Ollama via `setup-ollama` / `test-ollama` | ollanet (hosts) and Finetuna (runtime tuner) are unnamed |
 | `APP_FACTS.md`, `mcp-server/TOOL_FACTS.md`, `content/skills/forgetrail/SKILL_FACTS.md` already exist | Apps are not told when to write their own labels |
 | npm-name-hold already blesses LocalHelm `publish --apply` after `auth` | LocalHelm as a *status board* is never suggested |
-| `site/README.md` and `scripts/ensure-lease.mjs` still call **LocalBerth** for port 5195 | The public shelf lists **LocalSlip**, not LocalBerth |
+| This repo’s site port script still used the old CLI name | Migrated to LocalSlip (`localslip get` / `claim`) |
 | NUX spec forbids extra doors before Try | Any catalog work must stay below the fold / after kickoff |
 
-Shelf snapshot used for this draft (2026-09-11, 21 tools on [catalystforge.com/tools](https://catalystforge.com/tools/)). Re-read `/tools.json` when implementing; do not treat versions in this spec as pins.
+Shelf snapshot used for this draft (2026-09-11, 21 tools on [catalystforge.com/tools](https://catalystforge.com/tools/)). Re-read `/tools.json` when the mapping is refreshed; do not treat versions in this spec as pins.
 
-**LocalBerth vs LocalSlip:** this repo still claims `forgetrail-site` on **5195** with the `localberth` CLI. LocalSlip is the shelf’s named port registry. Implementation must confirm whether LocalSlip superseded LocalBerth, they coexist, or ForgeTrail’s own scripts should migrate. Until that is decided, *suggest LocalSlip to app users* and *leave this repo’s lease script as a separate cleanup* (see §9 Q1).
+**LocalSlip:** previous CLI name retired. App docs and this repo’s `scripts/ensure-lease.mjs` use LocalSlip only.
 
 ---
 
@@ -116,18 +116,19 @@ Source: Catalyst Forge tools shelf, 2026-09-11. Homepage links are the stable po
 | Pre-launch / wrap: “can a newcomer use what we are about to ship?” | **Cold-eye** | [coldeye.dev](https://coldeye.dev) | Readiness verdict + ranked gaps. Complements `pre-launch-audit`. Not a security audit unless that was the chosen review. |
 | Hard-to-undo work: delete data, pick a persistence model, rewrite history, lock a stack | **TemperPass** | [temperpass.dev](https://temperpass.dev) | Name consequential assumptions before proceeding. Fits Phase 1 lock and any destructive turn. |
 | Phase 3 (or any debug) when the **cause is not yet earned** | **Gap Last** | [gaplast.dev](https://gaplast.dev) | Observations, constraints, remaining questions, then hypotheses. A hypothesis is not the established cause. Log leftovers into `gotchas[]`. |
-| Shipping a tool, MCP server, agent config, or installable skill | **xFacts** (AppFacts / ToolFacts / AgentFacts / SkillFacts; ModelFacts if a local model is part of the product) | [xfacts.dev](https://xfacts.dev) | Structured labels. A validator checks shape, not truth. ForgeTrail already publishes its own. Hobby one-shots may skip. |
+| A product, tool, MCP server, agent config, or skill is going public or being handed off | **xFacts** (AppFacts and neighbors; ModelFacts if a local model is part of the product) | [xfacts.dev](https://xfacts.dev) | House standard for shipped products. A validator checks shape, not truth. One-shots may skip. |
 | Unpushed local branches/tags the operator cannot afford to lose; before rebase/rewrite | **IngotVault** | [ingotvault.dev](https://ingotvault.dev) | Mirror to a drive the operator controls. Never the default force-push. Does not replace commit discipline. |
-| Genesis, plan, or a long chat that still lives only on a website | **HaulOut** | [haulout.dev](https://haulout.dev) | Export the open thread to local Markdown/JSON. Fits “keep the trail.” Tampermonkey userscript; say that up front. Not an account-wide archive. |
+| Registrar / DNS / git / hosting still open | **Cloudflare** | [cloudflare.com](https://www.cloudflare.com/) | Default DNS (and Pages for static) when the user has not already named a provider. Droplet origin remains valid when a server is required. |
+| Builder captures ideas by voice, or wants a local journal beside the repo | **DictaWhisper** | [dictawhisper.com](https://dictawhisper.com) | Personal companion. Audio stays on disk. Git clone, not a one-click add-on. Not part of the app stack. |
 
 #### Tier B — mention if the job is already present
 
 | Trigger | Tool | Homepage | Note |
 |---------|------|----------|------|
+| Genesis, plan, or a long chat that still lives only on a website | **HaulOut** | [haulout.dev](https://haulout.dev) | Tampermonkey userscript. Not an account-wide archive. |
 | Phase 1 competitive/market briefing, or a handoff that must start from what is true *now* | **EmberDossier** | [emberdossier.com](https://emberdossier.com) | Format for a briefing. The agent still researches. `as_of` is a compile date, not a live feed. |
 | Shipping a **Node CLI** that non-terminal operators must run | **gui4cli** | [gui4cli.dev](https://gui4cli.dev) | Desktop form over Commander/yargs. First launch pulls NW.js (~200 MB). Mention only for CLI products. |
 | Product must **edit an existing Google Doc / Sheet / Slides** in place | **DocuPuncture** | [docupuncture.dev](https://docupuncture.dev) | Targeted Apps Script. Dry run first. Not for “generate a new Google file.” |
-| Operator wants a **local voice journal** of sessions (audio stays on disk) | **DictaWhisper** | [dictawhisper.com](https://dictawhisper.com) | Git clone, not a one-click add-on. Only if they asked for voice capture. |
 
 #### Tier C — do not suggest from ForgeTrail
 
@@ -185,9 +186,9 @@ Keep Lite thin. Put the full table in one content file and point at it.
 | **`content/skills/forgetrail/SKILL.md`** | One rule: when a trigger in COMPANION_TOOLS matches, *offer* the companion; never block the phase on it. |
 | **Audit prompts** (`brand-copy-edit-pass`, `docs-alignment-audit`, `pre-launch-audit`, `landing-page-rewrite`) | One optional line each: Smell Check / Detangler / Cold-eye as a neighbor pass. |
 | **`getPhaseGuidance`** | Append a short “Optional companions” block per phase (from the mapping, not a live HTTP fetch). |
-| **MCP (M2)** | Either the phase-guidance append is enough, or add **`getCompanionSuggestions`** (`phase` and/or `situation`) that returns the filtered subset. Prefer one mechanism; see §9 Q2. |
+| **MCP** | **`getCompanionSuggestions`** (`phase` and/or `situation`) **and** the phase-guidance footer. Local content only. |
 | **`site/docs/compare.md` or `about.md`** | One short “Works alongside” paragraph + link to the public shelf. Below the Try path. |
-| **This repo’s LocalBerth script** | Out of the *suggestion* pass unless Q1 says migrate. Track as a follow-on if LocalSlip is the successor. |
+| **This repo’s port script** | Use LocalSlip (`scripts/ensure-lease.mjs`). |
 
 ### 5.7 MCP / data
 
@@ -195,7 +196,7 @@ No new tracking schema fields required. Optional later: `decisions[]` entries wh
 
 Do **not** have the MCP server fetch `https://catalystforge.com/tools.json` at request time in v1. That adds network, failure modes, and version noise. Refresh `COMPANION_TOOLS.md` when the shelf changes (same discipline as Lite updates).
 
-If `getCompanionSuggestions` is added, serve the markdown (or a small static JSON derived from it) from the content root, same as other `get*` tools.
+`getCompanionSuggestions` reads `content/companion-tools.json`. `content/COMPANION_TOOLS.md` is the human/agent narrative. Keep them in sync when the shelf changes.
 
 ### 5.8 UI / UX
 
@@ -225,7 +226,7 @@ Marketing site: do not add a Tools mega-nav that competes with Try.
 - **Stale versions.** Mitigation: mapping has no `v0.x` pins; shelf is canonical for install.
 - **Agents install the fleet.** Mitigation: explicit “suggest, don’t install”; forgetrail skill rule; no `pnpm add` in first-actions.
 - **FilePress vs SvelteKit confusion.** Mitigation: §5.3 table in the mapping and in intake.
-- **LocalBerth leftover.** Mitigation: Q1; do not tell app users to install LocalBerth if LocalSlip is the current name.
+- **Old CLI name leftover.** Mitigation: this repo and app docs name LocalSlip only.
 - **Lite bloat.** Mitigation: pointers only; full table lives in `content/COMPANION_TOOLS.md`.
 - **gstack overlap** (review vs `/review`, deploy vs FilePress). Mitigation: gstack remains sprint execution; house tools are job-specific. An agent may use both. Persist in ForgeTrail either way.
 - **HaulOut extra install** (Tampermonkey). Mitigation: mention the userscript requirement; never imply it is a one-liner.
@@ -233,7 +234,7 @@ Marketing site: do not add a Tools mega-nav that competes with Try.
 | Risk | Mitigation |
 | ---- | ---------- |
 | Front door grows a catalog | NUX rule: no companions before Try; no post-bootstrap dump |
-| Mapping rots when a sibling is renamed | Refresh from `/tools.json` when editing the mapping; Q1 for LocalBerth |
+| Mapping rots when a sibling is renamed | Refresh from `/tools.json` when editing the mapping |
 | Phase exit criteria quietly depend on a skill | Acceptance: no companion is required to complete a phase |
 | MCP fetches the live shelf and fails offline | v1 is local content only |
 
@@ -246,7 +247,7 @@ Marketing site: do not add a Tools mega-nav that competes with Try.
 | **M1 — Mapping + WORKFLOW** | `content/COMPANION_TOOLS.md` exists with the approved tier table. WORKFLOW §1f + playbook one-liners. Intake + DEPLOYMENT + Lite thin pointers. TODO item stays open until M1 acceptance. |
 | **M2 — Agent surfaces** | Phase guidance (and/or `getCompanionSuggestions`), bootstrap tool-map row, agent-integration guides, forgetrail skill rule, selected audit-prompt one-liners. TOOL_FACTS updated if a tool is added. |
 | **M3 — Site mention** | Short “Works alongside” on compare/about + shelf link. Still below Try. |
-| **M4 — House cleanup (optional)** | If Q1 says LocalSlip replaced LocalBerth, migrate `scripts/ensure-lease.mjs` and `site/README.md`. Separate commit is fine. |
+| **M4 — House cleanup** | `scripts/ensure-lease.mjs` and `site/README.md` use LocalSlip. |
 
 M1 is the reviewable product. M2–M3 can follow in the same implementation pass if the tier table is approved unchanged.
 
@@ -262,7 +263,7 @@ M1 is the reviewable product. M2–M3 can follow in the same implementation pass
 6. Given a user who already runs two or more local apps, when ports or “what is dirty” come up, then LocalSlip and LocalHelm may be offered. Given a first single app, when nothing else is running, then those two are not pushed.
 7. Given Phase 6 copy work or a brand-copy audit, when the prompt/playbook runs, then Smell Check and Misemphasis are optional neighbors, not required gates.
 8. Given Phase 3 confusion about cause, when the playbook mentions debug method, then Gap Last may be offered; findings that matter land in `gotchas[]`.
-9. Given Phase 7 / wrap / pre-launch, when readiness for a newcomer is in scope, then Cold-eye may be offered; Detangler may be offered for structural drift; xFacts may be offered when shipping a tool or skill.
+9. Given Phase 7 / wrap / pre-launch, when readiness for a newcomer is in scope, then Cold-eye may be offered; Detangler may be offered for structural drift; xFacts may be offered when a product goes public or is handed off.
 10. Given TemperPass’s trigger (hard-to-undo work), when the agent is about to delete data, lock persistence, or rewrite git, then it may offer the assumption pass. The phase does not fail if the user skips it.
 11. Given the README / Try path, when a stranger follows NUX, then no companion install is required to complete Genesis + Lite.
 12. Given `forgetrail` / `forgetrail-mcp` package contents, when this pass ships, then no sibling tool is a new runtime dependency.
@@ -271,24 +272,24 @@ M1 is the reviewable product. M2–M3 can follow in the same implementation pass
 
 ## 9. Open questions
 
-| # | Question | Blocking? | Owner |
-| - | -------- | --------- | ----- |
-| 1 | Did **LocalSlip** replace **LocalBerth**, or do they still coexist? Should this repo’s `ensure-lease.mjs` migrate in M4? | Yes, for what we *tell app users*. No for M1 mapping if we only name LocalSlip externally. | Author |
-| 2 | Is a dedicated MCP tool (`getCompanionSuggestions`) worth it, or is an “Optional companions” footer on `getPhaseGuidance` enough? | No for M1. Yes before M2 coding. | Author |
-| 3 | Should **HaulOut** stay Tier A (continuity is core to ForgeTrail) or drop to B (userscript friction)? | No | Reviewer |
-| 4 | Should **xFacts** be suggested for every shipped `product`, or only when the project is itself a tool/skill/MCP? | No | Reviewer |
-| 5 | Any Tier A tool that should be demoted, or Tier B promoted, before M1 is written? | Yes for the mapping table | Reviewer |
-| 6 | Mention **DictaWhisper** at all in ForgeTrail, or keep voice journals out until someone asks? | No | Reviewer |
+| # | Question | Blocking? | Owner | Resolution |
+| - | -------- | --------- | ----- | ---------- |
+| 1 | LocalSlip vs old CLI name | no | Author | LocalSlip only. Port script migrated. |
+| 2 | Dedicated MCP tool vs footer | no | Author | Both: `getCompanionSuggestions` and a `getPhaseGuidance` footer. |
+| 3 | HaulOut tier | no | Author | Tier B. |
+| 4 | xFacts breadth | no | Author | Suggest for shipped products, not only tools/MCP. |
+| 5 | Tier table edits | no | Author | DictaWhisper and Cloudflare DNS promoted to A. |
+| 6 | DictaWhisper | no | Author | Tier A personal companion; intake only after the first message. |
 
 ---
 
-## 10. Decisions (proposed, unlock on review)
+## 10. Decisions (locked 2026-09-11)
 
 **D1.** Companions are suggestions, never dependencies, never phase gates.
 
 **D2.** Situation-triggered offers. No shelf dump at kickoff.
 
-**D3.** One mapping file in `content/` is the agent source of truth. The public shelf is the human catalog and current-version source.
+**D3.** `content/COMPANION_TOOLS.md` plus `content/companion-tools.json` are the agent source of truth. The public shelf is the human catalog and current-version source.
 
 **D4.** FilePress is the default *Markdown site* path (with Wrangler / Cloudflare Pages). It does not replace Default-A for interactive apps.
 
@@ -298,11 +299,17 @@ M1 is the reviewable product. M2–M3 can follow in the same implementation pass
 
 **D7.** ForeBalance and MediaTuna stay out of the lifecycle mapping.
 
+**D8.** Cloudflare is the default DNS (and Pages for static) suggestion when the user has not already named a provider. DigitalOcean remains a valid origin when a server is required.
+
+**D9.** HaulOut is Tier B. DictaWhisper is Tier A as a personal capture companion. xFacts is suggested for shipped products.
+
+**D10.** MCP ships both `getCompanionSuggestions` and a `getPhaseGuidance` footer.
+
 ---
 
 ## Progress (while Partial)
 
-_Leave empty until implementation starts (then move this file to `specs/partial/`)._
+- `2026-09-11:` Review locked (D8–D10). M1–M4 implemented: mapping + JSON, WORKFLOW §1f, intake/Lite/DEPLOYMENT, MCP tool + phase footer, site mention, LocalSlip port script. Remaining: ToolFacts viewer hash refresh if desired; live `pnpm ship` for site copy.
 
 ---
 

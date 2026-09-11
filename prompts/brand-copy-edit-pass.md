@@ -53,3 +53,4 @@ For each filler word found: drop it if the sentence is stronger without it, or r
 - Show a summary table of changes after each pass so the author can review.
 - When in doubt about whether to cut, keep. The author's voice and specificity take priority over brevity.
 - This prompt works on any long-form brand doc, product narrative, or marketing page copy.
+- Optional neighbor: Smell Check and Misemphasis for a second editorial pass. Not required. Do not install unless the user asked.

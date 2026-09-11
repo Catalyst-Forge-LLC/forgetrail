@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-09-11 | **Companion tools:** situation-triggered sibling suggestions (FilePress, LocalSlip/LocalHelm, practice skills, xFacts, DictaWhisper, Cloudflare DNS default). Mapping + JSON, WORKFLOW §1f, intake/Lite v2.0.1/DEPLOYMENT, MCP `getCompanionSuggestions` + phase-guidance footer, site About/compare mention. Port script uses LocalSlip. |
 | 2026-08-24 | **npm name hold:** first unscoped publish is `0.0.0` from a throwaway stub folder, not the app repo. Cursor rule `npm-name-hold.mdc`; CONTEXT_PROMPT pattern + anti-pattern; `docs/NPM.md` pointer. Source: LaunchCampaign. |
 | 2026-08-23 | **Positioning spine / theme-lock methodology (Exec Foundry origin-story passes):** BRAND_AND_PRODUCT gains *Positioning spine (theme lock)* (person-transformation ban for expert audiences, assure-not-guarantee, signature fast-read check, reality-check-as-terrain, staccato/vague-noun register rules) and *Long-form origin narrative (constraints file)*. CONTEXT_PROMPT pattern + anti-pattern. New `content/cursor-rules/writing-voice.mdc` template. Propagate-prompt trigger row (both copies). |
 | 2026-08-23 | **Site slim:** FilePress pages match ollanet (home + Try + About). Detail lives in `/docs`. How it works stays as a stub. Live `/docs` still needs `pnpm ship`. |
@@ -54,6 +55,10 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-09-11 — Companion tools
+
+Situation-triggered suggestions for Catalyst Forge siblings. Mapping: `content/COMPANION_TOOLS.md` + `content/companion-tools.json`. WORKFLOW §1f. Intake adds registrar/DNS/git/hosting and optional workstation/voice-journal questions. Lite v2.0.1 thin pointers. DEPLOYMENT defaults to Cloudflare DNS/Pages when unspecified. MCP: `getCompanionSuggestions` plus a `getPhaseGuidance` footer. Site About/compare mention the shelf below Try. `scripts/ensure-lease.mjs` calls LocalSlip. Spec: `specs/partial/companion-tools.md`.
 
 ### 2026-08-24 — npm name hold (LaunchCampaign)
 

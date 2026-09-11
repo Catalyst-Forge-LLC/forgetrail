@@ -7,7 +7,7 @@ alwaysApply: true
 
 The **user always publishes**. Never run `npm publish`, `pnpm publish`, or `yarn npm publish`.
 
-**Exception:** LocalHelm / LocalBerth `auth` can put a granular automation token in the **user** `~/.npmrc` (never in a repo). Only those tools may publish, and only when the operator asked (`localhelm publish <id> --apply`). A raw `npm publish` from any other repo is expected to fail (passkey / 2FA) — do not try it, and never print or copy the token.
+**Exception:** LocalHelm `auth` can put a granular automation token in the **user** `~/.npmrc` (never in a repo). Only those tools may publish, and only when the operator asked (`localhelm publish <id> --apply`). A raw `npm publish` from any other repo is expected to fail (passkey / 2FA) — do not try it, and never print or copy the token.
 
 When they want to grab an unscoped name before the package is real:
 

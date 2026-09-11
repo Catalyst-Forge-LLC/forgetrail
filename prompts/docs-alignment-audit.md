@@ -106,3 +106,4 @@ End with a summary:
 - Run this audit during Phase 7 (Hardening) and before every release.
 - After running, fix all FAIL items first (incorrect information), then STALE items (outdated but not wrong).
 - This prompt is framework-agnostic — adapt the specific file checks to your project's actual doc structure.
+- Optional neighbor: Detangler for broken references and journeys that no longer meet. Not required. Do not install unless the user asked.

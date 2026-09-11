@@ -13,7 +13,7 @@ pnpm dev
 pnpm build
 ```
 
-If [LocalBerth](https://www.npmjs.com/package/localberth) is installed, this site stays on **5195** as `forgetrail-site`.
+If [LocalSlip](https://localslip.dev) is installed, this site stays on **5195** as `forgetrail-site`.
 
 Optional: edit `theme.css` next to `filepress.config.ts`.
 

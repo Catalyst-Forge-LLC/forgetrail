@@ -26,7 +26,15 @@ tools:
       processes: false
     idempotent: true
   - name: getPhaseGuidance
-    purpose: "Return methodology guidance for a development phase (1-7)"
+    purpose: "Return methodology guidance for a development phase (1-7), including an optional companions footer"
+    side_effects: none
+    reach:
+      filesystem: none
+      network: none
+      processes: false
+    idempotent: true
+  - name: getCompanionSuggestions
+    purpose: "Return optional companion tools for a phase or situation (does not install anything)"
     side_effects: none
     reach:
       filesystem: none
@@ -170,7 +178,7 @@ tools:
       processes: false
     idempotent: true
   - name: getGreenfieldIntakePrompt
-    purpose: "Return Phase 1 structured questions about exports, tenancy, and delivery gaps"
+    purpose: "Return Phase 1 structured questions about exports, tenancy, hosting, and delivery gaps"
     side_effects: none
     reach:
       filesystem: none
@@ -293,12 +301,13 @@ None required.
 | Telemetry | none |
 | Destinations | (none) |
 
-## Tools (30)
+## Tools (31)
 
 | Tool | Side effects | Filesystem | Network | Processes | Idempotent |
 |---|---|---|---|---|---|
 | `ping` | none | none | none | no | yes |
 | `getPhaseGuidance` | none | none | none | no | yes |
+| `getCompanionSuggestions` | none | none | none | no | yes |
 | `searchLessons` | none | none | none | no | yes |
 | `getTemplate` | none | none | none | no | yes |
 | `runAudit` | none | none | none | no | yes |
@@ -333,7 +342,8 @@ None required.
 | Tool | Purpose |
 |---|---|
 | `ping` | Connectivity check: returns ok, package version, FORGETRAIL_ROOT, and whether WORKFLOW.md was found |
-| `getPhaseGuidance` | Return methodology guidance for a development phase (1-7) |
+| `getPhaseGuidance` | Return methodology guidance for a development phase (1-7), including an optional companions footer |
+| `getCompanionSuggestions` | Return optional companion tools for a phase or situation (does not install anything) |
 | `searchLessons` | Search the ForgeTrail lesson database by keyword |
 | `getTemplate` | Return a ForgeTrail document template from docs/*.md |
 | `runAudit` | Return a structured audit prompt for the current project (does not scan the workspace itself). Following that prompt is a later host or agent step. |
@@ -351,7 +361,7 @@ None required.
 | `getForgeTrailCursorLessonsRules` | Return Cursor rules for lessons gate and MCP lessons usage |
 | `getScaffoldInstallParams` | Return JSON defaults for scripted Phase-2 setup |
 | `getGenesisSpecPrompt` | Return a copy-paste prompt for producing docs/GENESIS.md in an external LLM |
-| `getGreenfieldIntakePrompt` | Return Phase 1 structured questions about exports, tenancy, and delivery gaps |
+| `getGreenfieldIntakePrompt` | Return Phase 1 structured questions about exports, tenancy, hosting, and delivery gaps |
 | `getResumeSessionInstructions` | Return instructions for continuing work in a later MCP-only session |
 | `getInitialWorkflowTracking` | Return starter .forgetrail/workflow_tracking.json for a new repo |
 | `getPostBootstrapUserMessage` | Return canonical short first-reply guidance after bootstrap files are written |

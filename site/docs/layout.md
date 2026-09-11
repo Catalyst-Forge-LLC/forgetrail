@@ -44,3 +44,4 @@ Doc templates use `[BRACKETED]` placeholders. MCP serves **shell** or **full** m
 - **MCP / CLI:** Node.js 20+.
 - **Lite greenfield (when the agent scaffolds):** Git, Node.js 20+, npm, pnpm (Lite §4.1).
 - **gstack (optional):** [gstack](https://github.com/garrytan/gstack) for sprint skills inside ForgeTrail phases.
+- **Companions (optional):** [Catalyst Forge tools](https://catalystforge.com/tools/) suggested at the moment of need (FilePress, LocalSlip, LocalHelm, practice skills). Never required to start.

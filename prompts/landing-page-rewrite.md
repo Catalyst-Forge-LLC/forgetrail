@@ -59,5 +59,5 @@ The landing page is **not** a feature walkthrough or a tutorial. It answers thre
 
 - This prompt works best when the brand doc is already strong. If the brand doc is thin, strengthen it first (see `brand-copy-edit-pass.md`).
 - The prompt focuses on content strategy and copy, not HTML/CSS structure. Apply to whatever template or framework you're using.
-- Run once for a full rewrite, then use the brand copy edit pass for ongoing refinement.
+- Run once for a full rewrite, then use the brand copy edit pass for ongoing refinement. Optional neighbor: Smell Check / Misemphasis on the rewritten copy. Not required.
 - If the landing page has a pricing section, leave it mostly unchanged — pricing copy follows different rules.

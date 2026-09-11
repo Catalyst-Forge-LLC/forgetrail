@@ -8,7 +8,7 @@ The user is **continuing** a project that uses ForgeTrail via the **MCP server**
 
 1. Read **`.forgetrail/workflow_tracking.json`** — current phase, exit criteria, notes, decisions.
 2. If **`currentPhase`** is **`1-architecture`**, read **`docs/PHASE_1_BRIEF.md`** and continue planning toward a locked brief. Otherwise read **`CONTEXT_PROMPT.md`**. If Phase 2+ but CONTEXT is missing and **`PHASE_1_BRIEF.md`** exists, **merge the brief into CONTEXT** first (see CONTEXT_PROMPT template).
-3. Call **`getPhaseGuidance`** for the phase matching `.forgetrail/workflow_tracking.json` → `currentPhase` (e.g. `4` for feature iteration, or keyword `features`).
+3. Call **`getPhaseGuidance`** for the phase matching `.forgetrail/workflow_tracking.json` → `currentPhase` (e.g. `4` for feature iteration, or keyword `features`). When a companion trigger is true, call **`getCompanionSuggestions`** for that phase or situation. Do not install unless the user asked.
 4. If you need checklist context, call **`getChecklist`** (e.g. `every-session` or `full`).
 5. If unsure how to update tracking fields, call **`getTrackingSchema`**.
 

@@ -31,6 +31,7 @@ From a clone instead: `pnpm run mcp:build`, then `forgetrail mcp cursor-config`.
 - Kickoff: *Call `getNewProjectKickoff` and set up the project.*
 - Resume: *Call `getResumeSessionInstructions`.*
 - Existing Genesis: call `ingestPlanArtifact` before locking Phase 1.
+- Companions: call `getCompanionSuggestions` when a job matches. Never required.
 
 The app repo keeps **your code**, **your docs**, and **`.forgetrail/workflow_tracking.json`**.
 

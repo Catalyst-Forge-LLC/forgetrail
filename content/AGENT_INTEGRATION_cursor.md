@@ -6,7 +6,7 @@ Cursor agents (Composer, Agent mode) map well to ForgeTrail via MCP, **Cursor ru
 
 | Cursor capability | ForgeTrail use |
 |-------------------|--------------|
-| ForgeTrail MCP tools | Methodology delivery — `getNewProjectKickoff`, `getPhaseGuidance`, `runAudit`, `validateTracking`, etc. |
+| ForgeTrail MCP tools | Methodology delivery — `getNewProjectKickoff`, `getPhaseGuidance`, `getCompanionSuggestions`, `runAudit`, `validateTracking`, etc. |
 | `.cursor/rules/*.mdc` | Persistent phase + lessons discipline from kickoff (`forgetrail-phase-status`, `forgetrail-lessons-gate`, `forgetrail-lessons-mcp`) |
 | Plan mode (`SwitchMode` / plan) | Phase 1 architecture — explore before edits; export to `PHASE_1_BRIEF.md` on approval (`getPlanModePatterns`) |
 | Task / subagents (`explore`, `generalPurpose`, `shell`) | Parallel audits (Phase 7), research (Phase 4), spikes (Phase 5) — call `suggestSubagentDecomposition` first |
@@ -47,6 +47,8 @@ After subagent or feature work:
 ## Skills alternative
 
 Cursor users typically rely on **rules** from kickoff rather than Grok-style skills. Optional: add **`getForgeTrailSkill`** content as a global Cursor skill if your workflow supports it.
+
+Optional house neighbors (one per current job, never required): Smell Check, Detangler, Misemphasis, Cold-eye, TemperPass, Gap Last. Call **`getCompanionSuggestions`** when a trigger matches. Do not install the set.
 
 ## MCP setup
 

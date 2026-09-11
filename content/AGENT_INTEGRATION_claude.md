@@ -6,7 +6,7 @@ Claude-based coding agents integrate with ForgeTrail through MCP, extended plann
 
 | Capability | ForgeTrail use |
 |------------|--------------|
-| ForgeTrail MCP | `getNewProjectKickoff`, `getPhaseGuidance`, `runAudit`, `searchLessons`, `validateTracking` |
+| ForgeTrail MCP | `getNewProjectKickoff`, `getPhaseGuidance`, `getCompanionSuggestions`, `runAudit`, `searchLessons`, `validateTracking` |
 | Extended planning / "plan before code" | Phase 1 — produce a reviewable plan artifact; lock `PHASE_1_BRIEF.md` before scaffolding (`getPlanModePatterns`) |
 | gstack slash commands (optional) | Sprint execution inside phases — see WORKFLOW §1b; persist outcomes in tracking |
 | Subagents / agent teams (when available) | Parallel audits and research — `suggestSubagentDecomposition` |
@@ -28,6 +28,8 @@ getResumeSessionInstructions → read tracking + CONTEXT_PROMPT → continue cur
 ## gstack + ForgeTrail
 
 If [gstack](https://github.com/garrytan/gstack) is installed, use WORKFLOW §1b: gstack for inner-loop build/review/QA/ship; ForgeTrail for phase state and durable docs. After every gstack sprint, update tracking.
+
+Optional house neighbors (one per current job, never required): Smell Check, Detangler, Misemphasis, Cold-eye, TemperPass, Gap Last. Call **`getCompanionSuggestions`** when a trigger matches.
 
 ## Subagents
 

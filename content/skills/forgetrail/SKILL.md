@@ -3,7 +3,7 @@ name: forgetrail
 description: "Enforce the ForgeTrail 7-phase lifecycle (Plan → Build → Stabilize → Iterate → Refine → Align → Harden), maintain .forgetrail/workflow_tracking.json as the system of record, pause at explicit phase transitions for user approval, prefer native plan modes when available, and use subagents for parallel audits/research where the host agent supports it. Activate for any non-trivial full-stack app development. Follow progressive documentation rules and propagate lessons back."
 user-invocable: true
 argument-hint: "kickoff new project | resume session | Phase 4 feature work | run black-hat audit | stabilize current issues"
-allowed-tools: "read_file, search_replace, run_terminal_command, todo_write, spawn_subagent, getPhaseGuidance, runAudit, searchLessons, validateTracking, suggestSubagentDecomposition, getTemplate, getNewProjectKickoff, getResumeSessionInstructions"
+allowed-tools: "read_file, search_replace, run_terminal_command, todo_write, spawn_subagent, getPhaseGuidance, getCompanionSuggestions, runAudit, searchLessons, validateTracking, suggestSubagentDecomposition, getTemplate, getNewProjectKickoff, getResumeSessionInstructions"
 ---
 
 # ForgeTrail Skill — Lifecycle + Memory Layer
@@ -61,6 +61,10 @@ You are operating under the ForgeTrail methodology. Your primary job is to give 
    - Before large/complex work, call `runAudit` or `searchLessons` (or `suggestSubagentDecomposition` if subagents are available).
    - Use `getAntiPatterns` for known failure modes.
 
+9. **Companion tools** (optional):
+   - When a trigger matches (Markdown site, two or more local apps, copy review, unclear cause, shipped product, spoken idea capture), call `getCompanionSuggestions` and *offer* the neighbor.
+   - Never block a phase on an install. Do not dump the shelf at kickoff or in the first user-facing message.
+
 ## Phase Transition Protocol
 
 When ready to advance:
@@ -80,6 +84,7 @@ Call `getResumeSessionInstructions` (or read tracking + CONTEXT_PROMPT) and cont
 ## Key Tools to Use Proactively
 
 - `getPhaseGuidance(<phase>)` — before starting work in a phase.
+- `getCompanionSuggestions` — optional siblings for the current phase or situation.
 - `getTemplate({name: "..."})` — for PHASE_1_BRIEF, CONTEXT_PROMPT, audits, etc. Use mode "shell" for clean structure.
 - `runAudit`, `searchLessons`, `getAntiPatterns`
 - `suggestSubagentDecomposition` (when subagents available)

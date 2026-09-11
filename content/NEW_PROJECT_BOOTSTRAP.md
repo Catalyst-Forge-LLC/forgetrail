@@ -61,7 +61,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 2. **Initialize git if needed** (see **Greenfield git** above): after bootstrap files exist, `git init -b main` when `git rev-parse --is-inside-work-tree` fails; minimal `.gitignore`; optional first commit. Do not ask the user to run `git init`.
 3. Call **`getProgressiveDocSchedule`** and keep it in mind for every phase transition.
 4. Call **`getChecklist`** with section `before-session-1` — complete those items with the user (problem statement, stack, assets, hero flow).
-5. Call **`getGreenfieldIntakePrompt`** — product/delivery questions: exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier (even if “none yet”), and hero flow. Capture answers in **`PHASE_1_BRIEF.md`** and **`decisions[]`**. If using native plan mode, include these questions in the plan context (`getPlanModePatterns`).
+5. Call **`getGreenfieldIntakePrompt`** — product/delivery questions: exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier (even if “none yet”), hero flow, and registrar/DNS/git/hosting if still open. Capture answers in **`PHASE_1_BRIEF.md`** and **`decisions[]`**. If using native plan mode, include these questions in the plan context (`getPlanModePatterns`). When a companion trigger is true later, call **`getCompanionSuggestions`**. Do not name companions in the first user-facing message.
 6. Call **`getTrackingSchema`** — you will maintain **`.forgetrail/workflow_tracking.json`** accordingly. Optionally call **`getAgentIntegrationGuide`** for your host (`grok`, `cursor`, `claude`, `generic`) and **`getForgeTrailSkill`** if the agent supports persistent skills.
 7. Call **`getPhaseGuidance`** with phase `1` (architecture). Summarize understanding and propose structure, data model, integrations, and v1 scope **before** writing app code.
 8. During Phase 1, create **`docs/PHASE_1_BRIEF.md`** from **`getTemplate({ name: "PHASE_1_BRIEF" })`**, fill every section, and **lock** it; mirror major decisions in **`.forgetrail/workflow_tracking.json`**.
@@ -80,7 +80,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 | **Which docs in which phase** | **`getProgressiveDocSchedule`** (WORKFLOW §1a) |
 | Phase playbooks, entry/exit criteria, patterns | `getPhaseGuidance` (phases 1–7 or keywords like `scaffolding`, `hardening`) |
 | Milestone checklists | `getChecklist` (`before-session-1`, `session-1`, `session-2`, `full`, …) |
-| **Exports, multi-tenant, hybrid spec, compliance, hero flow** (Phase 1) | **`getGreenfieldIntakePrompt`** — use with `before-session-1` so delivery shape is captured early |
+| **Exports, multi-tenant, hybrid spec, compliance, hero flow, hosting** (Phase 1) | **`getGreenfieldIntakePrompt`** — use with `before-session-1` so delivery shape is captured early |
 | How to update tracking | `getTrackingSchema` |
 | Doc structure vs full lessons | `getTemplate` — `mode: "shell"` for placeholders/headings only (💡📝🔧 blockquotes stripped from single-source `docs/*.md`); `mode: "full"` when you need every example and lesson. Use `name: "list"` to discover template names |
 | Security, pre-launch, marketing, docs audits | `runAudit` — use `type: "list"` for available prompts |
@@ -90,6 +90,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 | **Agent-specific integration** (Grok, Cursor, Claude) | **`getAgentIntegrationGuide`** — primitive mappings and session openers |
 | **Installable forgetrail skill** (Grok etc.) | **`getForgeTrailSkill`** — copy to host skill directory |
 | **Tracking file health check** | **`validateTracking`** — after substantive work or phase transitions |
+| **Optional companion tools** (FilePress, LocalSlip, skills, xFacts, …) | **`getCompanionSuggestions`** — `phase` or `situation`; never required; not in the first user-facing message (WORKFLOW §1f) |
 | **Parallel subagent recommendations** | **`suggestSubagentDecomposition`** — before spawning audits/research (WORKFLOW §1c) |
 | **Starter tracking file** for a greenfield repo | `getInitialWorkflowTracking` — write the returned JSON to **`.forgetrail/workflow_tracking.json`** |
 | **First reply to the human** after tracking exists (short; no tool dump) | **`getPostBootstrapUserMessage`** |

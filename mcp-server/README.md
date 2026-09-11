@@ -46,7 +46,7 @@ If the app already has **`docs/GENESIS.md`**, after MCP is connected call **`ing
 | `getForgeTrailLite` | **Portable Lite protocol:** full `FORGETRAIL_LITE.md` for drop-in / paste bootstrap (no MCP required in the app repo) |
 | `getForgeTrailLiteUpdates` | Starter `.forgetrail/FORGETRAIL_LITE_UPDATES.md` for local Lite protocol feedback (§1.6) |
 | `getGenesisSpecPrompt` | **Pre-Phase-1:** copy-paste prompt for an external LLM chat; save as **`docs/GENESIS.md`**. Humans: **TRY_FORGETRAIL.md**. Feed into `ingestPlanArtifact` |
-| `getGreenfieldIntakePrompt` | **Phase 1:** exports (PDF/DOCX/PPTX, etc.), tenancy, hybrid vs full spec, compliance, hero flow — complements `getChecklist(before-session-1)` |
+| `getGreenfieldIntakePrompt` | **Phase 1:** exports (PDF/DOCX/PPTX, etc.), tenancy, hybrid vs full spec, compliance, hero flow, registrar/DNS/git/hosting — complements `getChecklist(before-session-1)` |
 | `getForgeTrailCursorPhaseRule` | **Cursor:** optional `.cursor/rules/forgetrail-phase-status.mdc` — agents show phase / next actions from `.forgetrail/workflow_tracking.json` |
 | `getForgeTrailCursorLessonsRules` | **Cursor:** `.cursor/rules/forgetrail-lessons-gate.mdc` + `forgetrail-lessons-mcp.mdc` — when to call `getAntiPatterns` / `searchLessons` before large work (also bundled in `getNewProjectKickoff`) |
 | `getScaffoldInstallParams` | **Phase 2:** PocketBase (**latest** unless pinned), one-click launchers, **isolated** `test:pocketbase` / `setup:ollama` / `test:ollama` — **SYSTEM_HEALTH_CHECKS.md**, `scripts/*.mjs` |
@@ -54,7 +54,8 @@ If the app already has **`docs/GENESIS.md`**, after MCP is connected call **`ing
 | `getPostBootstrapUserMessage` | **After tracking exists:** how the first reply to the user should read—short; no tool/JSON dump |
 | `getUserReplyFormat` | **Lists and choices:** numbers vs bullets vs letters when presenting options (matches Cursor `forgetrail-phase-status.mdc`) |
 | `getResumeSessionInstructions` | **MCP-first resume:** session-start steps when ForgeTrail is only on MCP |
-| `getPhaseGuidance` | Phase-specific guidance (1-7): entry/exit criteria, playbook, prompt patterns |
+| `getPhaseGuidance` | Phase-specific guidance (1-7): entry/exit criteria, playbook, prompt patterns, optional companions footer |
+| `getCompanionSuggestions` | Optional sibling tools for a phase or situation (FilePress, LocalSlip, skills, xFacts). Never required |
 | `searchLessons` | Keyword search across the full lesson database (71+ lessons, anti-patterns, insights) |
 | `getTemplate` | Doc template from `docs/*.md` (includes **`SPEC_FEATURE_TEMPLATE`**, `PHASE_1_BRIEF`, …). `mode: "shell"` strips 💡/📝/🔧 blockquote callouts. Default: `FORGETRAIL_TEMPLATE_DEFAULT_MODE` or `shell` |
 | `runAudit` | Get a structured audit prompt (security, pre-launch, marketing, competitor, docs, copy) |
@@ -154,6 +155,8 @@ If your ForgeTrail repo lives somewhere other than the parent of `mcp-server/`, 
 ## gstack compatibility
 
 ForgeTrail works alongside [gstack](https://github.com/garrytan/gstack) (Garry Tan's Claude Code slash-command skills). ForgeTrail provides the lifecycle methodology and project memory; gstack provides sprint execution, browser testing, and deploy automation. The bootstrap and resume tools include gstack integration guidance when applicable. See WORKFLOW.md §1b for the full integration guide.
+
+Optional Catalyst Forge companions (FilePress, LocalSlip, LocalHelm, practice skills, xFacts) are suggested at the moment of need via `getCompanionSuggestions`. See WORKFLOW.md §1f. None are required.
 
 ## Development
 

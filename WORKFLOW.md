@@ -261,6 +261,36 @@ ForgeTrail's tracking schema collects `gotchas[]` and `decisions[]` all project 
 
 ---
 
+## 1f. Companion tools (optional)
+
+Catalyst Forge siblings (and Cloudflare as a default DNS/hosting suggestion) are **complementary**, same model as gstack (§1b) and subagents (§1c):
+
+- **ForgeTrail** = lifecycle + project memory.
+- **Companions** = one bounded job (publish Markdown, named ports, editorial review, labels, backup, voice journal).
+
+They are **never required**. Decline is success. Do not dump the shelf at kickoff. Suggest when a trigger is true; persist outcomes in `.forgetrail/workflow_tracking.json`.
+
+**Agents:** `getCompanionSuggestions` (`phase` or `situation`) plus the optional footer on `getPhaseGuidance`. Mapping: `content/COMPANION_TOOLS.md`. Shelf: [catalystforge.com/tools](https://catalystforge.com/tools/).
+
+**Triggers (short):**
+
+- Markdown site or docs/marketing `site/` → FilePress + Cloudflare Pages / Wrangler
+- Registrar / DNS / hosting still open → Cloudflare DNS (and Pages for static); droplet only if a server is required
+- Two or more local apps → LocalSlip + LocalHelm
+- Local Ollama → ollanet; VRAM/context → Finetuna
+- Copy / README / landing → Smell Check, Misemphasis
+- Docs or journeys no longer meet → Detangler
+- Cause not earned → Gap Last
+- Hard-to-undo work → TemperPass
+- Pre-launch newcomer check → Cold-eye
+- Product going public or handed off → xFacts
+- Unpushed work you cannot lose → IngotVault
+- Spoken idea capture → DictaWhisper
+
+FilePress publishes Markdown. It does not replace Default-A for an interactive app. LocalSlip/LocalHelm are for two or more local apps, not a first single project.
+
+---
+
 ## 2. Per-Phase Playbook
 
 ### Phase 1: Architecture + Planning
@@ -281,6 +311,8 @@ ForgeTrail's tracking schema collects `gotchas[]` and `decisions[]` all project 
 - **If your agent supports a native plan mode** (Grok `/plan`, Cursor Plan mode, extended plan-before-code): use it for all Phase 1 work. Include **`getGreenfieldIntakePrompt`** questions in the plan context. Do **not** write app code or heavy docs until the user approves the plan. On approval, map the plan into **`PHASE_1_BRIEF.md`** (`getTemplate`) and log commitments in **`decisions[]`**. See **`getPlanModePatterns`** (MCP) or WORKFLOW §1c for handoff details.
 - **Classify the project archetype** (`product` | `internal-tool` | `one-shot`) per **§1d** and prune the tracking template's exit criteria to match. Record it in **`PHASE_1_BRIEF.md`**, **`decisions[]`**, and **`project.archetype`** in the tracking file. Default to `product` when unsure.
 - **If this is a web app**, answer the state-persistence sub-question **before** locking PocketBase + auth: *"Does any state need to outlive this browser — accounts, cross-device sync, shared data — or is state per-user local?"* If local-only → drop PocketBase + auth, target `adapter-static`, persist via `localStorage` / `IndexedDB`. If persistent → full backend stack. Record the answer in **`PHASE_1_BRIEF.md` §4 (`State persistence:`)** and **`decisions[]`**. See **ForgeTrail Lite** §7 (A-local vs A-persistent) and **GREENFIELD_INTAKE.md** §7.
+- **Hosting / DNS / git (if still open):** ask registrar, DNS, git host, and production host. If the user has not already named providers, default to **GitHub** + **Cloudflare DNS** (free plan) and **Cloudflare Pages** for a static site. A DigitalOcean (or similar) origin stays valid when the app needs a server. Record in the brief and `decisions[]`.
+- **Optional companions** (never required): TemperPass before hard-to-undo locks; FilePress if the product is a Markdown site; DictaWhisper if they capture ideas by voice; LocalSlip/LocalHelm if this machine already runs other local apps. Call **`getCompanionSuggestions`**. See §1f.
 - **If any content is produced by an LLM** (not hand-authored, not from a conventional non-LLM API), pick one of three content-generation patterns **in Phase 1** — it drives deploy model, cost, and secret management:
   - **Runtime LLM API** — server route calls the provider per request; needs rate-limit + streaming UX. **Cloud** (OpenAI, Anthropic, …): API keys in `.env`. **Local Ollama:** `OLLAMA_BASE_URL` + `OLLAMA_MODEL`; Phase 2 **`setup:ollama`** / **`test:ollama`** (see **SYSTEM_HEALTH_CHECKS.md**, Lite §4.8) — default **Granite 4.1** / **Gemma 3**, not thinking models unless required.
   - **Build-time LLM generation** — `scripts/seed.ts` calls the provider once, writes JSON into `data/`, commits it; no runtime cost; pairs well with A-local + `adapter-static`. Seed may use cloud APIs or the same Ollama env as local dev.
@@ -334,6 +366,8 @@ ForgeTrail's tracking schema collects `gotchas[]` and `decisions[]` all project 
 - You can see your data on screen
 - The core action (scrape, create, view) completes without errors
 
+**Optional companions:** LocalSlip/LocalHelm if this machine already runs other local apps or ports collide; ollanet/Finetuna if the brief chose local Ollama; FilePress only for a Markdown `site/`, not as the app. See §1f.
+
 **Example prompt (this worked):**
 
 > "Let's do Playwright, and Claude, and option C for Word doc. Yes, this is a great folder structure! Love the quick filters. And definitely should import the current jobs. Make it so Claude!"
@@ -366,6 +400,8 @@ ForgeTrail's tracking schema collects `gotchas[]` and `decisions[]` all project 
 - `CONTEXT_PROMPT.md` reflects what you learned (not still the Phase 2 draft)
 
 **Anti-pattern:** Reporting "it doesn't work" without the error message. The fix: always include the exact output.
+
+**Optional companion:** when the cause is not yet earned, offer **Gap Last** (`getCompanionSuggestions` situation `unclear-cause`). Log remaining questions in `gotchas[]`.
 
 ### Phase 4: Feature Iteration + Value Delivery
 
@@ -470,6 +506,8 @@ ForgeTrail's tracking schema collects `gotchas[]` and `decisions[]` all project 
 
 > "Time to do another TODO review. What else might you suggest, or prioritize or deprecate? Also consider the BRAND_AND_PRODUCT.md file."
 
+**Optional companions:** Smell Check and Misemphasis for copy; Detangler if docs or journeys no longer meet (`getCompanionSuggestions` phase `6`).
+
 ### Phase 7: Hardening + Production Prep
 
 **What to provide Claude:**
@@ -508,6 +546,8 @@ ForgeTrail's tracking schema collects `gotchas[]` and `decisions[]` all project 
 - Payment flow works end to end (if applicable)
 - No silent failures in core workflows
 - Docs alignment audit passed (MCP `runAudit({ type: "docs-alignment" })` or `_forgetrail/prompts/docs-alignment-audit.md`)
+
+**Optional companions:** Cold-eye for newcomer readiness; xFacts label when the product goes public or changes hands; FilePress + Cloudflare Pages for a Markdown or docs site; IngotVault before a rewrite. See §1f.
 
 ---
 

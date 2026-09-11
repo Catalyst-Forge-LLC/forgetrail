@@ -60,18 +60,21 @@ _Organized by category. Reference specific CODE_QUALITY.md findings where applic
 
 ### Target Setup
 
+If the project has **not** already locked providers: **GitHub** for git, **Cloudflare** for DNS (free plan), **Cloudflare Pages + Wrangler** for a static site (FilePress or `adapter-static`). Use a **DigitalOcean** (or similar) origin only when the app needs a server, still behind Cloudflare DNS. Do not migrate a host the operator already chose. forgetrail.dev is the FilePress + Pages worked example.
+
 | Component  | Choice                             | Spec                    | Monthly Cost |
 | ---------- | ---------------------------------- | ----------------------- | ------------ |
-| Hosting    | [e.g., DigitalOcean]               | [e.g., 1 vCPU, 2GB RAM] | $[X]         |
-| Database   | [e.g., PocketBase on same droplet] | [included]              | $0           |
-| Domain     | [e.g., Cloudflare]                 | [domain name]           | $[X]/yr      |
-| SSL        | [e.g., Caddy auto-HTTPS]           | [included]              | $0           |
+| Hosting    | [static: Cloudflare Pages + Wrangler; server: e.g. DigitalOcean behind Cloudflare DNS] | [Pages project, or 1 vCPU / 2GB] | $[0 or X] |
+| Site / docs | [FilePress `site/` if Markdown; else app `adapter-static`] | [build to `./build/`] | $0 |
+| Database   | [e.g., PocketBase on same droplet; none if A-local] | [included]              | $0           |
+| Domain     | [Cloudflare DNS unless already specified] | [domain name]           | $[X]/yr      |
+| SSL        | [Cloudflare Universal SSL; or Caddy on origin] | [included]              | $0           |
 | CI/CD      | [e.g., GitHub Actions]             | [free tier]             | $0           |
 | Monitoring | [e.g., UptimeRobot]                | [free tier]             | $0           |
 
 ### DNS delegation order (registrar + Cloudflare + origin)
 
-Typical stack: domain at **Namecheap** (or any registrar), **Cloudflare** for DNS and edge TLS, **DigitalOcean** (or similar) for the origin.
+Typical stack: domain at **Namecheap** (or any registrar), **Cloudflare** for DNS and edge TLS. Origin is **Cloudflare Pages** for static, or **DigitalOcean** (or similar) when the app needs a server.
 
 1. **Cloudflare first:** Add the domain as a **zone** in Cloudflare. Cloudflare assigns **two nameservers** (e.g. `*.ns.cloudflare.com`). You need those before changing the registrar.
 2. **In Cloudflare DNS:** Point `A`/`CNAME` records at the origin server’s IP or hostname (pre-fill before delegation so cutover is clean).

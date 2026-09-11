@@ -19,6 +19,7 @@ instructions_reach:
 tools_referenced:
   - https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/mcp-server/TOOL_FACTS.md
   - getPhaseGuidance
+  - getCompanionSuggestions
   - runAudit
   - searchLessons
   - validateTracking

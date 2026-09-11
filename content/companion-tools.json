@@ -1,0 +1,256 @@
+{
+  "shelf": "https://catalystforge.com/tools/",
+  "rules": [
+    "Companions are optional. Decline is success. Never block a phase on an install.",
+    "Suggest at the moment of need. Do not dump the shelf at kickoff or in the first user-facing message.",
+    "Do not install, enroll, or publish unless the user asked.",
+    "After a companion run that matters, persist the outcome in .forgetrail/workflow_tracking.json and the matching progressive doc.",
+    "Do not mention the mapping file, spec paths, or MCP tool names in human-facing offers."
+  ],
+  "situations": [
+    {
+      "id": "markdown-site",
+      "tier": "A",
+      "phases": ["1", "2", "7"],
+      "trigger": "The project needs a Markdown site (docs, changelog, writing, marketing) or a one-shot event page.",
+      "tools": [
+        {
+          "name": "FilePress",
+          "homepage": "https://getfilepress.com",
+          "offer": "FilePress turns a Markdown folder into a static site. Cloudflare Pages with Wrangler is a free publish path."
+        }
+      ]
+    },
+    {
+      "id": "static-publish",
+      "tier": "A",
+      "phases": ["1", "7"],
+      "trigger": "An interactive app still needs a marketing or docs site beside the product.",
+      "tools": [
+        {
+          "name": "FilePress",
+          "homepage": "https://getfilepress.com",
+          "offer": "Keep the app on its own stack. Add a site/ folder with FilePress for docs and marketing, the same pattern forgetrail.dev uses."
+        }
+      ]
+    },
+    {
+      "id": "dns-hosting",
+      "tier": "A",
+      "phases": ["1", "7"],
+      "trigger": "Registrar, DNS, git host, or production hosting is still open, and the user has not already named a provider.",
+      "tools": [
+        {
+          "name": "Cloudflare",
+          "homepage": "https://www.cloudflare.com/",
+          "offer": "Cloudflare is the default DNS path when no provider is already chosen. The free plan covers DNS, edge TLS, and Cloudflare Pages for a static deploy. A DigitalOcean droplet (or similar) remains a fine origin when the app needs a server."
+        }
+      ]
+    },
+    {
+      "id": "multi-app-local",
+      "tier": "A",
+      "phases": ["1", "2"],
+      "trigger": "This machine already runs, or will run, two or more local apps, or bookmarks hit the wrong process after reboot.",
+      "tools": [
+        {
+          "name": "LocalSlip",
+          "homepage": "https://localslip.dev",
+          "offer": "LocalSlip keeps a named port claim so startup order does not move the app."
+        },
+        {
+          "name": "LocalHelm",
+          "homepage": "https://localhelm.dev",
+          "offer": "LocalHelm shows status across the repos you enroll. Inspection does not publish."
+        }
+      ]
+    },
+    {
+      "id": "local-ollama",
+      "tier": "A",
+      "phases": ["1", "2"],
+      "trigger": "Intake chose local Ollama for runtime or build-time generation.",
+      "tools": [
+        {
+          "name": "ollanet",
+          "homepage": "https://ollanet.dev",
+          "offer": "ollanet finds and aliases Ollama hosts you choose. Keep setup-ollama and test-ollama as the in-repo health scripts."
+        }
+      ]
+    },
+    {
+      "id": "ollama-vram",
+      "tier": "A",
+      "phases": ["2", "3"],
+      "trigger": "Ollama is in use and VRAM, context length, or GPU residency is the actual question.",
+      "tools": [
+        {
+          "name": "Finetuna",
+          "homepage": "https://finetuna.net",
+          "offer": "Finetuna measures a runtime profile (num_ctx, num_batch, num_gpu). It does not train weights."
+        }
+      ]
+    },
+    {
+      "id": "copy-review",
+      "tier": "A",
+      "phases": ["6", "7"],
+      "trigger": "Phase 6 copy, README, landing, changelog, or a brand-copy edit pass.",
+      "tools": [
+        {
+          "name": "Smell Check",
+          "homepage": "https://smellcheck.dev",
+          "offer": "Smell Check reviews prose for wording that has not earned its place. It complements a brand-copy pass; it does not replace it."
+        },
+        {
+          "name": "Misemphasis",
+          "homepage": "https://misemphasis.com",
+          "offer": "Misemphasis finds the other reading a sentence already allows."
+        }
+      ]
+    },
+    {
+      "id": "docs-drift",
+      "tier": "A",
+      "phases": ["4", "5", "6", "7"],
+      "trigger": "Docs, README, or in-app journeys after repeated edits no longer meet.",
+      "tools": [
+        {
+          "name": "Detangler",
+          "homepage": "https://detangler.dev",
+          "offer": "Detangler reports broken references, competing sources of truth, and flows that no longer connect. Review does not silently edit."
+        }
+      ]
+    },
+    {
+      "id": "newcomer-readiness",
+      "tier": "A",
+      "phases": ["7"],
+      "trigger": "Pre-launch or wrap: check whether a newcomer can use what you are about to ship.",
+      "tools": [
+        {
+          "name": "Cold-eye",
+          "homepage": "https://coldeye.dev",
+          "offer": "Cold-eye returns a readiness verdict and ranked gaps. It is not a security audit unless that was the chosen review."
+        }
+      ]
+    },
+    {
+      "id": "hard-to-undo",
+      "tier": "A",
+      "phases": ["1", "5", "7"],
+      "trigger": "Hard-to-undo work: delete data, lock persistence, rewrite history, or lock a stack.",
+      "tools": [
+        {
+          "name": "TemperPass",
+          "homepage": "https://temperpass.dev",
+          "offer": "TemperPass names consequential assumptions before you proceed."
+        }
+      ]
+    },
+    {
+      "id": "unclear-cause",
+      "tier": "A",
+      "phases": ["3"],
+      "trigger": "The failure is real and the cause is not yet earned.",
+      "tools": [
+        {
+          "name": "Gap Last",
+          "homepage": "https://gaplast.dev",
+          "offer": "Gap Last separates observations, constraints, and remaining questions, then proposes hypotheses. A hypothesis is not the established cause. Log leftovers in gotchas[]."
+        }
+      ]
+    },
+    {
+      "id": "ship-label",
+      "tier": "A",
+      "phases": ["4", "7"],
+      "trigger": "A product, tool, MCP server, agent config, or skill is going public or being handed off.",
+      "tools": [
+        {
+          "name": "xFacts",
+          "homepage": "https://xfacts.dev",
+          "offer": "xFacts labels (AppFacts and neighbors) are the house standard for shipped products. Write a label when the product is public or handed off. A validator checks shape, not truth."
+        }
+      ]
+    },
+    {
+      "id": "git-backup",
+      "tier": "A",
+      "phases": ["5", "7"],
+      "trigger": "Unpushed local branches or tags the operator cannot afford to lose, or a rebase/rewrite is about to start.",
+      "tools": [
+        {
+          "name": "IngotVault",
+          "homepage": "https://ingotvault.dev",
+          "offer": "IngotVault mirrors covered local branches and tags to a drive you control. It never modifies origin. It does not replace commit discipline."
+        }
+      ]
+    },
+    {
+      "id": "voice-journal",
+      "tier": "A",
+      "phases": ["1", "4"],
+      "trigger": "The builder captures ideas by voice, or wants a local journal beside the repo trail.",
+      "tools": [
+        {
+          "name": "DictaWhisper",
+          "homepage": "https://dictawhisper.com",
+          "offer": "DictaWhisper is a local voice journal. Audio stays on the computer. It is a personal capture tool, not part of the app stack."
+        }
+      ]
+    },
+    {
+      "id": "chat-export",
+      "tier": "B",
+      "phases": ["1", "7"],
+      "trigger": "A Genesis, plan, or long chat still lives only on a website and the user wants a local file.",
+      "tools": [
+        {
+          "name": "HaulOut",
+          "homepage": "https://haulout.dev",
+          "offer": "HaulOut exports the open thread to local Markdown or JSON. It is a Tampermonkey userscript, not a one-line install. It is not an account-wide archive."
+        }
+      ]
+    },
+    {
+      "id": "briefing",
+      "tier": "B",
+      "phases": ["1"],
+      "trigger": "Phase 1 competitive or market briefing, or a handoff that must start from what is true now.",
+      "tools": [
+        {
+          "name": "EmberDossier",
+          "homepage": "https://emberdossier.com",
+          "offer": "EmberDossier is a briefing format that starts with what is true now. The agent still does the research. as_of is a compile date, not a live feed."
+        }
+      ]
+    },
+    {
+      "id": "cli-desktop",
+      "tier": "B",
+      "phases": ["2", "7"],
+      "trigger": "The product is a Node CLI that non-terminal operators must run.",
+      "tools": [
+        {
+          "name": "gui4cli",
+          "homepage": "https://gui4cli.dev",
+          "offer": "gui4cli opens a desktop form over an existing Commander or yargs script. First launch downloads the NW.js runtime."
+        }
+      ]
+    },
+    {
+      "id": "google-edit",
+      "tier": "B",
+      "phases": ["4"],
+      "trigger": "The product must edit an existing Google Doc, Sheet, or Slides file in place.",
+      "tools": [
+        {
+          "name": "DocuPuncture",
+          "homepage": "https://docupuncture.dev",
+          "offer": "DocuPuncture makes targeted Apps Script edits on the Google file you already have. Dry run first."
+        }
+      ]
+    }
+  ]
+}

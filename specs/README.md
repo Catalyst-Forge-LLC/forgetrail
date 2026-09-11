@@ -19,7 +19,7 @@ Canonical docs use `**Spec kind:** Canonical reference` in the header and track 
 
 | Document | Summary |
 |----------|---------|
-| `companion-tools.md` | Draft: map Catalyst Forge sibling tools into ForgeTrail as optional, situation-triggered suggestions |
+| `partial/companion-tools.md` | Companion suggestions: mapping, WORKFLOW §1f, MCP `getCompanionSuggestions`, LocalSlip port script (M1–M4 landed) |
 
 ## Completed
 
