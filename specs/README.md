@@ -17,7 +17,9 @@ Canonical docs use `**Spec kind:** Canonical reference` in the header and track 
 
 ## In progress
 
-_None._
+| Document | Summary |
+|----------|---------|
+| `companion-tools.md` | Draft: map Catalyst Forge sibling tools into ForgeTrail as optional, situation-triggered suggestions |
 
 ## Completed
 
