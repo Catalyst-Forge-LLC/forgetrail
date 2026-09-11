@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-09-11 | **Companion tools:** add CraftAssay as `quality-review` (Phase 6/7). Scores usefulness, clarity, and presentation. Distinct from Cold-eye's readiness verdict. Mapping, WORKFLOW §1f, phase-guidance footer, skill and audit-prompt neighbors. |
 | 2026-09-11 | **Companion tools:** situation-triggered sibling suggestions (FilePress, LocalSlip/LocalHelm, practice skills, xFacts, DictaWhisper, Cloudflare DNS default). Mapping + JSON, WORKFLOW §1f, intake/Lite v2.0.1/DEPLOYMENT, MCP `getCompanionSuggestions` + phase-guidance footer, site About/compare mention. Port script uses LocalSlip. |
 | 2026-08-24 | **npm name hold:** first unscoped publish is `0.0.0` from a throwaway stub folder, not the app repo. Cursor rule `npm-name-hold.mdc`; CONTEXT_PROMPT pattern + anti-pattern; `docs/NPM.md` pointer. Source: LaunchCampaign. |
 | 2026-08-23 | **Positioning spine / theme-lock methodology (Exec Foundry origin-story passes):** BRAND_AND_PRODUCT gains *Positioning spine (theme lock)* (person-transformation ban for expert audiences, assure-not-guarantee, signature fast-read check, reality-check-as-terrain, staccato/vague-noun register rules) and *Long-form origin narrative (constraints file)*. CONTEXT_PROMPT pattern + anti-pattern. New `content/cursor-rules/writing-voice.mdc` template. Propagate-prompt trigger row (both copies). |
@@ -55,6 +56,10 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-09-11 — CraftAssay (`quality-review`)
+
+CraftAssay joins the companion map as a Phase 6/7 quality score of a tool, site, or page. It writes a dated report and does not edit the source. It does not issue Cold-eye's readiness verdict. Offer one or the other for the job in front of you. Persist the run-folder path in session notes when the review matters.
 
 ### 2026-09-11 — Companion tools
 

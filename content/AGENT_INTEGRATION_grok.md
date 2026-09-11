@@ -59,7 +59,7 @@ Then simply say things like:
 
 The skill will remind you of phases, tracking, subagents, etc.
 
-Optional house neighbors (one per current job, never required): Smell Check, Detangler, Misemphasis, Cold-eye, TemperPass, Gap Last. Call **`getCompanionSuggestions`** when a trigger matches.
+Optional house neighbors (one per current job, never required): Smell Check, Detangler, Misemphasis, Cold-eye, CraftAssay, TemperPass, Gap Last. Call **`getCompanionSuggestions`** when a trigger matches.
 
 ## Headless / Automation Tips
 

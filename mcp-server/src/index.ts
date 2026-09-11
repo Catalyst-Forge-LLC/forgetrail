@@ -1356,7 +1356,7 @@ server.tool(
     )
       .optional()
       .describe(
-        "Situation id from companion-tools.json (e.g. markdown-site, multi-app-local, ship-label)"
+        "Situation id from companion-tools.json (e.g. markdown-site, quality-review, ship-label)"
       ),
     format: z
       .enum(["text", "json"])

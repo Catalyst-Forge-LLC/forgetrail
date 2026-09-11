@@ -266,7 +266,7 @@ ForgeTrail's tracking schema collects `gotchas[]` and `decisions[]` all project 
 Catalyst Forge siblings (and Cloudflare as a default DNS/hosting suggestion) are **complementary**, same model as gstack (§1b) and subagents (§1c):
 
 - **ForgeTrail** = lifecycle + project memory.
-- **Companions** = one bounded job (publish Markdown, named ports, editorial review, labels, backup, voice journal).
+- **Companions** = one bounded job (publish Markdown, named ports, editorial review, quality score, labels, backup, voice journal).
 
 They are **never required**. Decline is success. Do not dump the shelf at kickoff. Suggest when a trigger is true; persist outcomes in `.forgetrail/workflow_tracking.json`.
 
@@ -283,6 +283,7 @@ They are **never required**. Decline is success. Do not dump the shelf at kickof
 - Cause not earned → Gap Last
 - Hard-to-undo work → TemperPass
 - Pre-launch newcomer check → Cold-eye
+- Quality / presentation of a tool, site, or page → CraftAssay
 - Product going public or handed off → xFacts
 - Unpushed work you cannot lose → IngotVault
 - Spoken idea capture → DictaWhisper
@@ -506,7 +507,7 @@ FilePress publishes Markdown. It does not replace Default-A for an interactive a
 
 > "Time to do another TODO review. What else might you suggest, or prioritize or deprecate? Also consider the BRAND_AND_PRODUCT.md file."
 
-**Optional companions:** Smell Check and Misemphasis for copy; Detangler if docs or journeys no longer meet (`getCompanionSuggestions` phase `6`).
+**Optional companions:** Smell Check and Misemphasis for copy; Detangler if docs or journeys no longer meet; CraftAssay to score usefulness, clarity, and presentation (`getCompanionSuggestions` phase `6`).
 
 ### Phase 7: Hardening + Production Prep
 
@@ -547,7 +548,7 @@ FilePress publishes Markdown. It does not replace Default-A for an interactive a
 - No silent failures in core workflows
 - Docs alignment audit passed (MCP `runAudit({ type: "docs-alignment" })` or `_forgetrail/prompts/docs-alignment-audit.md`)
 
-**Optional companions:** Cold-eye for newcomer readiness; xFacts label when the product goes public or changes hands; FilePress + Cloudflare Pages for a Markdown or docs site; IngotVault before a rewrite. See §1f.
+**Optional companions:** Cold-eye for newcomer readiness; CraftAssay for a quality score of the presented work; xFacts label when the product goes public or changes hands; FilePress + Cloudflare Pages for a Markdown or docs site; IngotVault before a rewrite. See §1f.
 
 ---
 

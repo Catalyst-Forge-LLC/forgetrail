@@ -29,7 +29,7 @@ getResumeSessionInstructions → read tracking + CONTEXT_PROMPT → continue cur
 
 If [gstack](https://github.com/garrytan/gstack) is installed, use WORKFLOW §1b: gstack for inner-loop build/review/QA/ship; ForgeTrail for phase state and durable docs. After every gstack sprint, update tracking.
 
-Optional house neighbors (one per current job, never required): Smell Check, Detangler, Misemphasis, Cold-eye, TemperPass, Gap Last. Call **`getCompanionSuggestions`** when a trigger matches.
+Optional house neighbors (one per current job, never required): Smell Check, Detangler, Misemphasis, Cold-eye, CraftAssay, TemperPass, Gap Last. Call **`getCompanionSuggestions`** when a trigger matches.
 
 ## Subagents
 

@@ -48,7 +48,7 @@ After subagent or feature work:
 
 Cursor users typically rely on **rules** from kickoff rather than Grok-style skills. Optional: add **`getForgeTrailSkill`** content as a global Cursor skill if your workflow supports it.
 
-Optional house neighbors (one per current job, never required): Smell Check, Detangler, Misemphasis, Cold-eye, TemperPass, Gap Last. Call **`getCompanionSuggestions`** when a trigger matches. Do not install the set.
+Optional house neighbors (one per current job, never required): Smell Check, Detangler, Misemphasis, Cold-eye, CraftAssay, TemperPass, Gap Last. Call **`getCompanionSuggestions`** when a trigger matches. Do not install the set.
 
 ## MCP setup
 

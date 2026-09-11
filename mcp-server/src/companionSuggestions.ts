@@ -153,8 +153,8 @@ const PHASE_FOOTER_SITUATIONS: Record<string, string[]> = {
   "3": ["unclear-cause", "ollama-vram"],
   "4": ["docs-drift", "ship-label", "voice-journal"],
   "5": ["docs-drift", "hard-to-undo", "git-backup"],
-  "6": ["copy-review", "docs-drift"],
-  "7": ["newcomer-readiness", "ship-label", "markdown-site", "dns-hosting", "git-backup", "docs-drift"],
+  "6": ["copy-review", "docs-drift", "quality-review"],
+  "7": ["newcomer-readiness", "quality-review", "ship-label", "markdown-site", "dns-hosting", "git-backup"],
 };
 
 export function formatPhaseCompanionFooter(

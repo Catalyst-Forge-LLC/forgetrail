@@ -57,6 +57,7 @@ Do not migrate a working host the user already chose.
 | `copy-review` | Phase 6 copy, README, landing, changelog | [Smell Check](https://smellcheck.dev), [Misemphasis](https://misemphasis.com) |
 | `docs-drift` | Docs or journeys no longer meet | [Detangler](https://detangler.dev) |
 | `newcomer-readiness` | Pre-launch / wrap: can a newcomer use this? | [Cold-eye](https://coldeye.dev) |
+| `quality-review` | Phase 6/7: how useful, clear, and well-presented is this? | [CraftAssay](https://craftassay.dev) |
 | `hard-to-undo` | Delete data, lock persistence, rewrite git, lock a stack | [TemperPass](https://temperpass.dev) |
 | `unclear-cause` | Failure is real; cause is not earned | [Gap Last](https://gaplast.dev) |
 | `ship-label` | Product is going public or being handed off | [xFacts](https://xfacts.dev) (AppFacts and neighbors) |
@@ -93,3 +94,4 @@ Use a direct verb. No hedging *can* for a shipped capability. No em dashes.
 - Cloudflare is the default DNS path when you have not already named another provider.
 - DictaWhisper is a local voice journal. Audio stays on your computer.
 - xFacts labels are the standard for a shipped product. Write one when this goes public or changes hands.
+- CraftAssay scores the presented work and writes a dated report. It does not edit the source. It does not issue a readiness verdict.

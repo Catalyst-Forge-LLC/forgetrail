@@ -42,7 +42,7 @@ Use native plan mode for **Phase 1** only. On approval, export to `PHASE_1_BRIEF
 - Install **`.cursor/rules/`** from kickoff (Cursor), or copy **`getForgeTrailSkill`** output to your agent's skill directory (Grok, etc.).
 - Call **`validateTracking`** after substantive work.
 - Call **`getAntiPatterns`** + **`searchLessons`** before large feature work.
-- When a job matches (Markdown site, two or more local apps, copy review, shipped label), call **`getCompanionSuggestions`**. Offer one neighbor. Do not install unless the user asked.
+- When a job matches (Markdown site, two or more local apps, copy review, quality review, shipped label), call **`getCompanionSuggestions`**. Offer one neighbor. Do not install unless the user asked.
 
 ## MCP registration
 

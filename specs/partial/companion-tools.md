@@ -86,7 +86,7 @@ Same integration model as gstack:
 
 - **ForgeTrail** owns *what* and *when* (phase, docs, exit criteria, memory).
 - **Companions** own a *how* for a bounded job.
-- After a companion run that matters, persist outcomes in tracking (`decisions[]`, `gotchas[]`, session notes) and the matching progressive doc. Example: FilePress URL into wrap / `DEPLOYMENT.md`; Cold-eye findings into pre-launch notes; Gap Last remaining questions into `gotchas[]`.
+- After a companion run that matters, persist outcomes in tracking (`decisions[]`, `gotchas[]`, session notes) and the matching progressive doc. Example: FilePress URL into wrap / `DEPLOYMENT.md`; Cold-eye findings into pre-launch notes; CraftAssay run-folder path into session notes; Gap Last remaining questions into `gotchas[]`.
 
 **When the agent may speak:** only after the trigger is true, and only as an optional next step, never as a blocker.
 
@@ -114,6 +114,7 @@ Source: Catalyst Forge tools shelf, 2026-09-11. Homepage links are the stable po
 | Same surfaces, plus sentences that admit a second reading | **Misemphasis** | [misemphasis.com](https://misemphasis.com) | Finds the other stress a silent reader may apply. Grammar/tone stay out. |
 | Docs, README, or in-app journeys after repeated edits | **Detangler** | [detangler.dev](https://detangler.dev) | Broken references, competing sources of truth, flows that no longer meet. Complements `docs-alignment-audit`. Draft skill for prose; application skill for the product. |
 | Pre-launch / wrap: “can a newcomer use what we are about to ship?” | **Cold-eye** | [coldeye.dev](https://coldeye.dev) | Readiness verdict + ranked gaps. Complements `pre-launch-audit`. Not a security audit unless that was the chosen review. |
+| Phase 6 or 7: score usefulness, clarity, quality, and presentation of a tool, site, or page | **CraftAssay** | [craftassay.dev](https://craftassay.dev) | Dated report, scorecard, findings. Does not edit the source. Does not issue a readiness verdict. Complements Cold-eye; pick the job that is actually in front of you. |
 | Hard-to-undo work: delete data, pick a persistence model, rewrite history, lock a stack | **TemperPass** | [temperpass.dev](https://temperpass.dev) | Name consequential assumptions before proceeding. Fits Phase 1 lock and any destructive turn. |
 | Phase 3 (or any debug) when the **cause is not yet earned** | **Gap Last** | [gaplast.dev](https://gaplast.dev) | Observations, constraints, remaining questions, then hypotheses. A hypothesis is not the established cause. Log leftovers into `gotchas[]`. |
 | A product, tool, MCP server, agent config, or skill is going public or being handed off | **xFacts** (AppFacts and neighbors; ModelFacts if a local model is part of the product) | [xfacts.dev](https://xfacts.dev) | House standard for shipped products. A validator checks shape, not truth. One-shots may skip. |
@@ -164,11 +165,11 @@ LocalHelm inspection does not publish. Keep the existing npm-name-hold rule: onl
 
 ### 5.5 Skills vs CLIs
 
-House **skills** (Smell Check, Detangler, Misemphasis, Cold-eye, TemperPass, Gap Last, EmberDossier, DocuPuncture) belong in **agent-integration guides** and the forgetrail `SKILL.md` as *optional neighbors*, not as always-on rules.
+House **skills** (Smell Check, Detangler, Misemphasis, Cold-eye, CraftAssay, TemperPass, Gap Last, EmberDossier, DocuPuncture) belong in **agent-integration guides** and the forgetrail `SKILL.md` as *optional neighbors*, not as always-on rules.
 
 Pattern to copy from Detangler’s own shelf copy: neighbors are optional; review does not silently edit.
 
-Do not tell every Cursor user to install all eight skills. Offer the one that matches the current phase job.
+Do not tell every Cursor user to install all nine skills. Offer the one that matches the current phase job.
 
 ### 5.6 Where the mapping is inserted
 
@@ -184,7 +185,7 @@ Keep Lite thin. Put the full table in one content file and point at it.
 | **`content/NEW_PROJECT_BOOTSTRAP.md`** | Tool-map row for companion suggestions. Not in the post-bootstrap *user* message. |
 | **`content/AGENT_INTEGRATION_*.md`** | Short “optional house skills / CLIs” list with the trigger rule. gstack stays Claude-specific. |
 | **`content/skills/forgetrail/SKILL.md`** | One rule: when a trigger in COMPANION_TOOLS matches, *offer* the companion; never block the phase on it. |
-| **Audit prompts** (`brand-copy-edit-pass`, `docs-alignment-audit`, `pre-launch-audit`, `landing-page-rewrite`) | One optional line each: Smell Check / Detangler / Cold-eye as a neighbor pass. |
+| **Audit prompts** (`brand-copy-edit-pass`, `docs-alignment-audit`, `pre-launch-audit`, `landing-page-rewrite`) | One optional line each: Smell Check / Detangler / Cold-eye / CraftAssay as a neighbor pass. |
 | **`getPhaseGuidance`** | Append a short “Optional companions” block per phase (from the mapping, not a live HTTP fetch). |
 | **MCP** | **`getCompanionSuggestions`** (`phase` and/or `situation`) **and** the phase-guidance footer. Local content only. |
 | **`site/docs/compare.md` or `about.md`** | One short “Works alongside” paragraph + link to the public shelf. Below the Try path. |
@@ -263,7 +264,7 @@ M1 is the reviewable product. M2–M3 can follow in the same implementation pass
 6. Given a user who already runs two or more local apps, when ports or “what is dirty” come up, then LocalSlip and LocalHelm may be offered. Given a first single app, when nothing else is running, then those two are not pushed.
 7. Given Phase 6 copy work or a brand-copy audit, when the prompt/playbook runs, then Smell Check and Misemphasis are optional neighbors, not required gates.
 8. Given Phase 3 confusion about cause, when the playbook mentions debug method, then Gap Last may be offered; findings that matter land in `gotchas[]`.
-9. Given Phase 7 / wrap / pre-launch, when readiness for a newcomer is in scope, then Cold-eye may be offered; Detangler may be offered for structural drift; xFacts may be offered when a product goes public or is handed off.
+9. Given Phase 7 / wrap / pre-launch, when readiness for a newcomer is in scope, then Cold-eye may be offered; CraftAssay may be offered for a quality score of the presented work; Detangler may be offered for structural drift; xFacts may be offered when a product goes public or is handed off.
 10. Given TemperPass’s trigger (hard-to-undo work), when the agent is about to delete data, lock persistence, or rewrite git, then it may offer the assumption pass. The phase does not fail if the user skips it.
 11. Given the README / Try path, when a stranger follows NUX, then no companion install is required to complete Genesis + Lite.
 12. Given `forgetrail` / `forgetrail-mcp` package contents, when this pass ships, then no sibling tool is a new runtime dependency.
@@ -295,7 +296,7 @@ M1 is the reviewable product. M2–M3 can follow in the same implementation pass
 
 **D5.** LocalSlip + LocalHelm are the default *multi-app workstation* pair (two or more local apps).
 
-**D6.** Practice skills (Smell Check, Detangler, Misemphasis, Cold-eye, TemperPass, Gap Last) are the default *quality neighbors* for Align / Harden / debug. Install one for the current job, not the set.
+**D6.** Practice skills (Smell Check, Detangler, Misemphasis, Cold-eye, CraftAssay, TemperPass, Gap Last) are the default *quality neighbors* for Align / Harden / debug. Install one for the current job, not the set.
 
 **D7.** ForeBalance and MediaTuna stay out of the lifecycle mapping.
 
