@@ -54,5 +54,13 @@
     "@types/node": "^25.5.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "fast-uri": "3.1.7",
+      "hono": "4.13.7",
+      "ip-address": "10.3.1",
+      "path-to-regexp": "8.4.0"
+    }
   }
 }
