@@ -525,7 +525,7 @@ FilePress publishes Markdown. It does not replace Default-A for an interactive a
 - Check for silent failures (functions that catch errors and return empty results)
 - Consolidate documentation (eliminate duplicates, update cross-references)
 - Add all security and code quality findings to TODO.md with P0/P1/P2 priority tiers
-- After GitHub Advanced Security is first enabled, triage Dependabot High with lockfile `overrides` (do not major-upgrade an EOL framework for a nested pin) and CodeQL High with the known hygiene patterns: suffix-safe host match, escape `\\` first, strip trailing slashes without `/\/+$/`. Do not file GHSA/CVE for scanner findings unless there is a real remote exploit. Search lessons for “Dependabot”, “sharp”, “fast-uri”, and “CodeQL”.
+- After GitHub Advanced Security is first enabled, triage Dependabot High with lockfile `overrides` (do not major-upgrade an EOL framework for a nested pin) and CodeQL High with the known hygiene patterns: suffix-safe host match, escape `\\` first, strip trailing slashes without `/\/+$/`. Dismiss leftover Vite 4 / SvelteKit 1 / Svelte 3 / devalue 4 / undici 5 alerts (no patch on that major; local/dev-only). Do not file GHSA/CVE for scanner findings unless there is a real remote exploit. Search lessons for “Dependabot”, “sharp”, “fast-uri”, “Vite 4”, and “CodeQL”.
 
 **Artifacts to create:**
 

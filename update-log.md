@@ -60,7 +60,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 ### 2026-09-14 — Lockfile advisory pins + CodeQL hygiene
 
-First org Advanced Security wave: Dependabot High is almost always FilePress `sharp` (libheif), Ajv `fast-uri`, or glob's `brace-expansion`. Pin with `pnpm.overrides` in the package that owns the flagged lockfile. Do not major-upgrade Vite 4 / SvelteKit 1 for a nested advisory. CodeQL polynomial `/\/+$/` / `\\0+$` and incomplete `replace('/', '%2f')` are hygiene, not remote ReDoS. Do not file GHSA/CVE for lockfile or local-stdio scanner findings unless there is a real remote exploit.
+First org Advanced Security wave: Dependabot High is almost always FilePress `sharp` (libheif), Ajv `fast-uri`, or glob's `brace-expansion`. Pin with `pnpm.overrides` in the package that owns the flagged lockfile. Do not major-upgrade Vite 4 / SvelteKit 1 for a nested advisory. Leftover Vite 4 / Kit 1 / Svelte 3 / devalue 4 / undici 5 alerts have no patch on that major: dismiss after the pin pass (`launch-editor` `2.14.1`, `qs` `6.16.0`, `hono` `4.13.7` still pin). CodeQL polynomial `/\/+$/` / `\\0+$` and incomplete `replace('/', '%2f')` are hygiene, not remote ReDoS. Do not file GHSA/CVE for lockfile or local-stdio scanner findings unless there is a real remote exploit.
 
 - **`docs/CODE_QUALITY.md`** — checklist rows + two lessons (overrides; trailing-slash walk).
 - **`docs/CONTEXT_PROMPT.md`** — anti-patterns (no framework jump, complete escaping, no GHSA for scanner noise).
