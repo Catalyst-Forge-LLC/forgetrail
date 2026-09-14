@@ -12,7 +12,7 @@ alwaysApply: false
 
 - When Dependabot names a **transitive** (`sharp`, `fast-uri`, `cookie`, `js-yaml`) in a lockfile, add `pnpm.overrides` (or npm `overrides`) in the **package that owns that lockfile**.
 - Do **not** major-upgrade Vite 4 / SvelteKit 1 (or another EOL line) just to pick up the nested pin.
-- Recurring pins as of 2026-09: `sharp` `0.35.4`, `fast-uri` `3.1.7`, `cookie@<0.7.0` → `0.7.2`, `js-yaml` `3.15.2`. Cookie 1.x is already past the 0.6 advisory.
+- Recurring pins as of 2026-09: `sharp` `0.35.4`, `fast-uri` `3.1.7`, `cookie@<0.7.0` → `0.7.2`, `js-yaml` `3.15.2`, `brace-expansion` `5.0.9` (or `1.1.18` / `2.1.4` / `3.0.6` on older majors). Cookie 1.x is already past the 0.6 advisory.
 
 ## After the pin
 
