@@ -1,0 +1,26 @@
+---
+description: Pin Dependabot High transitives with overrides; do not major-upgrade frameworks for nested advisories
+globs:
+  - "**/package.json"
+  - "**/pnpm-lock.yaml"
+alwaysApply: false
+---
+
+# Lockfile advisory pins
+
+## Overrides, not framework jumps
+
+- When Dependabot names a **transitive** (`sharp`, `fast-uri`, `cookie`, `js-yaml`) in a lockfile, add `pnpm.overrides` (or npm `overrides`) in the **package that owns that lockfile**.
+- Do **not** major-upgrade Vite 4 / SvelteKit 1 (or another EOL line) just to pick up the nested pin.
+- Recurring pins as of 2026-09: `sharp` `0.35.4`, `fast-uri` `3.1.7`, `cookie@<0.7.0` → `0.7.2`, `js-yaml` `3.15.2`. Cookie 1.x is already past the 0.6 advisory.
+
+## After the pin
+
+- Run `pnpm install --lockfile-only` in that package directory.
+- Leave the product version alone unless this is a real release.
+
+## Scanner hygiene (related)
+
+- CodeQL `/\/+$/` and `\\0+$` are trailing-delimiter strips: walk the string.
+- Incomplete escaping: `replaceAll` for `/`; escape `\\` before `|` or `"`.
+- Do not file GHSA/CVE for first-wave lockfile or local-stdio findings unless there is a real remote exploit.

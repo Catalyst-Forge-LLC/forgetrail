@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-09-14 | **Lockfile advisory pins + CodeQL scanner hygiene:** Dependabot High on site/tool lockfiles is a nested pin (`sharp` `0.35.4`, `fast-uri` `3.1.7`, `cookie@<0.7.0` → `0.7.2`), not a framework upgrade. CodeQL `/\/+$/` is a trailing-slash walk. No GHSA for first-wave scanner noise. |
 | 2026-09-11 | **Companion tools:** add CraftAssay as `quality-review` (Phase 6/7). Scores usefulness, clarity, and presentation. Distinct from Cold-eye's readiness verdict. Mapping, WORKFLOW §1f, phase-guidance footer, skill and audit-prompt neighbors. |
 | 2026-09-11 | **Companion tools:** situation-triggered sibling suggestions (FilePress, LocalSlip/LocalHelm, practice skills, xFacts, DictaWhisper, Cloudflare DNS default). Mapping + JSON, WORKFLOW §1f, intake/Lite v2.0.1/DEPLOYMENT, MCP `getCompanionSuggestions` + phase-guidance footer, site About/compare mention. Port script uses LocalSlip. |
 | 2026-08-24 | **npm name hold:** first unscoped publish is `0.0.0` from a throwaway stub folder, not the app repo. Cursor rule `npm-name-hold.mdc`; CONTEXT_PROMPT pattern + anti-pattern; `docs/NPM.md` pointer. Source: LaunchCampaign. |
@@ -56,6 +57,17 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-09-14 — Lockfile advisory pins + CodeQL hygiene
+
+First org Advanced Security wave: Dependabot High is almost always FilePress `sharp` (libheif) or Ajv `fast-uri`. Pin with `pnpm.overrides` in the package that owns the flagged lockfile. Do not major-upgrade Vite 4 / SvelteKit 1 for a nested advisory. CodeQL polynomial `/\/+$/` / `\\0+$` and incomplete `replace('/', '%2f')` are hygiene, not remote ReDoS. Do not file GHSA/CVE for lockfile or local-stdio scanner findings unless there is a real remote exploit.
+
+- **`docs/CODE_QUALITY.md`** — checklist rows + two lessons (overrides; trailing-slash walk).
+- **`docs/CONTEXT_PROMPT.md`** — anti-patterns (no framework jump, complete escaping, no GHSA for scanner noise).
+- **`docs/DEPLOYMENT.md`** — first-scan-is-baseline lesson.
+- **`WORKFLOW.md`** — Phase 7 playbook bullet (`searchLessons` keywords).
+- **`content/FORGETRAIL_LITE.md`** §13 — one engineering anti-pattern (no Lite version bump).
+- **`content/cursor-rules/lockfile-advisory-pins.mdc`** (+ `.cursor/rules/` mirror).
 
 ### 2026-09-11 — CraftAssay (`quality-review`)
 
