@@ -2,7 +2,7 @@
 tool_facts_version: "0.1.0"
 name: ForgeTrail MCP Server
 developer: Catalyst Forge
-version: "0.3.8"
+version: "0.3.9"
 status: active
 license: Apache-2.0
 kind: mcp-server
@@ -278,7 +278,7 @@ credits:
 | | |
 |---|---|
 | **Developer** | Catalyst Forge |
-| **Version** | 0.3.8 |
+| **Version** | 0.3.9 |
 | **Status** | active |
 | **License** | Apache-2.0 |
 | **Kind** | mcp-server |
