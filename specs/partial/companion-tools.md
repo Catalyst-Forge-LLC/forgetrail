@@ -313,6 +313,7 @@ M1 is the reviewable product. M2–M3 can follow in the same implementation pass
 
 - `2026-09-11:` Review locked (D8–D10). M1–M4 implemented: mapping + JSON, WORKFLOW §1f, intake/Lite/DEPLOYMENT, MCP tool + phase footer, site mention, LocalSlip port script. Remaining: ToolFacts viewer hash refresh if desired; live `pnpm ship` for site copy.
 - `2026-09-15:` LocalSlip *how*: FilePress claims then reads; Vite uses CLI `get`. Drop leftover `ensure-lease.mjs` mentions. `companion-tools.json` `how` field + COMPANION_TOOLS recipes. Do not add the `localslip` package just to read a port.
+- `2026-09-15:` Lite **v2.0.2** — same recipes in §2 so a Lite-only boot does not invent `ensure-lease.mjs`.
 
 ---
 

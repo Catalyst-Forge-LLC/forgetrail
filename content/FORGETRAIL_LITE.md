@@ -1,6 +1,6 @@
 # ForgeTrail Lite — portable kickoff for any agentic chat
 
-> **ForgeTrail Lite v2.0.1**
+> **ForgeTrail Lite v2.0.2**
 > © Catalyst Forge, LLC — [www.catalystforge.com](https://www.catalystforge.com)
 > Part of the **ForgeTrail** open-source methodology ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) in the upstream ForgeTrail repo).
 >
@@ -97,6 +97,8 @@ When a boot surfaces a gap in **ForgeTrail Lite itself** (not a one-off app bug)
 **It is not** the full ForgeTrail methodology — no audit prompts, no deep per-phase playbooks, no lessons database, no template library. For those, use the ForgeTrail MCP server (see §13). Lite gets you ~80% of the value in one file.
 
 **Optional companions:** when a job matches (Markdown site, two or more local apps, local Ollama, copy review, shipped-product label), you may offer a sibling from the Catalyst Forge shelf. Never required. Do not list them in the first message to the human. MCP: `getCompanionSuggestions`. Full mapping lives with ForgeTrail, not in this file.
+
+**Named ports (if they accept):** [LocalSlip](https://localslip.dev). FilePress: lease name = site `package.json` `name`. `localslip claim NAME --port N && filepress dev`. Do not pass `--port`. Vite: `localslip get` in `vite.config`, `strictPort`. Claim once. Do not write `ensure-lease.mjs`. Do not add the `localslip` package just to read a port.
 
 ### Who creates what
 
@@ -514,7 +516,7 @@ These are the **topics the agent needs to cover in Phase 1**, not a checklist to
 - **Existing assets** — repos, brand, content, APIs, schemas, or designs to reuse or integrate with.
 - **Live web / search** — does v1 need **up-to-date results from the public internet** (not just the model’s training cutoff)? If yes, the user may need a **search API** account (§4.4) before the spine can call real data.
 - **Registrar / DNS / git / hosting** — only what is still open. If unspecified: GitHub; Cloudflare for DNS (free plan); Cloudflare Pages for a static site; a droplet only if the app needs a server. Do not migrate a provider they already named.
-- **Other local apps / spoken notes** — if this machine will run two or more local apps, named ports help. If they capture ideas by voice, a local voice journal is a personal option. Neither is part of the first message.
+- **Other local apps / spoken notes** — if this machine will run two or more local apps, named ports help (LocalSlip: FilePress claims then `filepress dev`; Vite uses CLI `get` — see §2). If they capture ideas by voice, a local voice journal is a personal option. Neither is part of the first message.
 
 **Suggested rounds** (not a script — adapt to the user's energy):
 
@@ -636,7 +638,7 @@ Both defaults share the same foundation — **TypeScript + pnpm + ESM** — so t
 - Why this default: single-binary DB/auth/files (PocketBase), fast cold start, no cloud lock-in for v1, ships to a cheap VPS. Gets from zero to a runnable hero flow fastest.
 - Examples: internal tool, SaaS MVP, client portal, marketplace, dashboard, consulting deliverable builder.
 - **A-sub-question: does state need to outlive the browser?** Before locking PocketBase + auth, ask: *"Does any state need to outlive the browser — accounts, cross-device sync, shared data, admin views? Or is every user's state private and fine to live in `localStorage`?"*
-  - **A-local (per-user, browser-only):** drop PocketBase and auth. `adapter-static` becomes viable, no deploy-time secrets, no server-side DB. Persist via `localStorage` / `IndexedDB`. Many hobby/toy apps and single-session tools fit here — do not scaffold server infrastructure they will not use. An **interactive** A-local app stays on SvelteKit. [FilePress](https://getfilepress.com) is for a Markdown site or an optional `site/` beside the app (Cloudflare Pages + Wrangler), not a replacement for the app.
+  - **A-local (per-user, browser-only):** drop PocketBase and auth. `adapter-static` becomes viable, no deploy-time secrets, no server-side DB. Persist via `localStorage` / `IndexedDB`. Many hobby/toy apps and single-session tools fit here — do not scaffold server infrastructure they will not use. An **interactive** A-local app stays on SvelteKit. [FilePress](https://getfilepress.com) is for a Markdown site or an optional `site/` beside the app (Cloudflare Pages + Wrangler), not a replacement for the app. If LocalSlip is in play: `localslip claim` then `filepress dev`; FilePress reads the lease — do not pass `--port`.
   - **A-persistent (the existing Default A):** keep PocketBase, auth, and the full SvelteKit + adapter-auto defaults.
   - Record the choice in `decisions[]` and in `docs/PHASE_1_BRIEF.md` §4 so future sessions do not re-introduce a DB the project chose to skip.
 
@@ -1015,7 +1017,7 @@ Save this as `.forgetrail/AGENTS.md` so agents that auto-load it (Codex, Cursor,
 
 ```markdown
 <!--
-  Agent protocol based on ForgeTrail Lite v2.0.1.
+  Agent protocol based on ForgeTrail Lite v2.0.2.
   © Catalyst Forge, LLC — www.catalystforge.com
   Licensed under Apache License 2.0 (upstream ForgeTrail repo).
 -->
@@ -1207,4 +1209,4 @@ ForgeTrail Lite covers the shape of a project. The full **ForgeTrail MCP server*
 
 ---
 
-**ForgeTrail Lite v2.0.1** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+**ForgeTrail Lite v2.0.2** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

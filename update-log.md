@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-09-15 | **FORGETRAIL_LITE v2.0.2:** LocalSlip FilePress/Vite recipes in §2 (intake + A-local FilePress one-liners). Lite-only agents get the how without the mapping file. |
 | 2026-09-15 | **LocalSlip how:** companion mapping now includes FilePress and Vite recipes. Drop leftover `ensure-lease.mjs` mentions. Do not add the `localslip` package just to read a port. |
 | 2026-09-14 | **Lockfile advisory pins + CodeQL scanner hygiene:** Dependabot High on site/tool lockfiles is a nested pin (`sharp` `0.35.4`, `fast-uri` `3.1.7`, `cookie@<0.7.0` → `0.7.2`, `brace-expansion` `5.0.9`), not a framework upgrade. CodeQL `/\/+$/` is a trailing-slash walk. No GHSA for first-wave scanner noise. |
 | 2026-09-11 | **Companion tools:** add CraftAssay as `quality-review` (Phase 6/7). Scores usefulness, clarity, and presentation. Distinct from Cold-eye's readiness verdict. Mapping, WORKFLOW §1f, phase-guidance footer, skill and audit-prompt neighbors. |
@@ -58,6 +59,10 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-09-15 — FORGETRAIL_LITE v2.0.2 (LocalSlip how)
+
+Lite-only agents never read `COMPANION_TOOLS.md`. §2 now has the FilePress claim-then-`filepress dev` recipe and the Vite `localslip get` + `strictPort` recipe. Intake §5 and A-local FilePress in §7 point at it. Version strings: header, §12 AGENTS snippet, footer. No §4.3 / §4.4 / §7.1 triplicate change.
 
 ### 2026-09-15 — LocalSlip how (FilePress + Vite)
 
