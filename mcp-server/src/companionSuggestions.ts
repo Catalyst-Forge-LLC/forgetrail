@@ -7,6 +7,8 @@ export interface CompanionTool {
   name: string;
   homepage: string;
   offer: string;
+  /** Agent-facing recipe. Keep `offer` short for humans. */
+  how?: string;
 }
 
 export interface CompanionSituation {
@@ -52,7 +54,10 @@ export function filterCompanionSituations(
 
 function formatSituation(s: CompanionSituation): string {
   const tools = s.tools
-    .map((t) => `- **${t.name}** (${t.homepage}): ${t.offer}`)
+    .map((t) => {
+      const line = `- **${t.name}** (${t.homepage}): ${t.offer}`;
+      return t.how ? `${line}\n  How: ${t.how}` : line;
+    })
     .join("\n");
   return `### \`${s.id}\` (tier ${s.tier}, phases ${s.phases.join(", ")})\n\n${s.trigger}\n\n${tools}`;
 }

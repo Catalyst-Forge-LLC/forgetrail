@@ -13,7 +13,7 @@ pnpm dev
 pnpm build
 ```
 
-If [LocalSlip](https://localslip.dev) is installed, this site stays on **5195** as `forgetrail-site`.
+If [LocalSlip](https://localslip.dev) is installed, this site stays on **5195** as `forgetrail-site` (`localslip claim forgetrail-site --port 5195`; FilePress reads the lease — do not pass `--port`).
 
 Optional: edit `theme.css` next to `filepress.config.ts`.
 

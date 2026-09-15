@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-09-15 | **LocalSlip how:** companion mapping now includes FilePress and Vite recipes. Drop leftover `ensure-lease.mjs` mentions. Do not add the `localslip` package just to read a port. |
 | 2026-09-14 | **Lockfile advisory pins + CodeQL scanner hygiene:** Dependabot High on site/tool lockfiles is a nested pin (`sharp` `0.35.4`, `fast-uri` `3.1.7`, `cookie@<0.7.0` → `0.7.2`, `brace-expansion` `5.0.9`), not a framework upgrade. CodeQL `/\/+$/` is a trailing-slash walk. No GHSA for first-wave scanner noise. |
 | 2026-09-11 | **Companion tools:** add CraftAssay as `quality-review` (Phase 6/7). Scores usefulness, clarity, and presentation. Distinct from Cold-eye's readiness verdict. Mapping, WORKFLOW §1f, phase-guidance footer, skill and audit-prompt neighbors. |
 | 2026-09-11 | **Companion tools:** situation-triggered sibling suggestions (FilePress, LocalSlip/LocalHelm, practice skills, xFacts, DictaWhisper, Cloudflare DNS default). Mapping + JSON, WORKFLOW §1f, intake/Lite v2.0.1/DEPLOYMENT, MCP `getCompanionSuggestions` + phase-guidance footer, site About/compare mention. Port script uses LocalSlip. |
@@ -57,6 +58,16 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-09-15 — LocalSlip how (FilePress + Vite)
+
+Agents were getting *when* (two or more local apps) without *how*. They invented `ensure-lease.mjs` copies or added the `localslip` package (sqlite) just to read a port.
+
+- **`content/COMPANION_TOOLS.md`** — Wire LocalSlip table: FilePress claims then `filepress dev` (no `--port`); Vite uses CLI `get` + `strictPort`.
+- **`content/companion-tools.json`** — LocalSlip `how` plus a rule. Human `offer` stays one sentence.
+- **`mcp-server/src/companionSuggestions.ts`** — print `how` on the filtered offer.
+- **`WORKFLOW.md` §1f** + Phase 2 companion note, **`GREENFIELD_INTAKE.md`**, forgetrail **`SKILL.md`** — same recipes, no lease helper.
+- **`specs/partial/companion-tools.md`** — strike leftover `ensure-lease.mjs` as the current port script.
 
 ### 2026-09-14 — Lockfile advisory pins + CodeQL hygiene
 

@@ -5,7 +5,8 @@
     "Suggest at the moment of need. Do not dump the shelf at kickoff or in the first user-facing message.",
     "Do not install, enroll, or publish unless the user asked.",
     "After a companion run that matters, persist the outcome in .forgetrail/workflow_tracking.json and the matching progressive doc.",
-    "Do not mention the mapping file, spec paths, or MCP tool names in human-facing offers."
+    "Do not mention the mapping file, spec paths, or MCP tool names in human-facing offers.",
+    "When wiring LocalSlip, follow that tool's how. Do not write ensure-lease.mjs. Do not add the localslip package just to read a port."
   ],
   "situations": [
     {
@@ -56,7 +57,8 @@
         {
           "name": "LocalSlip",
           "homepage": "https://localslip.dev",
-          "offer": "LocalSlip keeps a named port claim so startup order does not move the app."
+          "offer": "LocalSlip keeps a named port claim so startup order does not move the app.",
+          "how": "FilePress: lease name = site package.json name (or FILEPRESS_LEASE). `localslip claim NAME --port N && filepress dev`. Do not pass --port. Do not write ensure-lease.mjs. Vite: `localslip get` in vite.config with strictPort. Claim once (README or pnpm dev). Do not add the localslip package just to read a port. `localslip ls` is the table. `localslip/port` only if the app already depends on LocalSlip."
         },
         {
           "name": "LocalHelm",

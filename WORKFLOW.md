@@ -288,7 +288,7 @@ They are **never required**. Decline is success. Do not dump the shelf at kickof
 - Unpushed work you cannot lose → IngotVault
 - Spoken idea capture → DictaWhisper
 
-FilePress publishes Markdown. It does not replace Default-A for an interactive app. LocalSlip/LocalHelm are for two or more local apps, not a first single project.
+FilePress publishes Markdown. It does not replace Default-A for an interactive app. LocalSlip/LocalHelm are for two or more local apps, not a first single project. If they accept LocalSlip: FilePress claims then `filepress dev` (no `--port`); Vite uses CLI `get` and `strictPort`. Do not write `ensure-lease.mjs` or add the `localslip` package just to read a port. Recipes: `content/COMPANION_TOOLS.md`.
 
 ---
 
@@ -367,7 +367,7 @@ FilePress publishes Markdown. It does not replace Default-A for an interactive a
 - You can see your data on screen
 - The core action (scrape, create, view) completes without errors
 
-**Optional companions:** LocalSlip/LocalHelm if this machine already runs other local apps or ports collide; ollanet/Finetuna if the brief chose local Ollama; FilePress only for a Markdown `site/`, not as the app. See §1f.
+**Optional companions:** LocalSlip/LocalHelm if this machine already runs other local apps or ports collide; ollanet/Finetuna if the brief chose local Ollama; FilePress only for a Markdown `site/`, not as the app. If they accept LocalSlip, use the FilePress or Vite recipe in `content/COMPANION_TOOLS.md` — do not invent a lease helper. See §1f.
 
 **Example prompt (this worked):**
 

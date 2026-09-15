@@ -46,12 +46,12 @@ Those siblings exist, are free, and are already used *inside this repo* (FilePre
 | Lite §4.8 and intake §8 cover local Ollama via `setup-ollama` / `test-ollama` | ollanet (hosts) and Finetuna (runtime tuner) are unnamed |
 | `APP_FACTS.md`, `mcp-server/TOOL_FACTS.md`, `content/skills/forgetrail/SKILL_FACTS.md` already exist | Apps are not told when to write their own labels |
 | npm-name-hold already blesses LocalHelm `publish --apply` after `auth` | LocalHelm as a *status board* is never suggested |
-| This repo’s site port script still used the old CLI name | Migrated to LocalSlip (`localslip get` / `claim`) |
+| This repo’s site port script still used the old CLI name | Migrated to LocalSlip (`localslip claim forgetrail-site --port 5195` then FilePress reads) |
 | NUX spec forbids extra doors before Try | Any catalog work must stay below the fold / after kickoff |
 
 Shelf snapshot used for this draft (2026-09-11, 21 tools on [catalystforge.com/tools](https://catalystforge.com/tools/)). Re-read `/tools.json` when the mapping is refreshed; do not treat versions in this spec as pins.
 
-**LocalSlip:** previous CLI name retired. App docs and this repo’s `scripts/ensure-lease.mjs` use LocalSlip only.
+**LocalSlip:** previous CLI name retired. House recipe: FilePress claims then reads; Vite uses CLI `get`. Do not write `ensure-lease.mjs`. Do not add the `localslip` package just to read a port.
 
 ---
 
@@ -189,7 +189,7 @@ Keep Lite thin. Put the full table in one content file and point at it.
 | **`getPhaseGuidance`** | Append a short “Optional companions” block per phase (from the mapping, not a live HTTP fetch). |
 | **MCP** | **`getCompanionSuggestions`** (`phase` and/or `situation`) **and** the phase-guidance footer. Local content only. |
 | **`site/docs/compare.md` or `about.md`** | One short “Works alongside” paragraph + link to the public shelf. Below the Try path. |
-| **This repo’s port script** | Use LocalSlip (`scripts/ensure-lease.mjs`). |
+| **This repo’s site preview** | `localslip claim forgetrail-site --port 5195 && filepress dev`. FilePress reads the lease. Do not pass `--port`. |
 
 ### 5.7 MCP / data
 
@@ -228,6 +228,7 @@ Marketing site: do not add a Tools mega-nav that competes with Try.
 - **Agents install the fleet.** Mitigation: explicit “suggest, don’t install”; forgetrail skill rule; no `pnpm add` in first-actions.
 - **FilePress vs SvelteKit confusion.** Mitigation: §5.3 table in the mapping and in intake.
 - **Old CLI name leftover.** Mitigation: this repo and app docs name LocalSlip only.
+- **Agents invent a lease helper or add `localslip` as a dep.** Mitigation: `how` on the LocalSlip tool + `COMPANION_TOOLS.md` FilePress/Vite recipes.
 - **Lite bloat.** Mitigation: pointers only; full table lives in `content/COMPANION_TOOLS.md`.
 - **gstack overlap** (review vs `/review`, deploy vs FilePress). Mitigation: gstack remains sprint execution; house tools are job-specific. An agent may use both. Persist in ForgeTrail either way.
 - **HaulOut extra install** (Tampermonkey). Mitigation: mention the userscript requirement; never imply it is a one-liner.
@@ -248,7 +249,7 @@ Marketing site: do not add a Tools mega-nav that competes with Try.
 | **M1 — Mapping + WORKFLOW** | `content/COMPANION_TOOLS.md` exists with the approved tier table. WORKFLOW §1f + playbook one-liners. Intake + DEPLOYMENT + Lite thin pointers. TODO item stays open until M1 acceptance. |
 | **M2 — Agent surfaces** | Phase guidance (and/or `getCompanionSuggestions`), bootstrap tool-map row, agent-integration guides, forgetrail skill rule, selected audit-prompt one-liners. TOOL_FACTS updated if a tool is added. |
 | **M3 — Site mention** | Short “Works alongside” on compare/about + shelf link. Still below Try. |
-| **M4 — House cleanup** | `scripts/ensure-lease.mjs` and `site/README.md` use LocalSlip. |
+| **M4 — House cleanup** | Site preview uses `localslip claim` + FilePress read. `site/README.md` names `forgetrail-site` on 5195. |
 
 M1 is the reviewable product. M2–M3 can follow in the same implementation pass if the tier table is approved unchanged.
 
@@ -311,6 +312,7 @@ M1 is the reviewable product. M2–M3 can follow in the same implementation pass
 ## Progress (while Partial)
 
 - `2026-09-11:` Review locked (D8–D10). M1–M4 implemented: mapping + JSON, WORKFLOW §1f, intake/Lite/DEPLOYMENT, MCP tool + phase footer, site mention, LocalSlip port script. Remaining: ToolFacts viewer hash refresh if desired; live `pnpm ship` for site copy.
+- `2026-09-15:` LocalSlip *how*: FilePress claims then reads; Vite uses CLI `get`. Drop leftover `ensure-lease.mjs` mentions. `companion-tools.json` `how` field + COMPANION_TOOLS recipes. Do not add the `localslip` package just to read a port.
 
 ---
 

@@ -15,7 +15,7 @@ Public shelf (current versions and install): [catalystforge.com/tools](https://c
 1. Suggest at the moment of need. Decline is success.
 2. Do not dump this list at kickoff or in the first user-facing message.
 3. FilePress publishes **Markdown**. It does not replace an interactive SvelteKit app.
-4. LocalSlip and LocalHelm are for **two or more** local apps, not a first single project.
+4. LocalSlip and LocalHelm are for **two or more** local apps, not a first single project. If they accept LocalSlip, use the recipes below. Do not write `ensure-lease.mjs`.
 5. Practice skills: install the one that matches the current job, not the set.
 6. xFacts is the house standard for a **shipped** product (public URL or handoff). One-shots may skip.
 
@@ -28,6 +28,22 @@ Public shelf (current versions and install): [catalystforge.com/tools](https://c
 | Interactive web app | Keep Default-A (SvelteKit, optional PocketBase). Optional `site/` with FilePress for docs and marketing. |
 | Markdown-first site, writing shelf, docs-only product, event page | FilePress **is** the product. Cloudflare Pages + Wrangler is the default free host. |
 | A-local app with UI and `localStorage` | Still SvelteKit + `adapter-static`. Do not scaffold FilePress as the app. |
+
+---
+
+## Wire LocalSlip (agents)
+
+Human offer stays one sentence. Wire it this way:
+
+| Stack | Recipe |
+|-------|--------|
+| FilePress site | Lease name = site `package.json` `name` (or `FILEPRESS_LEASE`). `localslip claim NAME --port N && filepress dev`. FilePress reads the lease. Do not pass `--port`. |
+| Vite / SvelteKit app | `localslip get` in `vite.config`, `strictPort: true`. Claim once (README or `pnpm dev`). |
+| Table | `localslip ls` |
+
+Do not write `scripts/ensure-lease.mjs`. Do not add the `localslip` npm package just to read a port. `localslip/port` only if the app already depends on LocalSlip.
+
+Same recipes: [localslip.dev](https://localslip.dev) (FilePress + Vite pages) and FilePress `docs/LOCALSLIP.md`.
 
 ---
 

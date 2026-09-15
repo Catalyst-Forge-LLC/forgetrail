@@ -90,7 +90,7 @@ Record git host, DNS, registrar, and deploy target in **`PHASE_1_BRIEF.md` §4**
 
 Do **not** put these in the first user-facing message. Ask only if they did not already come up.
 
-- **Other local apps?** If this machine already runs (or will run) two or more local apps, offer **LocalSlip** (named ports) and **LocalHelm** (status board). Skip on a first single-app machine.
+- **Other local apps?** If this machine already runs (or will run) two or more local apps, offer **LocalSlip** (named ports) and **LocalHelm** (status board). Skip on a first single-app machine. If they accept LocalSlip: FilePress claims then reads; Vite uses CLI `get`. Do not write `ensure-lease.mjs`. Recipes: `COMPANION_TOOLS.md`.
 - **Spoken ideas?** If they capture ideas by voice or want a local journal beside the repo, offer **DictaWhisper**. Audio stays on their computer. It is a personal tool, not part of the app stack.
 
 These are optional companions (`getCompanionSuggestions`). Decline is success.

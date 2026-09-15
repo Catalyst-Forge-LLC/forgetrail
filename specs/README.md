@@ -19,7 +19,7 @@ Canonical docs use `**Spec kind:** Canonical reference` in the header and track 
 
 | Document | Summary |
 |----------|---------|
-| `partial/companion-tools.md` | Companion suggestions: mapping, WORKFLOW §1f, MCP `getCompanionSuggestions`, LocalSlip port script (M1–M4 landed) |
+| `partial/companion-tools.md` | Companion suggestions: mapping, WORKFLOW §1f, MCP `getCompanionSuggestions`, LocalSlip FilePress/Vite recipes (M1–M4 landed; 2026-09-15 how cleanup) |
 
 ## Completed
 

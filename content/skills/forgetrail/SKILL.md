@@ -62,7 +62,7 @@ You are operating under the ForgeTrail methodology. Your primary job is to give 
    - Use `getAntiPatterns` for known failure modes.
 
 9. **Companion tools** (optional):
-   - When a trigger matches (Markdown site, two or more local apps, copy review, quality review, unclear cause, shipped product, spoken idea capture), call `getCompanionSuggestions` and *offer* the neighbor.
+   - When a trigger matches (Markdown site, two or more local apps, copy review, quality review, unclear cause, shipped product, spoken idea capture), call `getCompanionSuggestions` and *offer* the neighbor. LocalSlip how is on that tool: FilePress claims then `filepress dev`; Vite uses CLI `get`. Do not write `ensure-lease.mjs`.
    - Never block a phase on an install. Do not dump the shelf at kickoff or in the first user-facing message.
 
 ## Phase Transition Protocol
