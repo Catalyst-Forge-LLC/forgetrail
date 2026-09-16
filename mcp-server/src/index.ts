@@ -305,10 +305,28 @@ lessonIndex.push(...extractLessons(workflow, "WORKFLOW.md"));
 // MCP Server
 // ---------------------------------------------------------------------------
 
+const pkgPath = join(import.meta.dirname, "..", "package.json");
+function packageVersion(): string {
+  try {
+    return (JSON.parse(readFileSync(pkgPath, "utf-8")) as { version?: string }).version ?? "unknown";
+  } catch {
+    return "unknown";
+  }
+}
+const pkgVersion = packageVersion();
+
 const server = new McpServer({
   name: "forgetrail",
-  version: "0.1.0",
+  version: pkgVersion === "unknown" ? "0.0.0" : pkgVersion,
 });
+
+/** Packaged methodology and local validation. No writes, no open-world I/O. */
+const PACKAGED = {
+  readOnlyHint: true,
+  destructiveHint: false,
+  idempotentHint: true,
+  openWorldHint: false,
+} as const;
 
 // -- Tool: ping -------------------------------------------------------------
 
@@ -322,15 +340,8 @@ server.tool(
       .optional()
       .describe("text (default) or json for structured headless output"),
   },
+  PACKAGED,
   async ({ format }) => {
-    const pkgPath = join(import.meta.dirname, "..", "package.json");
-    let pkgVersion = "unknown";
-    try {
-      const pkg = JSON.parse(readFileSync(pkgPath, "utf-8")) as { version?: string };
-      pkgVersion = pkg.version ?? "unknown";
-    } catch {
-      /* keep unknown */
-    }
     const workflowOk = Boolean(readFile(WORKFLOW_PATH));
     const text = [
       "ForgeTrail MCP: ok",
@@ -377,6 +388,7 @@ server.tool(
   "Get ForgeTrail methodology guidance for a specific development phase (1-7). " +
     "Returns entry/exit criteria, playbook, prompt patterns, anti-patterns, and an optional companions footer.",
   { phase: z.string().describe("Phase number (1-7) or keyword like 'architecture', 'scaffolding', 'hardening'") },
+  PACKAGED,
   async ({ phase }) => {
     const phaseMap: Record<string, string> = {
       architecture: "1", planning: "1",
@@ -444,6 +456,7 @@ server.tool(
     query: z.string().describe("Search keywords (e.g. 'PocketBase auth', 'silent failures', 'DOCX', 'billing')"),
     limit: z.number().optional().default(10).describe("Max results to return (default 10)"),
   },
+  PACKAGED,
   async ({ query, limit }) => {
     const terms = query.toLowerCase().split(/\s+/);
 
@@ -509,6 +522,7 @@ server.tool(
       .optional()
       .describe("When true with format=json, include template metadata (path, mode, name)"),
   },
+  PACKAGED,
   async ({ name, mode, format, includeMetadata }) => {
     if (name.toLowerCase() === "list") {
       const templates = docFiles.map((f) => f.replace(".md", ""));
@@ -588,6 +602,7 @@ server.tool(
       .optional()
       .describe("When true, response includes audit type, filename, and recommendedSubagentPersona hint"),
   },
+  PACKAGED,
   async ({ type, format, includeMetadata }) => {
     if (type.toLowerCase() === "list") {
       const prompts = promptFiles.map((f) => f.replace(".md", ""));
@@ -678,6 +693,7 @@ server.tool(
       "'strategic-review', 'refactoring', 'hardening', 'every-session', or 'full' (default)"
     ),
   },
+  PACKAGED,
   async ({ section }) => {
     const checklistStart = workflow.indexOf("## 6. The Checklist");
     if (checklistStart === -1) {
@@ -726,6 +742,7 @@ server.tool(
   "Get the workflow_tracking.json schema reference (customer path: `.forgetrail/workflow_tracking.json`). Use this to understand how to " +
     "read and update the project tracking file (phases, decisions, gotchas, sessions).",
   {},
+  PACKAGED,
   async () => {
     if (!trackingSchema) {
       return { content: [{ type: "text" as const, text: "TRACKING_SCHEMA.md not found." }] };
@@ -741,6 +758,7 @@ server.tool(
   "Get all documented anti-patterns from the ForgeTrail methodology. " +
     "These are common failure modes with explanations of what went wrong and how to avoid them.",
   {},
+  PACKAGED,
   async () => {
     const apSection = workflow.indexOf("## 5. Anti-Patterns and Pitfalls");
     if (apSection === -1) {
@@ -761,6 +779,7 @@ server.tool(
   "Returns WORKFLOW.md §1a: which ForgeTrail doc templates to create in each phase. " +
     "Phase 1 = PHASE_1_BRIEF + `.forgetrail/workflow_tracking.json` decisions; Phase 2 = merge brief into CONTEXT_PROMPT + README + TODO + `.forgetrail/IDEAS.md` + full app spine; later phases add templates when warranted.",
   {},
+  PACKAGED,
   async () => {
     const section = extractWorkflowSection(workflow, PROGRESSIVE_DOCS_HEADING);
     if (!section) {
@@ -789,6 +808,7 @@ server.tool(
       .optional()
       .describe("Include the Cursor `.mdc` section; omit or true for full bundle, false to save tokens when not using Cursor"),
   },
+  PACKAGED,
   async (args) => {
     const includeCursorRule = args.includeCursorRule !== false;
     const result = buildNewProjectKickoff(includeCursorRule);
@@ -803,6 +823,7 @@ server.tool(
   "kickoffGreenfield",
   "Same payload as getNewProjectKickoff with includeCursorRule true, but **no parameters**—use when an MCP client omits or fails on getNewProjectKickoff.",
   {},
+  PACKAGED,
   async () => {
     const result = buildNewProjectKickoff(true);
     if (!result.ok) {
@@ -816,6 +837,7 @@ server.tool(
   "kickoffGreenfieldNoCursor",
   "Same as kickoffGreenfield but **without** the Cursor `.mdc` section (smaller payload when not using Cursor). No parameters.",
   {},
+  PACKAGED,
   async () => {
     const result = buildNewProjectKickoff(false);
     if (!result.ok) {
@@ -834,6 +856,7 @@ server.tool(
     "and what files belong in the customer project (`.forgetrail/workflow_tracking.json`, docs). " +
     "For a single bundled response, use getNewProjectKickoff or kickoffGreenfield instead.",
   {},
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "NEW_PROJECT_BOOTSTRAP.md");
     const content = readFile(path);
@@ -857,6 +880,7 @@ server.tool(
     "Use when the user wants the single-file Lite artifact: save to `.forgetrail/FORGETRAIL_LITE.md` or paste into chat. " +
     "Complements getNewProjectKickoff (MCP-first greenfield).",
   {},
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "FORGETRAIL_LITE.md");
     const content = readFile(path);
@@ -887,6 +911,7 @@ server.tool(
   "Returns the FORGETRAIL_LITE_UPDATES.md starter for logging Lite protocol gaps in `.forgetrail/` (§1.6). " +
     "Optional local feedback file — merge accepted entries back into upstream FORGETRAIL_LITE.md.",
   {},
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "FORGETRAIL_LITE_UPDATES.md");
     const content = readFile(path);
@@ -917,6 +942,7 @@ server.tool(
   "Returns the optional Cursor IDE rule (`.mdc`) so agents show ForgeTrail phase / next actions from `.forgetrail/workflow_tracking.json`. " +
     "Agent should write the output to `.cursor/rules/forgetrail-phase-status.mdc` when setting up a new project (Phase 1). Skip if not using Cursor.",
   {},
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "cursor-rules", "forgetrail-phase-status.mdc");
     const content = readFile(path);
@@ -948,6 +974,7 @@ server.tool(
     "and forgetrail-lessons-mcp.mdc (optional globs + tool reminders). " +
     "Bundled in getNewProjectKickoff when includeCursorRule is true; use this tool alone when adding lessons workflow to an existing project.",
   {},
+  PACKAGED,
   async () => {
     const gatePath = join(MCP_CONTENT_DIR, "cursor-rules", "forgetrail-lessons-gate.mdc");
     const mcpPath = join(MCP_CONTENT_DIR, "cursor-rules", "forgetrail-lessons-mcp.mdc");
@@ -986,6 +1013,7 @@ server.tool(
   "Returns JSON defaults for scripted Phase-2 setup (PocketBase version policy, default HTTP port, one-click launchers, pnpm script names). " +
     "Resolve PocketBase latest at install unless POCKETBASE_VERSION is pinned in .env. Prefer setup.bat/setup.sh for humans; agents run setup when possible.",
   {},
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "SCAFFOLD_INSTALL.json");
     const content = readFile(path);
@@ -1024,6 +1052,7 @@ server.tool(
     "existing app's data format, but generalizes. Humans without MCP: see TRY_FORGETRAIL.md. Feed the result into " +
     "ingestPlanArtifact to draft PHASE_1_BRIEF.md, or use alongside getGreenfieldIntakePrompt for delivery gaps.",
   {},
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "GENESIS_SPEC_PROMPT.md");
     const content = readFile(path);
@@ -1048,6 +1077,7 @@ server.tool(
     "Agent should capture answers in PHASE_1_BRIEF.md and .forgetrail/workflow_tracking.json decisions[]. " +
     "For a pre-written portable spec instead of in-session Q&A, see getGenesisSpecPrompt.",
   {},
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "GREENFIELD_INTAKE.md");
     const content = readFile(path);
@@ -1070,6 +1100,7 @@ server.tool(
   "MCP-first: instructions for continuing work in a later session when ForgeTrail is MCP-only (no _forgetrail/ folder). " +
     "Call at the start of a session after the user describes what to focus on.",
   {},
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "SESSION_RESUME_MCP.md");
     const content = readFile(path);
@@ -1092,6 +1123,7 @@ server.tool(
   "Returns starter .forgetrail/workflow_tracking.json for a new repo, with exit-criteria strings rewritten for MCP " +
     "(no _forgetrail/ paths). The agent should write this to `.forgetrail/workflow_tracking.json` and fill project metadata.",
   {},
+  PACKAGED,
   async () => {
     const json = workflowTrackingJsonForMcp();
     if (!json) {
@@ -1123,6 +1155,7 @@ server.tool(
   "After `.forgetrail/workflow_tracking.json` (and optional Cursor phase rule) is written: canonical guidance for a SHORT first reply to the user. " +
     "Suppresses noisy 'Completed setup' dumps (no raw JSON, no MCP tool list, no bootstrap section paste).",
   {},
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "POST_BOOTSTRAP_USER_MESSAGE.md");
     const content = readFile(path);
@@ -1145,6 +1178,7 @@ server.tool(
   "How to format options and next steps for users: numbered lists for ordered pipelines, bullets for parallel items, letters for pick-one. " +
     "Baked into forgetrail-phase-status.mdc for Cursor; use this tool when the rule is not loaded.",
   {},
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "USER_REPLY_FORMAT.md");
     const content = readFile(path);
@@ -1170,6 +1204,7 @@ server.tool(
     path: z.string().optional().describe("Filesystem path to .forgetrail/workflow_tracking.json (server will attempt to read)"),
     format: z.enum(["text", "json"]).optional().describe("text (default) or json"),
   },
+  PACKAGED,
   async ({ trackingJson, path, format }) => {
     let jsonText = trackingJson;
     if (!jsonText && path) {
@@ -1230,6 +1265,7 @@ server.tool(
     maxSubagents: z.number().optional().default(3),
     format: z.enum(["text", "json"]).optional().describe("text (default) or json"),
   },
+  PACKAGED,
   async ({ phase, taskDescription, maxSubagents, format }) => {
     const category = resolveSubagentPhaseCategory(phase, taskDescription);
     const examples: string[] = [];
@@ -1289,6 +1325,7 @@ server.tool(
       .describe("Current PHASE_1_BRIEF.md content if merging into an existing draft"),
     format: z.enum(["text", "json"]).optional().describe("text (default) or json"),
   },
+  PACKAGED,
   async ({ planContent, projectName, existingBrief, format }) => {
     const templatePath = join(DOCS_DIR, "PHASE_1_BRIEF.md");
     const fullTemplate = readFile(templatePath);
@@ -1363,6 +1400,7 @@ server.tool(
       .optional()
       .describe("text (default) or json for structured headless output"),
   },
+  PACKAGED,
   async ({ phase, situation, format }) => {
     if (!companionCatalog) {
       return {
@@ -1419,6 +1457,7 @@ server.tool(
   "getPlanModePatterns",
   "Returns guidance for using native agent plan modes as ForgeTrail Phase 1 (architecture). Covers Grok, Cursor, Claude, and generic plan-before-code flows.",
   {},
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "PLAN_MODE_PATTERNS.md");
     const content = readFile(path);
@@ -1446,6 +1485,7 @@ server.tool(
       .default("generic")
       .describe("Agent host: grok | claude | cursor | generic"),
   },
+  PACKAGED,
   async ({ agent }) => {
     const specificPath = join(MCP_CONTENT_DIR, `AGENT_INTEGRATION_${agent}.md`);
     let content = readFile(specificPath);
@@ -1481,6 +1521,7 @@ server.tool(
       .optional()
       .describe("Optional hint (grok | claude | cursor | generic) — currently returns the same canonical skill"),
   },
+  PACKAGED,
   async () => {
     const path = join(MCP_CONTENT_DIR, "skills", "forgetrail", "SKILL.md");
     const content = readFile(path);
