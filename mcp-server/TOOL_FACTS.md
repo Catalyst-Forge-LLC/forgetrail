@@ -26,15 +26,7 @@ tools:
       processes: false
     idempotent: true
   - name: getPhaseGuidance
-    purpose: "Return methodology guidance for a development phase (1-7), including an optional companions footer"
-    side_effects: none
-    reach:
-      filesystem: none
-      network: none
-      processes: false
-    idempotent: true
-  - name: getCompanionSuggestions
-    purpose: "Return optional companion tools for a phase or situation (does not install anything)"
+    purpose: "Return methodology guidance for a development phase (1-7)"
     side_effects: none
     reach:
       filesystem: none
@@ -178,7 +170,7 @@ tools:
       processes: false
     idempotent: true
   - name: getGreenfieldIntakePrompt
-    purpose: "Return Phase 1 structured questions about exports, tenancy, hosting, and delivery gaps"
+    purpose: "Return Phase 1 structured questions about exports, tenancy, and delivery gaps"
     side_effects: none
     reach:
       filesystem: none
@@ -241,6 +233,14 @@ tools:
       network: none
       processes: false
     idempotent: true
+  - name: getCompanionSuggestions
+    purpose: "Return optional Catalyst Forge companion tools for a ForgeTrail phase or situation"
+    side_effects: none
+    reach:
+      filesystem: none
+      network: none
+      processes: false
+    idempotent: true
   - name: getPlanModePatterns
     purpose: "Return guidance for using native agent plan modes as Phase 1"
     side_effects: none
@@ -266,8 +266,8 @@ tools:
       processes: false
     idempotent: true
 generated:
-  date: 2026-09-10
-  generator: hand-authored (tools inventory from forgetrail-mcp 0.3.5)
+  date: 2026-09-16
+  generator: hand-authored (tools inventory from forgetrail-mcp 0.3.10)
 credits:
   generated_with: https://toolfacts.dev
   built_by: "Catalyst Forge - https://www.catalystforge.com/"
@@ -282,6 +282,11 @@ credits:
 | **Status** | active |
 | **License** | Apache-2.0 |
 | **Kind** | mcp-server |
+| **Reviewed** | 2026-09-16 against forgetrail-mcp 0.3.10 (`tools/list` inventory, hand-authored) |
+
+`runAudit` returns a structured audit prompt. It does not scan the workspace or perform the audit. Following those instructions is a later host or agent action, and that later action is outside this tool's labeled side effects.
+
+This file is bound to server version 0.3.10 and the 2026-09-16 review. A later package can change tools or implementations while an old copy of this file remains. Comparing a live `tools/list` can show added, removed, or renamed tools. It cannot prove that a same-named tool still does what this label says.
 
 ## Runtime
 
@@ -307,7 +312,6 @@ None required.
 |---|---|---|---|---|---|
 | `ping` | none | none | none | no | yes |
 | `getPhaseGuidance` | none | none | none | no | yes |
-| `getCompanionSuggestions` | none | none | none | no | yes |
 | `searchLessons` | none | none | none | no | yes |
 | `getTemplate` | none | none | none | no | yes |
 | `runAudit` | none | none | none | no | yes |
@@ -333,6 +337,7 @@ None required.
 | `validateTracking` | read | scoped | none | no | yes |
 | `suggestSubagentDecomposition` | none | none | none | no | yes |
 | `ingestPlanArtifact` | none | none | none | no | yes |
+| `getCompanionSuggestions` | none | none | none | no | yes |
 | `getPlanModePatterns` | none | none | none | no | yes |
 | `getAgentIntegrationGuide` | none | none | none | no | yes |
 | `getForgeTrailSkill` | none | none | none | no | yes |
@@ -342,11 +347,10 @@ None required.
 | Tool | Purpose |
 |---|---|
 | `ping` | Connectivity check: returns ok, package version, FORGETRAIL_ROOT, and whether WORKFLOW.md was found |
-| `getPhaseGuidance` | Return methodology guidance for a development phase (1-7), including an optional companions footer |
-| `getCompanionSuggestions` | Return optional companion tools for a phase or situation (does not install anything) |
+| `getPhaseGuidance` | Return methodology guidance for a development phase (1-7) |
 | `searchLessons` | Search the ForgeTrail lesson database by keyword |
 | `getTemplate` | Return a ForgeTrail document template from docs/*.md |
-| `runAudit` | Return a structured audit prompt for the current project (does not scan the workspace itself). Following that prompt is a later host or agent step. |
+| `runAudit` | Return a structured audit prompt for the current project (does not scan the workspace itself) |
 | `getChecklist` | Return a project checklist for a milestone or the full checklist |
 | `getTrackingSchema` | Return the workflow_tracking.json schema reference |
 | `getAntiPatterns` | Return documented anti-patterns from the methodology |
@@ -361,7 +365,7 @@ None required.
 | `getForgeTrailCursorLessonsRules` | Return Cursor rules for lessons gate and MCP lessons usage |
 | `getScaffoldInstallParams` | Return JSON defaults for scripted Phase-2 setup |
 | `getGenesisSpecPrompt` | Return a copy-paste prompt for producing docs/GENESIS.md in an external LLM |
-| `getGreenfieldIntakePrompt` | Return Phase 1 structured questions about exports, tenancy, hosting, and delivery gaps |
+| `getGreenfieldIntakePrompt` | Return Phase 1 structured questions about exports, tenancy, and delivery gaps |
 | `getResumeSessionInstructions` | Return instructions for continuing work in a later MCP-only session |
 | `getInitialWorkflowTracking` | Return starter .forgetrail/workflow_tracking.json for a new repo |
 | `getPostBootstrapUserMessage` | Return canonical short first-reply guidance after bootstrap files are written |
@@ -369,11 +373,10 @@ None required.
 | `validateTracking` | Validate .forgetrail/workflow_tracking.json (inline JSON or optional filesystem path) against schema and phase rules |
 | `suggestSubagentDecomposition` | Return recommended subagent spawn parameters for a phase and task |
 | `ingestPlanArtifact` | Map an approved plan artifact into a PHASE_1_BRIEF.md draft plus decisions[] entries |
+| `getCompanionSuggestions` | Return optional Catalyst Forge companion tools for a ForgeTrail phase or situation |
 | `getPlanModePatterns` | Return guidance for using native agent plan modes as Phase 1 |
 | `getAgentIntegrationGuide` | Return tailored ForgeTrail bootstrap mappings for a specific agent host |
 | `getForgeTrailSkill` | Return the canonical forgetrail SKILL.md for skill-capable agents |
 
 ---
 *Generated with [ToolFacts](https://toolfacts.dev) · Built by [Catalyst Forge](https://www.catalystforge.com/)*
-
-[toolfacts-label]: https://toolfacts.dev/v#tf1.eNrFl1Fv2zYQx7_KgU_JoLjthmGA3rKsCbqmceBk60NRBAx1klhTPO54smsE-e7DyXLiullf9qBXmyL_v7v_HY8PZmXKN4WJtkNTmnPiBm_Z-gAfzq7hBnmFbApT4QoDJWRTmjMrNmyywLDYFGaFnD1FU5rXs19mv5rCZLHSZ1Ma68SvdE3wDmPWI06TdS2e_Dx7bQqz9LEypelcOsm7s7iP4lXNg8Gv6HrZ7h3I2XCSmBzmbAojbGNOxGJKk6XyZB4L4xgrjOJtyPo94z-9Z6xM-enzY2GwYf22fDCCATsU3pjSRIo4IGbx0eppeVwvRLrPp4ddeFY2-MqKRsgtfWwU1Vd4h3WNThSY0VbKgNa1elDtA-ZNFuxUpqOE-ndEWRMvnw8fsTCbsrYh42NhfIVdIsEophTusTCp50RDDP8edcCs1hyIJuyV7lgHWt_JqG72JVOEIx-Djwh_3syvgBgoKaIN8CwNkpX2GGxjfcwC2bXYWbCxgtTajMB9wGwei6c4pBfZR5aX2cc__y_5GcWIaiovG3AtumUJjNJzzEDLApJ1S9sgjJ4s4Hy-uHh7uzh9d3m3mM9viwFr3aK0yPBxvnh_fjn_OOsqWNsMNfWx2gdtUK41BBe9r2x0OA30YgCEDqWligI1G2hGQVATg4WxPjuMMubs6M3Jb8f7KBktu_YSc1aDT8JxM0gAaRH2Gk0YJEFlxd6r8vsNLHGzJj7MxC12KViZNgl2X3pFrh9iLqM0qJk6_Tm_-mnWfQPAfTztKy8Tq8_CvZOesQKrciAxdUkGH2liXM88uIjpCzqBo4owQyRtCzYOS1RITtYheMkY6uODPJ1pWQafp0bdIbidnrFYOj1UKCKMzHUfwvOqQ9eN3fRm6IqTIu2C_0KXH3s2Y42M2qi-hTiN4q-tCPJUtT8i7CpG7RfFn6RR1LZwFHCvyx12YqbhAvcr_IOc5qPqw7TdYN161yrUUwfIIASOUZuBj6Aath35AOYK19dbf773bkl1PSlHw4ix9hgquCeSLGwTJLsJZCvw0YW-8rGBLJYFGXbeGy7Tp4HirOdM_P20sNwCXjydMdHtYzsEm-Gl4MPaSzuC4pZj0QcE3WOAjATJsu1QkH8Md0Xb76eF_E7WQEi9DDW2lynIOk5R_E97_r7zw6QG_XB2fVJ7zgI6ouoVpnO61trgSbD7Ft41_h2yo7RRt-7d3D4KDaFgTHTA_rzs0k88bQyj0vMEe_nu9q3OqvrssfcBd2lWYiFH4YckfyV9M-TJgVQL9FsxTy1Fr-ZATaN52tFAY1M2j5_1sddHZ0Vfcrrx47-gjDXT
