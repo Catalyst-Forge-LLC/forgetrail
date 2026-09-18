@@ -31,6 +31,7 @@ const VALID_DECISION_STATUS = new Set(["active", "superseded", "revisit"]);
 
 const VALID_PHASE_STATUS = new Set([
   "not_started",
+  "pending",
   "in_progress",
   "completed",
   "revisiting",
