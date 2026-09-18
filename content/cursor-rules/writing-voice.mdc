@@ -28,6 +28,12 @@ Fill the bracketed placeholders once brand voice crystallizes (usually after sev
 - **Ban vague nouns** in marketing and narrative copy: "something," "stuff," "things" (fine in error strings). Name the thing.
 - **Ban squish intensifiers:** "strongly," "deeply," "easily," "incredibly," "very." If the sentence needs the intensifier, rewrite the sentence.
 
+## Language and locale
+
+- Default to **US English** conventions unless context indicates otherwise.
+- **Adapt to the audience:** Adapt spelling and phrasing to what is discovered about the user, team, or target audience (e.g. Commonwealth/UK English when operating in those markets).
+- **No em dashes (—) in user-facing copy:** Use a colon, comma, period, or parentheses instead.
+
 ## Named-person constraints (narratives)
 
 If real people appear in origin/brand narratives, record their hard constraints here (employer safety, public roles, verb restrictions like "no founder verbs for X") and audit after every pass. Keep narrative locks in a constraints file next to the long-form (LOCKED FRAMING / ARC / VOICE pattern).

@@ -1,31 +1,30 @@
 ---
-description: Prefer hostMatchesDomain over hostname.includes for board/ATS URL checks
+description: Prefer exact domain/suffix matching over substring includes for URL checks and SSRF hygiene
 globs:
   - src/**/*.{ts,js}
-  - outpost/**/*.{js,mjs}
   - scripts/**/*.{js,mjs,ts}
 alwaysApply: false
 ---
 
-# URL host matching
+# URL host matching and SSRF hygiene
 
-## Prefer shared helpers
+## Domain and host checks
 
-- For board / ATS / “is this LinkedIn / Indeed / Greenhouse?” decisions, use **`hostMatchesDomain` / `urlMatchesHostDomain`** from `$lib/urlHost` (Outpost: `outpost/src/urlHost.js`, keep in sync).
-- **Do not** write `hostname.includes('linkedin.com')` or `url.includes('indeed.com')` for host allow/deny. Substring checks match lookalikes (`evil-linkedin.com`, `linkedin.com.attacker.example`) and trip CodeQL `js/incomplete-url-substring-sanitization`.
+- For external integration and host allow/deny decisions, use exact domain or suffix matching (`endsWith('.example.com')` or a shared helper like `hostMatchesDomain`).
+- **Do not** write `hostname.includes('example.com')` or `url.includes('example.com')` for host allow/deny. Substring checks match attacker lookalikes (`evil-example.com`, `example.com.attacker.net`) and trip CodeQL `js/incomplete-url-substring-sanitization`.
 
 ## Parse first
 
-- Prefer `new URL(...)` then match on **`hostname`**. Keep path checks on **`pathname`** (e.g. `/jobs/view`), not on the full href string when tightening.
+- Prefer `new URL(...)` then match on **`hostname`**. Keep path checks on **`pathname`** (e.g. `/api/v1`), not on the full href string.
 
-## Outgoing fetch
+## Outgoing fetch (SSRF hygiene)
 
-- App: `assertSafeUrl` at the boundary; follow redirects with re-check (`safeFetch`).
-- Outpost: `assertPublicHttpUrl` before slot acquisition / `goto`. Align blocked hosts (localhost, private IPs, `.local` / `.internal`, credentialed URLs).
+- Validate external URLs before slot acquisition or server-side fetch.
+- Disallow access to local and private network ranges: `localhost`, `127.0.0.1`, `::1`, RFC 1918 private IPs (`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`), `.local`, `.internal`, and credentials in URLs (`user:pass@host`).
+- Follow redirects with re-validation of each redirect target.
 
 ## Schemes and sanitization
 
 - Scheme checks: **allowlist** `http:` / `https:`; do not only deny `javascript:`.
-- Tag stripping / entity decode: use shared helpers (`stripMarkupTags`, amp-last entity decode) or a parser. If a regex is extraction-only, say so in a one-line comment.
-- GitHub Actions: always set top-level `permissions:` (least privilege).
-- Never return `err.stack` or raw exception text to HTTP clients; log server-side and return stable error codes.
+- Tag stripping / entity decode: use shared parser utilities. If a regex is extraction-only, annotate it in a comment.
+- Never return `err.stack` or raw exception text to external HTTP clients; log server-side and return stable error codes.

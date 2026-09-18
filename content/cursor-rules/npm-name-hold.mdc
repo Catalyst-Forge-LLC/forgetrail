@@ -1,6 +1,6 @@
 ---
 description: Reserve an npm name with a throwaway 0.0.0 stub; the user always publishes
-alwaysApply: true
+alwaysApply: false
 ---
 
 # Initial npm name hold

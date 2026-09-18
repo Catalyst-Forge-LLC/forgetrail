@@ -233,7 +233,7 @@ Before touching files or running setup, verify the tools this protocol depends o
    - **Ask the user:** *"Git isn't installed. I can wait while you install it with `<OS-specific command>`, or we can proceed without source control for now and you can add git later. Which would you prefer?"*
 3. If the user proceeds **without git**, enter **no-git mode**: skip step 2, step 5, and the commits in step 12. Set `.forgetrail/workflow_tracking.json → project.sourceControl = "deferred"` and append a `gotchas[]` entry noting git is not yet installed. Treat "install git + run the missed commits" as a Phase 7 hardening task. Never pretend commits happened.
 4. The agent **must not install git itself** — always run the install command by asking the user to execute it, or instruct them to run it in their own terminal. System-wide installs require user consent.
-5. **Note the git version.** Assume Git 2.32+ on modern development machines. Ensure basic git configuration (name, email) exists before making baseline commits.
+5. **Check git configuration.** Ensure basic git configuration (`user.name`, `user.email`) exists before making baseline commits.
 
 **Node.js** (needed before pnpm and from step 10 onward):
 
@@ -242,7 +242,7 @@ Before touching files or running setup, verify the tools this protocol depends o
    - **Windows:** `winget install OpenJS.NodeJS.LTS` or download from <https://nodejs.org/>.
    - **macOS:** `brew install node` or the LTS installer from <https://nodejs.org/>.
    - **Linux:** distro packages (`nodejs` / `nodejs-lts`) or NodeSource / nvm — prefer **20+** to match Lite defaults (§7).
-3. **Minimum versions:** **Node 20+** recommended (Default A/B stack). **Node 16.13+** is the floor for **corepack**-based pnpm bootstrap only — if the machine is older, ask the user to upgrade Node before continuing.
+3. **Minimum version:** **Node 20+** (Active LTS). If the machine has an older Node version, ask the user to upgrade Node before continuing.
 4. The agent **must not install Node system-wide** without user consent — same as git: give one concrete command, wait, then re-check.
 
 **npm** (bundled with the official Node.js installer; needed to install pnpm when corepack is unavailable):
@@ -254,7 +254,7 @@ Before touching files or running setup, verify the tools this protocol depends o
 **pnpm** (needed from step 10 onward — install **after** Node and npm):
 
 1. Run `pnpm --version`. If it prints a version, continue.
-2. If it errors, try **corepack** first (ships with Node 16.13+):
+2. If it errors, try **corepack** first:
    - Run `corepack enable`, then `corepack prepare pnpm@latest --activate` (or the version in `packageManager` once `package.json` exists), then re-check `pnpm --version`.
 3. If corepack is unavailable or still doesn't resolve pnpm:
    - Confirm **`npm --version`** works, then ask the user to run **`npm install -g pnpm`** (may need admin / sudo). Re-check `pnpm --version`.

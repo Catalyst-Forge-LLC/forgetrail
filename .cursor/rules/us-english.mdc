@@ -1,9 +1,0 @@
----
-description: Default locale for product copy and LLM-facing prompts is US English
-alwaysApply: true
----
-
-# US English Default
-
-- Use **US English** spelling and conventions for **user-visible product copy**, in-app help, marketing strings, and **prompts** that generate user-facing text (e.g. journal summaries, suggested copy), unless the user explicitly asks for another locale.
-- When editing or generating long-form project docs meant for the same audience as the product, default to US English unless context calls for otherwise.

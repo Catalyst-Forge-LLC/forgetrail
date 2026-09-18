@@ -19,8 +19,8 @@ alwaysApply: true
 
 When describing what **the product does**, use direct verbs — not hedging **can**:
 
-- **Do:** “Resume Forge **strengthens** your file.” / “The Prospect Engine **suggests** matching roles.” / “Foreman **proposes** a run plan.”
-- **Don't:** “…**can strengthen**…” / “…**can suggest**…” when stating a shipped capability.
+- **Do:** “The pipeline **validates** each record.” / “The analyzer **identifies** bottlenecks.” / “The engine **generates** clean exports.”
+- **Don't:** “…**can validate**…” / “…**can identify**…” when stating a shipped capability.
 
 **Keep *can* when it means:**
 

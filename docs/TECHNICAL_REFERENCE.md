@@ -97,7 +97,7 @@ Document **what actually happens** when users remove data — not only the happy
 
 **Pre-release target:** inline audit at **0 UI prose not in export**; sync audit passes for shipped features.
 
-**Cursor rules:** `.cursor/rules/user-facing-content.mdc` (no spec paths in UI), `.cursor/rules/us-english.mdc` (US English default).
+**Cursor rules:** `.cursor/rules/writing-voice.mdc` (voice, theme, and locale defaults), `.cursor/rules/user-facing-content.mdc` (no spec paths in UI).
 
 ## Feature Documentation
 

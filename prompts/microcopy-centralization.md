@@ -107,7 +107,7 @@ Split **prose** (paragraphs, intros, help bodies) from **terms** (labels, toolti
 
 **User-facing content rule:** Help, onboarding, tours, toasts, and empty states must **not** mention internal spec paths or engineering jargon (see `.cursor/rules/user-facing-content.mdc`).
 
-**Locale:** Default **US English** for product copy and LLM prompts that generate user-visible text (see `.cursor/rules/us-english.mdc`).
+**Locale:** Default **US English** for product copy and LLM prompts that generate user-visible text, adapting to target audience or locale (see `.cursor/rules/writing-voice.mdc`).
 
 ---
 

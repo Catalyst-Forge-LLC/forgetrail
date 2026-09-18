@@ -30,7 +30,8 @@ The user should **never** have to ask you to commit. Treat “here is what I did
 
 ## Push and merge
 
-- **Do not** run `git push`, merge/rebase, or publish flows unless the user **explicitly** asks.
+- If IngotVault is setup (or a local `backup` mirror remote is configured), pushing to it is automatic after committing in order to preserve work.
+- **Do not** run `git push` to `origin` or upstream remotes, merge/rebase, or publish flows unless the user **explicitly** asks.
 - Read-only git is always fine: `git status`, `git diff`, `git log`, `git show`, blame, etc.
 
 ## When the user opts out

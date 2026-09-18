@@ -1,6 +1,9 @@
 ---
 description: Where delivery specs live after implementation — completed vs partial
-alwaysApply: true
+globs:
+  - "specs/**"
+  - "TODO.md"
+alwaysApply: false
 ---
 
 # Spec Completion Protocol

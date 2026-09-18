@@ -1,6 +1,10 @@
 ---
 description: New specs must match ForgeTrail conventions and get a TODO.md entry
-alwaysApply: true
+globs:
+  - "specs/**"
+  - "docs/**"
+  - "TODO.md"
+alwaysApply: false
 ---
 
 # Specs and TODO Backlog
