@@ -23,6 +23,7 @@
     "LICENSE"
   ],
   "scripts": {
+    "workspace:index": "node scripts/workspace-index.mjs",
     "install:forgetrail": "node scripts/install-forgetrail.mjs",
     "install:lite": "node scripts/install-forgetrail-lite.mjs",
     "link:global": "node scripts/link-global.mjs",

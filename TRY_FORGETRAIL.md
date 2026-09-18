@@ -61,11 +61,50 @@ Already have a long PRD? Save it as `docs/GENESIS.md` and use the kickoff line a
 
 ---
 
-## After the try: graduation ladder
+## Next step: Connect the ForgeTrail MCP server
 
-1. **Stay on Lite** for small tools and weekend builds. Enough for many projects.  
-2. **Add MCP** when you live in Cursor/Claude: `npx -y forgetrail-mcp` (set `FORGETRAIL_ROOT` to a `forgetrail` install or clone). See [mcp-server/README.md](mcp-server/README.md).  
-3. **Full `_forgetrail/` install** when you need the whole template tree on disk (offline / no MCP). `npx forgetrail install` (without `--lite`).
+Once you have verified the protocol on a first project, connecting the **ForgeTrail MCP server** is the natural upgrade:
+
+1. **Token efficiency:** Instead of pasting or re-reading the 28k-token Lite file, the agent pulls phase playbooks, templates, checklists, and anti-patterns on demand via MCP tools. Your prompt stays clean and focused on your app code.
+2. **Dynamic lessons:** The agent queries `searchLessons` and `getAntiPatterns` before large tasks, avoiding known traps across hundreds of prior sessions.
+3. **Structured validation:** `validateTracking` catches schema errors immediately.
+
+### How to connect (Cursor)
+
+Add this to `.cursor/mcp.json` in your workspace or globally in Cursor Settings:
+
+```json
+{
+  "mcpServers": {
+    "forgetrail": {
+      "command": "node",
+      "args": ["Z:/workspace/forgetrail/mcp-server/dist/index.js"],
+      "env": {
+        "FORGETRAIL_ROOT": "Z:/workspace/forgetrail"
+      }
+    }
+  }
+}
+```
+
+Or via npx (packaged release):
+
+```json
+{
+  "mcpServers": {
+    "forgetrail": {
+      "command": "npx",
+      "args": ["-y", "forgetrail-mcp"]
+    }
+  }
+}
+```
+
+### Graduation ladder
+
+1. **Lite file:** Portable protocol for weekend projects and single-turn prototypes.
+2. **MCP server:** Full tool suite with on-demand retrieval, subagent decomposition, and dynamic lessons for substantive products.
+3. **Template in repo (`_forgetrail/`):** Full offline file tree when building without internet or MCP access (`forgetrail install`).
 
 ---
 

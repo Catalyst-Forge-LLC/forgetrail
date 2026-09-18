@@ -14,6 +14,7 @@ ForgeTrail — bootstrap a project folder and run the MCP server
 
 Usage:
   forgetrail install [--lite] [options]
+  forgetrail workspace [dir]         Scan workspace and emit cross-repo status table
   forgetrail mcp <subcommand>        Build, status, ping, Cursor config
 
 Global link (one-time, from your forgetrail clone):
@@ -55,6 +56,11 @@ function main() {
 
   if (cmd === "mcp") {
     runMcpCommand(argv.slice(1));
+    return;
+  }
+
+  if (cmd === "workspace" || cmd === "index") {
+    import("./workspace-index.mjs");
     return;
   }
 

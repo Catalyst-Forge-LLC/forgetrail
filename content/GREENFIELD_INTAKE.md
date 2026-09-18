@@ -8,9 +8,16 @@ Use alongside **`getChecklist`** section `before-session-1`. That checklist cove
 
 ---
 
-## 0. Project archetype (ask or infer first)
+## 0. User goal and audience (the why before the how)
 
-- **Is this a product, an internal tool, or a one-shot?** — **product** (others will use it, possibly pay), **internal-tool** (real recurring users, no market), **one-shot** (gift, event page, demo — one occasion, then done). Often obvious from the problem statement; confirm rather than interrogate.
+- **Who is the user, and what job are they hiring this software to do?**
+- **What is the painful friction, manual workaround, or missing capability today?**
+- **What does success look like once this exists?** (The core outcome, not the implementation).
+- Anchor on intent before locking technical constraints. Record answers in `PHASE_1_BRIEF.md` §1.
+
+## 0.5 Project archetype (ask or infer next)
+
+- **Is this a product, an internal tool, or a one-shot?** (product: others will use it, possibly pay; internal-tool: real recurring users, no market; one-shot: gift, event page, demo: one occasion, then done). Often obvious from the problem statement; confirm rather than interrogate.
 - The archetype **prunes the lifecycle**: internal tools make Phase 6 optional and drop payments/business-plan criteria from Phase 7; one-shots collapse phases 5–7 into a single polish-and-ship gate. See **WORKFLOW.md §1d**.
 - Record in **`PHASE_1_BRIEF.md`**, **`decisions[]`**, and **`project.archetype`** in the tracking file, then prune the tracking template's exit criteria to match (log the pruning as a decision).
 
