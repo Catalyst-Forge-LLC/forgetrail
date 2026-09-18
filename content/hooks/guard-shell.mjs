@@ -80,9 +80,10 @@ function main() {
       return;
     }
 
-    // Verify-before-commit (Phase B hook, enabled when FORGETRAIL_VERIFY_ON_COMMIT=1 or package.json has verify)
+    // Verify-before-commit: run whenever package.json has a verify script (unless skipped via FORGETRAIL_SKIP_VERIFY=1 or --no-verify)
     if (
-      process.env.FORGETRAIL_VERIFY_ON_COMMIT === "1" &&
+      process.env.FORGETRAIL_SKIP_VERIFY !== "1" &&
+      !/\s+--no-verify\b/.test(command) &&
       hasVerifyScript(cwd)
     ) {
       try {

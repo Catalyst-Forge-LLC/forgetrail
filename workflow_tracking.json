@@ -38,6 +38,7 @@
         "README.md created (from ForgeTrail template)",
         "TODO.md created (from ForgeTrail template, seeded from PHASE_1_BRIEF §11)",
         "IDEAS.md created (from ForgeTrail template)",
+        "Runnable verify script in package.json (types + build or lint) passing cleanly",
         "Phase 2 doc scope only per WORKFLOW §1a (no premature extra templates)"
       ],
       "notes": []

@@ -136,6 +136,14 @@ and one-line fix suggestions. For each finding, include the checklist item numbe
 - [ ] Verify any template markers or placeholders are fully resolved in generated content.
 - [ ] Check that generated content sections don't repeat each other unnecessarily.
 
+### 12. Post-Deploy Smoke Verification
+
+- [ ] Fetch the live production URL (`curl -sI https://...`) and assert it returns HTTP 200 (or expected canonical redirect).
+- [ ] Confirm response HTML contains expected head tags and root elements (not an empty white screen or unhandled server crash).
+- [ ] Verify that static assets (CSS, JS bundles, favicon, logos) return HTTP 200 without CORS or MIME type errors.
+- [ ] Verify that public health check routes (e.g. `/api/health`) return HTTP 200 OK.
+- [ ] Verify live SSL certificate validity and TLS configuration.
+
 ---
 
 ## Severity Guide

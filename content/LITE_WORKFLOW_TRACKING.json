@@ -26,7 +26,8 @@
       "exitCriteria": {
         "runnableSpine": false,
         "heroFlowEndToEnd": false,
-        "contextPromptWritten": false
+        "contextPromptWritten": false,
+        "verifyScriptWorking": false
       }
     },
     "3": { "name": "Stabilize", "status": "pending", "exitCriteria": {} },

@@ -105,12 +105,20 @@ _Surfaces, empty/loading/error states, copy notes, a11y._
 
 ---
 
-## 8. Acceptance criteria
+## 8. Verifier and Acceptance Criteria
 
-_Testable. Prefer “Given / when / then” or checkbox style. The feature is not done until these pass._
+### 8.1 Verifier command
+_Exact automated command(s) that verify this feature (e.g. `pnpm run test:feature`, `pnpm run verify`, or dedicated test script). A delivery spec without a runnable verifier command fails spec review._
 
-1. Given …, when …, then …
-2. Given …, when …, then …
+```bash
+pnpm test
+```
+
+### 8.2 Acceptance criteria (boolean-checkable)
+_Testable binary pass/fail checks. Avoid vague qualifiers ("performant", "clean"). The feature is not done until each criterion evaluates to true._
+
+- [ ] Given ..., when ..., then ...
+- [ ] Given ..., when ..., then ...
 
 ---
 

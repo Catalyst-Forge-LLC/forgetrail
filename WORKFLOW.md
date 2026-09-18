@@ -28,7 +28,7 @@ These phases emerged from the actual build sequence across all sessions. They're
 
 **Entry criteria:** Architecture is confirmed. Tech choices are locked.
 
-**Exit criteria:** The app runs. You can see data on screen. Core CRUD works. The happy path functions end to end, even if roughly.
+**Exit criteria:** The app runs. You can see data on screen. Core CRUD works. The happy path functions end to end, even if roughly. A runnable `verify` script in `package.json` (or equivalent test runner) exists and passes cleanly.
 
 **What actually happened:** In a single massive turn, Claude created the SvelteKit project, installed 9 dependencies, built 4 backend services (data, scraper, LLM, docx), 4 API routes, 5 frontend components, and imported 44 existing jobs. The app was usable within one turn.
 
@@ -90,7 +90,7 @@ These phases emerged from the actual build sequence across all sessions. They're
 
 **Entry criteria:** Features are stable. You're thinking about other people using the app.
 
-**Exit criteria:** CODE_QUALITY findings are triaged. Auth works. Payments work. Documentation is consolidated and current. Error messages are user-facing, not developer-facing.
+**Exit criteria:** CODE_QUALITY findings are triaged. Auth works. Payments work. Documentation is consolidated and current. Error messages are user-facing, not developer-facing. Post-deploy smoke check verifies the live URL and asserts response codes (HTTP 200, assets resolve, zero 500 errors).
 
 **What actually happened:** Session 6 produced a 26-finding CODE_QUALITY.md, fixed PocketBase field size limits (5K default was silently truncating LLM output), fixed state propagation bugs, and added OAuth. Session 7 added Stripe billing, token usage tracking, consolidated 7 docs into 5, built a marketing landing page, and hardened fonts for ATS compatibility. Session 9 ran a comprehensive black hat security audit (prompts/black-hat-audit.md), producing a 27-finding BLACK_HAT_REPORT.md separate from CODE_QUALITY.md, implemented a full promo code system with Stripe integration, and added centralized Zod input validation across all API routes.
 

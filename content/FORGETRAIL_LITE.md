@@ -141,12 +141,12 @@ Every project flows through these phases. The agent **pauses at every phase tran
 | # | Phase | Entry | Exit |
 |---|-------|-------|------|
 | **1** | **Plan** | user has a rough idea | `docs/PHASE_1_BRIEF.md` is complete and **locked**; stack, hero flow, v1 scope, and major decisions are in `.forgetrail/workflow_tracking.json → decisions[]` |
-| **2** | **Build (spine)** | Phase 1 brief is locked | a **runnable end-to-end hero flow** exists in one pass: project init, deps installed, data path working, routes + components + hero journey wired, `CONTEXT_PROMPT.md` written by merging the brief |
+| **2** | **Build (spine)** | Phase 1 brief is locked | a **runnable end-to-end hero flow** exists in one pass: project init, deps installed, data path working, routes + components + hero journey wired, `CONTEXT_PROMPT.md` written by merging the brief, and a runnable `verify` script in `package.json` passing cleanly |
 | 3 | Stabilize | spine runs | critical bugs fixed, error paths handled, the happy path + 1–2 known sad paths are reliable |
 | 4 | Iterate | hero flow is solid | secondary features land one at a time; each complex feature has a short **delivery spec** (§3.1) before multi-file work; each ships with tests or at least a manual test note |
 | 5 | Refine | feature set feels complete | refactor for clarity, split modules, remove dead code, tighten types/validation |
 | 6 | Align | code is clean | brand, naming, copy, and UX are coherent; `README.md` matches reality |
-| 7 | Harden | product is coherent | security review, performance pass, deploy pipeline, docs for the next operator |
+| 7 | Harden | product is coherent | security review, performance pass, deploy pipeline, post-deploy live smoke check (HTTP 200, assets resolve), docs for the next operator |
 
 **Deep focus in Lite:** Phases **1** and **2**. Most projects die because the brief was skipped and the spine was half-built. Phases 3–7 are real but mostly need the user to say "let's move on" — the agent's job after Phase 2 is to keep `.forgetrail/workflow_tracking.json` current and not regress.
 
@@ -192,18 +192,24 @@ When archetype ≠ `product`, **prune** the non-applicable exit criteria in the 
 
 ## 4. Edge cases
 
-## 5. Acceptance criteria
+## 5. How to test (verifier command)
 
-1. Given …, when …, then …
+```bash
+pnpm test
+```
 
-## 6. Open questions
+## 6. Acceptance criteria (boolean-checkable)
+
+- [ ] Given ..., when ..., then ...
+
+## 7. Open questions
 
 ## Implementation summary
 
 (Filled when moving to specs/completed/)
 ```
 
-Do **not** scaffold or refactor from a vague chat request when a spec is warranted. Draft the skeleton, get a quick user nod on goals/non-goals/AC, then build. On finish: mark TODO `[x]`, fill Implementation summary, move to `specs/completed/`.
+Do **not** scaffold or refactor from a vague chat request when a spec is warranted. Draft the skeleton, ensure a runnable verifier command is present, get a quick user nod on goals/non-goals/AC, then build. A delivery spec without a runnable verifier command fails spec review. On finish: mark TODO `[x]`, fill Implementation summary, move to `specs/completed/`.
 
 ---
 
