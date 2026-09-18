@@ -32,7 +32,7 @@ Deliver a ranked trimming and migration proposal.
 
 ### 2. Overlap and Redundancy
 
-- [ ] Do multiple rules restate the same constraint (e.g. git commit formatting, trailer prohibitions, voice guidelines)?
+- [ ] Do multiple rules restate the same constraint (e.g. git commit conventions, package manager rules, voice guidelines)?
 - [ ] Do rules duplicate instructions already provided by the host environment or CLI tooling?
 - [ ] Can companion rules (e.g. Smell Check and writing-voice) be consolidated into a single coherent guide?
 
@@ -40,9 +40,9 @@ Deliver a ranked trimming and migration proposal.
 
 Can any prose rule be replaced by a deterministic hook that costs zero tokens on normal turns?
 
-- [ ] **Trailer bans:** Prose telling agents not to use `--trailer` or `Co-Authored-By` can be completely handled by a `beforeShellExecution` hook (`guard-shell.mjs`).
 - [ ] **Package manager locking:** Rules telling agents to use pnpm can be enforced by a shell guard hook when `pnpm-lock.yaml` is present.
 - [ ] **Git push restrictions:** Rules telling agents not to push can be enforced by `permission: "ask"` in a shell hook.
+- [ ] **Pre-commit verification:** Rules requiring typecheck/build before commit can be run automatically before `git commit` executes.
 - [ ] **Tracking maintenance:** Rules telling agents to read/update tracking can be replaced by `sessionStart` context injection and `afterFileEdit` tracking validation.
 
 ### 4. Skill Conversion Candidates

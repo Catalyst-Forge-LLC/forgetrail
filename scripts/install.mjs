@@ -30,7 +30,6 @@ const LITE_FILES = [
 ];
 
 const LITE_CURSOR_RULES = [
-  "forgetrail-no-trailer.mdc",
   "forgetrail-updates-log.mdc",
   "specs-and-todo.mdc",
   "spec-completion.mdc",

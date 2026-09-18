@@ -41,7 +41,7 @@ Record pattern, provider (e.g. `ollama/ibm/granite4.1:8b`), env var names, paths
 
 **External listing/article URLs (if the hero flow imports from pasted URLs):** follow **`FORGETRAIL_LITE.md` §7.2** — layered fetch and parse, **don’t blame users** for correct URLs when selectors rot, optional **single** structured **verbatim** recover from stripped page text (env-gated). Expand into **`docs/TECHNICAL_REFERENCE.md`** using the ForgeTrail template subsection on deterministic extractors vs markup drift.
 
-**Git commits:** use `git commit -F <file>` or plain `-m`; no unrequested attribution trailers (`Made-with:`, `Co-Authored-By:`, etc.). **Git 2.32.0+** (2021) supports `--trailer` natively — not a compatibility problem on current Git. **Pre-2.32 only:** if commit fails with `unknown option 'trailer'`, use `bash -c "git commit -F path/to/msg.txt"` or upgrade Git. See **`FORGETRAIL_LITE.md` §8.9**.
+**Git commits:** use `git commit -F <file>` or plain `-m` at natural stopping points with concise summaries. Verify checks pass before committing.
 
 Skip the **“copy-paste paths”** section below unless we are using a **local** ForgeTrail folder.
 

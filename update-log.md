@@ -72,6 +72,7 @@ Deterministic tool-level enforcement replaces prompt-only adherence for key inva
 - **`mcp-server/TOOL_FACTS.md`**: Registered `getForgeTrailHooks` with zero side effects.
 - **`WORKFLOW.md`**: New §1g on host safety hooks enforcement layer.
 - **`content/COMPANION_TOOLS.md` + `companion-tools.json`**: Added `never-do` situation triggering TemperPass and IngotVault.
+- **Commit trailer cleanup**: Retired legacy commit trailer bans (`--trailer`, `-c trailer.*`, `Co-Authored-By:`) and pre-2.32 Git shell-hop rules across `guard-shell.mjs`, `FORGETRAIL_LITE.md` (§0, §8.9, §12.5), and `scripts/install.mjs`. Removed obsolete `forgetrail-no-trailer.mdc`. Standardized commit guidance on clean messages, natural stopping points, and automated pre-commit verification.
 
 ### 2026-09-15 — FORGETRAIL_LITE v2.0.2 (LocalSlip how)
 

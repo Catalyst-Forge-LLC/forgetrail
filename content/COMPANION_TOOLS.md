@@ -75,7 +75,7 @@ Do not migrate a working host the user already chose.
 | `newcomer-readiness` | Pre-launch / wrap: can a newcomer use this? | [Cold-eye](https://coldeye.dev) |
 | `quality-review` | Phase 6/7: how useful, clear, and well-presented is this? | [CraftAssay](https://craftassay.dev) |
 | `hard-to-undo` | Delete data, lock persistence, rewrite git, lock a stack | [TemperPass](https://temperpass.dev) |
-| `never-do` | Destructive action, force-push, history rewrite, or prohibited trailer | [TemperPass](https://temperpass.dev), [IngotVault](https://ingotvault.dev) |
+| `never-do` | Destructive action, force-push, or history rewrite | [TemperPass](https://temperpass.dev), [IngotVault](https://ingotvault.dev) |
 | `unclear-cause` | Failure is real; cause is not earned | [Gap Last](https://gaplast.dev) |
 | `ship-label` | Product is going public or being handed off | [xFacts](https://xfacts.dev) (AppFacts and neighbors) |
 | `git-backup` | Unpushed work you cannot lose; before rebase/rewrite | [IngotVault](https://ingotvault.dev) |

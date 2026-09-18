@@ -24,7 +24,7 @@ On a **new project folder**, commands like `git status`, `git log`, or `git rev-
 1. Write kickoff artifacts first: **`.forgetrail/workflow_tracking.json`**, guardrails, optional Cursor rules.
 2. Check with `git rev-parse --is-inside-work-tree`. If it returns false or errors, run **`git init -b main`** at the repo root (or `git init` + `git branch -m main` on older Git). **Never** re-init an existing repo.
 3. Write a **minimal** `.gitignore` now — at least `node_modules/`, `.env`, `.DS_Store`. Add `.forgetrail/` **only** if you chose the gitignore branch in **`FORGETRAIL_LITE.md` §1.5** (default MCP greenfield: **commit `.forgetrail/`**).
-4. Make a **first commit** when steps 1–3 are done so the user has a clean baseline (plain `-m` or `-F`; no attribution trailers — see Rules below). Skip if the repo already had history; skip entirely in no-git mode.
+4. Make a **first commit** when steps 1–3 are done so the user has a clean baseline (plain `-m` or `-F`). Skip if the repo already had history; skip entirely in no-git mode.
 
 Do **not** treat an early missing-repo git error as blocking. Prefer **`git rev-parse --is-inside-work-tree`** over blind `git status` when you only need to know whether init is required.
 
@@ -109,7 +109,6 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 - **`.forgetrail/`** — create the directory. Write **`.forgetrail/workflow_tracking.json`** inside it (output from **`getInitialWorkflowTracking`**), then fill `project.name`, `project.created`, `project.description`, and update phases as you work. Add **`.forgetrail/`** to **`.gitignore`** if the repo may be published.
 - **`docs/GENESIS.md`** (optional but preferred on the Try path) — what-not-how product spec from **`getGenesisSpecPrompt`** / **`TRY_FORGETRAIL.md`**. If present at kickoff, ingest with **`ingestPlanArtifact`** before locking the brief.
 - **Git repo** — if `git rev-parse --is-inside-work-tree` fails, **`git init -b main`** after bootstrap files exist (see **Greenfield git**). A failed early `git status` on an empty folder is **not** an error. Add minimal **`.gitignore`** and an optional first commit before Phase 1 intake.
-- **Trailer-ban guardrails — create unconditionally, regardless of current agent.** Users switch tools mid-project. Write **`AGENTS.md`**, **`CLAUDE.md`**, and **`.forgetrail/cursor/rules/forgetrail-no-trailer.mdc`** under **`.forgetrail/`**; **symlink or copy** the `.mdc` into **`.cursor/rules/`**. Core text: no unrequested attribution in commit messages. **`git commit --trailer`** is normal on **Git 2.32+**; pre-2.32 may need a shell hop if the wrapper injects `--trailer` — see **`FORGETRAIL_LITE.md` §4.2 step 3, §8.9, §12.5**.
 - **Cursor users:** `.cursor/rules/forgetrail-phase-status.mdc` — from **`getForgeTrailCursorPhaseRule`**. **`forgetrail-lessons-gate.mdc`** + **`forgetrail-lessons-mcp.mdc`** — from **`getForgeTrailCursorLessonsRules`** or **`getNewProjectKickoff`** (lessons workflow before substantial changes).
 
 **End of Phase 1 (before scaffolding):**
@@ -144,7 +143,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 - After substantive work, **update `.forgetrail/workflow_tracking.json`**: exit criteria, `decisions`, `gotchas`, `sessions` per **`getTrackingSchema`**. Run **`validateTracking`** to catch structural drift.
 - If a problem does not converge after **~5 turns**, propose a **different approach**, not more patches.
 - **When the project ends** (shipped, delivered, shelved), run the **wrap protocol** (WORKFLOW §1e): sweep `gotchas[]` + `decisions[]` for generalizable lessons, run the propagation prompt in **Harvest mode**, set `project.status` to `"wrapped"`, and add a final `sessions[]` entry with end state and handoff pointers.
-- **Git commits:** `git commit -F <file>` or plain `-m`; no unrequested attribution trailers. **Git 2.32.0+** supports `--trailer` — focus on message policy, not Git version anxiety. **Pre-2.32 only:** `unknown option 'trailer'` → `bash -c "git commit -F …"` or upgrade Git. See **`FORGETRAIL_LITE.md` §8.9** and **`.cursor/rules/commit-messages.mdc`**.
+- **Git commits:** `git commit -F <file>` or plain `-m` at natural stopping points with concise summaries. Run verification checks prior to commit.
 
 ---
 

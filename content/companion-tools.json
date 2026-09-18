@@ -167,7 +167,7 @@
       "id": "never-do",
       "tier": "A",
       "phases": ["1", "2", "3", "4", "5", "6", "7"],
-      "trigger": "An agent attempts a destructive action, force-push, history rewrite, or prohibited trailer.",
+      "trigger": "An agent attempts a destructive action, force-push, or history rewrite.",
       "tools": [
         {
           "name": "TemperPass",

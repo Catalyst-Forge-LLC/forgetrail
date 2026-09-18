@@ -296,7 +296,7 @@ FilePress publishes Markdown. It does not replace Default-A for an interactive a
 
 ForgeTrail includes deterministic host hooks (`.forgetrail/hooks/` with `.cursor/hooks.json` and `.claude/settings.json` adapters) that enforce project rules at the tool layer rather than relying solely on prompt attention:
 
-- **Shell guards:** Blocks unrequested commit attribution trailers (`--trailer`, `-c trailer.*`, `Co-Authored-By:`), prevents package manager divergence (e.g. `npm`/`yarn` when `pnpm-lock.yaml` is present), gates `git push` on explicit user approval, and flags destructive operations (`git reset --hard`, `rm -rf`).
+- **Shell guards:** Runs pre-commit verification (`pnpm run verify`), prevents package manager divergence (e.g. `npm`/`yarn` when `pnpm-lock.yaml` is present), gates `git push` on explicit user approval, and flags destructive operations (`git reset --hard`, `rm -rf`).
 - **Edit guards:** Requires user confirmation before mutating environment secrets (`.env*`) or canonical/completed specs (`specs/completed/**`).
 - **Session start injection:** Dynamically injects project name, current phase, open exit criteria, and last session notes on session start, retiring always-on static phase rules.
 - **Tracking validation:** Validates `.forgetrail/workflow_tracking.json` on save, returning issues immediately.

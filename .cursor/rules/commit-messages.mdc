@@ -33,11 +33,7 @@ The body should usually include:
 
 **Trivial commits** (typo in one comment, single-string copy fix) may use a subject-only message; everything else should use subject + body.
 
-**Git version (trailer support):** `git commit --trailer` is built in from **Git 2.32.0** (2021). On **2.32+** (normal for current dev machines), `--trailer` is not a compatibility problem — Git understands it. On **pre-2.32** Git only, a wrapper or agent that passes `--trailer` can fail with `error: unknown option 'trailer'`.
-
-**ForgeTrail policy (all Git versions):** Do not add attribution trailers the user did not ask for (`Made-with:`, `Co-Authored-By:`, etc.) — use plain `-m` or `git commit -F path/to/msg.txt` (subject, blank line, body). Remove `--trailer`, `-c trailer.*`, and `interpret-trailers` from commands **you** author. Prefer `-F` for multi-line bodies on Windows/Cursor shells.
-
-**Legacy Git only (pre-2.32):** If your command is already clean and commit still fails with `unknown option 'trailer'`, the IDE shell wrapper may be injecting `--trailer` at argv level. Use a shell hop the wrapper cannot rewrite: `bash -c "git commit -F path/to/msg.txt"` or `cmd.exe //c "cd /d Z:\\path\\to\\repo && git commit -F path\\to\\msg.txt"`. Upgrading to **Git 2.32+** is the durable fix on old installs. See `content/FORGETRAIL_LITE.md` §8.9.
+**Git verification:** Ensure tests and typechecks pass (`pnpm run verify` or project test suite) before committing. Host hooks enforce pre-commit verification automatically when configured. Use `git commit -F path/to/msg.txt` for clean multi-line bodies on Windows/Cursor shells.
 
 ## Tone
 

@@ -12,9 +12,9 @@ Used for **both** ForgeTrail Lite file bootstrap and **MCP greenfield** kickoff.
 | `FORGETRAIL_LITE.md` | Full Lite kickoff protocol (Lite file bootstrap only) |
 | `FORGETRAIL_LITE_UPDATES.md` | Optional local feedback log (§1.6) — merge accepted items upstream |
 | `AGENTS.md` | Agent instructions — cite or symlink for your IDE |
-| `CLAUDE.md` | Claude Code trailer override |
+| `CLAUDE.md` | Claude Code instructions |
 | `IDEAS.md` | Backlog parking lot |
-| `cursor/rules/*.mdc` | Cursor rule snippets (no-trailer, updates-log, …) |
+| `cursor/rules/*.mdc` | Cursor rule snippets (updates-log, …) |
 
 ## Wire up Cursor (one-time)
 
@@ -24,7 +24,6 @@ From the **repo root**:
 
 ```bash
 mkdir -p .cursor/rules
-ln -sf ../../.forgetrail/cursor/rules/forgetrail-no-trailer.mdc .cursor/rules/
 ln -sf ../../.forgetrail/cursor/rules/forgetrail-updates-log.mdc .cursor/rules/
 ```
 
@@ -32,7 +31,6 @@ ln -sf ../../.forgetrail/cursor/rules/forgetrail-updates-log.mdc .cursor/rules/
 
 ```bat
 mkdir .cursor\rules 2>nul
-mklink .cursor\rules\forgetrail-no-trailer.mdc ..\.forgetrail\cursor\rules\forgetrail-no-trailer.mdc
 mklink .cursor\rules\forgetrail-updates-log.mdc ..\.forgetrail\cursor\rules\forgetrail-updates-log.mdc
 ```
 

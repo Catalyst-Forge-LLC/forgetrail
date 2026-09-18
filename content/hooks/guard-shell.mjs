@@ -50,37 +50,8 @@ function main() {
     return;
   }
 
-  // 1. Check for prohibited git commit trailers (Lite §0 Rule 1)
+  // 1. Verify-before-commit: run whenever package.json has a verify script (unless skipped via FORGETRAIL_SKIP_VERIFY=1 or --no-verify)
   if (/\bgit\s+commit\b/.test(command)) {
-    if (/\s+(--trailer\b|-c\s+trailer\.)/.test(command)) {
-      console.log(
-        JSON.stringify({
-          permission: "deny",
-          user_message:
-            "ForgeTrail Lite §0: Unrequested attribution trailers (--trailer, -c trailer.*) are prohibited in commit commands.",
-          agent_message:
-            "Do not use --trailer or -c trailer.* in git commit commands.",
-        })
-      );
-      return;
-    }
-
-    if (
-      /(Co-Authored-By|Made-with|Signed-off-by|Change-Id):/i.test(command)
-    ) {
-      console.log(
-        JSON.stringify({
-          permission: "deny",
-          user_message:
-            "ForgeTrail Lite §0: Unrequested attribution trailers (Co-Authored-By, Made-with, Signed-off-by, Change-Id) are prohibited in commit messages.",
-          agent_message:
-            "Remove attribution trailers from commit message.",
-        })
-      );
-      return;
-    }
-
-    // Verify-before-commit: run whenever package.json has a verify script (unless skipped via FORGETRAIL_SKIP_VERIFY=1 or --no-verify)
     if (
       process.env.FORGETRAIL_SKIP_VERIFY !== "1" &&
       !/\s+--no-verify\b/.test(command) &&
