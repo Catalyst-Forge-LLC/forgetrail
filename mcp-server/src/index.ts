@@ -647,6 +647,8 @@ server.tool(
       spec: "spec-review",
       "second-family": "second-family-critique",
       "second-family-critique": "second-family-critique",
+      "rules-audit": "rules-audit",
+      rules: "rules-audit",
       propagate: "propagate-to-forgetrail",
       "skill-library": "engineering-skill-library",
       handoff: "engineering-skill-library",

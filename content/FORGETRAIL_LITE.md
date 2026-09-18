@@ -39,6 +39,8 @@ If your host supports hooks (Cursor `hooks.json`, Claude Code `settings.json`), 
 
 Any of the three works. A + C together is best. For a written pre-Phase-1 spec, A + **`docs/GENESIS.md`** is the Try path.
 
+**Context budget note:** This protocol is comprehensive (~28k tokens) and is designed to guide initial kickoff and reference. Do not load this entire file into always-on context on every subsequent turn. After Phase 2 spine scaffolding, persistent project state lives in `.forgetrail/workflow_tracking.json` (~300–1,100 tokens), `CONTEXT_PROMPT.md`, and active feature specs. On Cursor and Claude Code, host hooks in `.forgetrail/hooks/` enforce rules deterministically without consuming prompt budget.
+
 ---
 
 ## 1.5 ForgeTrail workspace — `.forgetrail/` (Lite and MCP)
