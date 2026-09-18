@@ -6,7 +6,8 @@ Cursor agents (Composer, Agent mode) map well to ForgeTrail via MCP, **Cursor ru
 
 | Cursor capability | ForgeTrail use |
 |-------------------|--------------|
-| ForgeTrail MCP tools | Methodology delivery — `getNewProjectKickoff`, `getPhaseGuidance`, `getCompanionSuggestions`, `runAudit`, `validateTracking`, etc. |
+| ForgeTrail MCP tools | Methodology delivery: `getNewProjectKickoff`, `getPhaseGuidance`, `getCompanionSuggestions`, `runAudit`, `validateTracking`, etc. |
+| Cursor hooks (`.cursor/hooks.json`) | Host-level enforcement: commit attribution bans, pnpm lock, git push approval, phase context injection on session start |
 | `.cursor/rules/*.mdc` | Persistent phase + lessons discipline from kickoff (`forgetrail-phase-status`, `forgetrail-lessons-gate`, `forgetrail-lessons-mcp`) |
 | Plan mode (`SwitchMode` / plan) | Phase 1 architecture — explore before edits; export to `PHASE_1_BRIEF.md` on approval (`getPlanModePatterns`) |
 | Task / subagents (`explore`, `generalPurpose`, `shell`) | Parallel audits (Phase 7), research (Phase 4), spikes (Phase 5) — call `suggestSubagentDecomposition` first |

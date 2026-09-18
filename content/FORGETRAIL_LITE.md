@@ -1,6 +1,6 @@
 # ForgeTrail Lite — portable kickoff for any agentic chat
 
-> **ForgeTrail Lite v2.0.2**
+> **ForgeTrail Lite v2.1.0**
 > © Catalyst Forge, LLC — [www.catalystforge.com](https://www.catalystforge.com)
 > Part of the **ForgeTrail** open-source methodology ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) in the upstream ForgeTrail repo).
 >
@@ -23,7 +23,7 @@ Read this block **before you touch a tool.** These are the footguns that most co
 3. **Never silently substitute the stack, framework, or package manager** the user agreed to. If a constraint forces a deviation, ask first and log in `decisions[]`. Full rule: §7 + §8.
 4. **Never dump a wall of intake questions** into one message. Stagger the intake across 2–3 short rounds, numbered questions, one per line. Full rule: §5 + §9.
 
-If any of these feel tempting mid-session, stop and re-read the referenced rule.
+If your host supports hooks (Cursor `hooks.json`, Claude Code `settings.json`), these rules are backed by host-level guards in `.forgetrail/hooks/` that deny prohibited trailers, block unrequested pushes, and enforce package manager locking. On hosts without hooks, these rules are prompt-level only. Do not violate them.
 
 ---
 
@@ -55,6 +55,7 @@ ForgeTrail agent artifacts (protocol, tracking, platform rules) live in **`.forg
   CLAUDE.md                 ← §12.5 snippet (Claude Code)
   IDEAS.md                  ← backlog parking lot
   workflow_tracking.json    ← §11 starter / live tracking
+  hooks/                    ← host safety hooks (scripts + configs)
   cursor/rules/             ← §12.5 Cursor rule snippets
     forgetrail-no-trailer.mdc
     forgetrail-updates-log.mdc
@@ -112,6 +113,7 @@ The **human** only needs to do two things: copy ForgeTrail Lite into **`.forgetr
 | `.forgetrail/AGENTS.md` | **Agent** (from §12 snippet) | First session, right after reading this file |
 | `.forgetrail/cursor/rules/forgetrail-no-trailer.mdc` | **Agent** (from §12.5 snippet) | First session — symlink/copy to `.cursor/rules/` for Cursor |
 | `.forgetrail/cursor/rules/forgetrail-updates-log.mdc` | **Agent** (from §12.6 snippet) | First session — symlink/copy to `.cursor/rules/` for Cursor |
+| `.forgetrail/hooks/` + `.cursor/hooks.json` | **Agent** (from upstream `content/hooks/`) | First session — host-level safety and tracking enforcement |
 | `.forgetrail/FORGETRAIL_LITE_UPDATES.md` | **Agent** (from upstream template) | Optional — when logging Lite protocol gaps (§1.6) |
 | `.forgetrail/workflow_tracking.json` | **Agent** (from §11 starter) | First session |
 | `docs/FORGETRAIL_PROGRESS.md` | **Agent** (template + refreshed on phase changes / status script) | Phase 2+ (§4.6) |
@@ -309,6 +311,7 @@ Log anything non-obvious in **`gotchas[]`** (e.g. *"Playwright browsers installe
    2. **`.forgetrail/cursor/rules/forgetrail-no-trailer.mdc`** — use the §12.5 snippet verbatim. **Symlink or copy** into `.cursor/rules/` so Cursor loads it.
    3. **`.forgetrail/CLAUDE.md`** — use the §12.5 snippet (the same Markdown body; the file name is what Claude Code auto-loads). Overrides Claude Code's `Co-Authored-By: Claude` trailer injection. Harmless in non-Claude tools.
    4. **`.forgetrail/cursor/rules/forgetrail-updates-log.mdc`** — use the §12.6 snippet verbatim. **Symlink or copy** into `.cursor/rules/` so Cursor reminds agents when to update `FORGETRAIL_LITE_UPDATES.md` (§1.6). Optional: copy the upstream **`FORGETRAIL_LITE_UPDATES.md`** starter into `.forgetrail/` when you expect protocol feedback during the project.
+   5. **`.forgetrail/hooks/` and `.cursor/hooks.json`** — install host safety hooks (`content/hooks/`) into `.forgetrail/hooks/` and copy `cursor-hooks.json` to `.cursor/hooks.json`. On Cursor, this enforces commit attribution bans, pnpm lock consistency, and git push gating at the tool level, and injects live phase context at session start. For Claude Code, add `claude-settings-hooks.json` into `.claude/settings.json`.
    If any of these already exists and its content conflicts with the Lite defaults, **do not overwrite** — flag the conflict to the user and ask how to reconcile. Log the reconciliation decision in `decisions[]`. On **pre-2.32 Git**, rule files cannot stop argv-level `--trailer` injection (§8.9) — use the shell hop or upgrade Git.
 4. **Create `.forgetrail/workflow_tracking.json`** if it does not exist, using the starter block in §11. Fill `project.name`, `project.created` (today's date), and a one-line `project.description` from whatever the user has already said.
 5. **If git was initialized in step 2**, make the first commit now so the user has a clean baseline. **What lands in the commit depends on §1.5:** if **committing `.forgetrail/`**, steps 3–4 artifacts are included; if **gitignoring `.forgetrail/`**, only `.gitignore` (and any `.cursor/rules/` copies) — the workspace stays local-only and that is expected, not a mistake. Example: `git add -A && git commit -m "chore: ForgeTrail Lite bootstrap"`. Use a **plain `-m` message only** — do **not** use `--trailer`, `-c trailer.*`, or `git interpret-trailers` (see §8 rule 9). Skip this step if the repo already had history — do not squash or amend what's there. Skip entirely if the user is in no-git mode (§4.1).
@@ -1017,7 +1020,7 @@ Save this as `.forgetrail/AGENTS.md` so agents that auto-load it (Codex, Cursor,
 
 ```markdown
 <!--
-  Agent protocol based on ForgeTrail Lite v2.0.2.
+  Agent protocol based on ForgeTrail Lite v2.1.0.
   © Catalyst Forge, LLC — www.catalystforge.com
   Licensed under Apache License 2.0 (upstream ForgeTrail repo).
 -->
@@ -1209,4 +1212,4 @@ ForgeTrail Lite covers the shape of a project. The full **ForgeTrail MCP server*
 
 ---
 
-**ForgeTrail Lite v2.0.2** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+**ForgeTrail Lite v2.1.0** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

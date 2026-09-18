@@ -200,6 +200,20 @@ function buildNewProjectKickoff(
     }
   }
 
+  const cursorHooksPath = join(MCP_CONTENT_DIR, "hooks", "cursor-hooks.json");
+  const cursorHooks = readFile(cursorHooksPath);
+  if (cursorHooks) {
+    text +=
+      "\n\n---\n\n" +
+      "## Host safety hooks (Cursor `.cursor/hooks.json` & Claude Code)\n\n" +
+      "ForgeTrail hooks enforce git push approval, commit attribution bans (Lite §0), pnpm consistency, and tracking validation at the tool level.\n\n" +
+      "Write `.cursor/hooks.json`:\n\n" +
+      "```json\n" +
+      cursorHooks.trim() +
+      "\n```\n\n" +
+      "Hook scripts reside in `.forgetrail/hooks/` (call `getForgeTrailHooks` for script contents if not bootstrapped via CLI).\n";
+  }
+
   return { ok: true, text };
 }
 
@@ -1001,6 +1015,58 @@ server.tool(
           "\n\n---\n\n" +
           "## `.cursor/rules/forgetrail-lessons-mcp.mdc`\n\n" +
           mcp.trim(),
+      }],
+    };
+  }
+);
+
+// -- Tool: getForgeTrailHooks ----------------------------------------------
+
+server.tool(
+  "getForgeTrailHooks",
+  "Returns the ForgeTrail host safety hooks bundle (.cursor/hooks.json, claude-settings-hooks.json, and the .forgetrail/hooks/ scripts). Enforces git push approval, commit attribution rules, pnpm consistency, and tracking validation at the tool level.",
+  {
+    host: z
+      .enum(["cursor", "claude", "all"])
+      .optional()
+      .default("all")
+      .describe("Target host: cursor | claude | all (default)"),
+  },
+  PACKAGED,
+  async ({ host }) => {
+    const hooksDir = join(MCP_CONTENT_DIR, "hooks");
+    const cursorConfig = readFile(join(hooksDir, "cursor-hooks.json")) || "";
+    const claudeConfig = readFile(join(hooksDir, "claude-settings-hooks.json")) || "";
+    const guardShell = readFile(join(hooksDir, "guard-shell.mjs")) || "";
+    const guardEdit = readFile(join(hooksDir, "guard-edit.mjs")) || "";
+    const sessionStart = readFile(join(hooksDir, "session-start.mjs")) || "";
+    const validateTracking = readFile(join(hooksDir, "validate-tracking.mjs")) || "";
+    const validateTrackingCore = readFile(join(hooksDir, "validate-tracking-core.mjs")) || "";
+    const sessionStop = readFile(join(hooksDir, "session-stop.mjs")) || "";
+    const readme = readFile(join(hooksDir, "README.md")) || "";
+
+    let text = "# ForgeTrail Host Safety Hooks\n\n";
+
+    if (host === "cursor" || host === "all") {
+      text += "## Cursor configuration: write to `.cursor/hooks.json`\n\n```json\n" + cursorConfig.trim() + "\n```\n\n";
+    }
+    if (host === "claude" || host === "all") {
+      text += "## Claude Code configuration: add to `.claude/settings.json`\n\n```json\n" + claudeConfig.trim() + "\n```\n\n";
+    }
+
+    text += "## Hook Scripts: write into `.forgetrail/hooks/`\n\n";
+    text += "### `.forgetrail/hooks/guard-shell.mjs`\n\n```javascript\n" + guardShell.trim() + "\n```\n\n";
+    text += "### `.forgetrail/hooks/guard-edit.mjs`\n\n```javascript\n" + guardEdit.trim() + "\n```\n\n";
+    text += "### `.forgetrail/hooks/session-start.mjs`\n\n```javascript\n" + sessionStart.trim() + "\n```\n\n";
+    text += "### `.forgetrail/hooks/validate-tracking.mjs`\n\n```javascript\n" + validateTracking.trim() + "\n```\n\n";
+    text += "### `.forgetrail/hooks/validate-tracking-core.mjs`\n\n```javascript\n" + validateTrackingCore.trim() + "\n```\n\n";
+    text += "### `.forgetrail/hooks/session-stop.mjs`\n\n```javascript\n" + sessionStop.trim() + "\n```\n\n";
+    text += "### `.forgetrail/hooks/README.md`\n\n" + readme.trim() + "\n";
+
+    return {
+      content: [{
+        type: "text" as const,
+        text,
       }],
     };
   }

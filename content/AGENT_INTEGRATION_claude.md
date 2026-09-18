@@ -6,8 +6,9 @@ Claude-based coding agents integrate with ForgeTrail through MCP, extended plann
 
 | Capability | ForgeTrail use |
 |------------|--------------|
-| ForgeTrail MCP | `getNewProjectKickoff`, `getPhaseGuidance`, `getCompanionSuggestions`, `runAudit`, `searchLessons`, `validateTracking` |
-| Extended planning / "plan before code" | Phase 1 — produce a reviewable plan artifact; lock `PHASE_1_BRIEF.md` before scaffolding (`getPlanModePatterns`) |
+| ForgeTrail MCP | `getNewProjectKickoff`, `getPhaseGuidance`, `getCompanionSuggestions`, `runAudit`, `searchLessons`, `validateTracking`, `getForgeTrailHooks` |
+| Settings hooks (`.claude/settings.json`) | Host-level enforcement: commit attribution bans, pnpm lock, tracking validation |
+| Extended planning / "plan before code" | Phase 1: produce a reviewable plan artifact; lock `PHASE_1_BRIEF.md` before scaffolding (`getPlanModePatterns`) |
 | gstack slash commands (optional) | Sprint execution inside phases — see WORKFLOW §1b; persist outcomes in tracking |
 | Subagents / agent teams (when available) | Parallel audits and research — `suggestSubagentDecomposition` |
 | Project `CLAUDE.md` / `AGENTS.md` | Trailer-ban + methodology pointers from kickoff `.forgetrail/` copies |

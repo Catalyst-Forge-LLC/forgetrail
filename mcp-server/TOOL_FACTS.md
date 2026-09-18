@@ -265,6 +265,14 @@ tools:
       network: none
       processes: false
     idempotent: true
+  - name: getForgeTrailHooks
+    purpose: "Return host safety hooks bundle (.cursor/hooks.json, claude-settings-hooks.json, and .forgetrail/hooks/ scripts)"
+    side_effects: none
+    reach:
+      filesystem: none
+      network: none
+      processes: false
+    idempotent: true
 generated:
   date: 2026-09-16
   generator: hand-authored (tools inventory from forgetrail-mcp 0.3.10)
@@ -341,6 +349,7 @@ None required.
 | `getPlanModePatterns` | none | none | none | no | yes |
 | `getAgentIntegrationGuide` | none | none | none | no | yes |
 | `getForgeTrailSkill` | none | none | none | no | yes |
+| `getForgeTrailHooks` | none | none | none | no | yes |
 
 **Purpose lines**
 
@@ -377,6 +386,7 @@ None required.
 | `getPlanModePatterns` | Return guidance for using native agent plan modes as Phase 1 |
 | `getAgentIntegrationGuide` | Return tailored ForgeTrail bootstrap mappings for a specific agent host |
 | `getForgeTrailSkill` | Return the canonical forgetrail SKILL.md for skill-capable agents |
+| `getForgeTrailHooks` | Return host safety hooks bundle (.cursor/hooks.json, claude-settings-hooks.json, and .forgetrail/hooks/ scripts) |
 
 ---
 *Generated with [ToolFacts](https://toolfacts.dev) · Built by [Catalyst Forge](https://www.catalystforge.com/)*

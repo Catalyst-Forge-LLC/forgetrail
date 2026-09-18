@@ -164,6 +164,24 @@
       ]
     },
     {
+      "id": "never-do",
+      "tier": "A",
+      "phases": ["1", "2", "3", "4", "5", "6", "7"],
+      "trigger": "An agent attempts a destructive action, force-push, history rewrite, or prohibited trailer.",
+      "tools": [
+        {
+          "name": "TemperPass",
+          "homepage": "https://temperpass.dev",
+          "offer": "TemperPass acts as the confirmation gate before hard-to-undo actions proceed."
+        },
+        {
+          "name": "IngotVault",
+          "homepage": "https://ingotvault.dev",
+          "offer": "IngotVault takes an immutable local snapshot before risky git operations or rewrites."
+        }
+      ]
+    },
+    {
       "id": "unclear-cause",
       "tier": "A",
       "phases": ["3"],

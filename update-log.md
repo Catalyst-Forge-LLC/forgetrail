@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-09-18 | **Host safety hooks + FORGETRAIL_LITE v2.1.0:** deterministic enforcement in `.forgetrail/hooks/` with Cursor and Claude Code adapters. Lite §0 backed by tool-level deny/ask/validate guards. New MCP tool `getForgeTrailHooks`. CLI installer and kickoff generate hooks. Companion mapping gains `never-do` situation. |
 | 2026-09-15 | **FORGETRAIL_LITE v2.0.2:** LocalSlip FilePress/Vite recipes in §2 (intake + A-local FilePress one-liners). Lite-only agents get the how without the mapping file. |
 | 2026-09-15 | **LocalSlip how:** companion mapping now includes FilePress and Vite recipes. Drop leftover `ensure-lease.mjs` mentions. Do not add the `localslip` package just to read a port. |
 | 2026-09-14 | **Lockfile advisory pins + CodeQL scanner hygiene:** Dependabot High on site/tool lockfiles is a nested pin (`sharp` `0.35.4`, `fast-uri` `3.1.7`, `cookie@<0.7.0` → `0.7.2`, `brace-expansion` `5.0.9`), not a framework upgrade. CodeQL `/\/+$/` is a trailing-slash walk. No GHSA for first-wave scanner noise. |
@@ -59,6 +60,18 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-09-18: Host safety hooks + FORGETRAIL_LITE v2.1.0
+
+Deterministic tool-level enforcement replaces prompt-only adherence for key invariant rules.
+
+- **`content/hooks/`**: Host-neutral scripts (`guard-shell.mjs`, `guard-edit.mjs`, `session-start.mjs`, `validate-tracking.mjs`, `validate-tracking-core.mjs`, `session-stop.mjs`) plus Cursor (`cursor-hooks.json`) and Claude Code (`claude-settings-hooks.json`) adapters.
+- **`content/FORGETRAIL_LITE.md`**: v2.1.0 bump. §0 rewritten with tool-level backstop statement. §1.5 file tree and §2 tables include `.forgetrail/hooks/` and `.cursor/hooks.json`. §4.2 step 3 includes hooks installation.
+- **`scripts/install.mjs`**: Lite and full installer copy hooks and write `.cursor/hooks.json`.
+- **`mcp-server/src/index.ts`**: New `getForgeTrailHooks` tool. `getNewProjectKickoff` includes host safety hooks guidance.
+- **`mcp-server/TOOL_FACTS.md`**: Registered `getForgeTrailHooks` with zero side effects.
+- **`WORKFLOW.md`**: New §1g on host safety hooks enforcement layer.
+- **`content/COMPANION_TOOLS.md` + `companion-tools.json`**: Added `never-do` situation triggering TemperPass and IngotVault.
 
 ### 2026-09-15 — FORGETRAIL_LITE v2.0.2 (LocalSlip how)
 

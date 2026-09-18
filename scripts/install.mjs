@@ -36,6 +36,18 @@ const LITE_CURSOR_RULES = [
   "spec-completion.mdc",
 ];
 
+const HOOK_FILES = [
+  "guard-shell.mjs",
+  "guard-edit.mjs",
+  "session-start.mjs",
+  "validate-tracking.mjs",
+  "validate-tracking-core.mjs",
+  "session-stop.mjs",
+  "cursor-hooks.json",
+  "claude-settings-hooks.json",
+  "README.md",
+];
+
 export function runInstallForgetrail(rawArgv, { defaultToCwd = false } = {}) {
   const args = parseInstallArgs(rawArgv);
   if (args.help) return { help: INSTALL_FULL_HELP };
@@ -67,10 +79,25 @@ export function runInstallForgetrail(rawArgv, { defaultToCwd = false } = {}) {
     );
   }
 
+  const hooksSrc = join(FORGETRAIL_ROOT, "content", "hooks");
+  const hooksDest = join(target, ".forgetrail", "hooks");
+  ensureDir(hooksDest, args.dryRun);
+  for (const hookFile of HOOK_FILES) {
+    copyPath(join(hooksSrc, hookFile), join(hooksDest, hookFile), opts);
+  }
+  const cursorDir = join(target, ".cursor");
+  ensureDir(cursorDir, args.dryRun);
+  copyPath(
+    join(hooksSrc, "cursor-hooks.json"),
+    join(cursorDir, "hooks.json"),
+    opts
+  );
+
   console.log("\nDone.");
   console.log("  Methodology:  _forgetrail/WORKFLOW.md");
   console.log("  First chat:   _forgetrail/INITIAL_PROMPT.md");
   console.log("  Tracking:     .forgetrail/workflow_tracking.json");
+  console.log("  Hooks:        .forgetrail/hooks/ (enforced via .cursor/hooks.json)");
   return { target, mode: "full" };
 }
 
@@ -109,6 +136,21 @@ export function runInstallLite(rawArgv, { defaultToCwd = false } = {}) {
     );
   }
 
+  const hooksSrc = join(contentDir, "hooks");
+  const hooksDest = join(forgetrailDir, "hooks");
+  ensureDir(hooksDest, args.dryRun);
+  for (const hookFile of HOOK_FILES) {
+    copyPath(join(hooksSrc, hookFile), join(hooksDest, hookFile), opts);
+  }
+
+  const cursorDir = join(target, ".cursor");
+  ensureDir(cursorDir, args.dryRun);
+  copyPath(
+    join(hooksSrc, "cursor-hooks.json"),
+    join(cursorDir, "hooks.json"),
+    opts
+  );
+
   if (args.withGenesisStub) {
     const genesisDest = join(target, "docs", "GENESIS.md");
     ensureDir(join(target, "docs"), args.dryRun);
@@ -118,6 +160,7 @@ export function runInstallLite(rawArgv, { defaultToCwd = false } = {}) {
   console.log("\nDone.");
   console.log("  Protocol:  .forgetrail/FORGETRAIL_LITE.md");
   console.log("  Tracking:  .forgetrail/workflow_tracking.json (lite-1 schema)");
+  console.log("  Hooks:     .forgetrail/hooks/ (enforced via .cursor/hooks.json)");
   if (args.withGenesisStub) {
     console.log("  Genesis:   docs/GENESIS.md (stub — replace with your spec)");
     console.log("  Next:      see TRY_FORGETRAIL.md in the ForgeTrail repo");
