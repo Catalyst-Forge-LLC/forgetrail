@@ -35,7 +35,7 @@ The same recipe lives in [TRY_FORGETRAIL.md](https://github.com/Catalyst-Forge-L
 
 Required on this path: the Lite file, a Genesis spec or the §5 intake, tracking, and a Phase 1 brief you approve. Situational: Node (only if you use the CLI), MCP, and a full template tree.
 
-The CLI can place the Lite file. The agent creates `.forgetrail/workflow_tracking.json`. That write is not automatic.
+The CLI can place the Lite file and a starter `.forgetrail/workflow_tracking.json`. The agent creates or fills in tracking. Those writes are not automatic.
 
 ## Graduation
 

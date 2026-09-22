@@ -19,7 +19,7 @@ The human pasted the kickoff line from [TRY_FORGETRAIL.md](../../TRY_FORGETRAIL.
 3. Logged one decision and one gotcha.
 4. Stopped after the human approved the brief. No application scaffold yet.
 
-The CLI, if used instead of a hand copy, only writes the Lite file and an optional Genesis stub. It does not update tracking, decisions, or sessions. Those writes depend on the agent following the protocol.
+The CLI, if used instead of a hand copy, writes the Lite file, a starter tracking file, hook scripts, and an optional Genesis stub. It does not fill in phases, decisions, or sessions. Those writes depend on the agent following the protocol.
 
 ### What was left unfinished
 
@@ -99,7 +99,7 @@ That is the trail: phase flags, a decision, a gotcha, and a `nextSession` line. 
 | --- | --- | --- |
 | `.forgetrail/FORGETRAIL_LITE.md` | Human copy, or `forgetrail install --lite` | The file copy is automatic once you run install. Following it is not. |
 | `docs/GENESIS.md` | Human, or `--with-genesis-stub` plus later edits | Stub only if you asked the CLI for it. |
-| `.forgetrail/workflow_tracking.json` | The agent, on first kickoff and after substantive work | No. Empty tracking after a busy session is a protocol miss. |
+| `.forgetrail/workflow_tracking.json` | The agent, on first kickoff and after substantive work. `forgetrail install --lite` places an empty starter. | No. Empty tracking after a busy session is a protocol miss. |
 | `docs/PHASE_1_BRIEF.md` | The agent, then the human approves | No. |
 | `decisions[]`, `gotchas[]`, `sessions[]` | The agent | No. The protocol tells the agent to append. The host does not enforce it. |
 

@@ -26,9 +26,10 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec in any AI chat, 
 4. **Add ForgeTrail Lite**  
    - **Copy:** save [`content/FORGETRAIL_LITE.md`](content/FORGETRAIL_LITE.md) as `.forgetrail/FORGETRAIL_LITE.md` in your project, **or**  
    - **CLI** (Node 20+):  
-     `npx forgetrail install --lite`  
+     `pnpm dlx forgetrail install --lite`  
      Stub for Genesis too:  
-     `npx forgetrail install --lite --with-genesis-stub`
+     `pnpm dlx forgetrail install --lite --with-genesis-stub`  
+     The CLI also writes a starter tracking file and Cursor hooks, and skips files that already exist.
 
 5. **Save your spec as `docs/GENESIS.md`**  
    Create `docs/` if needed. That path is the canonical handoff for ForgeTrail (not the repo root).
@@ -66,7 +67,7 @@ Already have a long PRD? Save it as `docs/GENESIS.md` and use the kickoff line a
 Once you have verified the protocol on a first project, connecting the **ForgeTrail MCP server** is the natural upgrade:
 
 1. **Token efficiency:** Instead of pasting or re-reading the 28k-token Lite file, the agent pulls phase playbooks, templates, checklists, and anti-patterns on demand via MCP tools. Your prompt stays clean and focused on your app code.
-2. **Dynamic lessons:** The agent queries `searchLessons` and `getAntiPatterns` before large tasks, avoiding known traps across hundreds of prior sessions.
+2. **Dynamic lessons:** The agent queries `searchLessons` and `getAntiPatterns` before large tasks, avoiding traps recorded in first-party Catalyst Forge projects.
 3. **Structured validation:** `validateTracking` catches schema errors immediately.
 
 ### How to connect (Cursor)

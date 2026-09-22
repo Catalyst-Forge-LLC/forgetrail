@@ -10,9 +10,9 @@
 
 **Forge the path. Keep the trail.**
 
-Keep project decisions, development state, and lessons in the repository so your next AI-assisted session can continue with context.
+ForgeTrail gives your coding agent a method: seven phases, each with exit criteria, and a pause for your approval before the agent moves on. As it works, the agent records the phase, decisions, and gotchas in your repository, so a new chat days later starts from that record instead of from zero.
 
-After one sitting you should have `.forgetrail/workflow_tracking.json` with the phase you are in, a decision, and a `nextSession` line. A labeled two-session walk-through is in [`content/examples/two-session-continuity.md`](content/examples/two-session-continuity.md).
+In session one, the agent drafts a Phase 1 brief, you approve it, and the agent logs the stack decision and a note for next time. In session two, a fresh chat reads that record, skips the settled questions, finishes the open Phase 1 item, and asks to move into Phase 2 with that phase's guidance. The record is `.forgetrail/workflow_tracking.json`. Labeled walk-through: [`content/examples/two-session-continuity.md`](content/examples/two-session-continuity.md).
 
 **Docs:** [forgetrail.dev/docs](https://forgetrail.dev/docs) · **Site:** [forgetrail.dev](https://forgetrail.dev)
 
@@ -31,8 +31,8 @@ The shortest supported first task is: create tracking, draft `docs/PHASE_1_BRIEF
 | Path | Who uses it | What it is |
 | --- | --- | --- |
 | **Lite** | First path | One protocol file. The agent writes tracking. |
-| **CLI** (`forgetrail`) | Node.js 20+ | Installer. Writes Lite or the full template tree. Does not run the agent. |
-| **MCP** (`forgetrail-mcp`) | Cursor or Claude | Methodology tools. Tracking still lives in the app repo. |
+| **CLI** (`forgetrail`) | Node.js 20+ | Installer. Writes Lite with a starter tracking file and Cursor hooks, or the full template tree. Skips files that already exist. Does not run the agent. |
+| **MCP** (`forgetrail-mcp`) | Cursor or Claude | Phase guidance, templates, and lessons search. Tracking still lives in the app repo. |
 
 ```bash
 pnpm dlx forgetrail install --lite --with-genesis-stub
@@ -42,7 +42,9 @@ MCP: `npx -y forgetrail-mcp` with `FORGETRAIL_ROOT` set. Prefer `pnpm dlx` on Wi
 
 ## What you get
 
-A 7-phase playbook, a live `.forgetrail/workflow_tracking.json`, and templates pre-loaded with first-party production lessons. Each project leaves a trail of decisions, gotchas, and breadcrumbs that future work follows. Those lesson notes are not independent adoption evidence. Flags, MCP, and the phase table live in the [docs](https://forgetrail.dev/docs).
+A 7-phase playbook, a live `.forgetrail/workflow_tracking.json`, and templates pre-loaded with first-party production lessons. Each project leaves a trail of decisions, gotchas, and breadcrumbs that future work follows. Those lesson notes are not independent adoption evidence.
+
+Optional hooks in [`content/hooks/`](content/hooks/README.md) load the current phase at session start in Cursor or Claude Code, validate tracking edits, and check for a session note at session stop. The agent still does the writing. Flags, MCP, and the phase table live in the [docs](https://forgetrail.dev/docs).
 
 <!-- xfacts-label -->
 

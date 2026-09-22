@@ -1,14 +1,30 @@
 ---
 title: ForgeTrail
-description: Keep project decisions, development state, and lessons in the repository so your next AI-assisted session can continue with context.
+description: A development method for agent-assisted builds. Seven phases with approval gates, and the project's phase, decisions, and lessons kept in the repository so the next session picks up where the last one stopped.
 order: 0
 ---
 
 **Forge the path. Keep the trail.**
 
-Keep project decisions, development state, and lessons in the repository so your next AI-assisted session can continue with context. ForgeTrail is a methodology encoded in files your agent reads, follows, and updates. It is not a library, a SaaS, or a plugin.
+ForgeTrail gives your coding agent a method: seven phases, each with exit criteria, and a pause for your approval before the agent moves to the next one. As it works, the agent records the phase, the decisions, and the gotchas in your repository, so a new chat days later starts from that record instead of from zero. ForgeTrail ships as files your agent reads and follows, plus an optional installer, MCP server, and hooks. It is not a library or a SaaS.
 
-After one sitting you should have a live `.forgetrail/workflow_tracking.json` with the phase you are in, a decision, and a line that tells the next chat what to do.
+## Two sessions
+
+A fictional example: **desk-stamp**, a weekend CLI that stamps today's date on markdown notes.
+
+**Session one.** You write a short spec and paste the kickoff line. The agent drafts the Phase 1 brief, asks about the gaps, and waits. You approve it. The agent records the phase, the decision to keep everything on disk with no database, a Windows install gotcha, and a note for next time: agree the first stamp command, then scaffold.
+
+**Session two, days later.** You open a fresh chat in the same folder and say "continue from tracking." The agent reads the record first. It does not reopen the database question. It asks only about the first stamp command, the last open Phase 1 item. Once you agree, it asks to move to Phase 2 and follows that phase's guidance: scaffold the app, wire the main flow end to end, and add a passing `verify` script.
+
+<div class="cta-row">
+  <a class="cta cta-primary" href="/try">Try ForgeTrail Lite</a>
+  <a class="cta cta-secondary" href="/docs">Read the docs</a>
+  <a class="cta cta-secondary" href="https://github.com/Catalyst-Forge-LLC/forgetrail">View on GitHub</a>
+</div>
+
+## What the agent writes
+
+The record is `.forgetrail/workflow_tracking.json` in your project. A shortened excerpt from the end of session one:
 
 ```json
 {
@@ -28,13 +44,7 @@ After one sitting you should have a live `.forgetrail/workflow_tracking.json` wi
 }
 ```
 
-That excerpt is labeled and shortened from the [two-session example](/docs/continuity). A new chat in the same folder reads the file instead of reconstructing the plan from memory.
-
-<div class="cta-row">
-  <a class="cta cta-primary" href="/try">Try ForgeTrail Lite</a>
-  <a class="cta cta-secondary" href="/docs">Read the docs</a>
-  <a class="cta cta-secondary" href="https://github.com/Catalyst-Forge-LLC/forgetrail">View on GitHub</a>
-</div>
+The agent writes these entries because the protocol tells it to. The optional hooks back that up in Cursor and Claude Code: they load the current phase at session start and check for a session note at session stop. The full example, with the gotcha and the phase flags, is on [Continuity](/docs/continuity).
 
 ## Start with Lite
 
@@ -47,12 +57,12 @@ You do not have to run all seven phases. Lite is enough for a small tool. The sh
 | Path | Who uses it | What it is |
 | --- | --- | --- |
 | **Lite** | Anyone with a coding agent that reads files | One protocol file. The agent writes tracking. |
-| **CLI** (`forgetrail`) | People with Node.js 20+ who want files placed | Installer. Writes Lite or the full template tree. Does not run the agent. |
-| **MCP** (`forgetrail-mcp`) | Cursor or Claude users who want tools in the IDE | Methodology tools. Tracking still lives in the app repo. |
+| **CLI** (`forgetrail`) | People with Node.js 20+ who want files placed | Installer. Writes Lite with a starter tracking file and Cursor hooks, or the full template tree. Skips files that already exist. Does not run the agent. |
+| **MCP** (`forgetrail-mcp`) | Cursor or Claude users who want tools in the IDE | Phase guidance, templates, and lessons search. Tracking still lives in the app repo. |
 
 Do not add `forgetrail` to an app's `dependencies`. The trail is the files in your project.
 
-Lessons shipped in Lite and in MCP search are first-party notes from Catalyst Forge production work. They are not independent adoption evidence. [Continuity](/docs/continuity) shows one decision and one gotcha changing the next session.
+Lessons shipped in Lite and in MCP search are first-party notes from Catalyst Forge production work. They are not independent adoption evidence.
 
 Flags, the phase table, and install details live in the [docs](/docs).
 

@@ -8,17 +8,11 @@ Requires **Node.js 20+** for the CLI and MCP. The [Try](/docs/try) path does not
 
 ## CLI
 
-Prefer `pnpm dlx` on Windows (npm 12 `npx forgetrail` may fail to spawn the bin).
-
 ```bash
-pnpm dlx forgetrail@0.3.0 install --lite --with-genesis-stub
+pnpm dlx forgetrail install --lite --with-genesis-stub
 ```
 
-or:
-
-```bash
-npx forgetrail install --lite --with-genesis-stub
-```
+`npx forgetrail install --lite --with-genesis-stub` works on macOS and Linux. On Windows, npm 12 `npx forgetrail` may fail to spawn the bin, so use `pnpm dlx`.
 
 Global:
 
@@ -27,7 +21,7 @@ pnpm add -g forgetrail
 forgetrail install --lite
 ```
 
-That writes `.forgetrail/FORGETRAIL_LITE.md` into the **current app folder**. Use a new empty project. Do not run it inside a clone of this methodology repo.
+That writes into the **current app folder**: `.forgetrail/FORGETRAIL_LITE.md`, a starter `.forgetrail/workflow_tracking.json` (skip with `--skip-tracking`), hook scripts in `.forgetrail/hooks/`, and `.cursor/hooks.json`. Existing files are skipped unless you pass `--force`. Preview with `--dry-run`. Use a new empty project. Do not run it inside a clone of this methodology repo.
 
 ## MCP
 

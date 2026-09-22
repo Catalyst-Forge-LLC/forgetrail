@@ -2,11 +2,11 @@
 title: Introduction
 ---
 
-**ForgeTrail** keeps project decisions, development state, and lessons in the repository so the next AI-assisted session can continue with context.
+**ForgeTrail** gives your coding agent a development method, seven phases with exit criteria and approval gates, and keeps the project's phase, decisions, and lessons in the repository so the next session picks up where the last one stopped.
 
 **Forge the path. Keep the trail.**
 
-Most AI coding sessions forget everything when you close the tab. ForgeTrail keeps the phase you are in, the decisions you made, and the gotchas you hit inside the app repo.
+Most AI coding sessions forget everything when you close the tab. ForgeTrail tells the agent what each phase needs before it moves on, and keeps the phase you are in, the decisions you made, and the gotchas you hit inside the app repo.
 
 It is not a library, a SaaS, or a plugin. It is a methodology encoded into files your agent reads, follows, and updates. Distilled from Catalyst Forge production work.
 
@@ -18,7 +18,7 @@ After a first sitting you should see:
 - `.forgetrail/workflow_tracking.json`
 - `docs/GENESIS.md` and, once drafted, `docs/PHASE_1_BRIEF.md`
 
-The installer can place the Lite file. The agent writes tracking, the brief, decisions, and session notes. Those updates are not automatic. Empty tracking after a busy session is a protocol miss.
+The installer can place the Lite file, a starter tracking file, and hooks. The agent fills in tracking and writes the brief, decisions, and session notes. Those updates are not automatic. Empty tracking after a busy session is a protocol miss.
 
 A labeled two-session walk-through, including a `lite-1` excerpt, is on [Continuity](/docs/continuity).
 

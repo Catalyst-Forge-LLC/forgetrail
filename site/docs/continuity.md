@@ -17,7 +17,7 @@ ForgeTrail keeps state in the **app** repo, not in a hosted project database.
 | `docs/GENESIS.md` | What to build, not how |
 | `docs/PHASE_1_BRIEF.md` | Locked plan the next session must not silently reopen |
 
-The CLI can write the Lite file and an optional Genesis stub. The agent writes tracking, the brief, decisions, and session notes. Those updates are not automatic.
+The CLI can write the Lite file, a starter tracking file, the hook scripts, and an optional Genesis stub. The agent fills in tracking and writes the brief, decisions, and session notes. Those updates are not automatic.
 
 ## Session 1, then a closed chat
 
@@ -79,8 +79,8 @@ The files above are the product. The three install paths are ways to get the pro
 
 | Path | Who uses it | Host needs | What it writes |
 | --- | --- | --- | --- |
-| **Lite** (recommended first) | Anyone with a coding agent that can read files | A new empty project folder. Node is optional. | A protocol file you copy, or the same file via the CLI. The agent then creates tracking. |
-| **CLI** (`forgetrail`) | People who want the installer to place files | Node.js 20+ | Lite, or the full template tree. It does not run the agent. |
+| **Lite** (recommended first) | Anyone with a coding agent that can read files | A new empty project folder. Node is optional. | A protocol file you copy, or the same file via the CLI. The agent then creates or fills in tracking. |
+| **CLI** (`forgetrail`) | People who want the installer to place files | Node.js 20+ | Lite with a starter tracking file and Cursor hooks, or the full template tree. It skips files that already exist and does not run the agent. |
 | **MCP** (`forgetrail-mcp`) | People who want methodology tools inside Cursor or Claude | Node.js 20+, an MCP client, and `FORGETRAIL_ROOT` | Nothing in the app except what the agent writes after calling tools. Tracking still lives in `.forgetrail/workflow_tracking.json`. |
 
 Stay on Lite for a small tool. Add MCP when you want searchable lessons and phase playbooks in the IDE. Use a full `forgetrail install` (no `--lite`) only when you want the whole template tree on disk.
