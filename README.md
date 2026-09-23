@@ -65,3 +65,5 @@ pnpm site:dev
 Site (FilePress + docs mount): `pnpm ship`.
 
 Apache-2.0 · [Catalyst Forge LLC](https://catalystforge.com)
+
+[See the rest of the Catalyst Forge shelf.](https://catalystforge.com/tools/)
