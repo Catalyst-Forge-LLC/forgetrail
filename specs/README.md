@@ -15,6 +15,12 @@ This folder holds **ForgeTrail methodology and meta-documentation** — not cust
 
 Canonical docs use `**Spec kind:** Canonical reference` in the header and track **catalog/evolution state**, not a delivery lifecycle. They stay in `canonical/` and evolve over time.
 
+## Draft
+
+| Document | Summary |
+|----------|---------|
+| `app-ledger-spec-pack-v0.1.0/` | AppLedger format plus ForgeTrail and xFacts adoption. Implementation repo is the sibling `appledger`. Not started. |
+
 ## In progress
 
 | Document | Summary |
