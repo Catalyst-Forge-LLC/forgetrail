@@ -1,5 +1,5 @@
 ---
-title: A place for the next session to start.
+title: Guide your agent through building solid software, and keep the trail between sessions.
 description: A development method for agent-assisted builds. Seven phases with approval gates, and the project's phase, decisions, and lessons kept in the repository so the next session picks up where the last one stopped.
 order: 0
 ---
