@@ -9,7 +9,7 @@ export default defineFilepressConfig({
 	url: 'https://forgetrail.dev',
 	author: 'Catalyst Forge LLC',
 	tagline: 'Forge the path. Keep the trail.',
-	lede: 'A persistent development system for building software with AI agents.',
+	lede: 'Phase · decisions · next session',
 	homePage: 'home',
 	logo: '/logo.png',
 	ogImage: '/logo.png',

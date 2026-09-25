@@ -1,14 +1,18 @@
 ---
-title: ForgeTrail
+title: Forge the path
 description: A development method for agent-assisted builds. Seven phases with approval gates, and the project's phase, decisions, and lessons kept in the repository so the next session picks up where the last one stopped.
 order: 0
 ---
 
-**Forge the path. Keep the trail.**
-
 ForgeTrail gives your next coding session a place to start. It keeps the phase, decisions, and handoff in your repository so an agent can read them when you resume.
 
 Start with Lite for a small project. Add the full templates or MCP when you need them. You do not have to run all seven phases to try the method. ForgeTrail ships as files your agent reads and follows, plus an optional installer, MCP server, and hooks. It is not a library or a SaaS.
+
+<div class="cta-row">
+  <a class="cta cta-primary" href="/try">Try ForgeTrail Lite</a>
+  <a class="cta cta-secondary" href="/docs">Read the docs</a>
+  <a class="cta cta-secondary" href="https://github.com/Catalyst-Forge-LLC/forgetrail">View on GitHub</a>
+</div>
 
 ## Two sessions
 
@@ -17,12 +21,6 @@ A fictional example: **desk-stamp**, a weekend CLI that stamps today's date on m
 **Session one.** You write a short spec and paste the kickoff line. The agent drafts the Phase 1 brief, asks about the gaps, and waits. You approve it. The agent records the phase, the decision to keep everything on disk with no database, a Windows install gotcha, and a note for next time: agree the first stamp command, then scaffold.
 
 **Session two, days later.** You open a fresh chat in the same folder and say "continue from tracking." The agent reads the record first. It does not reopen the database question. It asks only about the first stamp command, the last open Phase 1 item. Once you agree, it asks to move to Phase 2 and follows that phase's guidance: scaffold the app, wire the main flow end to end, and add a passing `verify` script.
-
-<div class="cta-row">
-  <a class="cta cta-primary" href="/try">Try ForgeTrail Lite</a>
-  <a class="cta cta-secondary" href="/docs">Read the docs</a>
-  <a class="cta cta-secondary" href="https://github.com/Catalyst-Forge-LLC/forgetrail">View on GitHub</a>
-</div>
 
 ## What the agent writes
 
