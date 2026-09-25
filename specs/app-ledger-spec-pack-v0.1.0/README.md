@@ -2,6 +2,8 @@
 
 Version: 0.1.0 proposal, 2026-09-25. Owner: Catalyst Forge. Domain: AppLedger.dev, acquired by the owner. This pack defines a proposed implementation, not shipped behavior.
 
+Implementation of the format checker has started in [Catalyst-Forge-LLC/appledger](https://github.com/Catalyst-Forge-LLC/appledger). That repository holds the canonical `spec/` and `schemas/`. This copy remains the ForgeTrail-side adoption record. Edit the format there, then refresh this pack when ForgeTrail's own migration changes.
+
 ## The move
 
 AppLedger becomes the open, durable application record used natively by ForgeTrail. ForgeTrail replaces overlapping project tracking with AppLedger and maintains applicable xFacts records and labels throughout development. xFacts schemas retain ownership of their specialized declarations. The application owns its record independently of the agent, editor, and development method.
