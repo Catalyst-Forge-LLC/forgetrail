@@ -36,7 +36,7 @@
 	--accent: #c2410c;
 	--accent-strong: #9a3412;
 	--accent-wash: rgba(194, 65, 12, 0.1);
-	--measure: 42rem;
+	--measure: 60rem;
 	--measure-wide: 69rem;
 	--font-sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 	--font-serif: 'Source Serif 4', Georgia, 'Iowan Old Style', serif;
@@ -73,6 +73,21 @@ html body {
 		radial-gradient(800px 420px at 100% 0%, color-mix(in srgb, var(--accent-strong) 12%, transparent), transparent 52%),
 		linear-gradient(180deg, #fff8e8 0%, var(--bg) 42%, #ead9b0 100%);
 	background-attachment: fixed;
+}
+
+main.wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: transparent;
+}
+
+.home-page,
+.static-page,
+main.wrap > article {
+	width: min(var(--measure), 100%);
+	max-width: var(--measure);
+	background: transparent;
 }
 
 .home-page .page-header h1 {
@@ -284,7 +299,7 @@ header.site-header .site-nav a.nav-github:hover {
 	font-weight: 600;
 	letter-spacing: -0.035em;
 	line-height: 1.05;
-	max-width: 16ch;
+	max-width: none;
 	margin: 0;
 }
 
