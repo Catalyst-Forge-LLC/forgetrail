@@ -17,7 +17,7 @@ ForgeTrail keeps state in the **app** repo, not in a hosted project database.
 | `docs/GENESIS.md` | What to build, not how |
 | `docs/PHASE_1_BRIEF.md` | Locked plan the next session must not silently reopen |
 
-The CLI can write the Lite file, a starter tracking file, the hook scripts, and an optional Genesis stub. The agent fills in tracking and writes the brief, decisions, and session notes. Those updates are not automatic.
+ForgeTrail instructs the agent to read tracking, preserve approved decisions, and pause at approval gates. The agent must write the handoff. The CLI can write the Lite file, a starter tracking file, the hook scripts, and an optional Genesis stub. The agent fills in tracking and writes the brief, decisions, and session notes. Those updates are not automatic. Optional hooks enforce only the checks documented for their supported host.
 
 ## Session 1, then a closed chat
 

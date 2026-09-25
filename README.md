@@ -10,7 +10,9 @@
 
 **Forge the path. Keep the trail.**
 
-ForgeTrail gives your coding agent a method: seven phases, each with exit criteria, and a pause for your approval before the agent moves on. As it works, the agent records the phase, decisions, and gotchas in your repository, so a new chat days later starts from that record instead of from zero.
+ForgeTrail gives your next coding session a place to start. It keeps the phase, decisions, and handoff in your repository so an agent can read them when you resume. Start with Lite for a small project. You do not have to run all seven phases to try the method.
+
+ForgeTrail instructs the agent to read tracking, preserve approved decisions, and pause at approval gates. The agent must write the handoff. Those updates are not automatic. Optional hooks enforce the checks documented for their supported host.
 
 In session one, the agent drafts a Phase 1 brief, you approve it, and the agent logs the stack decision and a note for next time. In session two, a fresh chat reads that record, skips the settled questions, finishes the open Phase 1 item, and asks to move into Phase 2 with that phase's guidance. The record is `.forgetrail/workflow_tracking.json`. Labeled walk-through: [`content/examples/two-session-continuity.md`](content/examples/two-session-continuity.md).
 

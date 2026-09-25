@@ -6,7 +6,9 @@ order: 0
 
 **Forge the path. Keep the trail.**
 
-ForgeTrail gives your coding agent a method: seven phases, each with exit criteria, and a pause for your approval before the agent moves to the next one. As it works, the agent records the phase, the decisions, and the gotchas in your repository, so a new chat days later starts from that record instead of from zero. ForgeTrail ships as files your agent reads and follows, plus an optional installer, MCP server, and hooks. It is not a library or a SaaS.
+ForgeTrail gives your next coding session a place to start. It keeps the phase, decisions, and handoff in your repository so an agent can read them when you resume.
+
+Start with Lite for a small project. Add the full templates or MCP when you need them. You do not have to run all seven phases to try the method. ForgeTrail ships as files your agent reads and follows, plus an optional installer, MCP server, and hooks. It is not a library or a SaaS.
 
 ## Two sessions
 
@@ -44,7 +46,7 @@ The record is `.forgetrail/workflow_tracking.json` in your project. A shortened 
 }
 ```
 
-The agent writes these entries because the protocol tells it to. The optional hooks back that up in Cursor and Claude Code: they load the current phase at session start and check for a session note at session stop. The full example, with the gotcha and the phase flags, is on [Continuity](/docs/continuity).
+ForgeTrail instructs the agent to read tracking, preserve approved decisions, and pause at approval gates. The agent must write the handoff. Those tracking updates are not automatic. Optional hooks enforce the checks documented for Cursor and Claude Code: they load the current phase at session start and check for a session note at session stop. The full example is on [Continuity](/docs/continuity).
 
 ## Start with Lite
 
