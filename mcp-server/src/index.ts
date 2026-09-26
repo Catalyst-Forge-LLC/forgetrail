@@ -50,7 +50,6 @@ const DOCS_DIR = join(FORGETRAIL_ROOT, "docs");
 const PROMPTS_DIR = join(FORGETRAIL_ROOT, "prompts");
 const WORKFLOW_PATH = join(FORGETRAIL_ROOT, "WORKFLOW.md");
 const TRACKING_SCHEMA_PATH = join(FORGETRAIL_ROOT, "TRACKING_SCHEMA.md");
-const WORKFLOW_TRACKING_PATH = join(FORGETRAIL_ROOT, "workflow_tracking.json");
 const MCP_CONTENT_DIR = join(FORGETRAIL_ROOT, "content");
 
 /** Default getTemplate mode: `shell` (IP-safe) unless FORGETRAIL_TEMPLATE_DEFAULT_MODE=full */
@@ -92,31 +91,17 @@ function listDir(dir: string, ext = ".md"): string[] {
   }
 }
 
-/** Starter tracking JSON with _forgetrail/ paths rewritten for MCP-only repos */
-function workflowTrackingJsonForMcp(): string {
-  const raw = readFile(WORKFLOW_TRACKING_PATH);
-  if (!raw) {
-    return "";
-  }
-  return raw
-    .replace(
-      / \(from _forgetrail\/docs\/ template\)/g,
-      " (via ForgeTrail MCP getTemplate — use the template name matching the doc, e.g. CONTEXT_PROMPT)"
-    )
-    .replace(
-      / \(from _forgetrail\/prompts\/black-hat-audit\.md\)/g,
-      " (via ForgeTrail MCP runAudit with type black-hat)"
-    )
-    .replace(
-      / \(_forgetrail\/prompts\/docs-alignment-audit\.md\)/g,
-      " (ForgeTrail MCP runAudit with type docs-alignment)"
-    );
-}
+const LEDGER_INIT =
+  "Do **not** write `.forgetrail/workflow_tracking.json`.\n\n" +
+  "Create an AppLedger at `appledger/`:\n\n" +
+  "1. `appledger/manifest.yaml` — `format: appledger`, `format_version: 0.1.0`, a `ledger_id`, an `application_id`, `repositories` with `root: .`, `record_roots: [records]`, and profile `forgetrail` version `0.1.0` at `profiles/forgetrail.yaml`.\n" +
+  "2. `appledger/profiles/forgetrail.yaml` — `profile: forgetrail`, `profile_version: 0.1.0`, `archetype` (`product`, `internal-tool`, or `one-shot`), `project_status: active`, and one `plan` phase instance with `status: in_progress`. Criteria stay `pending` until evidence exists. Do not mark later phases completed.\n" +
+  "3. An application record and a session record under `appledger/records/`. Decisions are decision records, not a JSON array.\n\n" +
+  "If the `appledger` command is installed, run `appledger check` after writing. There is no separate init command. If a legacy `workflow_tracking.json` already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep both.\n";
 
 /**
- * Single-call greenfield kickoff: same material as getNewProjectBootstrap +
- * getInitialWorkflowTracking + getPostBootstrapUserMessage + optional Cursor rules
- * (phase status + lessons gate + lessons MCP detail).
+ * Single-call greenfield kickoff: bootstrap, ledger initialization, post-bootstrap
+ * user message, and optional Cursor rules.
  */
 function buildNewProjectKickoff(
   includeCursorRule: boolean
@@ -129,7 +114,6 @@ function buildNewProjectKickoff(
 
   const bootstrap = readFile(bootstrapPath);
   const postBoot = readFile(postPath);
-  const json = workflowTrackingJsonForMcp();
 
   if (!bootstrap) {
     return {
@@ -142,9 +126,6 @@ function buildNewProjectKickoff(
       ok: false,
       text: "POST_BOOTSTRAP_USER_MESSAGE.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
     };
-  }
-  if (!json) {
-    return { ok: false, text: "workflow_tracking.json not found under FORGETRAIL_ROOT." };
   }
 
   const intro =
@@ -163,11 +144,9 @@ function buildNewProjectKickoff(
     "## Bootstrap methodology\n\n" +
     bootstrap.trim() +
     "\n\n---\n\n" +
-    "## `.forgetrail/workflow_tracking.json`\n\n" +
-    "Create **`.forgetrail/`** if missing. Adjust `project` fields. Maintain per `getTrackingSchema`. Do **not** paste this JSON to the user.\n\n" +
-    "```json\n" +
-    json.trim() +
-    "\n```\n\n---\n\n" +
+    "## AppLedger\n\n" +
+    LEDGER_INIT +
+    "\n\n---\n\n" +
     "## Post-bootstrap user message\n\n" +
     postBoot.trim();
 
@@ -759,8 +738,7 @@ server.tool(
 
 server.tool(
   "getTrackingSchema",
-  "Get the workflow_tracking.json schema reference (customer path: `.forgetrail/workflow_tracking.json`). Use this to understand how to " +
-    "read and update the project tracking file (phases, decisions, gotchas, sessions).",
+  "Get the project-record reference. Phase, decisions, sessions, and gotchas live in appledger/. The legacy workflow_tracking.json shape is documented only so an existing file can be migrated, not so a new one is written.",
   {},
   PACKAGED,
   async () => {
@@ -797,7 +775,7 @@ server.tool(
 server.tool(
   "getProgressiveDocSchedule",
   "Returns WORKFLOW.md §1a: which ForgeTrail doc templates to create in each phase. " +
-    "Phase 1 = PHASE_1_BRIEF + `.forgetrail/workflow_tracking.json` decisions; Phase 2 = merge brief into CONTEXT_PROMPT + README + TODO + `.forgetrail/IDEAS.md` + full app spine; later phases add templates when warranted.",
+    "Phase 1 = PHASE_1_BRIEF plus decision records in appledger/; Phase 2 = merge brief into CONTEXT_PROMPT + README + TODO + `.forgetrail/IDEAS.md` + full app spine; later phases add templates when warranted.",
   {},
   PACKAGED,
   async () => {
@@ -818,7 +796,7 @@ server.tool(
 
 server.tool(
   "getNewProjectKickoff",
-  "One-call greenfield setup: bootstrap + starter .forgetrail/workflow_tracking.json + post-bootstrap user-message guidance + optional Cursor rules " +
+  "One-call greenfield setup: bootstrap + appledger/ initialization (no workflow_tracking.json) + post-bootstrap user-message guidance + optional Cursor rules " +
     "(phase status + lessons gate + lessons MCP detail). " +
     "Prefer this over calling getNewProjectBootstrap, getInitialWorkflowTracking, getPostBootstrapUserMessage, getForgeTrailCursorPhaseRule, and getForgeTrailCursorLessonsRules separately. " +
     "If your client does not list this tool, call kickoffGreenfield (identical bundle, no parameters).",
@@ -873,7 +851,7 @@ server.tool(
   "getNewProjectBootstrap",
   "MCP-first: full instructions to start a greenfield project WITHOUT copying ForgeTrail into the repo. " +
     "Tells the agent which phases to run, which MCP tools to call for templates/checklists/scaffolding, " +
-    "and what files belong in the customer project (`.forgetrail/workflow_tracking.json`, docs). " +
+    "and what files belong in the customer project (`appledger/`, docs, `.forgetrail/` hooks). " +
     "For a single bundled response, use getNewProjectKickoff or kickoffGreenfield instead.",
   {},
   PACKAGED,
@@ -959,7 +937,7 @@ server.tool(
 
 server.tool(
   "getForgeTrailCursorPhaseRule",
-  "Returns the optional Cursor IDE rule (`.mdc`) so agents show ForgeTrail phase / next actions from `.forgetrail/workflow_tracking.json`. " +
+  "Returns the optional Cursor IDE rule (`.mdc`) so agents show ForgeTrail phase and next actions from appledger/profiles/forgetrail.yaml. " +
     "Agent should write the output to `.cursor/rules/forgetrail-phase-status.mdc` when setting up a new project (Phase 1). Skip if not using Cursor.",
   {},
   PACKAGED,
@@ -979,7 +957,7 @@ server.tool(
         type: "text" as const,
         text:
           "Write the following to `.cursor/rules/forgetrail-phase-status.mdc` (create directories if needed). " +
-          "This rule is always-on (`alwaysApply: true`) and nudges the agent to append a compact phase footer from `.forgetrail/workflow_tracking.json`.\n\n" +
+          "This rule is always-on (`alwaysApply: true`) and nudges the agent to append a compact phase footer from appledger/profiles/forgetrail.yaml.\n\n" +
           content,
       }],
     };
@@ -1146,7 +1124,7 @@ server.tool(
   "getGreenfieldIntakePrompt",
   "Phase 1 helper: structured questions about exports (PDF/DOCX/PPTX, etc.), tenancy (e.g. consultants with many clients), " +
     "hybrid vs full spec, compliance tier, hero flow, and registrar/DNS/git/hosting. Complements getChecklist(before-session-1). " +
-    "Agent should capture answers in PHASE_1_BRIEF.md and .forgetrail/workflow_tracking.json decisions[]. " +
+    "Agent should capture answers in PHASE_1_BRIEF.md and appledger decision records. Do not write workflow_tracking.json. " +
     "For a pre-written portable spec instead of in-session Q&A, see getGenesisSpecPrompt.",
   {},
   PACKAGED,
@@ -1192,29 +1170,17 @@ server.tool(
 
 server.tool(
   "getInitialWorkflowTracking",
-  "Returns starter .forgetrail/workflow_tracking.json for a new repo, with exit-criteria strings rewritten for MCP " +
-    "(no _forgetrail/ paths). The agent should write this to `.forgetrail/workflow_tracking.json` and fill project metadata.",
+  "Deprecated name. Does not return a tracking file to write. Tells the agent to initialize appledger/ and not to create workflow_tracking.json.",
   {},
   PACKAGED,
   async () => {
-    const json = workflowTrackingJsonForMcp();
-    if (!json) {
-      return {
-        content: [{
-          type: "text" as const,
-          text: "workflow_tracking.json not found under FORGETRAIL_ROOT.",
-        }],
-      };
-    }
     return {
       content: [{
         type: "text" as const,
         text:
-          "Write the following JSON to `.forgetrail/workflow_tracking.json` (create `.forgetrail/` if needed; adjust `project` fields). " +
-          "Maintain this file for the life of the project per getTrackingSchema. " +
-          "Do not paste this JSON or MCP tool names to the user; after the file exists, call **getPostBootstrapUserMessage** (or use **getNewProjectKickoff**, which bundles this) for the first user-facing reply.\n\n```json\n" +
-          json.trim() +
-          "\n```",
+          "getInitialWorkflowTracking no longer returns a starter JSON file.\n\n" +
+          LEDGER_INIT +
+          "\nDo not paste ledger YAML or MCP tool names to the user. After `appledger/` exists, call **getPostBootstrapUserMessage** (or use **getNewProjectKickoff**, which bundles this) for the first user-facing reply.",
       }],
     };
   }
@@ -1224,7 +1190,7 @@ server.tool(
 
 server.tool(
   "getPostBootstrapUserMessage",
-  "After `.forgetrail/workflow_tracking.json` (and optional Cursor phase rule) is written: canonical guidance for a SHORT first reply to the user. " +
+  "After appledger/ exists (and the optional Cursor phase rule is written): canonical guidance for a SHORT first reply to the user. " +
     "Suppresses noisy 'Completed setup' dumps (no raw JSON, no MCP tool list, no bootstrap section paste).",
   {},
   PACKAGED,
@@ -1270,7 +1236,7 @@ server.tool(
 
 server.tool(
   "validateTracking",
-  "Validate a .forgetrail/workflow_tracking.json file (or supplied JSON) against the schema and ForgeTrail phase rules. Returns issues + suggested fixes. Safe to call often. Pass format=json for structured output.",
+  "Classify a workflow_tracking.json file. A pointer to appledger/ is accepted. A legacy writable tracking document is reported as a conflict, not updated. A missing file is expected. Pass format=json for structured output.",
   {
     trackingJson: z.string().optional().describe("Raw JSON string of the tracking file (if not supplying path)"),
     path: z.string().optional().describe("Filesystem path to .forgetrail/workflow_tracking.json (server will attempt to read)"),
@@ -1288,18 +1254,10 @@ server.tool(
       }
     }
     if (!jsonText) {
-      try {
-        const defaultPath = join(FORGETRAIL_ROOT, "workflow_tracking.json");
-        const fs = await import("node:fs");
-        jsonText = fs.readFileSync(defaultPath, "utf-8");
-      } catch {}
-    }
-
-    if (!jsonText) {
       return {
         content: [{
           type: "text" as const,
-          text: "No tracking JSON provided and no default file found. Pass trackingJson or path.",
+          text: "No workflow_tracking.json was supplied. A new project does not have that file. Read appledger/profiles/forgetrail.yaml and the latest session record. Pass path only to classify an existing file.",
         }],
       };
     }
@@ -1359,7 +1317,7 @@ server.tool(
       );
     }
 
-    const synthesis = "Parent: Collect all subagent outputs. Update .forgetrail/workflow_tracking.json (gotchas, decisions). Synthesize into the appropriate doc (BLACK_HAT_REPORT.md, etc.). Present prioritized next actions to user.";
+    const synthesis = "Parent: Collect all subagent outputs. Record gotchas and decisions in appledger/. Do not write workflow_tracking.json. Synthesize into the appropriate doc (BLACK_HAT_REPORT.md, etc.). Present prioritized next actions to user.";
 
     const text =
       `Recommended decomposition for Phase ${phase} — task: "${taskDescription}"\n\n` +
@@ -1387,7 +1345,7 @@ server.tool(
 
 server.tool(
   "ingestPlanArtifact",
-  "Map an approved native plan artifact (plan.md, a GENESIS.md from getGenesisSpecPrompt, etc.) into a PHASE_1_BRIEF.md draft plus decisions[] entries for .forgetrail/workflow_tracking.json. Call after exit_plan_mode / user approval. Agent should review and lock the brief before Phase 2.",
+  "Map an approved native plan artifact (plan.md, a GENESIS.md from getGenesisSpecPrompt, etc.) into a PHASE_1_BRIEF.md draft plus decision records for appledger/. Call after exit_plan_mode / user approval. Agent should review and lock the brief before Phase 2. Do not write workflow_tracking.json.",
   {
     planContent: z.string().describe("Full text of the approved plan.md or equivalent planning artifact"),
     projectName: z.string().optional().describe("App/project name for the brief title"),
@@ -1421,7 +1379,7 @@ server.tool(
       `## Section mapping (plan → brief)\n\n${Object.entries(result.sectionMapping)
         .map(([k, v]) => `- ${k} → ${v}`)
         .join("\n")}\n\n` +
-      `## decisions[] (merge into .forgetrail/workflow_tracking.json)\n\n` +
+      `## Decision records (write into appledger/, not workflow_tracking.json)\n\n` +
       "```json\n" +
       JSON.stringify(result.trackingDecisions, null, 2) +
       "\n```\n\n" +
@@ -1639,7 +1597,7 @@ function printStartupHintsToStderr(): void {
     "  (Granular: getNewProjectBootstrap + getInitialWorkflowTracking + getPostBootstrapUserMessage + getForgeTrailCursorPhaseRule + getForgeTrailCursorLessonsRules.)",
     "",
     "Tell your agent — resume a session:",
-    '  "Call ForgeTrail getResumeSessionInstructions and continue using .forgetrail/workflow_tracking.json."',
+    '  "Call ForgeTrail getResumeSessionInstructions and continue from appledger/."',
     "",
     "Other useful tool calls:",
     "  getForgeTrailCursorPhaseRule (Cursor: phase status rule for new projects)",
@@ -1651,7 +1609,7 @@ function printStartupHintsToStderr(): void {
     "  getCompanionSuggestions (phase or situation: optional sibling tools)",
     '  getTemplate with name "list", then a template name (e.g. PHASE_1_BRIEF)',
     '  searchLessons with a keyword',
-    "  validateTracking (check .forgetrail/workflow_tracking.json health)",
+    "  validateTracking (classify a legacy workflow_tracking.json; do not treat it as the live record)",
     "  suggestSubagentDecomposition (parallel audits/research for spawn_subagent hosts)",
     "  ingestPlanArtifact (approved plan → PHASE_1_BRIEF + decisions[])",
     "  getPlanModePatterns (native plan mode as Phase 1)",

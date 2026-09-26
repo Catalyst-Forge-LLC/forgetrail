@@ -1,6 +1,6 @@
 # Post-bootstrap: first reply to the user
 
-**When:** Right after project tracking files exist (repo root tracking JSON +, for Cursor, the phase rule file if you use it).
+**When:** Right after `appledger/` exists (and, for Cursor, the phase rule file if you use it). Do not mention `workflow_tracking.json` to the user.
 
 **Purpose:** Confirm what happened in **plain language** and give **one clear ask**—what the human should do or answer next. This is not an implementation report.
 

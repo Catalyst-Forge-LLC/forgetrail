@@ -1,6 +1,6 @@
 # Local ForgeTrail workspace (`.forgetrail/`)
 
-This folder holds **ForgeTrail agent artifacts** — tracking, platform rules, and (for Lite boots) the protocol file. ForgeTrail upstream is **Apache 2.0**; you may commit this folder or **gitignore** it for a slimmer public app repo. Never commit secrets here.
+This folder holds **ForgeTrail host artifacts** — protocol, platform rules, and hooks. Project phase, decisions, and sessions live in **`appledger/`**, not in this folder. ForgeTrail upstream is **Apache 2.0**; you may commit this folder or **gitignore** it for a slimmer public app repo. Never commit secrets here. Do not add `workflow_tracking.json`.
 
 Used for **both** ForgeTrail Lite file bootstrap and **MCP greenfield** kickoff.
 
@@ -8,7 +8,7 @@ Used for **both** ForgeTrail Lite file bootstrap and **MCP greenfield** kickoff.
 
 | File | Purpose |
 |------|---------|
-| `workflow_tracking.json` | Phase / decisions / session tracking (all approaches) |
+| `hooks/` | Host safety hooks. They do not store project phase or decisions |
 | `FORGETRAIL_LITE.md` | Full Lite kickoff protocol (Lite file bootstrap only) |
 | `FORGETRAIL_LITE_UPDATES.md` | Optional local feedback log (§1.6) — merge accepted items upstream |
 | `AGENTS.md` | Agent instructions — cite or symlink for your IDE |

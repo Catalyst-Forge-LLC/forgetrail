@@ -1,11 +1,11 @@
 ---
-description: Show ForgeTrail phase, next actions, and doc gaps from workflow_tracking.json (esp. bookends & what's next)
+description: Show ForgeTrail phase and next actions from appledger/profiles/forgetrail.yaml
 alwaysApply: true
 ---
 
 # ForgeTrail phase awareness
 
-This repo uses **ForgeTrail** lifecycle tracking. **Source of truth:** `.forgetrail/workflow_tracking.json` (`currentPhase`, `phases`, `decisions`).
+This repo uses **ForgeTrail**. **Source of truth:** `appledger/profiles/forgetrail.yaml` and the latest session record. Do **not** read or write `.forgetrail/workflow_tracking.json`. If that file exists and is not a pointer, it is a legacy conflict: run `appledger migrate preview`, then apply.
 
 ## When to surface status
 
@@ -25,11 +25,10 @@ Skip the footer for trivial one-line answers (typos, single-token replies) unles
 
 ## What to read
 
-1. Open **`.forgetrail/workflow_tracking.json`** (or use known state from the same turn).
-2. Report **`currentPhase`** using friendly names:  
-   `1-architecture` → Plan · `2-scaffolding` → Build · `3-stabilization` → Stabilize · `4-feature-iteration` → Iterate · `5-refactoring` → Refine · `6-strategic-review` → Align · `7-hardening` → Harden.
-3. For that phase, note **`status`** (`not_started` | `in_progress` | `completed`) and **1–3 items** from **`exitCriteriaRemaining`** as **likely next actions** (truncate with “…” if long).
-4. If Phase 2+ docs are expected but missing, mention once: e.g. no **`CONTEXT_PROMPT.md`** / **`TODO.md`** at repo root when `currentPhase` is `2-scaffolding` or later.
+1. Open **`appledger/profiles/forgetrail.yaml`** and the latest session record (or use known state from the same turn).
+2. Report the current phase id: `plan`, `build`, `stabilize`, `iterate`, `refine`, `align`, or `harden`.
+3. For that phase instance, note **`status`** and **1–3 pending criteria** as **likely next actions** (truncate with “…” if long).
+4. If later-phase docs are expected but missing, mention once: e.g. no **`CONTEXT_PROMPT.md`** / **`TODO.md`** at repo root when the phase is past `plan`.
 
 ## Footer format (compact, copy-paste)
 
@@ -58,4 +57,4 @@ Do **not** bury three or more paths in a single long sentence—**list them**, t
 
 ## Phase transitions
 
-Do **not** advance `currentPhase` or mark phases complete without **explicit user confirmation** (ForgeTrail rule). If exit criteria look satisfied, say so and ask before updating tracking.
+Do **not** advance `current_phase_instance` or mark a phase completed without **explicit user confirmation**. If criteria look satisfied, say so and ask before updating the profile. Do not write `workflow_tracking.json`.

@@ -40,8 +40,9 @@ function scanWorkspace(workspaceRoot) {
 
     const trackingPath = findTracking(fullPath);
     const hooksStatus = hasHooks(fullPath);
+    const ledger = existsSync(join(fullPath, "appledger", "manifest.yaml"));
 
-    if (!trackingPath && hooksStatus === "none") {
+    if (!trackingPath && !ledger && hooksStatus === "none") {
       continue;
     }
 
@@ -77,8 +78,15 @@ function scanWorkspace(workspaceRoot) {
             openCriteriaCount = pObj.exitCriteriaRemaining.length;
           }
         }
+        if (tracking.status === "pointer") {
+          phase = ledger ? "appledger" : "pointer";
+        } else if (tracking.currentPhase || tracking.phases) {
+          phase = ledger ? `legacy+${phase}` : `legacy:${phase}`;
+        }
       } catch {}
     }
+
+    if (ledger && phase === "-") phase = "appledger";
 
     rows.push({
       repo: entry,

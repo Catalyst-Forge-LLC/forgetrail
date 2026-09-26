@@ -29,14 +29,14 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec in any AI chat, 
      `pnpm dlx forgetrail install --lite`  
      Stub for Genesis too:  
      `pnpm dlx forgetrail install --lite --with-genesis-stub`  
-     The CLI also writes a starter tracking file and Cursor hooks, and skips files that already exist.
+     The CLI writes the Lite protocol and Cursor hooks. It does not write a tracking JSON file. Project state belongs in `appledger/`. It skips files that already exist.
 
 5. **Save your spec as `docs/GENESIS.md`**  
    Create `docs/` if needed. That path is the canonical handoff for ForgeTrail (not the repo root).
 
 6. **Open the folder in your coding agent** and paste this kickoff line:
 
-> Follow `.forgetrail/FORGETRAIL_LITE.md` as the project protocol. Treat `docs/GENESIS.md` as the product spec (what, not how). Create `.forgetrail/workflow_tracking.json` and draft `docs/PHASE_1_BRIEF.md` from the Genesis file, asking me only about gaps. Do not scaffold application code until I explicitly approve the Phase 1 brief.
+> Follow `.forgetrail/FORGETRAIL_LITE.md` as the project protocol. Treat `docs/GENESIS.md` as the product spec (what, not how). Create `appledger/` (manifest, profile, application record, session record) and draft `docs/PHASE_1_BRIEF.md` from the Genesis file, asking me only about gaps. Do not create `workflow_tracking.json`. Do not scaffold application code until I explicitly approve the Phase 1 brief.
 
 7. **Approve the Phase 1 brief** before any app scaffold. If the agent starts writing application code early, stop it and paste the kickoff line again.
 

@@ -109,6 +109,7 @@ export function copyContentDir(fromDir, toDir, opts) {
   ensureDir(toDir, opts.dryRun);
   for (const name of readdirSync(fromDir)) {
     if (name === "skills") continue;
+    if (name === "LITE_WORKFLOW_TRACKING.json") continue;
     if (MCP_ONLY_CONTENT.has(name)) continue;
     copyPath(join(fromDir, name), join(toDir, name), opts);
   }

@@ -19,7 +19,7 @@ Canonical docs use `**Spec kind:** Canonical reference` in the header and track 
 
 | Document | Summary |
 |----------|---------|
-| `app-ledger-spec-pack-v0.1.0/` | AppLedger format plus ForgeTrail and xFacts adoption. Format checker lives in sibling repo [appledger](https://github.com/Catalyst-Forge-LLC/appledger). ForgeTrail cutover has not started. |
+| `app-ledger-spec-pack-v0.1.0/` | AppLedger format plus ForgeTrail and xFacts adoption. Format checker lives in sibling repo [appledger](https://github.com/Catalyst-Forge-LLC/appledger). Tracking cutover no longer installs a writable `workflow_tracking.json`. xFacts maintenance inside ForgeTrail phases is still open. |
 
 ## In progress
 

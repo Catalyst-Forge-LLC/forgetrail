@@ -6,7 +6,7 @@ Use this when no agent-specific guide is available. ForgeTrail is **agent-agnost
 
 | Layer | Responsibility |
 |-------|----------------|
-| **ForgeTrail** | 7-phase lifecycle, `.forgetrail/workflow_tracking.json`, progressive docs, audits, lessons |
+| **ForgeTrail** | 7-phase lifecycle, `appledger/`, progressive docs, audits, lessons |
 | **Host agent** | Tool use, file edits, terminal, optional subagents/plan modes |
 
 ForgeTrail owns **what** and **when**. The host agent owns **execution**.
@@ -15,14 +15,14 @@ ForgeTrail owns **what** and **when**. The host agent owns **execution**.
 
 **New project:**
 ```
-Call ForgeTrail getNewProjectKickoff, write .forgetrail/workflow_tracking.json, then getPhaseGuidance("1").
+Call ForgeTrail getNewProjectKickoff, write appledger/, then getPhaseGuidance("1"). Do not write workflow_tracking.json.
 Lock architecture in docs/PHASE_1_BRIEF.md before any app code.
 ```
 
 **Resume:**
 ```
-Call getResumeSessionInstructions. Read .forgetrail/workflow_tracking.json and CONTEXT_PROMPT.md.
-Continue from currentPhase.
+Call getResumeSessionInstructions. Read appledger/profiles/forgetrail.yaml, the latest session record, and CONTEXT_PROMPT.md.
+Continue from the current phase. Do not update workflow_tracking.json.
 ```
 
 ## When the host supports subagents

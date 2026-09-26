@@ -4,7 +4,7 @@ Use alongside **`getChecklist`** section `before-session-1`. That checklist cove
 
 **Already have a written spec (e.g. `docs/GENESIS.md`)?** Feed it into **`ingestPlanArtifact`** first, then use this document only to fill gaps (delivery, tenancy, compliance, live search) it may not cover. If the user has only an idea, **`getGenesisSpecPrompt`** (or human recipe **`TRY_FORGETRAIL.md`**) produces a portable spec via an external LLM chat before you run through these questions.
 
-**Agent:** Walk through these with the user (or infer from context and confirm). Record answers in **`docs/PHASE_1_BRIEF.md`** (§1–3, §6–8 as needed) and **`.forgetrail/workflow_tracking.json` → `decisions[]`**.
+**Agent:** Walk through these with the user (or infer from context and confirm). Record answers in **`docs/PHASE_1_BRIEF.md`** (§1–3, §6–8 as needed) and as **decision records in `appledger/`**. Do not write `workflow_tracking.json`.
 
 ---
 

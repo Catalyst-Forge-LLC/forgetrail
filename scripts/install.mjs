@@ -17,7 +17,6 @@ import {
 const ROOT_FILES = [
   "WORKFLOW.md",
   "TRACKING_SCHEMA.md",
-  "workflow_tracking.json",
   "INITIAL_PROMPT.md",
   "CONTINUATION_PROMPT.md",
   "LICENSE",
@@ -70,14 +69,6 @@ export function runInstallForgetrail(rawArgv, { defaultToCwd = false } = {}) {
   copyPath(join(FORGETRAIL_ROOT, "prompts"), join(forgetrailDir, "prompts"), opts);
   copyContentDir(contentSrc, contentDest, opts);
 
-  if (!args.skipTracking) {
-    copyPath(
-      join(FORGETRAIL_ROOT, "workflow_tracking.json"),
-      join(target, ".forgetrail", "workflow_tracking.json"),
-      { ...opts, force: args.force }
-    );
-  }
-
   const hooksSrc = join(FORGETRAIL_ROOT, "content", "hooks");
   const hooksDest = join(target, ".forgetrail", "hooks");
   ensureDir(hooksDest, args.dryRun);
@@ -95,7 +86,7 @@ export function runInstallForgetrail(rawArgv, { defaultToCwd = false } = {}) {
   console.log("\nDone.");
   console.log("  Methodology:  _forgetrail/WORKFLOW.md");
   console.log("  First chat:   _forgetrail/INITIAL_PROMPT.md");
-  console.log("  Tracking:     .forgetrail/workflow_tracking.json");
+  console.log("  Project record: appledger/ (not workflow_tracking.json)");
   console.log("  Hooks:        .forgetrail/hooks/ (enforced via .cursor/hooks.json)");
   return { target, mode: "full" };
 }
@@ -127,14 +118,6 @@ export function runInstallLite(rawArgv, { defaultToCwd = false } = {}) {
     );
   }
 
-  if (!args.skipTracking) {
-    copyPath(
-      join(contentDir, "LITE_WORKFLOW_TRACKING.json"),
-      join(forgetrailDir, "workflow_tracking.json"),
-      opts
-    );
-  }
-
   const hooksSrc = join(contentDir, "hooks");
   const hooksDest = join(forgetrailDir, "hooks");
   ensureDir(hooksDest, args.dryRun);
@@ -158,7 +141,7 @@ export function runInstallLite(rawArgv, { defaultToCwd = false } = {}) {
 
   console.log("\nDone.");
   console.log("  Protocol:  .forgetrail/FORGETRAIL_LITE.md");
-  console.log("  Tracking:  .forgetrail/workflow_tracking.json (lite-1 schema)");
+  console.log("  Project record: appledger/ (a tracking JSON file is not installed)");
   console.log("  Hooks:     .forgetrail/hooks/ (enforced via .cursor/hooks.json)");
   if (args.withGenesisStub) {
     console.log("  Genesis:   docs/GENESIS.md (stub — replace with your spec)");
@@ -177,12 +160,12 @@ Usage:
 Options:
   --path, -p <dir>   Target project root (default: current directory for \`forgetrail\` CLI)
   --force, -f        Overwrite existing files
-  --skip-tracking    Do not create .forgetrail/workflow_tracking.json
+  --skip-tracking    Accepted and ignored. A tracking JSON file is not installed.
   --dry-run          Print actions only
 
 Installs:
   <target>/_forgetrail/   WORKFLOW, templates, prompts, content/ (curated)
-  <target>/.forgetrail/   workflow_tracking.json starter (unless skipped)
+  <target>/.forgetrail/   hooks only. Project state belongs in appledger/.
 `.trim();
 
 export const INSTALL_LITE_HELP = `
@@ -195,11 +178,11 @@ Usage:
 Options:
   --path, -p <dir>        Target project root (default: current directory for \`forgetrail\` CLI)
   --force, -f             Overwrite existing files
-  --skip-tracking         Do not create workflow_tracking.json starter
+  --skip-tracking         Accepted and ignored. A tracking JSON file is not installed.
   --with-genesis-stub     Also create docs/GENESIS.md stub (for the Try path)
   --dry-run               Print actions only
 
-Installs into <target>/.forgetrail/ (FORGETRAIL_LITE.md, tracking starter, cursor rules).
+Installs into <target>/.forgetrail/ (FORGETRAIL_LITE.md, cursor rules, hooks). Project state belongs in appledger/.
 With --with-genesis-stub, also writes docs/GENESIS.md from content/GENESIS_STUB.md.
 See TRY_FORGETRAIL.md in the ForgeTrail repo for the no-MCP prove-it recipe.
 `.trim();

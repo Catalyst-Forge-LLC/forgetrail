@@ -39,6 +39,26 @@ export type TrackingValidationResult = {
   warnings: string[];
 };
 
+const LEGACY_TRACKING_ISSUE =
+  "Legacy writable tracking is not the system of record. Do not add decisions, sessions, or phase status to this file. Run `appledger migrate preview`, then apply once, and write only in appledger/.";
+
+const POINTER_WARNING =
+  "This file is a pointer to appledger/. Do not add decisions, sessions, or phase status here.";
+
+function isPointer(data: Record<string, unknown>): boolean {
+  return data.status === "pointer" && typeof data.record === "string" && data.record.replaceAll("\\", "/").includes("appledger");
+}
+
+function isLegacyTracking(data: Record<string, unknown>): boolean {
+  return (
+    "currentPhase" in data ||
+    "phases" in data ||
+    "decisions" in data ||
+    "sessions" in data ||
+    "schemaVersion" in data
+  );
+}
+
 function isLiteSchema(data: Record<string, unknown>): boolean {
   return data.schemaVersion === "lite-1";
 }
@@ -46,6 +66,20 @@ function isLiteSchema(data: Record<string, unknown>): boolean {
 export function validateTrackingData(data: Record<string, unknown>): TrackingValidationResult {
   const issues: string[] = [];
   const warnings: string[] = [];
+
+  if (!data || typeof data !== "object") {
+    issues.push("Tracking data is empty or not an object.");
+    return { issues, warnings };
+  }
+
+  if (isPointer(data)) {
+    warnings.push(POINTER_WARNING);
+    return { issues, warnings };
+  }
+
+  if (isLegacyTracking(data)) {
+    issues.push(LEGACY_TRACKING_ISSUE);
+  }
 
   const project = data.project as Record<string, unknown> | undefined;
   if (!project || typeof project !== "object") {
@@ -224,14 +258,13 @@ export function formatValidationResult(result: TrackingValidationResult): string
   const { issues, warnings } = result;
 
   if (issues.length === 0 && warnings.length === 0) {
+    return "No workflow_tracking.json is required. Project state lives in appledger/.";
+  }
+
+  if (issues.length === 0 && warnings.every((item) => item.includes("pointer"))) {
     return (
-      "Tracking file looks structurally healthy.\n\n" +
-      "Recommended next steps:\n" +
-      "- Confirm exit criteria are being actively moved from Remaining → Met.\n" +
-      "- Ensure major decisions have rationale + alternatives_considered.\n" +
-      "- Add gotchas when surprises occur.\n" +
-      "- Call validateTracking after substantive session work.\n\n" +
-      "Call getTrackingSchema for the full expected shape."
+      "Pointer accepted. Project state lives in appledger/.\n\n" +
+      warnings.map((item) => `- ${item}`).join("\n")
     );
   }
 
@@ -245,10 +278,9 @@ export function formatValidationResult(result: TrackingValidationResult): string
   }
 
   parts.push(
-    "Suggested actions:\n" +
-      "- Use getTrackingSchema() for the canonical shape.\n" +
-      "- Populate decisions[] with rationale when locking Phase 1.\n" +
-      "- Keep exitCriteriaMet/Remaining in sync with actual progress."
+    issues.some((item) => item.includes("not the system of record"))
+      ? "Suggested actions:\n- Run `appledger migrate preview`, then apply once.\n- Write phase, decisions, and sessions only in appledger/.\n- Do not keep editing this JSON file."
+      : "Suggested actions:\n- Read appledger/profiles/forgetrail.yaml and the latest session record.\n- Do not create a second workflow_tracking.json log."
   );
 
   return parts.join("\n\n");

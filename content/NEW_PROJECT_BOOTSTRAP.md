@@ -1,6 +1,6 @@
 # ForgeTrail — New project bootstrap (MCP-first)
 
-Use this when **ForgeTrail is available via the MCP server** (recommended). The customer repo should **not** contain a copied `_forgetrail/` methodology tree — templates, audits, phase playbooks, and lessons are retrieved through MCP tools from the open-source ForgeTrail install. Only **project-local state** (chiefly **`.forgetrail/workflow_tracking.json`**) lives in the app repo.
+Use this when **ForgeTrail is available via the MCP server** (recommended). The customer repo should **not** contain a copied `_forgetrail/` methodology tree — templates, audits, phase playbooks, and lessons are retrieved through MCP tools from the open-source ForgeTrail install. Project state lives in **`appledger/`**. Do **not** create **`.forgetrail/workflow_tracking.json`**. `.forgetrail/` is hooks and host rules.
 
 ---
 
@@ -8,7 +8,7 @@ Use this when **ForgeTrail is available via the MCP server** (recommended). The 
 
 1. Follow the **7-phase lifecycle** (Plan → Build → Stabilize → Iterate → Refine → Align → Harden).
 2. **Pause at phase transitions** for explicit user approval before advancing.
-3. **Persist ForgeTrail state in `.forgetrail/`** at the repo root — **same folder for MCP greenfield and Lite file bootstrap.** Write **`.forgetrail/workflow_tracking.json`** first; add **`.forgetrail/AGENTS.md`**, **`.forgetrail/CLAUDE.md`**, and **`.forgetrail/cursor/rules/`** (symlink `.mdc` files into **`.cursor/rules/`**). Product docs (**`docs/`**, **`CONTEXT_PROMPT.md`**, **`README.md`**, **`TODO.md`**) stay at repo root. **Optionally gitignore `.forgetrail/`** if you want a cleaner public history or use MCP-only without a vendored Lite file (see **`FORGETRAIL_LITE.md` §1.5**). For **Cursor**, add **`.cursor/rules/forgetrail-phase-status.mdc`** from **`getNewProjectKickoff`** (bundled) or **`getForgeTrailCursorPhaseRule`** — it reads **`.forgetrail/workflow_tracking.json`**. Also add **`forgetrail-lessons-gate.mdc`** and **`forgetrail-lessons-mcp.mdc`** from the same bundle or **`getForgeTrailCursorLessonsRules`** so agents call **`getAntiPatterns`** + **`searchLessons`** before substantial feature work.
+3. **Persist ForgeTrail state in `appledger/`** — manifest, `profiles/forgetrail.yaml`, and records. Do **not** write **`.forgetrail/workflow_tracking.json`**. Add **`.forgetrail/AGENTS.md`**, **`.forgetrail/CLAUDE.md`**, and **`.forgetrail/cursor/rules/`** (symlink `.mdc` files into **`.cursor/rules/`**) for host rules. Product docs (**`docs/`**, **`CONTEXT_PROMPT.md`**, **`README.md`**, **`TODO.md`**) stay at repo root. **Optionally gitignore `.forgetrail/`** if you want a cleaner public history or use MCP-only without a vendored Lite file (see **`FORGETRAIL_LITE.md` §1.5**). Commit **`appledger/`**. For **Cursor**, add **`.cursor/rules/forgetrail-phase-status.mdc`** from **`getNewProjectKickoff`** (bundled) or **`getForgeTrailCursorPhaseRule`** — it reads **`appledger/profiles/forgetrail.yaml`**. Also add **`forgetrail-lessons-gate.mdc`** and **`forgetrail-lessons-mcp.mdc`** from the same bundle or **`getForgeTrailCursorLessonsRules`** so agents call **`getAntiPatterns`** + **`searchLessons`** before substantial feature work.
 4. **Pull methodology on demand** via ForgeTrail MCP tools (below). Do not ask the user to paste entire ForgeTrail files.
 5. **User-facing replies:** After bootstrap files exist, **`getPostBootstrapUserMessage`** defines the **first** reply—plain language only: what you did, what happens next, and a **concrete “reply with”** (problem, audience, hero workflow, constraints, v1 scope). **No** MCP/tool names, methodology jargon, ForgeTrail footers, file inventories, or “reference only” tracking dumps unless the user asks for internals.
 6. **Lists and choices:** When offering several next steps or options, follow **`USER_REPLY_FORMAT.md`** (ForgeTrail): **numbers** for ordered pipelines, **bullets** for parallel items, **letters** for pick-one / “which first—A/B/C?”—never hide multiple paths in one long sentence.
@@ -21,7 +21,7 @@ On a **new project folder**, commands like `git status`, `git log`, or `git rev-
 
 **You** initialize git after bootstrap files exist (unless the user chose **no-git mode** — see **`FORGETRAIL_LITE.md` §4.1**):
 
-1. Write kickoff artifacts first: **`.forgetrail/workflow_tracking.json`**, guardrails, optional Cursor rules.
+1. Write kickoff artifacts first: **`appledger/`**, guardrails, optional Cursor rules. Do not write **`workflow_tracking.json`**.
 2. Check with `git rev-parse --is-inside-work-tree`. If it returns false or errors, run **`git init -b main`** at the repo root (or `git init` + `git branch -m main` on older Git). **Never** re-init an existing repo.
 3. Write a **minimal** `.gitignore` now — at least `node_modules/`, `.env`, `.DS_Store`. Add `.forgetrail/` **only** if you chose the gitignore branch in **`FORGETRAIL_LITE.md` §1.5** (default MCP greenfield: **commit `.forgetrail/`**).
 4. Make a **first commit** when steps 1–3 are done so the user has a clean baseline (plain `-m` or `-F`). Skip if the repo already had history; skip entirely in no-git mode.
@@ -32,7 +32,7 @@ Do **not** treat an early missing-repo git error as blocking. Prefer **`git rev-
 
 ## Progressive scaffolding (important)
 
-- **Phase 1:** Create and lock **`docs/PHASE_1_BRIEF.md`** (`getTemplate({ name: "PHASE_1_BRIEF" })`). Log major commitments in **`.forgetrail/workflow_tracking.json` → `decisions[]`**. If the host supports **native plan mode**, use **`getPlanModePatterns`** and WORKFLOW §1c — plan first, export to the brief on approval (no app code during planning).
+- **Phase 1:** Create and lock **`docs/PHASE_1_BRIEF.md`** (`getTemplate({ name: "PHASE_1_BRIEF" })`). Log major commitments as **decision records in `appledger/`**. If the host supports **native plan mode**, use **`getPlanModePatterns`** and WORKFLOW §1c — plan first, export to the brief on approval (no app code during planning).
 - **App/code:** Phase 2 still means the **full runnable spine** in one pass: init, deps, data path, routes, components, hero flow **end-to-end**. Do **not** defer that spine.
 - **Project archetype (Phase 1):** classify the project as **`product`** (default), **`internal-tool`**, or **`one-shot`** (gift / event / demo) — often inferable from the problem statement; confirm rather than interrogate. Record in **`PHASE_1_BRIEF.md`**, **`decisions[]`**, and **`project.archetype`** in the tracking file, then **prune** the non-applicable exit criteria from the tracking template (internal tools: Phase 6 optional, no payments/business-plan rows; one-shots: phases 5–7 collapse into one polish-and-ship gate). Log the pruning as a decision. See **WORKFLOW §1d** and **`GREENFIELD_INTAKE.md`** §0.
 - **Web-app sub-question (Phase 1, when app type = web app):** before locking PocketBase + auth, ask *"Does any state need to outlive the browser — accounts, cross-device sync, shared data — or is every user's state private and fine in `localStorage`?"* If local-only → **drop PocketBase and auth**, `adapter-static` becomes viable, no deploy-time secrets; persist via `localStorage` / `IndexedDB`. If persistent → the full Default-A stack applies. Record the choice in `decisions[]` and in **`PHASE_1_BRIEF.md` §4 (`State persistence:` row)**. See **`FORGETRAIL_LITE.md` §7** (A-local vs A-persistent) and **`GREENFIELD_INTAKE.md`** §7.
@@ -57,15 +57,15 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
    - If **`docs/GENESIS.md`** already exists (Try path / human brought a what-not-how spec), call **`ingestPlanArtifact`** with that file’s contents as `planContent`, review the draft brief, then continue intake for gaps only (`getGreenfieldIntakePrompt`). Do **not** re-run a full blank Genesis prompt unless the user asks.
    - If the user only has an **idea** (no file yet), especially one that wraps an existing app’s data/file format, offer **`getGenesisSpecPrompt`**: they paste it into an **external** LLM chat, save the result as **`docs/GENESIS.md`**, then you ingest as above. Humans without MCP can follow repo-root **`TRY_FORGETRAIL.md`** instead.
    - Skip this step if the user wants straight Lite/MCP intake questions with no Genesis file.
-1. Call **`getNewProjectKickoff`** (`includeCursorRule: false` if not using **Cursor**). It bundles this document, starter **`.forgetrail/workflow_tracking.json`**, post-bootstrap user-message guidance, and optionally the Cursor rules (phase status + lessons gate + lessons MCP detail)—**or** call **`getNewProjectBootstrap`**, **`getInitialWorkflowTracking`**, **`getPostBootstrapUserMessage`**, **`getForgeTrailCursorPhaseRule`**, and **`getForgeTrailCursorLessonsRules`** separately if you need only one piece. Create **`.forgetrail/`**, write files there; the **next message to the user** follows **`getPostBootstrapUserMessage`** (product-facing, no methodology leak).
+1. Call **`getNewProjectKickoff`** (`includeCursorRule: false` if not using **Cursor**). It bundles this document, **`appledger/`** initialization, post-bootstrap user-message guidance, and optionally the Cursor rules (phase status + lessons gate + lessons MCP detail)—**or** call **`getNewProjectBootstrap`**, **`getInitialWorkflowTracking`**, **`getPostBootstrapUserMessage`**, **`getForgeTrailCursorPhaseRule`**, and **`getForgeTrailCursorLessonsRules`** separately if you need only one piece. **`getInitialWorkflowTracking` does not return a JSON file.** Write **`appledger/`**. Do not write **`workflow_tracking.json`**. The **next message to the user** follows **`getPostBootstrapUserMessage`** (product-facing, no methodology leak).
 2. **Initialize git if needed** (see **Greenfield git** above): after bootstrap files exist, `git init -b main` when `git rev-parse --is-inside-work-tree` fails; minimal `.gitignore`; optional first commit. Do not ask the user to run `git init`.
 3. Call **`getProgressiveDocSchedule`** and keep it in mind for every phase transition.
 4. Call **`getChecklist`** with section `before-session-1` — complete those items with the user (problem statement, stack, assets, hero flow).
 5. Call **`getGreenfieldIntakePrompt`** — product/delivery questions: exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier (even if “none yet”), hero flow, and registrar/DNS/git/hosting if still open. Capture answers in **`PHASE_1_BRIEF.md`** and **`decisions[]`**. If using native plan mode, include these questions in the plan context (`getPlanModePatterns`). When a companion trigger is true later, call **`getCompanionSuggestions`**. Do not name companions in the first user-facing message.
-6. Call **`getTrackingSchema`** — you will maintain **`.forgetrail/workflow_tracking.json`** accordingly. Optionally call **`getAgentIntegrationGuide`** for your host (`grok`, `cursor`, `claude`, `generic`) and **`getForgeTrailSkill`** if the agent supports persistent skills.
+6. Call **`getTrackingSchema`** — you will maintain **`appledger/`**. Do not maintain a tracking JSON file. Optionally call **`getAgentIntegrationGuide`** for your host (`grok`, `cursor`, `claude`, `generic`) and **`getForgeTrailSkill`** if the agent supports persistent skills.
 7. Call **`getPhaseGuidance`** with phase `1` (architecture). Summarize understanding and propose structure, data model, integrations, and v1 scope **before** writing app code.
-8. During Phase 1, create **`docs/PHASE_1_BRIEF.md`** from **`getTemplate({ name: "PHASE_1_BRIEF" })`**, fill every section, and **lock** it; mirror major decisions in **`.forgetrail/workflow_tracking.json`**.
-9. After architecture is confirmed and the brief is locked, call **`getPhaseGuidance`** with phase `2` (scaffolding). Read the brief + **`.forgetrail/workflow_tracking.json`**, **merge the brief into `CONTEXT_PROMPT.md`**, then execute a **single-pass app skeleton** and the rest of the Phase 2 doc set (`README`, `TODO`, `.forgetrail/IDEAS.md`).
+8. During Phase 1, create **`docs/PHASE_1_BRIEF.md`** from **`getTemplate({ name: "PHASE_1_BRIEF" })`**, fill every section, and **lock** it; mirror major decisions as **appledger decision records**.
+9. After architecture is confirmed and the brief is locked, call **`getPhaseGuidance`** with phase `2` (scaffolding). Read the brief and **`appledger/profiles/forgetrail.yaml`**, **merge the brief into `CONTEXT_PROMPT.md`**, then execute a **single-pass app skeleton** and the rest of the Phase 2 doc set (`README`, `TODO`, `.forgetrail/IDEAS.md`).
 
 ---
 
@@ -89,13 +89,13 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 | **Native plan mode as Phase 1** | **`getPlanModePatterns`** — use before scaffolding when the host supports plan-before-code |
 | **Agent-specific integration** (Grok, Cursor, Claude) | **`getAgentIntegrationGuide`** — primitive mappings and session openers |
 | **Installable forgetrail skill** (Grok etc.) | **`getForgeTrailSkill`** — copy to host skill directory |
-| **Tracking file health check** | **`validateTracking`** — after substantive work or phase transitions |
+| **Legacy tracking classification** | **`validateTracking`** — reports a writable `workflow_tracking.json` as a conflict. A missing file is expected |
 | **Optional companion tools** (FilePress, LocalSlip, skills, xFacts, …) | **`getCompanionSuggestions`** — `phase` or `situation`; never required; not in the first user-facing message (WORKFLOW §1f) |
 | **Parallel subagent recommendations** | **`suggestSubagentDecomposition`** — before spawning audits/research (WORKFLOW §1c) |
-| **Starter tracking file** for a greenfield repo | `getInitialWorkflowTracking` — write the returned JSON to **`.forgetrail/workflow_tracking.json`** |
+| **Ledger initialization** for a greenfield repo | `getInitialWorkflowTracking` — does **not** return JSON. Create **`appledger/`** |
 | **First reply to the human** after tracking exists (short; no tool dump) | **`getPostBootstrapUserMessage`** |
 | **Numbered vs bullet vs letter lists** when offering options | **`getUserReplyFormat`** — also in Cursor **`forgetrail-phase-status.mdc`** |
-| **Cursor IDE:** phase / next-action footers from tracking | **`getForgeTrailCursorPhaseRule`** — write to `.cursor/rules/forgetrail-phase-status.mdc` (reads **`.forgetrail/workflow_tracking.json`**; Phase 1; optional if not using Cursor) |
+| **Cursor IDE:** phase / next-action footers | **`getForgeTrailCursorPhaseRule`** — write to `.cursor/rules/forgetrail-phase-status.mdc` (reads **`appledger/profiles/forgetrail.yaml`**; optional if not using Cursor) |
 | **Cursor IDE:** lessons gate (`getAntiPatterns` + `searchLessons` before large work) | **`getForgeTrailCursorLessonsRules`** — writes `forgetrail-lessons-gate.mdc` + `forgetrail-lessons-mcp.mdc` (also in **`getNewProjectKickoff`**) |
 | **Phase 2:** PocketBase scripted install defaults (port, version, dirs) + optional **schema-from-.env** pattern | **`getScaffoldInstallParams`** — keep app `scaffold-defaults.json` in sync; see **`schemaAutomation`** in the JSON and **`POCKETBASE_SCHEMA_SCRIPT.md`** in ForgeTrail |
 | **Phase 2+:** repeatable dev scripts (env check, codegen, seed, E2E browsers, git hooks) | **`DEV_AUTOMATION_SCRIPTS.md`** in ForgeTrail; **`devAutomation`** in **`getScaffoldInstallParams`** JSON |
@@ -106,14 +106,14 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 
 **Immediately (greenfield):**
 
-- **`.forgetrail/`** — create the directory. Write **`.forgetrail/workflow_tracking.json`** inside it (output from **`getInitialWorkflowTracking`**), then fill `project.name`, `project.created`, `project.description`, and update phases as you work. Add **`.forgetrail/`** to **`.gitignore`** if the repo may be published.
+- **`appledger/`** — manifest, `profiles/forgetrail.yaml`, an application record, and a session record. Fill the application name and description. Do **not** write **`workflow_tracking.json`**. Commit **`appledger/`**.
 - **`docs/GENESIS.md`** (optional but preferred on the Try path) — what-not-how product spec from **`getGenesisSpecPrompt`** / **`TRY_FORGETRAIL.md`**. If present at kickoff, ingest with **`ingestPlanArtifact`** before locking the brief.
 - **Git repo** — if `git rev-parse --is-inside-work-tree` fails, **`git init -b main`** after bootstrap files exist (see **Greenfield git**). A failed early `git status` on an empty folder is **not** an error. Add minimal **`.gitignore`** and an optional first commit before Phase 1 intake.
 - **Cursor users:** `.cursor/rules/forgetrail-phase-status.mdc` — from **`getForgeTrailCursorPhaseRule`**. **`forgetrail-lessons-gate.mdc`** + **`forgetrail-lessons-mcp.mdc`** — from **`getForgeTrailCursorLessonsRules`** or **`getNewProjectKickoff`** (lessons workflow before substantial changes).
 
 **End of Phase 1 (before scaffolding):**
 
-- **`docs/PHASE_1_BRIEF.md`** — complete and locked; **`.forgetrail/workflow_tracking.json`** — `decisions[]` + phase 1 notes updated.
+- **`docs/PHASE_1_BRIEF.md`** — complete and locked; **`appledger/`** — decision records and the plan phase updated. Do not mark criteria met without evidence.
 
 **During Phase 2 (scaffolding), after architecture lock:**
 
@@ -138,9 +138,9 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 
 ## Rules (same as methodology, MCP-adjusted)
 
-- At **each session start**, read the repo’s `.forgetrail/workflow_tracking.json` and `CONTEXT_PROMPT.md` (if present). Use **`getPhaseGuidance`** for the **current** phase from `.forgetrail/workflow_tracking.json` → `currentPhase`.
-- When exit criteria for a phase appear satisfied, **state that explicitly** and **wait for user confirmation** before treating the next phase as active; update `currentPhase` only after approval.
-- After substantive work, **update `.forgetrail/workflow_tracking.json`**: exit criteria, `decisions`, `gotchas`, `sessions` per **`getTrackingSchema`**. Run **`validateTracking`** to catch structural drift.
+- At **each session start**, read **`appledger/profiles/forgetrail.yaml`**, the latest session record, and `CONTEXT_PROMPT.md` (if present). Use **`getPhaseGuidance`** for the current phase.
+- When exit criteria for a phase appear satisfied, **state that explicitly** and **wait for user confirmation** before treating the next phase as active; change `current_phase_instance` only after approval.
+- After substantive work, update **`appledger/`** (criteria, decision records, lessons, the session). Do not write **`workflow_tracking.json`**. If that file exists and is not a pointer, **`validateTracking`** reports the conflict.
 - If a problem does not converge after **~5 turns**, propose a **different approach**, not more patches.
 - **When the project ends** (shipped, delivered, shelved), run the **wrap protocol** (WORKFLOW §1e): sweep `gotchas[]` + `decisions[]` for generalizable lessons, run the propagation prompt in **Harvest mode**, set `project.status` to `"wrapped"`, and add a final `sessions[]` entry with end state and handoff pointers.
 - **Git commits:** `git commit -F <file>` or plain `-m` at natural stopping points with concise summaries. Run verification checks prior to commit.

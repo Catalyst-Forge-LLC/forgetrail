@@ -9,12 +9,12 @@ You are helping me build a full-stack web application. I use ForgeTrail, a struc
 
 ### MCP-first (recommended — no `_forgetrail/` copy in this repo)
 
-If **ForgeTrail is connected as an MCP server**, do **not** require a local `_forgetrail/` folder. Methodology, templates, and audits stay in the MCP server (open-source ForgeTrail install); persist only **`.forgetrail/workflow_tracking.json`** and optional Cursor rules in this repo.
+If **ForgeTrail is connected as an MCP server**, do **not** require a local `_forgetrail/` folder. Methodology, templates, and audits stay in the MCP server (open-source ForgeTrail install). Persist project state in **`appledger/`**. Do **not** create **`.forgetrail/workflow_tracking.json`**. Optional Cursor rules may live in this repo.
 
 **Before doing anything else:**
 
 0. If **`docs/GENESIS.md`** exists, call **`ingestPlanArtifact`** with its contents and review the draft brief before scaffolding. If the user only has an idea, offer **`getGenesisSpecPrompt`** (they save as `docs/GENESIS.md`) or point them at **TRY_FORGETRAIL.md** when MCP is not the entry path.
-1. Call the ForgeTrail MCP tool **`getNewProjectKickoff`** (set **`includeCursorRule`** to **false** if not using Cursor). Write **`.forgetrail/workflow_tracking.json`** and the Cursor rule when included; keep the **first reply to the user** short per the bundle’s post-bootstrap section (no MCP tool list or raw JSON dump). **Alternatively:** call **`getNewProjectBootstrap`**, **`getInitialWorkflowTracking`**, **`getPostBootstrapUserMessage`**, and **`getForgeTrailCursorPhaseRule`** separately.
+1. Call the ForgeTrail MCP tool **`getNewProjectKickoff`** (set **`includeCursorRule`** to **false** if not using Cursor). Write **`appledger/`** as that bundle describes. Do **not** write **`workflow_tracking.json`**. Write the Cursor rule when included. Keep the **first reply to the user** short per the bundle’s post-bootstrap section (no MCP tool list or raw JSON dump). **Alternatively:** call **`getNewProjectBootstrap`**, **`getInitialWorkflowTracking`**, **`getPostBootstrapUserMessage`**, and **`getForgeTrailCursorPhaseRule`** separately. `getInitialWorkflowTracking` does not return a JSON file to save.
 2. In Phase 1, call **`getGreenfieldIntakePrompt`** alongside **`getChecklist`** (`before-session-1`) so exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier, and hero flow are captured early in **`PHASE_1_BRIEF.md`** and **`decisions[]`** (skip questions already answered in Genesis).
 3. Use **`getProgressiveDocSchedule`**, **`getPhaseGuidance`**, **`getChecklist`**, **`getTemplate`** (include **`PHASE_1_BRIEF`** in Phase 1; use `mode: "shell"` or `full` as needed), **`getTrackingSchema`**, **`runAudit`**, **`searchLessons`**, and **`getAntiPatterns`** as that bootstrap describes.
 4. We're starting with Phase 1 (Architecture + Planning).

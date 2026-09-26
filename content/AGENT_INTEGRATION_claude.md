@@ -17,7 +17,7 @@ Claude-based coding agents integrate with ForgeTrail through MCP, extended plann
 
 **New project:**
 ```
-Call ForgeTrail getNewProjectKickoff, write .forgetrail/workflow_tracking.json, getGreenfieldIntakePrompt, getPhaseGuidance("1").
+Call ForgeTrail getNewProjectKickoff, write appledger/, getGreenfieldIntakePrompt, getPhaseGuidance("1"). Do not write workflow_tracking.json.
 No app code until PHASE_1_BRIEF.md is locked.
 ```
 

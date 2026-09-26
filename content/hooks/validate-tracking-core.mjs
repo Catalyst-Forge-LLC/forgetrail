@@ -41,6 +41,26 @@ function isLiteSchema(data) {
   return data && data.schemaVersion === "lite-1";
 }
 
+const LEGACY_TRACKING_ISSUE =
+  "Legacy writable tracking is not the system of record. Do not add decisions, sessions, or phase status to this file. Run `appledger migrate preview`, then apply once, and write only in appledger/.";
+
+const POINTER_WARNING =
+  "This file is a pointer to appledger/. Do not add decisions, sessions, or phase status here.";
+
+function isPointer(data) {
+  return data.status === "pointer" && typeof data.record === "string" && data.record.replaceAll("\\", "/").includes("appledger");
+}
+
+function isLegacyTracking(data) {
+  return (
+    "currentPhase" in data ||
+    "phases" in data ||
+    "decisions" in data ||
+    "sessions" in data ||
+    "schemaVersion" in data
+  );
+}
+
 export function validateTrackingData(data) {
   const issues = [];
   const warnings = [];
@@ -48,6 +68,15 @@ export function validateTrackingData(data) {
   if (!data || typeof data !== "object") {
     issues.push("Tracking data is empty or not an object.");
     return { issues, warnings };
+  }
+
+  if (isPointer(data)) {
+    warnings.push(POINTER_WARNING);
+    return { issues, warnings };
+  }
+
+  if (isLegacyTracking(data)) {
+    issues.push(LEGACY_TRACKING_ISSUE);
   }
 
   const project = data.project;
@@ -214,7 +243,11 @@ export function formatValidationResult(result) {
   const { issues, warnings } = result;
 
   if (issues.length === 0 && warnings.length === 0) {
-    return "Tracking file looks structurally healthy.";
+    return "No workflow_tracking.json is required. Project state lives in appledger/.";
+  }
+
+  if (issues.length === 0 && warnings.every((item) => item.includes("pointer"))) {
+    return "Pointer accepted. Project state lives in appledger/.\n\n" + warnings.map((item) => `- ${item}`).join("\n");
   }
 
   const parts = [];

@@ -6,7 +6,7 @@ version: "0.3.0"
 status: active
 license: Apache-2.0
 kind: cursor-skill
-purpose: "Enforce the ForgeTrail 7-phase lifecycle and maintain .forgetrail/workflow_tracking.json as the system of record"
+purpose: "Enforce the ForgeTrail 7-phase lifecycle and maintain appledger/ as the system of record"
 homepage: https://forgetrail.dev
 repository: https://github.com/Catalyst-Forge-LLC/forgetrail
 provenance:
@@ -54,7 +54,7 @@ credits:
 
 ## Purpose
 
-Enforce the ForgeTrail 7-phase lifecycle and maintain .forgetrail/workflow_tracking.json as the system of record
+Enforce the ForgeTrail 7-phase lifecycle and maintain appledger/ as the system of record
 
 ## Provenance
 

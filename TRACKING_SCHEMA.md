@@ -1,12 +1,21 @@
-# workflow_tracking.json Schema Reference
+# Project record
 
-This file documents how to read and update **`.forgetrail/workflow_tracking.json`** in customer project repos. (This ForgeTrail repo keeps a starter copy at **`workflow_tracking.json`** at the repo root for MCP `getInitialWorkflowTracking` — agents write the output to **`.forgetrail/workflow_tracking.json`** in the app repo.)
+Phase, decisions, sessions, and gotchas live in **`appledger/`**.
 
-Agents should reference this when updating the tracking file.
+- **`appledger/profiles/forgetrail.yaml`** holds the current phase instance and criteria. Phase ids are `plan`, `build`, `stabilize`, `iterate`, `refine`, `align`, and `harden`.
+- Decision records, session records, and lesson or question records live under **`appledger/records/`**.
+- Do **not** create or update **`.forgetrail/workflow_tracking.json`**. `.forgetrail/` is hooks and host integration.
+- If that JSON file already exists and its `status` is not `pointer`, run **`appledger migrate preview`**, then apply once. Do not keep a second decision log.
+- A file with `"status": "pointer"` and `"record": "appledger/"` is a leftover pointer. Do not add decisions, sessions, or phase status to it.
 
-## Phase ID vocabulary (Lite vs MCP)
+`getInitialWorkflowTracking` does not return a starter JSON file. `validateTracking` classifies an existing file. It does not accept a legacy document as healthy writable state.
 
-Both schemas describe the same seven lifecycle phases. **`scripts/forgetrail-dev-launcher.mjs`** maps either shape to the display names below.
+The rest of this file describes the **legacy** Lite and full JSON shapes so an existing file can be recognized and migrated. It is not a template to copy into a new project.
+
+## Legacy phase id vocabulary (Lite vs full)
+
+Both legacy schemas describe the same seven lifecycle phases. **`scripts/forgetrail-dev-launcher.mjs`** can still read either shape. New work uses the profile ids in the table's display-name column.
+
 
 | # | Lite `currentPhase` | MCP `currentPhase` | Display name |
 |---|---------------------|--------------------|--------------|
@@ -18,9 +27,9 @@ Both schemas describe the same seven lifecycle phases. **`scripts/forgetrail-dev
 | 6 | `6` | `6-strategic-review` | Align |
 | 7 | `7` | `7-hardening` | Harden |
 
-**Lite (`schemaVersion: "lite-1"`):** numeric `currentPhase`; each phase has **`exitCriteria`** as `{ "flagName": true/false }`. Starter: **`FORGETRAIL_LITE.md`** §11.
+**Lite (`schemaVersion: "lite-1"`):** numeric `currentPhase`; each phase has **`exitCriteria`** as `{ "flagName": true/false }`. The old copy block is **`FORGETRAIL_LITE.md`** §11. Do not write it into a project.
 
-**MCP / full starter:** string `currentPhase`; each phase has **`exitCriteriaMet`** and **`exitCriteriaRemaining`** string arrays. Starter: repo-root **`workflow_tracking.json`** via `getInitialWorkflowTracking`.
+**Full / MCP:** string `currentPhase`; each phase has **`exitCriteriaMet`** and **`exitCriteriaRemaining`** string arrays. The old sample remains at repo-root **`workflow_tracking.json`** for migration only. `getInitialWorkflowTracking` does not return it.
 
 ## Top-Level Fields
 

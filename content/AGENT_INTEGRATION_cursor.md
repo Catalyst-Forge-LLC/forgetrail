@@ -23,7 +23,7 @@ Use plan mode for Phase 1 if available. Lock PHASE_1_BRIEF.md before scaffolding
 
 **Resume:**
 ```
-Call getResumeSessionInstructions. Read .forgetrail/workflow_tracking.json and CONTEXT_PROMPT.md.
+Call getResumeSessionInstructions. Read appledger/profiles/forgetrail.yaml, the latest session record, and CONTEXT_PROMPT.md. Do not update workflow_tracking.json.
 ```
 
 ## Subagent patterns

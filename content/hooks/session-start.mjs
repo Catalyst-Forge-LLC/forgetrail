@@ -3,20 +3,17 @@
 /**
  * ForgeTrail Session Start Context Injector
  * Hook event: sessionStart (Cursor)
- * Injects live ForgeTrail phase status and open exit criteria into session context.
- * Retires static phase-status rules on hosts with hook support.
+ * Points the session at appledger/. A legacy workflow_tracking.json is a conflict, not the live phase.
  */
 
-import { readFileSync, existsSync } from "node:fs";
-import { resolve, join } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 
-function findTrackingFile(startDir) {
+function walkUp(startDir, found) {
   let curr = resolve(startDir || process.cwd());
   for (let i = 0; i < 6; i++) {
-    const candidate1 = join(curr, ".forgetrail", "workflow_tracking.json");
-    if (existsSync(candidate1)) return candidate1;
-    const candidate2 = join(curr, "workflow_tracking.json");
-    if (existsSync(candidate2)) return candidate2;
+    const hit = found(curr);
+    if (hit) return hit;
     const parent = resolve(curr, "..");
     if (parent === curr) break;
     curr = parent;
@@ -24,70 +21,68 @@ function findTrackingFile(startDir) {
   return null;
 }
 
-function main() {
-  const trackingPath = findTrackingFile(process.cwd());
+function findLedger(startDir) {
+  return walkUp(startDir, (dir) => {
+    const manifest = join(dir, "appledger", "manifest.yaml");
+    if (existsSync(manifest)) return dir;
+    return null;
+  });
+}
 
-  if (!trackingPath) {
+function findProjectTracking(startDir) {
+  return walkUp(startDir, (dir) => {
+    const candidate = join(dir, ".forgetrail", "workflow_tracking.json");
+    if (existsSync(candidate)) return candidate;
+    const rootStarter = join(dir, "workflow_tracking.json");
+    const methodology = existsSync(join(dir, "WORKFLOW.md")) && existsSync(join(dir, "content"));
+    if (existsSync(rootStarter) && !methodology) return rootStarter;
+    return null;
+  });
+}
+
+function isPointer(data) {
+  return data?.status === "pointer" && typeof data.record === "string" && data.record.replaceAll("\\", "/").includes("appledger");
+}
+
+function main() {
+  const ledgerRoot = findLedger(process.cwd());
+  const trackingPath = findProjectTracking(process.cwd());
+  const lines = [];
+
+  if (ledgerRoot) {
+    lines.push("=== ForgeTrail Context ===");
+    lines.push("Project record: appledger/");
+    lines.push("Read appledger/profiles/forgetrail.yaml for the current phase.");
+    lines.push("Read the latest session record for left_off and next_steps.");
+    lines.push("Do not update workflow_tracking.json.");
+  }
+
+  if (trackingPath) {
+    try {
+      const tracking = JSON.parse(readFileSync(trackingPath, "utf-8"));
+      if (isPointer(tracking)) {
+        if (!ledgerRoot) {
+          lines.push("=== ForgeTrail Context ===");
+          lines.push("workflow_tracking.json is a pointer to appledger/. Do not write decisions, sessions, or phase status there.");
+        }
+      } else {
+        lines.push("=== Legacy tracking conflict ===");
+        lines.push("workflow_tracking.json is not the system of record.");
+        lines.push("Do not add decisions, sessions, or phase status to it.");
+        lines.push("Run `appledger migrate preview`, then apply once, and write only in appledger/.");
+      }
+    } catch {
+      lines.push("workflow_tracking.json could not be read. Do not recreate it. Use appledger/.");
+    }
+  }
+
+  if (lines.length === 0) {
     console.log(JSON.stringify({}));
     return;
   }
 
-  try {
-    const tracking = JSON.parse(readFileSync(trackingPath, "utf-8"));
-    const projectName = tracking.project?.name || "App";
-    const phase = tracking.currentPhase || "1";
-    const isLite = tracking.schemaVersion === "lite-1";
-
-    let remaining = [];
-    if (isLite) {
-      const phaseObj = tracking.phases?.[String(phase)];
-      if (phaseObj?.exitCriteria) {
-        remaining = Object.entries(phaseObj.exitCriteria)
-          .filter(([_, met]) => !met)
-          .map(([flag]) => flag);
-      }
-    } else {
-      const phaseObj = tracking.phases?.[phase];
-      if (Array.isArray(phaseObj?.exitCriteriaRemaining)) {
-        remaining = phaseObj.exitCriteriaRemaining;
-      }
-    }
-
-    let lastLeftOff = "";
-    if (Array.isArray(tracking.sessions) && tracking.sessions.length > 0) {
-      const lastSession = tracking.sessions[tracking.sessions.length - 1];
-      lastLeftOff = lastSession.leftOff || lastSession.notes || "";
-    }
-
-    const lines = [
-      `=== ForgeTrail Context (${projectName}) ===`,
-      `Current Phase: ${phase} (${isLite ? "Lite schema" : "MCP schema"})`,
-    ];
-
-    if (lastLeftOff) {
-      lines.push(`Last Session Left Off: ${lastLeftOff}`);
-    }
-
-    if (remaining.length > 0) {
-      lines.push("Open Exit Criteria for Current Phase:");
-      for (const item of remaining.slice(0, 5)) {
-        lines.push(`  - ${item}`);
-      }
-      if (remaining.length > 5) {
-        lines.push(`  ...and ${remaining.length - 5} more`);
-      }
-    }
-
-    lines.push("========================================");
-
-    console.log(
-      JSON.stringify({
-        additional_context: lines.join("\n"),
-      })
-    );
-  } catch {
-    console.log(JSON.stringify({}));
-  }
+  lines.push("========================================");
+  console.log(JSON.stringify({ additional_context: lines.join("\n") }));
 }
 
 main();

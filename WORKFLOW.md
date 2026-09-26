@@ -4,6 +4,8 @@
 
 A persistent development system for building software with AI agents. A structured 7-phase workflow for solo developers building non-trivial full-stack apps with coding agents. Derived from 7 sessions and ~78,000 lines of real-world app development.
 
+**System of record:** Phase, decisions, sessions, and gotchas live in `appledger/` (`profiles/forgetrail.yaml` and records). Do not create or update `.forgetrail/workflow_tracking.json`. Where this file names that JSON file, `decisions[]`, `gotchas[]`, `sessions[]`, or `currentPhase`, write the ledger instead. If the JSON file already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep a second decision log. `.forgetrail/` is hooks and host integration.
+
 ---
 
 ## 1. Phase Map
@@ -864,7 +866,7 @@ Print this and work through it sequentially for each new project.
 - [ ] Use "paste the error" for debugging
 - [ ] Update CONTEXT_PROMPT.md before ending (especially decisions and their WHY)
 - [ ] Mark completed TODOs, add new ones
-- [ ] Update .forgetrail/workflow_tracking.json with session notes, decisions, gotchas
+- [ ] Update the appledger session, decisions, and lessons. Do not write workflow_tracking.json
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: forgetrail
-description: "Enforce the ForgeTrail 7-phase lifecycle (Plan → Build → Stabilize → Iterate → Refine → Align → Harden), maintain .forgetrail/workflow_tracking.json as the system of record, pause at explicit phase transitions for user approval, prefer native plan modes when available, and use subagents for parallel audits/research where the host agent supports it. Activate for any non-trivial full-stack app development. Follow progressive documentation rules and propagate lessons back."
+description: "Enforce the ForgeTrail 7-phase lifecycle (Plan → Build → Stabilize → Iterate → Refine → Align → Harden), maintain appledger/ as the system of record, pause at explicit phase transitions for user approval, prefer native plan modes when available, and use subagents for parallel audits/research where the host agent supports it. Do not write workflow_tracking.json. Activate for any non-trivial full-stack app development. Follow progressive documentation rules and propagate lessons back."
 user-invocable: true
 argument-hint: "kickoff new project | resume session | Phase 4 feature work | run black-hat audit | stabilize current issues"
 allowed-tools: "read_file, search_replace, run_terminal_command, todo_write, spawn_subagent, getPhaseGuidance, getCompanionSuggestions, runAudit, searchLessons, validateTracking, suggestSubagentDecomposition, getTemplate, getNewProjectKickoff, getResumeSessionInstructions"
@@ -21,24 +21,25 @@ You are operating under the ForgeTrail methodology. Your primary job is to give 
    - 6. Align (map to brand/strategy)
    - 7. Harden (security, perf, docs, production readiness)
 
-   Phases 4 and 5 commonly alternate. Update `currentPhase` and exit criteria in tracking.
+   Phases 4 and 5 commonly alternate. Update `current_phase_instance` and criteria in `appledger/profiles/forgetrail.yaml`. Do not write `workflow_tracking.json`.
 
 2. **At the start of every session or major turn**:
-   - Read `.forgetrail/workflow_tracking.json` (create `.forgetrail/` if missing).
+   - Read `appledger/profiles/forgetrail.yaml` and the latest session record.
    - Read `CONTEXT_PROMPT.md` and `TODO.md` if they exist.
    - Call `getPhaseGuidance` for the current phase if needed.
-   - Summarize current phase, exit criteria met/remaining, and recent decisions to the user briefly.
+   - Summarize current phase, pending criteria, and recent decisions to the user briefly.
+   - If `workflow_tracking.json` exists and is not a pointer, do not edit it. Run `appledger migrate preview`, then apply.
 
 3. **Pause at phase transitions**:
    - When you believe exit criteria for the current phase are met, explicitly tell the user: "I think we have completed Phase X because [reasons]. The remaining exit criteria are [list]. Ready to move to Phase Y?"
-   - Wait for explicit user approval before advancing `currentPhase` in tracking.
+   - Wait for explicit user approval before changing `current_phase_instance`.
 
-4. **Maintain the tracking file** (`.forgetrail/workflow_tracking.json`):
-   - Log every major decision with rationale and alternatives_considered.
-   - Move items from `exitCriteriaRemaining` to `exitCriteriaMet`.
-   - Add to `gotchas[]` immediately when something surprising or painful happens.
-   - Append session notes at natural breaks.
-   - Use the schema from `getTrackingSchema`.
+4. **Maintain `appledger/`**:
+   - Log every major decision as a decision record with rationale.
+   - Mark a criterion `met` only when an evidence ref exists.
+   - Add a lesson or question record when something surprising or painful happens.
+   - Update the session record at natural breaks.
+   - Do not create or update `workflow_tracking.json`.
 
 5. **Use native agent capabilities**:
    - If the agent supports a native plan mode (e.g. Grok `/plan`), use it for Phase 1. On approval, export the plan into `docs/PHASE_1_BRIEF.md` (via `getTemplate`) + `decisions[]`.
@@ -75,11 +76,11 @@ When ready to advance:
 
 ## For New Projects (Greenfield)
 
-Prefer calling `getNewProjectKickoff` (or `kickoffGreenfield`) at the very beginning. Write the returned `.forgetrail/workflow_tracking.json`, optional Cursor rules, and follow the post-bootstrap instructions exactly. Then start with Phase 1.
+Prefer calling `getNewProjectKickoff` (or `kickoffGreenfield`) at the very beginning. Write `appledger/` as that bundle describes. Do not write `workflow_tracking.json`. Write optional Cursor rules, and follow the post-bootstrap instructions exactly. Then start with Phase 1.
 
 ## For Resuming
 
-Call `getResumeSessionInstructions` (or read tracking + CONTEXT_PROMPT) and continue from the current phase.
+Call `getResumeSessionInstructions` (or read `appledger/profiles/forgetrail.yaml`, the latest session, and CONTEXT_PROMPT) and continue from the current phase.
 
 ## Key Tools to Use Proactively
 
@@ -88,10 +89,10 @@ Call `getResumeSessionInstructions` (or read tracking + CONTEXT_PROMPT) and cont
 - `getTemplate({name: "..."})` — for PHASE_1_BRIEF, CONTEXT_PROMPT, audits, etc. Use mode "shell" for clean structure.
 - `runAudit`, `searchLessons`, `getAntiPatterns`
 - `suggestSubagentDecomposition` (when subagents available)
-- `validateTracking` (to keep the state file healthy)
+- `validateTracking` (classify a legacy `workflow_tracking.json`; a missing file is expected)
 - `ingestPlanArtifact` (after native plan mode approval — map plan → PHASE_1_BRIEF + decisions[])
 - `todo_write` — mirror open exit criteria and next actions.
 
-Always keep the user in the loop on phase progress and major decisions. The tracking file + CONTEXT_PROMPT are the source of truth across sessions, not chat history.
+Always keep the user in the loop on phase progress and major decisions. `appledger/` plus CONTEXT_PROMPT are the source of truth across sessions, not chat history.
 
 This skill makes you a much more reliable long-term build partner. Use it.

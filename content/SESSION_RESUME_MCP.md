@@ -6,11 +6,11 @@ The user is **continuing** a project that uses ForgeTrail via the **MCP server**
 
 ## Before doing anything else
 
-1. Read **`.forgetrail/workflow_tracking.json`** — current phase, exit criteria, notes, decisions.
-2. If **`currentPhase`** is **`1-architecture`**, read **`docs/PHASE_1_BRIEF.md`** and continue planning toward a locked brief. Otherwise read **`CONTEXT_PROMPT.md`**. If Phase 2+ but CONTEXT is missing and **`PHASE_1_BRIEF.md`** exists, **merge the brief into CONTEXT** first (see CONTEXT_PROMPT template).
-3. Call **`getPhaseGuidance`** for the phase matching `.forgetrail/workflow_tracking.json` → `currentPhase` (e.g. `4` for feature iteration, or keyword `features`). When a companion trigger is true, call **`getCompanionSuggestions`** for that phase or situation. Do not install unless the user asked.
+1. Read **`appledger/profiles/forgetrail.yaml`** — current phase instance and criteria — and the latest session record (`left_off`, `next_steps`).
+2. If the current phase is **`plan`**, read **`docs/PHASE_1_BRIEF.md`** and continue planning toward a locked brief. Otherwise read **`CONTEXT_PROMPT.md`**. If a later phase is current but CONTEXT is missing and **`PHASE_1_BRIEF.md`** exists, **merge the brief into CONTEXT** first (see CONTEXT_PROMPT template).
+3. Call **`getPhaseGuidance`** for that phase (`plan` through `harden`, or `1`–`7`). When a companion trigger is true, call **`getCompanionSuggestions`** for that phase or situation. Do not install unless the user asked.
 4. If you need checklist context, call **`getChecklist`** (e.g. `every-session` or `full`).
-5. If unsure how to update tracking fields, call **`getTrackingSchema`**.
+5. If a **`workflow_tracking.json`** file exists and is not a pointer, do not update it. Run **`appledger migrate preview`**, then apply. Call **`validateTracking`** only to classify that file.
 
 Do **not** require `_forgetrail/WORKFLOW.md` or `_forgetrail/TRACKING_SCHEMA.md` on disk — use the MCP tools above.
 
@@ -18,11 +18,11 @@ Do **not** require `_forgetrail/WORKFLOW.md` or `_forgetrail/TRACKING_SCHEMA.md`
 
 ## Rules for this session
 
-- When exit criteria for the current phase appear met, say so explicitly and **wait for user confirmation** before advancing `currentPhase`.
-- After work, **update `.forgetrail/workflow_tracking.json`** (criteria, `decisions`, `gotchas`, `sessions`) per **`getTrackingSchema`**.
+- When exit criteria for the current phase appear met, say so explicitly and **wait for user confirmation** before changing `current_phase_instance`.
+- After work, update the **session record** and any new **decision records** in **`appledger/`**. Do not write **`workflow_tracking.json`**.
 - Keep **`CONTEXT_PROMPT.md`** the source of truth for architecture; edit it when decisions change.
 - If stuck after **~5 turns** on one issue, propose a **fundamentally different approach**.
-- If the repo has **gstack** installed, use its skills for sprint execution (build/review/qa/ship) within ForgeTrail phases — see **WORKFLOW.md §1b** or call **`getPhaseGuidance`** for phase-specific gstack integration. After each gstack sprint, update `.forgetrail/workflow_tracking.json`.
+- If the repo has **gstack** installed, use its skills for sprint execution (build/review/qa/ship) within ForgeTrail phases — see **WORKFLOW.md §1b** or call **`getPhaseGuidance`** for phase-specific gstack integration. After each gstack sprint, update the **appledger** session.
 
 ---
 

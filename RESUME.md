@@ -22,8 +22,9 @@ npm: [`forgetrail@0.3.0`](https://www.npmjs.com/package/forgetrail) and [`forget
 
 ## Remaining
 
-- **`pnpm ship`** so forgetrail.dev picks up `/docs` (live URL is still 404) and the slim home/Try pages.
+- **`pnpm ship`** so forgetrail.dev picks up `/docs` (live URL is still 404) and the slim home/Try pages. Site pages still describe `workflow_tracking.json`; update them when the site is published, after pilots.
 - Optional M4: MCP finds content without `FORGETRAIL_ROOT` when both packages are present ([specs/completed/npm-distribution.md](specs/completed/npm-distribution.md)).
+- Tracking cutover: new installs do not write `workflow_tracking.json`. Project state is `appledger/`. xFacts maintenance inside ForgeTrail phases is still open.
 
 ## Do not
 
