@@ -4,7 +4,7 @@
     "Companions are optional. Decline is success. Never block a phase on an install.",
     "Suggest at the moment of need. Do not dump the shelf at kickoff or in the first user-facing message.",
     "Do not install, enroll, or publish unless the user asked.",
-    "After a companion run that matters, persist the outcome in .forgetrail/workflow_tracking.json and the matching progressive doc.",
+    "After a companion run that matters, persist the outcome on the appledger session as data.companion_outcomes and in the matching progressive doc. Do not write workflow_tracking.json.",
     "Do not mention the mapping file, spec paths, or MCP tool names in human-facing offers.",
     "When wiring LocalSlip, follow that tool's how. Do not write ensure-lease.mjs. Do not add the localslip package just to read a port."
   ],

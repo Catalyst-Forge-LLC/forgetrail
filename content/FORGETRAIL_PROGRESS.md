@@ -1,6 +1,6 @@
 # ForgeTrail progress
 
-_Human-readable snapshot for non-technical operators. **Source of truth:** `.forgetrail/workflow_tracking.json` — the agent updates that file; this doc is refreshed when you run **status.bat** / **status.sh** or **pnpm run forgetrail:status**._
+_Human-readable snapshot for non-technical operators. **Source of truth:** `appledger/profiles/forgetrail.yaml` and the latest session record. The agent updates those. Do not write `.forgetrail/workflow_tracking.json`. This page is a snapshot, not the record._
 
 ## Current phase
 
@@ -9,11 +9,11 @@ _Human-readable snapshot for non-technical operators. **Source of truth:** `.for
 
 ## What's done
 
-_(Populated from exit criteria marked true in tracking.)_
+_(Populated from criteria marked met in the profile.)_
 
 ## Still to do (this phase)
 
-_(Populated from exit criteria still false.)_
+_(Populated from criteria still pending.)_
 
 ## How to check progress anytime
 

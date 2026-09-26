@@ -54,16 +54,16 @@ Skip the **“copy-paste paths”** section below unless we are using a **local*
 **Before doing anything else:**
 
 1. Read `_forgetrail/WORKFLOW.md` to understand the full phase map, playbooks, and patterns.
-2. Read `_forgetrail/TRACKING_SCHEMA.md` to understand the tracking file structure before updating it.
-3. Read **`.forgetrail/workflow_tracking.json`** to see current project state.
-4. If using **Cursor**, copy **`_forgetrail/content/cursor-rules/forgetrail-phase-status.mdc`** to **`.cursor/rules/forgetrail-phase-status.mdc`** (create folders if needed) so agents surface phase / next actions from `.forgetrail/workflow_tracking.json`.
+2. Read `_forgetrail/TRACKING_SCHEMA.md` for where project state lives. The legacy JSON shape in that file is for migration only.
+3. Read **`appledger/profiles/forgetrail.yaml`** and the latest session record. Do **not** create **`.forgetrail/workflow_tracking.json`**.
+4. If using **Cursor**, copy **`_forgetrail/content/cursor-rules/forgetrail-phase-status.mdc`** to **`.cursor/rules/forgetrail-phase-status.mdc`** (create folders if needed) so agents surface phase / next actions from `appledger/profiles/forgetrail.yaml`.
 5. We're starting with Phase 1 (Architecture + Planning).
 
 **Rules for every session:**
 
-- At the start of each session, read `.forgetrail/workflow_tracking.json` and `CONTEXT_PROMPT.md` (if it exists).
+- At the start of each session, read `appledger/profiles/forgetrail.yaml`, the latest session record, and `CONTEXT_PROMPT.md` (if it exists).
 - When you believe a phase's exit criteria are met, tell me explicitly: "I think we've completed [Phase X]. The exit criteria are met because [reasons]. Ready to move to [Phase Y]?" Wait for my confirmation.
-- After completing work, update `.forgetrail/workflow_tracking.json` following the structure in `TRACKING_SCHEMA.md`: move satisfied exit criteria, add decisions to the `decisions` array (with rationale), log issues to the `gotchas` array, and add session notes.
+- After completing work, update **`appledger/`**: move satisfied criteria only when evidence exists, add decision records (with rationale), log lessons or questions, and update the session record. Do not write **`workflow_tracking.json`**.
 - During Phase 1, create and lock **`docs/PHASE_1_BRIEF.md`**; mirror major decisions in **`decisions[]`**.
 - When we create `CONTEXT_PROMPT.md` (Phase 2), **merge `PHASE_1_BRIEF.md` into it** first (see template), then keep it updated as the source of truth.
 - If something isn't working after 5 turns, propose a fundamentally different approach rather than continuing to patch.
@@ -174,12 +174,12 @@ Phase 1 (Architecture + Planning):
 - Recommend what to skip for v1.
 - Wait for my confirmation on every architectural decision.
 - Create **`docs/PHASE_1_BRIEF.md`** from the ForgeTrail template (`_forgetrail/docs/` or MCP **`getTemplate("PHASE_1_BRIEF")`**). Fill and **lock** it before we exit Phase 1.
-- Record major commitments in **`.forgetrail/workflow_tracking.json`** → **`decisions[]`** (and phase notes) so the next session does not depend on chat history.
+- Record major commitments as **decision records in `appledger/`** so the next session does not depend on chat history. Do not write **`workflow_tracking.json`**.
 
 Phase 2 (Scaffolding + Core Build):
 
 - Only after I've confirmed the architecture and the brief is locked.
-- Read **`PHASE_1_BRIEF.md`** and **`.forgetrail/workflow_tracking.json`** first.
+- Read **`PHASE_1_BRIEF.md`**, **`appledger/profiles/forgetrail.yaml`**, and the latest session record first. Do not treat **`workflow_tracking.json`** as the live record.
 - Build the **entire app skeleton in one pass**: project init, dependencies, services, routes, components — **do not defer the runnable spine or hero flow**.
 - Include an import script if there's existing data.
 - Wire up the hero flow end to end.

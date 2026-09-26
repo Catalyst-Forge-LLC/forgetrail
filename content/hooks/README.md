@@ -6,10 +6,10 @@ Enforces ForgeTrail rules and guards at the host tool level, rather than relying
 
 - `guard-shell.mjs`: runs pre-commit verification (`pnpm run verify`), prevents npm/yarn when `pnpm-lock.yaml` is present, gates `git push` to upstream remotes (pushing to IngotVault or local backup mirrors is allowed automatically), and prompts on destructive git or filesystem operations.
 - `guard-edit.mjs`: guards `.env*` secrets files and `specs/completed/**` or `specs/canonical/**` records against accidental mutation.
-- `session-start.mjs`: on session start, reads `.forgetrail/workflow_tracking.json` and injects live phase status, open exit criteria, and last session notes into agent context.
-- `validate-tracking.mjs`: after editing `workflow_tracking.json`, runs structural validation and returns any issues as context.
+- `session-start.mjs`: on session start, points the session at `appledger/`. A writable `workflow_tracking.json` is reported as a legacy conflict, not the live phase.
+- `validate-tracking.mjs`: after editing `workflow_tracking.json`, runs structural validation. A pointer is accepted. A legacy writable document is a conflict.
 - `validate-tracking-core.mjs`: standalone zero-dependency tracking validator.
-- `session-stop.mjs`: on session stop, checks that session notes were added to tracking.
+- `session-stop.mjs`: on session stop, reminds the agent to update the appledger session record. It does not ask for a new JSON session entry.
 - `cursor-hooks.json`: standard Cursor hooks configuration.
 - `claude-settings-hooks.json`: standard Claude Code configuration fragment.
 

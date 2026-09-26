@@ -26,15 +26,15 @@ You need a new empty project folder and a coding agent that can read files. Node
 2. Copy [`content/FORGETRAIL_LITE.md`](content/FORGETRAIL_LITE.md) to `.forgetrail/FORGETRAIL_LITE.md`, or run `pnpm dlx forgetrail install --lite --with-genesis-stub` (Node.js 20+).
 3. Paste the kickoff line from [TRY_FORGETRAIL.md](TRY_FORGETRAIL.md). Approve the Phase 1 brief before any scaffold.
 
-The shortest supported first task is: create tracking, draft `docs/PHASE_1_BRIEF.md`, and wait for approval. You do not have to run all seven phases. Full recipe: [Try](https://forgetrail.dev/docs/try).
+The shortest supported first task is: create `appledger/`, draft `docs/PHASE_1_BRIEF.md`, and wait for approval. You do not have to run all seven phases. Full recipe: [Try](https://forgetrail.dev/docs/try).
 
 ## Lite, CLI, and MCP
 
 | Path | Who uses it | What it is |
 | --- | --- | --- |
-| **Lite** | First path | One protocol file. The agent writes tracking. |
-| **CLI** (`forgetrail`) | Node.js 20+ | Installer. Writes Lite with a starter tracking file and Cursor hooks, or the full template tree. Skips files that already exist. Does not run the agent. |
-| **MCP** (`forgetrail-mcp`) | Cursor or Claude | Phase guidance, templates, and lessons search. Tracking still lives in the app repo. |
+| **Lite** | First path | One protocol file. The agent writes `appledger/`. |
+| **CLI** (`forgetrail`) | Node.js 20+ | Installer. Writes Lite and Cursor hooks, or the full template tree. It does not write a tracking JSON file. Skips files that already exist. Does not run the agent. |
+| **MCP** (`forgetrail-mcp`) | Cursor or Claude | Phase guidance, templates, and lessons search. The ledger still lives in the app repo. |
 
 ```bash
 pnpm dlx forgetrail install --lite --with-genesis-stub
@@ -44,7 +44,7 @@ MCP: `npx -y forgetrail-mcp` with `FORGETRAIL_ROOT` set. Prefer `pnpm dlx` on Wi
 
 ## What you get
 
-A 7-phase playbook, a live `.forgetrail/workflow_tracking.json`, and templates pre-loaded with first-party production lessons. Each project leaves a trail of decisions, gotchas, and breadcrumbs that future work follows. Those lesson notes are not independent adoption evidence.
+A 7-phase playbook, a ledger in `appledger/`, and templates pre-loaded with first-party production lessons. Each project leaves decisions, lessons, and a session handoff that future work follows. Those lesson notes are not independent adoption evidence. A new install does not create `.forgetrail/workflow_tracking.json`.
 
 Optional hooks in [`content/hooks/`](content/hooks/README.md) load the current phase at session start in Cursor or Claude Code, validate tracking edits, and check for a session note at session stop. The agent still does the writing. Flags, MCP, and the phase table live in the [docs](https://forgetrail.dev/docs).
 

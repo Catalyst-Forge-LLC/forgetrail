@@ -1,10 +1,10 @@
 # [App Name] — Phase 1 architecture brief
 
-_Structured capture of planning and architecture **before** code scaffolding. Goal: Phase 2 (or a new agent/session) can start from this file + `.forgetrail/workflow_tracking.json` without re-reading the whole Phase 1 chat._
+_Structured capture of planning and architecture **before** code scaffolding. Goal: Phase 2 (or a new agent/session) can start from this file plus `appledger/` without re-reading the whole Phase 1 chat._
 
 **Status:** `[draft | locked]`  
 **Last updated:** `[ISO date]`  
-**Phase 1 exit:** Do not mark Phase 1 complete in `.forgetrail/workflow_tracking.json` until this brief is **locked** and major commitments are in `decisions[]`.
+**Phase 1 exit:** Do not mark the `plan` phase complete in `appledger/profiles/forgetrail.yaml` until this brief is **locked** and major commitments are decision records. Do not write `workflow_tracking.json`.
 
 ---
 
@@ -13,7 +13,7 @@ _Structured capture of planning and architecture **before** code scaffolding. Go
 **What we are building (2–4 sentences):**
 
 
-**Project archetype:** `[product | internal-tool | one-shot]` _(WORKFLOW.md §1d — non-`product` archetypes prune later-phase exit criteria in the tracking file; log the pruning in `decisions[]`)_
+**Project archetype:** `[product | internal-tool | one-shot]` _(WORKFLOW.md §1d — non-`product` archetypes prune later-phase criteria in `appledger/profiles/forgetrail.yaml`; record the pruning as a decision.)_
 
 **What “done” looks like for v1 (measurable where possible):**
 
@@ -115,7 +115,7 @@ _What could blow schedule or architecture — honest list._
 
 ## 8. Architectural decisions (numbered)
 
-_Each decision should include **WHY** and what was rejected. **Also** add each major commitment to `.forgetrail/workflow_tracking.json` → `decisions[]` (id, timestamp, phase, decision, rationale, alternatives_considered)._
+_Each decision should include **WHY** and what was rejected. **Also** add each major commitment as a decision record in `appledger/` (choice, rationale, alternatives)._
 
 **D1.**
 
@@ -158,7 +158,7 @@ _Ordered list of what to build after the spine runs — aligns with initial `TOD
 
 - [ ] User has confirmed stack, folder shape, data sketch, hero flow, and v1 boundaries
 - [ ] This brief is **locked** (no `[draft]` ambiguity) or remaining items are only in §9 Open questions
-- [ ] `.forgetrail/workflow_tracking.json` updated: `decisions[]` for each major D#; `phases["1-architecture"]` notes summarize sign-off
-- [ ] Phase 2 opener will read **this file** + `.forgetrail/workflow_tracking.json` first
+- [ ] `appledger/` updated: a decision record for each major D#, and the session records the sign-off. Do not write `workflow_tracking.json`.
+- [ ] Phase 2 opener will read **this file**, `appledger/profiles/forgetrail.yaml`, and the latest session record first
 
-> 💡 **Lesson learned:** Treat the brief and `decisions[]` as a pair: JSON is great for machine-structured history; the brief is great for the next human or agent to read in one pass. Duplicated rationale is OK — drift between them is not. After Phase 2 starts, **merge** this content into `CONTEXT_PROMPT.md` per the mapping in that template’s “Handoff from Phase 1” section.
+> 💡 **Lesson learned:** Treat the brief and the decision records as a pair. The brief is what the next human or agent reads in one pass. Duplicated rationale is OK — drift between them is not. After Phase 2 starts, **merge** this content into `CONTEXT_PROMPT.md` per the mapping in that template’s “Handoff from Phase 1” section.

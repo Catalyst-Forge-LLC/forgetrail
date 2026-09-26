@@ -17,7 +17,7 @@ Mark what you completed:
 - [ ] Produced or saved a `docs/GENESIS.md` (or used Lite intake only)
 - [ ] Added `.forgetrail/FORGETRAIL_LITE.md` (copy or `forgetrail install --lite`)
 - [ ] Pasted the kickoff line into my coding agent
-- [ ] Got `.forgetrail/workflow_tracking.json`
+- [ ] Got `appledger/` (profile and a session record), not a new `workflow_tracking.json`
 - [ ] Got a draft `docs/PHASE_1_BRIEF.md`
 - [ ] Agent waited for Phase 1 approval before scaffolding
 

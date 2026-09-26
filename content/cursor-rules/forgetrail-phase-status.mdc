@@ -19,7 +19,7 @@ Include a short **ForgeTrail** footer in replies when it helps orientation—esp
 
 Skip the footer for trivial one-line answers (typos, single-token replies) unless the user asked for status.
 
-**Product-facing / non-technical users:** Do **not** show ForgeTrail footers, phase IDs, MCP/tool names, or internal checklists unless they ask how the workflow is wired up. Plain language only. For phase progress without an agent, point them to **`status.bat`** / **`status.sh`**, **`pnpm run forgetrail:status`**, or **`docs/FORGETRAIL_PROGRESS.md`** (regenerated from `.forgetrail/workflow_tracking.json`).
+**Product-facing / non-technical users:** Do **not** show ForgeTrail footers, phase IDs, MCP/tool names, or internal checklists unless they ask how the workflow is wired up. Plain language only. For phase progress without an agent, point them to **`docs/FORGETRAIL_PROGRESS.md`**. The durable phase is `appledger/profiles/forgetrail.yaml`, not `.forgetrail/workflow_tracking.json`.
 
 **Right after bootstrap:** **Omit** the footer entirely—user should get a simple “what’s done + what I need from you next,” not methodology. If you already followed **`getPostBootstrapUserMessage`** in the same turn, do not duplicate status blocks.
 

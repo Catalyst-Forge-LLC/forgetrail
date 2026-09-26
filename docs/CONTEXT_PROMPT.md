@@ -24,7 +24,7 @@ _If the project used ForgeTrail Phase 1 properly, **`docs/PHASE_1_BRIEF.md`** ex
 | §10 Out of scope v1 | **Key Architectural Decisions** or short note under **Recent Changes** |
 | §11 First feature batch | Seed **`TODO.md`** |
 
-**After merge:** Keep **`PHASE_1_BRIEF.md`** in `docs/` as a dated audit trail **or** replace its body with one line: `Merged into CONTEXT_PROMPT.md on [date]. Source preserved in git history.` Do **not** delete corresponding entries in **`.forgetrail/workflow_tracking.json` → `decisions[]`.**
+**After merge:** Keep **`PHASE_1_BRIEF.md`** in `docs/` as a dated audit trail **or** replace its body with one line: `Merged into CONTEXT_PROMPT.md on [date]. Source preserved in git history.` Do **not** delete the corresponding decision records in **`appledger/`**.
 
 ---
 

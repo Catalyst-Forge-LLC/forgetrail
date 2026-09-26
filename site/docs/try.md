@@ -17,7 +17,7 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to
 3. Add Lite: save [FORGETRAIL_LITE.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/content/FORGETRAIL_LITE.md) as `.forgetrail/FORGETRAIL_LITE.md`, or `pnpm dlx forgetrail install --lite --with-genesis-stub`.
 4. Paste this kickoff line into your coding agent:
 
-> Follow `.forgetrail/FORGETRAIL_LITE.md` as the project protocol. Treat `docs/GENESIS.md` as the product spec (what, not how). Create `.forgetrail/workflow_tracking.json` and draft `docs/PHASE_1_BRIEF.md` from the Genesis file, asking me only about gaps. Do not scaffold application code until I explicitly approve the Phase 1 brief.
+> Follow `.forgetrail/FORGETRAIL_LITE.md` as the project protocol. Treat `docs/GENESIS.md` as the product spec (what, not how). Create `appledger/` (manifest, profile, application record, session record) and draft `docs/PHASE_1_BRIEF.md` from the Genesis file, asking me only about gaps. Do not create `workflow_tracking.json`. Do not scaffold application code until I explicitly approve the Phase 1 brief.
 
 5. Approve the Phase 1 brief before any app scaffold.
 
@@ -25,7 +25,7 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to
 
 - `.forgetrail/FORGETRAIL_LITE.md` is present
 - `docs/GENESIS.md` is present
-- `.forgetrail/workflow_tracking.json` exists
+- `appledger/profiles/forgetrail.yaml` and a session record exist
 - `docs/PHASE_1_BRIEF.md` is drafted (or clearly in progress)
 - The agent asked for approval before scaffolding
 
@@ -33,9 +33,9 @@ Stuck? Open a [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/f
 
 The same recipe lives in [TRY_FORGETRAIL.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/TRY_FORGETRAIL.md) on GitHub. Short kickoff: [Try](/try). What the next session reads: [Continuity](/docs/continuity).
 
-Required on this path: the Lite file, a Genesis spec or the §5 intake, tracking, and a Phase 1 brief you approve. Situational: Node (only if you use the CLI), MCP, and a full template tree.
+Required on this path: the Lite file, a Genesis spec or the §5 intake, an `appledger/` ledger, and a Phase 1 brief you approve. Situational: Node (only if you use the CLI), MCP, and a full template tree.
 
-The CLI can place the Lite file and a starter `.forgetrail/workflow_tracking.json`. The agent creates or fills in tracking. Those writes are not automatic.
+The CLI can place the Lite file and hooks. It does not place a tracking JSON file. The agent creates the ledger. Those writes are not automatic.
 
 ## Graduation
 

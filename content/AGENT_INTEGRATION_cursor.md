@@ -41,8 +41,8 @@ Use `run_in_background` for long subagents when appropriate.
 ## Tracking sync
 
 After subagent or feature work:
-- Update `.forgetrail/workflow_tracking.json` (exit criteria, decisions, gotchas, sessions).
-- Run **`validateTracking`**.
+- Update `appledger/` (criteria, decision records, lessons, the session). Do not write `workflow_tracking.json`.
+- Run **`validateTracking`** only when a legacy tracking file is present. A missing file is expected.
 - Update `CONTEXT_PROMPT.md` when architecture or patterns change.
 
 ## Skills alternative

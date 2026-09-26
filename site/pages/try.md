@@ -4,7 +4,7 @@ description: Prove ForgeTrail in one sitting with a Genesis spec and ForgeTrail 
 order: 1
 ---
 
-Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to **ForgeTrail Lite**, and let your coding agent create the tracking file the next chat will read.
+Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to **ForgeTrail Lite**, and let your coding agent create the `appledger/` folder the next chat will read.
 
 **You need:** any LLM chat and any coding agent that reads files.
 
@@ -12,7 +12,7 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to
 
 **Important:** Use a **new empty project folder**. Do not run this inside a clone of the ForgeTrail methodology repo.
 
-The first artifact to look for is `.forgetrail/workflow_tracking.json`. How a second session uses it: [Continuity](/docs/continuity).
+The first project-state artifact to look for is `appledger/profiles/forgetrail.yaml`, plus a session record. A new install does not create `.forgetrail/workflow_tracking.json`. How a second session uses the ledger: [Continuity](/docs/continuity).
 
 ## Kickoff
 

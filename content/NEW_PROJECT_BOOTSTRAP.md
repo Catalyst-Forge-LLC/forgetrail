@@ -157,24 +157,24 @@ ForgeTrail’s reference implementation used **SvelteKit (Svelte 5), TypeScript,
 
 If the user has [gstack](https://github.com/garrytan/gstack) installed (Claude Code slash-command skills), ForgeTrail and gstack are **complementary** — ForgeTrail provides the lifecycle methodology, project memory, and business/brand layer; gstack provides sprint execution, browser-based QA, and deploy automation. Use both:
 
-**ForgeTrail owns the lifecycle.** Phase transitions, exit criteria, `.forgetrail/workflow_tracking.json`, progressive docs, lessons, and audits all come from ForgeTrail MCP.
+**ForgeTrail owns the lifecycle.** Phase transitions, exit criteria, `appledger/`, progressive docs, lessons, and audits all come from ForgeTrail MCP. Do not write `workflow_tracking.json`.
 
 **gstack owns the sprint inner loop.** Within a ForgeTrail phase, use gstack skills for the build → review → test → ship cycle:
 
 | ForgeTrail phase | gstack skills to use | How they connect |
 |---------------|---------------------|------------------|
-| **Phase 1** (Plan) | `/office-hours` for product framing, `/plan-ceo-review` for scope | Capture outputs in **`PHASE_1_BRIEF.md`** and **`.forgetrail/workflow_tracking.json` → `decisions[]`** — gstack doesn't persist these, ForgeTrail does. |
+| **Phase 1** (Plan) | `/office-hours` for product framing, `/plan-ceo-review` for scope | Capture outputs in **`PHASE_1_BRIEF.md`** and **decision records in `appledger/`** — gstack doesn't persist these, ForgeTrail does. |
 | **Phase 2** (Build) | `/plan-eng-review` for technical spine review | After building the skeleton, run `/review` on the initial commit. Merge the brief into `CONTEXT_PROMPT.md` per ForgeTrail's template. |
-| **Phase 3** (Stabilize) | `/investigate` for systematic root-cause debugging | Log every gotcha in **`.forgetrail/workflow_tracking.json` → `gotchas[]`** and update `CONTEXT_PROMPT.md` — gstack fixes bugs but doesn't persist lessons. |
-| **Phase 4** (Iterate) | `/plan-eng-review` per feature → build → `/review` → `/qa` → `/ship` | After each `/ship`, update **`TODO.md`** (mark done), **`CONTEXT_PROMPT.md`** (if patterns changed), and **`.forgetrail/workflow_tracking.json`** (exit criteria, session notes). |
+| **Phase 3** (Stabilize) | `/investigate` for systematic root-cause debugging | Log each lesson or open question in **`appledger/`** and update `CONTEXT_PROMPT.md` — gstack fixes bugs but doesn't persist lessons. |
+| **Phase 4** (Iterate) | `/plan-eng-review` per feature → build → `/review` → `/qa` → `/ship` | After each `/ship`, update **`TODO.md`** (mark done), **`CONTEXT_PROMPT.md`** (if patterns changed), and **`appledger/`** (criteria and the session). |
 | **Phase 5** (Refine) | `/review` on refactor branches | Update `CONTEXT_PROMPT.md` and `TECHNICAL_REFERENCE.md` to match the new structure. |
 | **Phase 6** (Align) | `/design-consultation` for design system, `/plan-ceo-review` for scope check | Create **`BRAND_AND_PRODUCT.md`** and restructure **`TODO.md`** via ForgeTrail templates — gstack doesn't have brand/strategy tooling. |
 | **Phase 7** (Harden) | `/cso` for security audit, `/qa` for full regression, `/ship` + `/land-and-deploy` + `/canary` for production | ForgeTrail's `runAudit("black-hat")` and gstack's `/cso` are complementary — run both. ForgeTrail produces **`BLACK_HAT_REPORT.md`** and **`CODE_QUALITY.md`** as persistent docs; gstack's `/cso` catches runtime exploits. Use `/land-and-deploy` → `/canary` for the actual deploy pipeline, then fill ForgeTrail's **`DEPLOYMENT.md`** to document the process. |
 
-**Key rule:** After every gstack sprint that completes meaningful work, **update `.forgetrail/workflow_tracking.json`** (move exit criteria, add decisions/gotchas, update session notes). gstack persists some sprint artifacts (design docs from `/office-hours` in `~/.gstack/projects/`, retro snapshots in `.context/retros/`, review overrides, skill analytics), but it has **no lifecycle state, no decision rationale log, and no architecture context document**. ForgeTrail's `.forgetrail/workflow_tracking.json` + `CONTEXT_PROMPT.md` are the system of record for what phase you're in, what's been decided and why, what gotchas have been hit, and what the architecture looks like — none of which gstack tracks.
+**Key rule:** After every gstack sprint that completes meaningful work, **update `appledger/`** (criteria when evidence exists, decision records, lessons or questions, the session). Do not write `workflow_tracking.json`. gstack persists some sprint artifacts (design docs from `/office-hours` in `~/.gstack/projects/`, retro snapshots in `.context/retros/`, review overrides, skill analytics), but it has **no lifecycle state, no decision rationale log, and no architecture context document**. ForgeTrail's `appledger/` plus `CONTEXT_PROMPT.md` are the system of record for the phase, the decisions, the lessons, and the architecture — none of which gstack tracks.
 
 ---
 
 ## IP / distribution note
 
-This bootstrap is designed for **MCP delivery**: deep methodology stays in the ForgeTrail distribution or hosted MCP; the customer repository holds **their** app, **their** filled docs, and **their** tracking file — not a vendored copy of ForgeTrail itself.
+This bootstrap is designed for **MCP delivery**: deep methodology stays in the ForgeTrail distribution or hosted MCP; the customer repository holds **their** app, **their** filled docs, and **their** `appledger/` ledger — not a vendored copy of ForgeTrail itself.

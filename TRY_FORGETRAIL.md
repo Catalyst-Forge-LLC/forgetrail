@@ -46,7 +46,7 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec in any AI chat, 
 
 - [ ] `.forgetrail/FORGETRAIL_LITE.md` is present  
 - [ ] `docs/GENESIS.md` is present  
-- [ ] `.forgetrail/workflow_tracking.json` exists  
+- [ ] `appledger/profiles/forgetrail.yaml` and a session record exist  
 - [ ] `docs/PHASE_1_BRIEF.md` drafted from your Genesis (or clearly in progress)  
 - [ ] The agent asked for approval before scaffolding  
 

@@ -18,6 +18,6 @@ Phases 4 and 5 often alternate. Full playbooks: [WORKFLOW.md](https://github.com
 
 ## What stays in the repo
 
-Phase state, decisions, and gotchas live in `.forgetrail/workflow_tracking.json`, not in a chat transcript. The next session reads the trail and continues.
+Phase state lives in `appledger/profiles/forgetrail.yaml`. Decisions, lessons, and the session handoff are records in `appledger/`, not a chat transcript. The next session reads that ledger and continues. A writable `.forgetrail/workflow_tracking.json` is a legacy file: preview it with `appledger migrate`, then apply.
 
 Product story: [forgetrail.dev](/).

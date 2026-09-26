@@ -143,9 +143,19 @@ async function cmdRun() {
 
 function renderProgress() {
   if (!existsSync(trackingPath)) {
-    return { text: "No .forgetrail/workflow_tracking.json yet — agent bootstrap not finished.", md: null };
+    return {
+      text: "No workflow_tracking.json. Phase state belongs in appledger/profiles/forgetrail.yaml.",
+      md: null,
+    };
   }
   const t = JSON.parse(readFileSync(trackingPath, "utf8"));
+  const record = typeof t.record === "string" ? t.record.replaceAll("\\", "/") : "";
+  if (t.status === "pointer" && record.includes("appledger")) {
+    return {
+      text: "workflow_tracking.json is a pointer to appledger/. Read appledger/profiles/forgetrail.yaml.",
+      md: null,
+    };
+  }
   const phase = t.currentPhase ?? "?";
   const phaseId = String(phase);
   const phaseBlock = t.phases?.[phaseId];
@@ -168,7 +178,7 @@ function renderProgress() {
   const md = [
     "# ForgeTrail progress",
     "",
-    "_Human-readable snapshot. Source of truth: `.forgetrail/workflow_tracking.json`._",
+    "_Human-readable snapshot read from a legacy workflow_tracking.json. After migrate, the source of truth is `appledger/profiles/forgetrail.yaml`._",
     "",
     `**Current phase:** ${label} (\`${phaseId}\`) — **${status}**`,
     "",

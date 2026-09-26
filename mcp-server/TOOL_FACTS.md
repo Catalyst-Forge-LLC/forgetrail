@@ -90,7 +90,7 @@ tools:
       processes: false
     idempotent: true
   - name: getNewProjectKickoff
-    purpose: "Return greenfield bootstrap payload including starter tracking and optional Cursor rules"
+    purpose: "Return greenfield bootstrap payload for appledger/ initialization and optional Cursor rules"
     side_effects: none
     reach:
       filesystem: none
@@ -364,7 +364,7 @@ None required.
 | `getTrackingSchema` | Return the workflow_tracking.json schema reference |
 | `getAntiPatterns` | Return documented anti-patterns from the methodology |
 | `getProgressiveDocSchedule` | Return which doc templates to create in each phase |
-| `getNewProjectKickoff` | Return greenfield bootstrap payload including starter tracking and optional Cursor rules |
+| `getNewProjectKickoff` | Return greenfield bootstrap payload for appledger/ initialization and optional Cursor rules |
 | `kickoffGreenfield` | Same as getNewProjectKickoff with includeCursorRule true and no parameters |
 | `kickoffGreenfieldNoCursor` | Same as kickoffGreenfield without the Cursor rule section |
 | `getNewProjectBootstrap` | Return MCP-first instructions to start a greenfield project without copying ForgeTrail into the repo |

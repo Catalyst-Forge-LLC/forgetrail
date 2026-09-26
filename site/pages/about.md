@@ -8,7 +8,7 @@ order: 3
 
 **Who it is for:** builders using Cursor, Claude Code, Codex, or similar agents who want structure without a heavyweight process.
 
-**Why it works:** phases with exit criteria, a live `.forgetrail/workflow_tracking.json`, and templates pre-loaded with production lessons. Each project leaves a trail of decisions, gotchas, and breadcrumbs that future work follows.
+**Why it works:** phases with exit criteria, a ledger in `appledger/`, and templates pre-loaded with production lessons. Each project leaves decisions, lessons, and a session handoff that future work follows.
 
 ## What it is not
 
