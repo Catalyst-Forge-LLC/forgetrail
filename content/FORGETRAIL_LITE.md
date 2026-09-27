@@ -1,6 +1,6 @@
 # ForgeTrail Lite — portable kickoff for any agentic chat
 
-> **ForgeTrail Lite v2.1.0**
+> **ForgeTrail Lite v2.2.0**
 > © Catalyst Forge, LLC — [www.catalystforge.com](https://www.catalystforge.com)
 > Part of the **ForgeTrail** open-source methodology ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) in the upstream ForgeTrail repo).
 >
@@ -8,7 +8,7 @@
 
 A single self-contained file for starting a new project in **any** agent: Cursor, Claude Code, Claude Cowork, OpenAI Codex, Cline, Aider, Continue, Windsurf, etc. **No MCP server, no vendored methodology tree, no external fetches.** Drop this file into the repo (or paste it into chat), and the agent has enough structure to run a real project end to end.
 
-**System of record:** Phase, decisions, sessions, and gotchas live in `appledger/` (`profiles/forgetrail.yaml` and records). Do not create or update `.forgetrail/workflow_tracking.json`. Where this file says to write that JSON file, `decisions[]`, `gotchas[]`, `sessions[]`, or `currentPhase`, write the ledger instead. §11 is the legacy shape for `appledger migrate` only. If the JSON file already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep a second decision log. `.forgetrail/` is the protocol, rules, and hooks.
+**System of record:** Phase, decisions, lessons, and sessions live in `appledger/` (`profiles/forgetrail.yaml` and records). Do not create or update `.forgetrail/workflow_tracking.json`. §11 is the legacy shape for `appledger migrate` only. If that file already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep a second decision log. `.forgetrail/` is the protocol, rules, and hooks.
 
 > **Maintainers:** Optional onboarding blocks in **§4.3**, **§4.4**, and **§7.1** are intentionally duplicated in root **`README.md`** and **`WORKFLOW.md`**. When you edit one, sync the others (see **`update-log.md`** — FORGETRAIL_LITE release checklist, item 3).
 
@@ -22,7 +22,7 @@ Read this block **before you touch a tool.** These are the footguns that most co
 
 1. **Clean commit messages.** Use `git commit -m "…"` or `git commit -F file` (multi-line). Commit at natural stopping points with concise summaries. Never leave broken uncommitted work across session boundaries.
 2. **Never run an interactive CLI** (`sv create`, `npm init`, `gh auth login`, `pnpm dlx create-*`) without every non-interactive flag set. A TTY prompt in an agent terminal hangs the session. Full rule: §8 rule 6.
-3. **Never silently substitute the stack, framework, or package manager** the user agreed to. If a constraint forces a deviation, ask first and log in `decisions[]`. Full rule: §7 + §8.
+3. **Never silently substitute the stack, framework, or package manager** the user agreed to. If a constraint forces a deviation, ask first and record a decision in `appledger/`. Full rule: §7 + §8.
 4. **Never dump a wall of intake questions** into one message. Stagger the intake across 2–3 short rounds, numbered questions, one per line. Full rule: §5 + §9.
 
 If your host supports hooks (Cursor `hooks.json`, Claude Code `settings.json`), these rules are backed by host-level guards in `.forgetrail/hooks/` that run pre-commit verification, block unrequested pushes, and enforce package manager locking. On hosts without hooks, these rules are prompt-level only. Do not violate them.
@@ -41,7 +41,7 @@ If your host supports hooks (Cursor `hooks.json`, Claude Code `settings.json`), 
 
 Any of the three works. A + C together is best. For a written pre-Phase-1 spec, A + **`docs/GENESIS.md`** is the Try path.
 
-**Context budget note:** This protocol is comprehensive (~28k tokens) and is designed to guide initial kickoff and reference. Do not load this entire file into always-on context on every subsequent turn. After Phase 2 spine scaffolding, persistent project state lives in `.forgetrail/workflow_tracking.json` (~300–1,100 tokens), `CONTEXT_PROMPT.md`, and active feature specs. On Cursor and Claude Code, host hooks in `.forgetrail/hooks/` enforce rules deterministically without consuming prompt budget.
+**Context budget note:** This protocol is comprehensive (~28k tokens) and is designed to guide initial kickoff and reference. Do not load this entire file into always-on context on every subsequent turn. After Phase 2 spine scaffolding, persistent project state lives in `appledger/`, `CONTEXT_PROMPT.md`, and active feature specs. On Cursor and Claude Code, host hooks in `.forgetrail/hooks/` point the session at `appledger/` without consuming prompt budget.
 
 ---
 
@@ -49,7 +49,7 @@ Any of the three works. A + C together is best. For a written pre-Phase-1 spec, 
 
 ForgeTrail agent artifacts (protocol, tracking, platform rules) live in **`.forgetrail/`** at the repo root — **whether you bootstrap via ForgeTrail Lite file copy or MCP greenfield.**
 
-**Upstream ForgeTrail is open source** (Apache 2.0). In your app repo, **`.forgetrail/`** holds agent artifacts — tracking, optional Lite copy, platform rules. **MCP greenfield** projects often need only **`.forgetrail/workflow_tracking.json`** (methodology via MCP tools; no vendored Lite file). **Lite file bootstrap** may copy `FORGETRAIL_LITE.md` here; you may **commit** `.forgetrail/` under the same license or **gitignore** it to keep the public repo focused on app code and to avoid duplicating a large protocol when MCP already serves updates. Never commit **secrets** (`.env`, API keys) inside tracking or rules.
+**Upstream ForgeTrail is open source** (Apache 2.0). In your app repo, **`.forgetrail/`** holds the protocol, rules, and hooks. Project state lives in **`appledger/`**. **MCP greenfield** does not need a tracking JSON file. **Lite file bootstrap** may copy `FORGETRAIL_LITE.md` here; you may **commit** `.forgetrail/` under the same license or **gitignore** it to keep the public repo focused on app code and to avoid duplicating a large protocol when MCP already serves updates. Never commit **secrets** (`.env`, API keys) inside the ledger or rules.
 
 ```
 .forgetrail/
@@ -58,7 +58,6 @@ ForgeTrail agent artifacts (protocol, tracking, platform rules) live in **`.forg
   AGENTS.md                 ← §12 snippet
   CLAUDE.md                 ← §12.5 snippet (Claude Code)
   IDEAS.md                  ← backlog parking lot
-  workflow_tracking.json    ← §11 starter / live tracking
   hooks/                    ← host safety hooks (scripts + configs)
   cursor/rules/             ← §12 Cursor rule snippets
     forgetrail-updates-log.mdc
@@ -69,10 +68,10 @@ ForgeTrail agent artifacts (protocol, tracking, platform rules) live in **`.forg
 
 | Choice | When | `.gitignore` | Bootstrap commit includes |
 |--------|------|--------------|---------------------------|
-| **A — Commit `.forgetrail/`** (Lite default) | Self-contained history; tracking and rules travel with the repo | Do **not** list `.forgetrail/` | `.forgetrail/` artifacts from steps 3–4 (tracking, `AGENTS.md`, rules, optional Lite copy) |
+| **A — Commit `.forgetrail/`** (Lite default) | Self-contained history; protocol and rules travel with the repo | Do **not** list `.forgetrail/` | `.forgetrail/` artifacts from steps 3–4 (`AGENTS.md`, rules, hooks, optional Lite copy). Commit `appledger/` with the app. |
 | **B — Gitignore `.forgetrail/`** | Cleaner public app repo; MCP serves methodology; avoid vendoring a large Lite file on GitHub | Add `.forgetrail/` | `.gitignore` only (+ any `.cursor/rules/` copies you symlinked for IDE load) — agent workspace stays local |
 
-Log the choice in **`decisions[]`** (e.g. *"ForgeTrail workspace: commit .forgetrail/"* or *"… gitignore .forgetrail/"*). Never commit **secrets** (`.env`, API keys) inside tracking or rules regardless of branch.
+Record the choice as a decision in **`appledger/`** (for example, commit `.forgetrail/` or gitignore it). Never commit **secrets** (`.env`, API keys) inside the ledger or rules.
 
 **Cursor / IDE wiring (local only):** tools read `.cursor/rules/` and repo-root `AGENTS.md` by default — not `.forgetrail/`. After creating `.forgetrail/`, either:
 
@@ -89,24 +88,26 @@ When a boot surfaces a gap in **ForgeTrail Lite itself** (not a one-off app bug)
 
 - **Upstream template:** `forgetrail/content/FORGETRAIL_LITE_UPDATES.md` (empty starter — copy into `.forgetrail/`).
 - **Cursor rule:** `.forgetrail/cursor/rules/forgetrail-updates-log.mdc` (§12.5) — symlink into `.cursor/rules/` (§1.5).
-- **Log session-local incidents** in `.forgetrail/workflow_tracking.json → `gotchas[]` instead — routine bugs and product-only notes do not belong in the updates file.
+- **Log session-local incidents** as a lesson or an open question in `appledger/` — routine bugs and product-only notes do not belong in the updates file.
 - **Write for maintainers:** what went wrong, which Lite § should change, optional pointer to this repo. Tighten or cross-link if the topic is already covered.
 
 ---
 
 ## 2. What this is (and what it is not)
 
-**ForgeTrail Lite is** a minimal, stack-agnostic project kickoff protocol: a 7-phase lifecycle, a Phase 1 product brief, a single tracking file, a few baseline docs, and a set of guardrails that keep agents from shipping a half-built spine or silently swapping your stack.
+**ForgeTrail Lite is** a minimal, stack-agnostic project kickoff protocol: a 7-phase lifecycle, a Phase 1 product brief, an `appledger/` ledger, a few baseline docs, and a set of guardrails that keep agents from shipping a half-built spine or silently swapping your stack.
 
 **It is not** the full ForgeTrail methodology — no audit prompts, no deep per-phase playbooks, no lessons database, no template library. For those, use the ForgeTrail MCP server (see §13). Lite gets you ~80% of the value in one file.
 
-**Optional companions:** when a job matches (Markdown site, two or more local apps, local Ollama, copy review, shipped-product label), you may offer a sibling from the Catalyst Forge shelf. Never required. Do not list them in the first message to the human. MCP: `getCompanionSuggestions`. Full mapping lives with ForgeTrail, not in this file.
+**Optional companions:** when a job matches (Markdown site, two or more local apps, local Ollama, copy review), you may offer a sibling from the Catalyst Forge shelf. Never required. Do not list them in the first message to the human. MCP: `getCompanionSuggestions`. Full mapping lives with ForgeTrail, not in this file.
+
+**Subjects:** When the project has an application, a tool server, a skill package, an agent configuration, or a model variant, record a disposition with `appledger subjects`. A family with no subject is `not_applicable`, not a missing label. Do not generate or publish a label unless the user asks. Offering an xFacts label when the product goes public or changes hands stays optional.
 
 **Named ports (if they accept):** [LocalSlip](https://localslip.dev). FilePress: lease name = site `package.json` `name`. `localslip claim NAME --port N && filepress dev`. Do not pass `--port`. Vite: `localslip get` in `vite.config`, `strictPort`. Claim once. Do not write `ensure-lease.mjs`. Do not add the `localslip` package just to read a port.
 
 ### Who creates what
 
-The **human** only needs to do two things: copy ForgeTrail Lite into **`.forgetrail/`** (or paste this doc into chat), and tell the agent to follow it. **Everything else is created by the agent** as it works through the phases. You should never be asked to hand-write `.forgetrail/workflow_tracking.json`, `.forgetrail/AGENTS.md`, the brief, `CONTEXT_PROMPT.md`, or the Phase 2 baseline files — the agent writes them and shows them to you for review.
+The **human** only needs to do two things: copy ForgeTrail Lite into **`.forgetrail/`** (or paste this doc into chat), and tell the agent to follow it. **Everything else is created by the agent** as it works through the phases. You should never be asked to hand-write `appledger/`, `.forgetrail/AGENTS.md`, the brief, `CONTEXT_PROMPT.md`, or the Phase 2 baseline files — the agent writes them and shows them to you for review. Do not create `.forgetrail/workflow_tracking.json`.
 
 | File / folder | Who creates it | When |
 |---|---|---|
@@ -117,7 +118,7 @@ The **human** only needs to do two things: copy ForgeTrail Lite into **`.forgetr
 | `.forgetrail/cursor/rules/forgetrail-updates-log.mdc` | **Agent** (from §12.5 snippet) | First session — symlink/copy to `.cursor/rules/` for Cursor |
 | `.forgetrail/hooks/` + `.cursor/hooks.json` | **Agent** (from upstream `content/hooks/`) | First session — host-level safety and tracking enforcement |
 | `.forgetrail/FORGETRAIL_LITE_UPDATES.md` | **Agent** (from upstream template) | Optional — when logging Lite protocol gaps (§1.6) |
-| `.forgetrail/workflow_tracking.json` | **Agent** (from §11 starter) | First session |
+| `appledger/` (manifest, profile, application record, session record) | **Agent** | First session |
 | `docs/FORGETRAIL_PROGRESS.md` | **Agent** (template + refreshed on phase changes / status script) | Phase 2+ (§4.6) |
 | `setup.bat` / `setup.sh`, `run.bat` / `run.sh`, `status.bat` / `status.sh` | **Agent** | Phase 2 when local dev needs repeatability (§4.5) |
 | `test-pocketbase.bat`, `test-ollama.bat`, `setup-ollama.bat` (+ `.sh`) | **Agent** | Phase 2 per stack (§4.7–§4.8) |
@@ -142,7 +143,7 @@ Every project flows through these phases. The agent **pauses at every phase tran
 
 | # | Phase | Entry | Exit |
 |---|-------|-------|------|
-| **1** | **Plan** | user has a rough idea | `docs/PHASE_1_BRIEF.md` is complete and **locked**; stack, hero flow, v1 scope, and major decisions are in `.forgetrail/workflow_tracking.json → decisions[]` |
+| **1** | **Plan** | user has a rough idea | `docs/PHASE_1_BRIEF.md` is complete and **locked**; stack, hero flow, v1 scope, and major choices are decision records in `appledger/` |
 | **2** | **Build (spine)** | Phase 1 brief is locked | a **runnable end-to-end hero flow** exists in one pass: project init, deps installed, data path working, routes + components + hero journey wired, `CONTEXT_PROMPT.md` written by merging the brief, and a runnable `verify` script in `package.json` passing cleanly |
 | 3 | Stabilize | spine runs | critical bugs fixed, error paths handled, the happy path + 1–2 known sad paths are reliable |
 | 4 | Iterate | hero flow is solid | secondary features land one at a time; each complex feature has a short **delivery spec** (§3.1) before multi-file work; each ships with tests or at least a manual test note |
@@ -150,17 +151,17 @@ Every project flows through these phases. The agent **pauses at every phase tran
 | 6 | Align | code is clean | brand, naming, copy, and UX are coherent; `README.md` matches reality |
 | 7 | Harden | product is coherent | security review, performance pass, deploy pipeline, post-deploy live smoke check (HTTP 200, assets resolve), docs for the next operator |
 
-**Deep focus in Lite:** Phases **1** and **2**. Most projects die because the brief was skipped and the spine was half-built. Phases 3–7 are real but mostly need the user to say "let's move on" — the agent's job after Phase 2 is to keep `.forgetrail/workflow_tracking.json` current and not regress.
+**Deep focus in Lite:** Phases **1** and **2**. Most projects die because the brief was skipped and the spine was half-built. Phases 3–7 are real but mostly need the user to say "let's move on" — the agent's job after Phase 2 is to keep `appledger/` current and not regress.
 
-**Project archetype (scale the lifecycle to the project):** During Phase 1 intake, classify the project and record it in the brief, `decisions[]`, and `project.archetype` in the tracking file:
+**Project archetype (scale the lifecycle to the project):** During Phase 1 intake, classify the project and record it in the brief, as a decision, and as `archetype` on `appledger/profiles/forgetrail.yaml`:
 
 - **`product`** (default) — others will use it, maybe pay for it. Full 7-phase lifecycle.
 - **`internal-tool`** — real recurring users, no market. Phase 6 (Align) optional; Phase 7 keeps security/deploy/docs but drops payments, business plan, and marketing criteria.
 - **`one-shot`** — keepsake, gift, event, or demo built for one occasion. Phases 1–4 scaled down; phases 5–7 collapse into one **polish + ship** gate: works on the target device (usually a phone), no dead ends, `prefers-reduced-motion` respected, personal/placeholder content filled, deployed or handed off. Emotional polish outranks hardening depth here.
 
-When archetype ≠ `product`, **prune** the non-applicable exit criteria in the tracking file once (and log the pruning in `decisions[]`) instead of annotating them "N/A" forever. If the project outgrows its archetype (a one-shot grows accounts), flag it and propose re-promoting to `product`.
+When archetype ≠ `product`, **prune** the non-applicable criteria in the profile once (and record that pruning as a decision) instead of annotating them "N/A" forever. If the project outgrows its archetype (a one-shot grows accounts), flag it and propose re-promoting to `product`.
 
-**Wrap (when the project ends):** Finishing a project includes **harvesting** it. When the app ships, is delivered, or is intentionally shelved: sweep `gotchas[]` + `decisions[]` for lessons that generalize beyond this app (framework traps, CLI changes, integration surprises), record them in `FORGETRAIL_LITE_UPDATES.md` (§1.6) or propagate to the upstream ForgeTrail repo if you have one, set `project.status` to `"wrapped"`, and add a final `sessions[]` entry with the end state (deploy URL, handoff notes). Small projects often surface the freshest tooling gotchas — do not let them die in the repo. Optional: Cold-eye for a newcomer-readiness pass; an xFacts label when the product is public or handed off.
+**Wrap (when the project ends):** Finishing a project includes **harvesting** it. When the app ships, is delivered, or is intentionally shelved: sweep lesson and decision records for lessons that generalize beyond this app (framework traps, CLI changes, integration surprises), record them in `FORGETRAIL_LITE_UPDATES.md` (§1.6) or propagate to the upstream ForgeTrail repo if you have one, set `project_status` to `wrapped`, and add a final session record with the end state (deploy URL, handoff notes). Small projects often surface the freshest tooling lessons — do not let them die in the repo. Optional: Cold-eye for a newcomer-readiness pass. A public xFacts label is still optional and only when the user asks. The subject disposition from the **Subjects** note above is already recorded.
 
 ### 3.1 Feature specs (Phase 4+)
 
@@ -233,7 +234,7 @@ Before touching files or running setup, verify the tools this protocol depends o
    - **macOS:** `xcode-select --install` installs the Command Line Tools (includes git). Alternative: `brew install git` if Homebrew is present.
    - **Linux:** `sudo apt install git` (Debian/Ubuntu), `sudo dnf install git` (Fedora/RHEL), `sudo pacman -S git` (Arch), or the distro equivalent.
    - **Ask the user:** *"Git isn't installed. I can wait while you install it with `<OS-specific command>`, or we can proceed without source control for now and you can add git later. Which would you prefer?"*
-3. If the user proceeds **without git**, enter **no-git mode**: skip step 2, step 5, and the commits in step 12. Set `.forgetrail/workflow_tracking.json → project.sourceControl = "deferred"` and append a `gotchas[]` entry noting git is not yet installed. Treat "install git + run the missed commits" as a Phase 7 hardening task. Never pretend commits happened.
+3. If the user proceeds **without git**, enter **no-git mode**: skip step 2, step 5, and the commits in step 12. Record a decision that source control is deferred, and a lesson that git is not yet installed. Treat "install git + run the missed commits" as a Phase 7 hardening task. Never pretend commits happened.
 4. The agent **must not install git itself** — always run the install command by asking the user to execute it, or instruct them to run it in their own terminal. System-wide installs require user consent.
 5. **Check git configuration.** Ensure basic git configuration (`user.name`, `user.email`) exists before making baseline commits.
 
@@ -251,7 +252,7 @@ Before touching files or running setup, verify the tools this protocol depends o
 
 1. After Node is present, run `npm --version`. If it prints a version, continue.
 2. If `node` works but `npm` is missing, the install is incomplete or PATH is wrong — ask the user to **reinstall Node.js LTS** from <https://nodejs.org/> (the official installer includes **npm** and **corepack**). Do not proceed to pnpm until `npm` resolves.
-3. **npm is not the package manager for Lite projects** — it is only a **bootstrap tool** to reach pnpm (`npm install -g pnpm`) when corepack does not activate pnpm. Never substitute `npm install` for `pnpm install` in the app repo without an explicit user decision logged in `decisions[]`.
+3. **npm is not the package manager for Lite projects** — it is only a **bootstrap tool** to reach pnpm (`npm install -g pnpm`) when corepack does not activate pnpm. Never substitute `npm install` for `pnpm install` in the app repo without an explicit user decision recorded as a decision in `appledger/`.
 
 **pnpm** (needed from step 10 onward — install **after** Node and npm):
 
@@ -260,7 +261,7 @@ Before touching files or running setup, verify the tools this protocol depends o
    - Run `corepack enable`, then `corepack prepare pnpm@latest --activate` (or the version in `packageManager` once `package.json` exists), then re-check `pnpm --version`.
 3. If corepack is unavailable or still doesn't resolve pnpm:
    - Confirm **`npm --version`** works, then ask the user to run **`npm install -g pnpm`** (may need admin / sudo). Re-check `pnpm --version`.
-4. **Do not silently fall back to `npm` or `yarn` for project installs.** Lite's defaults are pnpm-anchored (lockfile, workspace semantics, script conventions). If the user truly cannot install pnpm (rare — locked-down machine), stop and discuss before picking an alternative, and log the deviation in `decisions[]`.
+4. **Do not silently fall back to `npm` or `yarn` for project installs.** Lite's defaults are pnpm-anchored (lockfile, workspace semantics, script conventions). If the user truly cannot install pnpm (rare — locked-down machine), stop and discuss before picking an alternative, and record the deviation as a decision in `appledger/`.
 5. **Native addons (pnpm v9+).** If install logs say **"Ignored build scripts"** for packages like **`better-sqlite3`**, add at the **workspace root** `package.json`:
    ```json
    "pnpm": { "onlyBuiltDependencies": ["better-sqlite3"] }
@@ -282,7 +283,7 @@ If the project will push to GitHub:
 
 ### 4.1.2 Stack-conditional checks (Phase 2 entry — after brief is locked)
 
-**When:** Start of **Phase 2** (§4.2 step 10 onward), once **`docs/PHASE_1_BRIEF.md`** is locked and stack choices are in **`decisions[]`**. Do **not** block Phase 1 on these — they depend on what the project actually uses.
+**When:** Start of **Phase 2** (§4.2 step 10 onward), once **`docs/PHASE_1_BRIEF.md`** is locked and stack choices are decision records in **`appledger/`**. Do **not** block Phase 1 on these — they depend on what the project actually uses.
 
 **Agent:** Walk the rows that apply; skip the rest. Prefer **isolated test scripts** (§4.7–§4.8) over “start the whole app and guess.”
 
@@ -295,36 +296,36 @@ If the project will push to GitHub:
 | **E2E / Playwright in v1** | `pnpm run test:e2e:install` (or project script) once before first `test:e2e` | **`DEV_AUTOMATION_SCRIPTS.md`** |
 | **Native Node addons** (`better-sqlite3`, `sharp`, `bcrypt`, …) | First `pnpm install`: if compile fails, install OS build tools; set **`pnpm.onlyBuiltDependencies`** at workspace root (§4.1 pnpm step 5) | §13 |
 | **Monorepo `backend/` + `frontend/`** | Merge **root + package** `.env` in Vite/Node entry (§4.2.1); run **`env:check`** after both `.env.example` files exist | §4.2.1 |
-| **Docker / Postgres / Redis / custom DB** (stack override) | Follow brief §6 / **`decisions[]`** — document install in **`README.md`**, not Lite defaults | Phase 1 override only |
+| **Docker / Postgres / Redis / custom DB** (stack override) | Follow brief §6 and the decision records — document install in **`README.md`**, not Lite defaults | Phase 1 override only |
 | **A-local (no PocketBase)** | Skip PocketBase/Ollama rows unless brief still uses local LLM without PB | §7 A-local |
 
 **Port and disk (runtime):** If PocketBase or Ollama fails mysteriously, check **port** in `.env` (not default **8090** on busy machines) and **disk/RAM** for Ollama models — use **`test-pocketbase.bat`** / **`test-ollama.bat`**, not universal preflight.
 
 **Linux minimal images:** If `setup-pocketbase` fails on extract, confirm **`unzip`** (Mac/Linux scripts) or use Windows PowerShell path — see §4.1 install-script note.
 
-Log anything non-obvious in **`gotchas[]`** (e.g. *"Playwright browsers installed on second machine"*, *"node-gyp needed VS Build Tools on Windows"*).
+Record anything non-obvious as a lesson in **`appledger/`** (for example, Playwright browsers installed on a second machine, or node-gyp needing VS Build Tools on Windows).
 
 ### 4.2 Ordered first actions
 
-1. **Read** `.forgetrail/FORGETRAIL_LITE.md` top to bottom. Also read `.forgetrail/workflow_tracking.json`, `.forgetrail/AGENTS.md`, and `CONTEXT_PROMPT.md` if they already exist.
+1. **Read** `.forgetrail/FORGETRAIL_LITE.md` top to bottom. Also read `appledger/profiles/forgetrail.yaml`, the latest session record, `.forgetrail/AGENTS.md`, and `CONTEXT_PROMPT.md` if they already exist. Do not read a writable `workflow_tracking.json` as the live phase.
 2. **Ensure the folder is a git repo.** *(Skip this step if the user opted into no-git mode in §4.1.)* Check with `git rev-parse --is-inside-work-tree`. If it returns false or errors, run `git init -b main` (or `git init` + `git branch -m main` on older git) at the repo root. Never re-init an existing repo. **Apply §1.5 git policy** (default: **commit `.forgetrail/`** for Lite). Write a minimal `.gitignore` containing at least:
    ```
    node_modules/
    .env
    .DS_Store
    ```
-   Add `.forgetrail/` **only** if you chose §1.5 branch **B** (gitignore). Do **not** add it when committing `.forgetrail/`. Log the choice in `decisions[]`. (The full `.gitignore` lands in Phase 2 per §14.)
+   Add `.forgetrail/` **only** if you chose §1.5 branch **B** (gitignore). Do **not** add it when committing `.forgetrail/`. Record the choice as a decision. (The full `.gitignore` lands in Phase 2 per §14.)
 3. **Create `.forgetrail/`** if missing. **Create platform rule files** inside it (see §1.5), even if the current session is only one tool. Users switch between tools between sessions.
    1. **`.forgetrail/AGENTS.md`** — use the §12 snippet verbatim. Covers Codex CLI and any other `AGENTS.md`-native tool (cite explicitly or symlink to repo root locally if your tool requires root `AGENTS.md`).
    2. **`.forgetrail/cursor/rules/forgetrail-updates-log.mdc`** — use the §12.5 snippet verbatim. **Symlink or copy** into `.cursor/rules/` so Cursor reminds agents when to update `FORGETRAIL_LITE_UPDATES.md` (§1.6). Optional: copy the upstream **`FORGETRAIL_LITE_UPDATES.md`** starter into `.forgetrail/` when you expect protocol feedback during the project.
    3. **`.forgetrail/hooks/` and `.cursor/hooks.json`** — install host safety hooks (`content/hooks/`) into `.forgetrail/hooks/` and copy `cursor-hooks.json` to `.cursor/hooks.json`. On Cursor, this runs pre-commit verification, enforces pnpm lock consistency, gates git push at the tool level, and injects live phase context at session start. For Claude Code, add `claude-settings-hooks.json` into `.claude/settings.json`.
-   If any of these already exists and its content conflicts with the Lite defaults, **do not overwrite** — flag the conflict to the user and ask how to reconcile. Log the reconciliation decision in `decisions[]`.
+   If any of these already exists and its content conflicts with the Lite defaults, **do not overwrite** — flag the conflict to the user and ask how to reconcile. Record the reconciliation as a decision in `appledger/`.
 4. **Create `appledger/`** if it does not exist: `manifest.yaml`, `profiles/forgetrail.yaml` with the `plan` phase `in_progress`, an application record, and a session record. Do **not** create `.forgetrail/workflow_tracking.json`. Fill the application name and a one-line description from whatever the user has already said. Criteria stay `pending` until evidence exists.
 5. **If git was initialized in step 2**, make the first commit now so the user has a clean baseline. **What lands in the commit depends on §1.5:** if **committing `.forgetrail/`**, steps 3–4 artifacts are included; if **gitignoring `.forgetrail/`**, only `.gitignore` (and any `.cursor/rules/` copies) — the workspace stays local-only and that is expected, not a mistake. Example: `git add -A && git commit -m "chore: ForgeTrail Lite bootstrap"`. Skip this step if the repo already had history — do not squash or amend what's there. Skip entirely if the user is in no-git mode (§4.1).
 6. **Ask the §5 intake questions.** Do not write any project code yet. For the first user-facing reply, follow §9 (plain product language, one clear "reply with," no methodology jargon).
-7. **Create `docs/`** (if missing) and **draft `docs/PHASE_1_BRIEF.md`** from the §6 template using the user's answers. Show it to the user, iterate, then **lock it**: set `phases.1.exitCriteria.phase1BriefLocked = true` (and the related exit criteria) in `.forgetrail/workflow_tracking.json`, and record major commitments in `decisions[]`.
-8. **Pause for explicit approval** before moving to Phase 2. Do not advance `currentPhase` silently. **Explicit approval** means the user has reviewed the locked brief and given a clear, unambiguous affirmative — examples: *"locked,"* *"approved,"* *"go to phase 2,"* *"ship it,"* *"start building."* Silence, ambiguous nods (*"cool,"* *"interesting,"* *"ok"*), follow-up questions, or a "we'll see" do **not** count — if in doubt, ask: *"Ready to lock the brief and start Phase 2?"* and wait for a yes/no. An eager agent advancing on a "hmm" is a bigger cost than asking once more.
-9. **On approval, create `CONTEXT_PROMPT.md`** at the repo root from the §10 template by merging the locked brief's key sections. Update `currentPhase` to `2`.
+7. **Create `docs/`** (if missing) and **draft `docs/PHASE_1_BRIEF.md`** from the §6 template using the user's answers. Show it to the user, iterate, then **lock it**: mark the brief criteria met in `appledger/profiles/forgetrail.yaml` only when the user has approved them, and record major commitments as decision records.
+8. **Pause for explicit approval** before moving to Phase 2. Do not advance the profile phase silently. **Explicit approval** means the user has reviewed the locked brief and given a clear, unambiguous affirmative — examples: *"locked,"* *"approved,"* *"go to phase 2,"* *"ship it,"* *"start building."* Silence, ambiguous nods (*"cool,"* *"interesting,"* *"ok"*), follow-up questions, or a "we'll see" do **not** count — if in doubt, ask: *"Ready to lock the brief and start Phase 2?"* and wait for a yes/no. An eager agent advancing on a "hmm" is a bigger cost than asking once more.
+9. **On approval, create `CONTEXT_PROMPT.md`** at the repo root from the §10 template by merging the locked brief's key sections. Set the profile's current phase to `build` only after that approval.
 10. **Initialize the app and install dependencies** (the agent runs all of these — do not ask the user). **First:** run the **§4.1.2** stack-conditional checklist for this project (PocketBase test, Ollama, env keys, Playwright, native addons — only what applies).
 
     **Default A (web app — SvelteKit + PocketBase) — prefer the manual scaffold.** By the time we reach this step, the Lite bootstrap has already written **`.forgetrail/`** (protocol + tracking + agent rules), **`docs/PHASE_1_BRIEF.md`**, **`CONTEXT_PROMPT.md`**, **`.gitignore`**, and **`.git/`** at the repo root. That means the root is **never empty** when we scaffold, and `pnpm dlx sv create .` will hit `Directory not empty. Continue?` — an **interactive** prompt with no reliable non-interactive bypass in most versions (§13 anti-pattern). Rather than fight that, scaffold manually. It is deterministic and is **the primary path** for Lite.
@@ -350,7 +351,7 @@ Log anything non-obvious in **`gotchas[]`** (e.g. *"Playwright browsers installe
     - **Recent `sv` versions may emit no `svelte.config.js`.** From `sv` CLI ~v0.16, adapter and compiler options can live inside the `sveltekit()` plugin call in **`vite.config.ts`** instead of a separate config file. Do not hunt for (or blindly create) `svelte.config.js` to configure the adapter — read `vite.config.ts` first. For `adapter-static` prerendering, set `export const prerender = true` in **`src/routes/+layout.ts`** — that works under either config layout.
     - **Never** use `sv create .` against a populated repo root — there is no stable flag to skip the interactive "non-empty" prompt, and the agent terminal will hang (§8 rule 6, §13).
     - If a prior run left a partially created `app/`, **remove it** (or scaffold into a different new name) before retrying — do **not** re-run against the partial tree and try to answer the prompt.
-    - If you use this shortcut, note that **dev commands run from `app/`**: `cd app && pnpm dev`, or `pnpm -C app dev` from the repo root. Record the layout in `decisions[]` and call it out at the top of `README.md` (§14).
+    - If you use this shortcut, note that **dev commands run from `app/`**: `cd app && pnpm dev`, or `pnpm -C app dev` from the repo root. Record the layout as a decision in `appledger/` and call it out at the top of `README.md` (§14).
 
     **A.3 — `pnpm init` cleanup (applies to both A.1 and Default B).** `pnpm init` writes some defaults that are wrong for a Lite project and need to be corrected before anything else:
     - Set `"type": "module"` (ESM — see §8).
@@ -361,11 +362,11 @@ Log anything non-obvious in **`gotchas[]`** (e.g. *"Playwright browsers installe
 
     **Default B (API / service / script — Node + TS):** run `pnpm init` at the **repo root**, apply the A.3 cleanup, then `pnpm add -D typescript tsx vitest @types/node` and write a strict `tsconfig.json` (`"module": "ESNext"`, `"moduleResolution": "Bundler"`, `"strict": true`, `"target": "ES2022"`). Add runtime deps (e.g. `hono`, `zod`) with `pnpm add` as the spine requires them.
 
-    **Default B + separate UI (web app + API, not PocketBase):** when the brief is **UI + backend** but not Default A, use a **pnpm workspace** with committed packages — e.g. `backend/` (or `packages/api`) + `frontend/` (or `packages/web`) — instead of fighting `sv create .` at the repo root. The **`sv create app`** shortcut (A.2) into an **empty** subfolder is the first-class path for the frontend; init the API package with `pnpm init` + A.3 in its folder. Record the layout in `decisions[]` and `README.md` (§14). Load env per §4.2.1.
+    **Default B + separate UI (web app + API, not PocketBase):** when the brief is **UI + backend** but not Default A, use a **pnpm workspace** with committed packages — e.g. `backend/` (or `packages/api`) + `frontend/` (or `packages/web`) — instead of fighting `sv create .` at the repo root. The **`sv create app`** shortcut (A.2) into an **empty** subfolder is the first-class path for the frontend; init the API package with `pnpm init` + A.3 in its folder. Record the layout as a decision in `appledger/` and `README.md` (§14). Load env per §4.2.1.
 
     **Both paths:** always use **`pnpm`**, never `npm` or `yarn`. Never hand-edit `package.json` to add deps — use `pnpm add` / `pnpm add -D` so `pnpm-lock.yaml` stays in sync. If `pnpm` is suddenly missing here (it was verified at §4.1 preflight but the machine changed), re-run the preflight rather than silently falling back to `npm`.
 11. **Build the full runnable spine in one pass** (Phase 2 exit criteria in §3). As files are needed, also create the **Phase 2 baseline docs** from §14: `README.md`, `TODO.md` (seeded from brief §11), `.forgetrail/IDEAS.md`, `.env.example`, the full `.gitignore`, **one-click launchers** (§4.5), **`docs/FORGETRAIL_PROGRESS.md`** (§4.6), and PocketBase install scripts per §4.2.2 when Default A uses PocketBase.
-12. **At every subsequent phase transition**, pause for the user's explicit "go" before updating `currentPhase`. Append to `sessions[]` at the end of each substantive session. *(If git is enabled)* commit (`git add -A && git commit -m "<phase>: <summary>"`) at natural stopping points so history mirrors the phase log. In no-git mode, skip the commit and note progress in `sessions[]` only — and remind the user each session that git is still deferred.
+12. **At every subsequent phase transition**, pause for the user's explicit "go" before updating the profile phase. Update the session record at the end of each substantive session. *(If git is enabled)* commit (`git add -A && git commit -m "<phase>: <summary>"`) at natural stopping points so history mirrors the phase log. In no-git mode, skip the commit and note progress in the session record only — and remind the user each session that git is still deferred.
 
 ### 4.2.1 Environment variables (monorepos and split UI/API)
 
@@ -392,9 +393,9 @@ Log anything non-obvious in **`gotchas[]`** (e.g. *"Playwright browsers installe
 
 1. **Do not** embed a single PocketBase version in `FORGETRAIL_LITE.md`, bootstrap snippets, or app scripts as the only source of truth.
 2. **Default:** resolve **latest stable** at **install time** (GitHub `pocketbase/pocketbase` releases API). Copy upstream **`content/scripts/setup-pocketbase.mjs`** into the app repo (or equivalent in `scripts/setup-pocketbase.ts`).
-3. **Pin only after success:** when a boot works, set **`POCKETBASE_VERSION=0.xx.yy`** in **`.env`** and write **`pocketbase/.pocketbase-version`** via the install script. Record the pin in **`decisions[]`**.
+3. **Pin only after success:** when a boot works, set **`POCKETBASE_VERSION=0.xx.yy`** in **`.env`** and write **`pocketbase/.pocketbase-version`** via the install script. Record the pin as a decision in **`appledger/`**.
 4. **Env override:** `POCKETBASE_VERSION=latest` (or unset) → re-resolve on next `setup:pocketbase` / **setup.bat**. `POCKETBASE_VERSION=<semver>` → download that release only.
-5. **Align SDK:** `pnpm add pocketbase` should use a **current** SDK compatible with the resolved server; log **both** versions in `gotchas[]` if wire errors appear (§13 — curl first).
+5. **Align SDK:** `pnpm add pocketbase` should use a **current** SDK compatible with the resolved server; record **both** versions in a lesson if wire errors appear (§13 — curl first).
 
 **Port / duplicate instances:** Keep **`PUBLIC_POCKETBASE_URL`** (or your convention) in **`.env`**. Install and **run** scripts must **detect** if something already listens on that port (health check) and print a clear message — not silently attach to another project's PocketBase.
 
@@ -434,7 +435,7 @@ Output requirements
 1. **[Tavily](https://tavily.com/)** — search/extract endpoints aimed at **AI and agent** workflows. Sign up, create an API key, add e.g. `TAVILY_API_KEY` to **`.env`** and document a placeholder in **`.env.example`**. [Pricing / credits](https://tavily.com/pricing) · [Docs](https://docs.tavily.com/).
 2. **[Brave Search API](https://api-dashboard.search.brave.com/)** — **web, news, images, video**, and related endpoints. Create a key in the developer dashboard, add e.g. `BRAVE_API_KEY` (or the env name the official SDK/docs specify) to **`.env`**. [Pricing](https://api-dashboard.search.brave.com/documentation/pricing) — new accounts typically get **renewable monthly credits**; set **usage/budget limits** in the dashboard so you stay within the free-credit range while prototyping.
 
-**For agents:** Call search APIs **from the server** only; never send secret keys to the client. If the product needs search, nudge the user in Phase 1–2: *"If you don’t have a key yet, sign up for Tavily and/or Brave, add the key to `.env`, and tell me which provider we’re using for v1."* Log the provider in **`decisions[]`** and wire **`CONTEXT_PROMPT.md`**. Pick **one** provider for the spine unless the brief explicitly needs two; avoid shipping both without a product reason (cost and complexity add up). **Cache, rate-limit, and respect robots/ToS** for any URLs you then fetch.
+**For agents:** Call search APIs **from the server** only; never send secret keys to the client. If the product needs search, nudge the user in Phase 1–2: *"If you don’t have a key yet, sign up for Tavily and/or Brave, add the key to `.env`, and tell me which provider we’re using for v1."* Record the provider as a decision in **`appledger/`** and wire **`CONTEXT_PROMPT.md`**. Pick **one** provider for the spine unless the brief explicitly needs two; avoid shipping both without a product reason (cost and complexity add up). **Cache, rate-limit, and respect robots/ToS** for any URLs you then fetch.
 
 ### 4.5 One-click local dev (non-technical operators)
 
@@ -460,7 +461,7 @@ Output requirements
 
 ### 4.6 ForgeTrail phase progress (human-readable)
 
-**Source of truth:** **`.forgetrail/workflow_tracking.json`** (agents update every session).
+**Source of truth:** **`appledger/profiles/forgetrail.yaml`** and the latest session record (agents update every session). Do not write `workflow_tracking.json`.
 
 **For humans who are not in Cursor:**
 
@@ -499,7 +500,7 @@ Output requirements
 1. **Try to install** Ollama when missing (winget / brew / official install script) — see **`setup-ollama.mjs`**.
 2. **Detect GPU VRAM** (`nvidia-smi` when available) and pull a model that fits with headroom.
 3. **Default models (non-thinking):** **`ibm/granite4.1:8b`** or **`ibm/granite4.1:3b`** on smaller VRAM; **`gemma3:4b`** / **`gemma3:12b`** when **`OLLAMA_PREFER_GEMMA=1`**. Prefer **instruction** Granite 4.x / Gemma 3 — not DeepSeek-R1, QwQ, or other **reasoning-only** families unless **`OLLAMA_USE_THINKING=1`** and the brief explicitly requires chain-of-thought models.
-4. **Pin after success:** set **`OLLAMA_MODEL`** in **`.env`** and record in **`decisions[]`** after **`test-ollama`** passes.
+4. **Pin after success:** set **`OLLAMA_MODEL`** in **`.env`** and record a decision in **`appledger/`** after **`test-ollama`** passes.
 5. **Setup vs test:** **`setup-ollama.bat`** (install + pull); **`test-ollama.bat`** (version + one completion). Do not fold Ollama into **run.bat** unless the app always needs it running.
 
 **Env:** `OLLAMA_BASE_URL`, `OLLAMA_MODEL`, optional `OLLAMA_PREFER_GEMMA=1`, `SKIP_OLLAMA_INSTALL=1`.
@@ -518,7 +519,7 @@ These are the **topics the agent needs to cover in Phase 1**, not a checklist to
 - **Problem & audience** — what they're building and why, who the primary user is, what pain v1 removes.
 - **Hero workflow** — in one sentence, the *one* end-to-end journey that must work in v1 (e.g. "sign up → onboard → generate report → export PDF"). What proves the spine is alive?
 - **Type of app** — **A. web app** (UI, auth, stored data) or **B. API / service / script** (no UI or minimal UI)? The matching default stack (§7) is used automatically — the user picks the **type**, not the stack. Only ask about language/framework/DB/deploy if the user volunteers a constraint or explicitly overrides the default.
-- **Project archetype** — is this a **product** (others will use it), an **internal tool** (recurring users, no market), or a **one-shot** (gift, event, demo — one occasion, then done)? Often obvious from Round 1 — confirm rather than ask. Drives which later phases apply (§3) and which exit criteria get pruned from the tracking file.
+- **Project archetype** — is this a **product** (others will use it), an **internal tool** (recurring users, no market), or a **one-shot** (gift, event, demo — one occasion, then done)? Often obvious from Round 1 — confirm rather than ask. Drives which later phases apply (§3) and which criteria get pruned from the profile.
 - **v1 scope** — what *must* ship in v1, what is explicitly *out* of v1 (deferred, not deleted).
 - **Constraints** — timeline, team size, budget, latency targets, offline support, compliance hints (even "none yet, but enterprise later").
 - **Delivery shape** — exports (PDF / DOCX / PPTX / CSV / Markdown)? Multi-tenant (one org or many orgs × clients)? Auth model (public, invite-only, SSO)? Is the product read in-app or is export the main deliverable?
@@ -605,7 +606,7 @@ _Status: DRAFT | LOCKED (<date>)_
 
 ## 9. Decision log (headline decisions only)
 
-Mirror material entries in **`.forgetrail/workflow_tracking.json → decisions[]`** (`date`, `phase`, `decision`, `why`, `alternatives` — see §11).
+Mirror material entries as decision records in **`appledger/`** (choice, rationale, alternatives). §11 is the legacy JSON shape. Do not copy it.
 
 - <date> — <decision> — <why> — <alternatives considered>
 
@@ -649,7 +650,7 @@ Both defaults share the same foundation — **TypeScript + pnpm + ESM** — so t
 - **A-sub-question: does state need to outlive the browser?** Before locking PocketBase + auth, ask: *"Does any state need to outlive the browser — accounts, cross-device sync, shared data, admin views? Or is every user's state private and fine to live in `localStorage`?"*
   - **A-local (per-user, browser-only):** drop PocketBase and auth. `adapter-static` becomes viable, no deploy-time secrets, no server-side DB. Persist via `localStorage` / `IndexedDB`. Many hobby/toy apps and single-session tools fit here — do not scaffold server infrastructure they will not use. An **interactive** A-local app stays on SvelteKit. [FilePress](https://getfilepress.com) is for a Markdown site or an optional `site/` beside the app (Cloudflare Pages + Wrangler), not a replacement for the app. If LocalSlip is in play: `localslip claim` then `filepress dev`; FilePress reads the lease — do not pass `--port`.
   - **A-persistent (the existing Default A):** keep PocketBase, auth, and the full SvelteKit + adapter-auto defaults.
-  - Record the choice in `decisions[]` and in `docs/PHASE_1_BRIEF.md` §4 so future sessions do not re-introduce a DB the project chose to skip.
+  - Record the choice as a decision in `appledger/` and in `docs/PHASE_1_BRIEF.md` §4 so future sessions do not re-introduce a DB the project chose to skip.
 
 **B. API / service / script / CLI** — no UI, or minimal UI.
 - **Node 20+ + TypeScript + pnpm**, ESM only (`"type": "module"`), `tsx` for dev, `tsc --noEmit` for type-check, `vitest` for tests. Grow into **Hono** (HTTP) or a plain worker as needed.
@@ -660,11 +661,11 @@ Both defaults share the same foundation — **TypeScript + pnpm + ESM** — so t
 
 1. **Ask once:** *"Is this a **web app** (A) or an **API / service / script** (B)?"* — that's it. Do not enumerate frameworks, DBs, or deploy targets unless the user asks.
 2. **Confirm the default in one line** after they pick: e.g. *"Got it — web app, so I'll use the SvelteKit + PocketBase default unless you want to change anything."* Give them an easy "or change X" opening without forcing them to use it.
-3. **Lock the default in `docs/PHASE_1_BRIEF.md` §4** and record in `.forgetrail/workflow_tracking.json → decisions[]`:
+3. **Lock the default in `docs/PHASE_1_BRIEF.md` §4** and record a decision in `appledger/`:
    ```json
    { "date": "<YYYY-MM-DD>", "phase": 1, "decision": "Stack: default-A (SvelteKit+PB)", "why": "app type = web app; no overrides", "alternatives": [] }
    ```
-4. **Honor explicit overrides minimally.** If the user says "React, not Svelte," swap the frontend layer only — keep TS/pnpm/ESM/PB/Tailwind. Record the override in `decisions[]` with the user's reason.
+4. **Honor explicit overrides minimally.** If the user says "React, not Svelte," swap the frontend layer only — keep TS/pnpm/ESM/PB/Tailwind. Record the override as a decision in `appledger/` with the user's reason.
 
 **Rules of the road**
 - **Never silently substitute.** If the user picked A, do not ship React because the agent is more familiar with it.
@@ -679,7 +680,7 @@ Orthogonal to the A/B picker: if the app needs content (text, structured data, d
 - **Build-time LLM generation** — an offline script (e.g. `pnpm run seed`) calls an LLM **once**, writes JSON under `data/`, and commits it. Zero **runtime** LLM cost. Provider can be **cloud** or **Ollama** (same `OLLAMA_*` env — only required when running the seed script). Pairs well with **A-local** + `adapter-static`.
 - **BYO-LLM paste pattern** — ship a prompt in the repo (`prompts/seed.md` or brief §12); the **user** runs it in their own LLM chat account; the user pastes the JSON output into a repo file (e.g. `data/seed.json`); a schema (typically **Zod**) validates at app start. **Zero API keys in the project, zero runtime cost, the user keeps control of their own LLM account.** Ideal for hobby / OSS / free-hosted projects where API-key provisioning would kill the "download and run" experience. See §4.3 for the copy-paste prompt template and validator skeleton.
 
-Record the chosen pattern in `decisions[]` and in `docs/PHASE_1_BRIEF.md` §12 (or §4 if §12 is omitted). Mixing is fine (e.g. build-time seed + optional runtime enrichment), but be explicit about which layer uses which pattern.
+Record the chosen pattern as a decision in `appledger/` and in `docs/PHASE_1_BRIEF.md` §12 (or §4 if §12 is omitted). Mixing is fine (e.g. build-time seed + optional runtime enrichment), but be explicit about which layer uses which pattern.
 
 #### Minimal reference skeletons
 
@@ -827,10 +828,10 @@ Full ForgeTrail expands this under **`docs/TECHNICAL_REFERENCE.md`** (*URL impor
 
 ## 8. Agent rules (non-negotiable in Lite)
 
-1. **Pause at phase transitions.** Declare exit criteria are met, **wait for user approval**, then update `currentPhase`.
+1. **Pause at phase transitions.** Declare exit criteria are met, **wait for user approval**, then update the profile phase in `appledger/profiles/forgetrail.yaml`.
 2. **Phase 2 delivers a full runnable spine in one pass.** Init → deps → data path → routes → components → hero flow **end to end**. Do not defer "we'll wire the DB next session." If the spine would take longer than one session, shrink v1 scope with the user before starting.
    - **Output budget:** a real spine can be 20–30 files / a few thousand lines — that is fine in a modern large-context session. If the spine is clearly going to exceed **~30 tool calls** (a rough proxy for small-context risk), break it into **two commits within the same session** without pausing for user approval between them: **(a)** configs + directory scaffolding + empty route stubs + data model, then **(b)** route bodies + components + hero-flow glue. Both commits still land inside Phase 2; the spine is not "half-built" until the second commit verifies the hero flow end-to-end. Do not use this as an excuse to defer wiring to a later session.
-3. **Log material decisions.** Anything a future teammate would ask "why did we do it that way?" goes in `.forgetrail/workflow_tracking.json → decisions[]` with a one-line "why."
+3. **Log material decisions.** Anything a future teammate would ask "why did we do it that way?" becomes a decision record in `appledger/` with a one-line rationale.
 4. **First user-facing reply is plain product language.** No methodology jargon, no tool-name dumps, no file inventories unless asked. Confirm what you did, say what happens next, give one concrete "reply with." (See §9.)
 5. **List format conventions** when offering options (also applies to plans, next steps, checkpoints):
    - **Numbered** (1/2/3) = ordered pipeline, sequence matters.
@@ -838,7 +839,7 @@ Full ForgeTrail expands this under **`docs/TECHNICAL_REFERENCE.md`** (*URL impor
    - **Letters** (A/B/C) = pick-one / "which first?" — avoids collision with numbered steps.
 6. **No interactive CLIs** in scripted commands. Pass non-interactive flags. Examples: `npm create vite@latest -- --template ...`, `gh repo create --confirm`. For SvelteKit in Lite, **prefer the manual scaffold** (§4.2 step 10 A.1) over `sv create` — by the time Phase 2 runs, the repo root is never empty and `sv create .` will hit an un-skippable **`Directory not empty. Continue?`** prompt and hang. If you do use `sv create` as a shortcut, target a **new empty subfolder** (`sv create app`), never `.`. A hanging prompt in an agent terminal is a dead session.
 7. **Five-turn rule.** If a bug or design problem has not converged in ~5 turns, **stop patching** and propose a different approach (different library, different data model, different scope cut). Announce the pivot explicitly.
-8. **Update tracking after substantive work.** Move exit criteria checkboxes, append to `gotchas[]` and `sessions[]`. An empty tracking file after a busy session is a bug.
+8. **Update the ledger after substantive work.** Move criteria that have evidence, and update the session record. A stale `appledger/` after a busy session is a bug. Do not write `workflow_tracking.json`.
 9. **Git commits — clean messages and natural stopping points.** See **§8.9** for guidelines. Commit with phase-prefixed or descriptive messages (`git commit -m "phase-2: wire hero flow"` or `git commit -F path/to/msg.txt`). Always verify that types and checks pass cleanly before committing. Never leave uncommitted broken states across session boundaries.
 
 10. **Install/bootstrap scripts must branch on `process.platform` before shelling out to archive, network, or text tools.** Treat `tar`, `unzip`, `curl`, `sed`, `awk`, `openssl`, and similar as **platform-dependent on Windows** — never a drop-in from a Unix-only recipe. On `win32`, prefer PowerShell (`Expand-Archive`, `Invoke-WebRequest`) or call `C:\Windows\System32\tar.exe` by absolute path to bypass PATH shadowing; keep `tar` / `unzip` / `curl` for macOS/Linux branches. Layer fallbacks and end with a clear error that points the user at manual steps (e.g. “Extract All”) if automation cannot run. Full failure modes: §13 (Engineering).
@@ -861,7 +862,7 @@ Ensure that automated checks pass (`pnpm run verify` or project test suite) befo
 
 ## 9. First user-facing reply after bootstrap
 
-After you create `.forgetrail/AGENTS.md`, `.forgetrail/workflow_tracking.json`, and the git baseline, your **first message to the human** should be **short, plain-English, and ask only the opening round** of §5. Do **not** dump the full intake checklist. Do **not** list MCP tools, internal file paths, ForgeTrail terms ("hero workflow," "architecture," "spine," "exit criteria," "brief," "phase"), or file inventories. Target **~80 words or fewer** — this is a conversation starter, not a form.
+After you create `.forgetrail/AGENTS.md`, `appledger/`, and the git baseline, your **first message to the human** should be **short, plain-English, and ask only the opening round** of §5. Do not create `.forgetrail/workflow_tracking.json`. Do **not** dump the full intake checklist. Do **not** list MCP tools, internal file paths, ForgeTrail terms ("hero workflow," "architecture," "spine," "exit criteria," "brief," "phase"), or file inventories. Target **~80 words or fewer** — this is a conversation starter, not a form.
 
 **The anchor round is always Round 1:** three small, numbered questions — project name, what it is, who it's for. Nothing else. Stagger the rest of §5 across follow-up messages once they answer.
 
@@ -929,14 +930,14 @@ Once the brief is locked and you start the spine, create `CONTEXT_PROMPT.md` at 
 - <other project-specific conventions>
 
 ## Current phase
-<from .forgetrail/workflow_tracking.json>
+<from appledger/profiles/forgetrail.yaml>
 
-## Recent gotchas (last 3–5)
-<pull from tracking gotchas[]>
+## Recent lessons (last 3–5)
+<pull from appledger lesson records>
 
 ## Pointers
 - Brief: docs/PHASE_1_BRIEF.md
-- Tracking: .forgetrail/workflow_tracking.json
+- Ledger: appledger/
 - TODO: TODO.md
 ```
 
@@ -1002,7 +1003,7 @@ Save this as `.forgetrail/AGENTS.md` so agents that auto-load it (Codex, Cursor,
 
 ```markdown
 <!--
-  Agent protocol based on ForgeTrail Lite v2.1.0.
+  Agent protocol based on ForgeTrail Lite v2.2.0.
   © Catalyst Forge, LLC — www.catalystforge.com
   Licensed under Apache License 2.0 (upstream ForgeTrail repo).
 -->
@@ -1012,10 +1013,10 @@ Save this as `.forgetrail/AGENTS.md` so agents that auto-load it (Codex, Cursor,
 This repository uses **ForgeTrail Lite** as its project kickoff and operating protocol. The full protocol is in `.forgetrail/FORGETRAIL_LITE.md` — read it at the start of every fresh session.
 
 ## Non-negotiables
-- **Phase gates:** pause at every phase transition and wait for explicit user approval before advancing. Current phase lives in `.forgetrail/workflow_tracking.json → currentPhase`.
+- **Phase gates:** pause at every phase transition and wait for explicit user approval before advancing. Current phase lives in `appledger/profiles/forgetrail.yaml`.
 - **Phase 1 before code:** do not write project code until `docs/PHASE_1_BRIEF.md` is locked and stack is agreed.
 - **Phase 2 = full runnable spine** in one pass (init → deps → data → routes → hero flow end to end). No deferred spine.
-- **Log decisions:** every material decision goes into `.forgetrail/workflow_tracking.json → decisions[]` with a one-line "why."
+- **Log decisions:** every material decision is a decision record in `appledger/` with a one-line rationale.
 - **Plain first reply:** first user-facing message after bootstrap is product language, not methodology jargon. See `.forgetrail/FORGETRAIL_LITE.md` §9.
 - **Ask questions as numbered lists, one per line.** Never mash multiple questions into a paragraph. See §5.
 - **Git commits:** plain `-m` or `-F` at natural stopping points with concise summaries. Verify checks pass before committing. See §8.9.
@@ -1033,9 +1034,9 @@ This repository uses **ForgeTrail Lite** as its project kickoff and operating pr
 Initial `git init`, `pnpm init` / scaffolder, `pnpm install`, and the initial commit are all done by the agent per `.forgetrail/FORGETRAIL_LITE.md` §4. Do not ask the user to run setup commands by hand. If `git`, **Node.js**, **npm**, or **pnpm** are missing, follow §4.1 preflight (concrete install path; no-git mode for git only — never silently skip).
 
 ## Session start
-1. Read `.forgetrail/workflow_tracking.json` and `CONTEXT_PROMPT.md` (if present).
-2. Check `currentPhase` and the most recent `sessions[]` entry.
-3. Verify `.git/` and `package.json` exist if the phase calls for them; if missing, re-read `.forgetrail/FORGETRAIL_LITE.md` §4 (preflight + ordered actions) and catch up before proceeding. If `project.sourceControl` is `"deferred"` in tracking, respect no-git mode and remind the user git is still pending.
+1. Read `appledger/profiles/forgetrail.yaml` and `CONTEXT_PROMPT.md` (if present). Do not treat `.forgetrail/workflow_tracking.json` as the live phase.
+2. Check the current profile phase and the latest session record.
+3. Verify `.git/` and `package.json` exist if the phase calls for them; if missing, re-read `.forgetrail/FORGETRAIL_LITE.md` §4 (preflight + ordered actions) and catch up before proceeding. If a decision records that source control is deferred, respect no-git mode and remind the user git is still pending.
 4. If the previous session left exit criteria unmet, resume there — do not jump ahead.
 ```
 
@@ -1055,17 +1056,17 @@ These are the failures ForgeTrail sees most often. The agent should re-read this
 - **Skipping the Phase 1 brief.** Rewrites compound. If the user says "just start coding," offer to write a 10-line brief in 2 minutes first — it still pays off.
 - **Half-built spine.** Scaffolding a UI with mock data, or wiring a DB with no UI, and calling it Phase 2. The spine is end-to-end or it is not a spine.
 - **Silent stack swap.** Choosing a framework, DB, or language the user did not confirm. Always name the stack and get a "yes" before Phase 2.
-- **Tracking-file rot.** Writing `.forgetrail/workflow_tracking.json` once and never updating it. Update it at the end of every substantive turn.
-- **Turning the first reply into a methodology dump.** Users want a product answer, not a tour of `decisions[]` and `exitCriteria`.
+- **Ledger rot.** Creating `appledger/` once and never updating it. Update the session record at the end of every substantive turn. Do not recreate `.forgetrail/workflow_tracking.json`.
+- **Turning the first reply into a methodology dump.** Users want a product answer, not a tour of decision records and exit criteria.
 
 **Engineering**
 - **Interactive CLIs in agent terminals.** `sv create`, `npm init`, `gh auth login`, `pnpm dlx create-*` will hang forever on a TTY prompt. Pass every flag, or skip the CLI and write files directly.
 - **`sv create` against a repo that Lite has already bootstrapped.** By §4.2 step 10 the repo root is **never empty** — the Lite bootstrap (steps 1–9) writes **`.forgetrail/`**, `docs/PHASE_1_BRIEF.md`, `CONTEXT_PROMPT.md`, `.gitignore`, and `.git/` before any scaffolder runs. Running `pnpm dlx sv create .` at that point triggers an **interactive** `Directory not empty. Continue?` prompt with **no reliable non-interactive bypass** — agent terminals cannot answer it and the session hangs (§8 rule 6). **Prevention:** in Lite, **prefer the manual scaffold** described in §4.2 step 10 (A.1); it is deterministic and never prompts. If you want the `sv create` shortcut, target a **fresh subfolder that does not exist yet** (e.g. `sv create app`, never `sv create .`). **Recovery:** kill the hung process, delete any partial `app/`, and switch to the manual path or retry into a new folder name. Do not try to answer the prompt by piping "Yes" — non-portable and fragile.
-- **Committing secrets or the wrong artifacts to a public repo.** Do not put API keys, `.env`, or customer-private notes in **`.forgetrail/workflow_tracking.json`** or committed rules. Prefer **`.forgetrail/`** (not repo root) for agent files per §1.5. If you **gitignored** `.forgetrail/` but later need it on GitHub, that is fine — it was intentional. If you **accidentally committed secrets** or sensitive internal URLs, treat the remote as compromised: rotate credentials and rewrite history (`git filter-repo`) if needed; a follow-up delete commit does **not** remove blobs from history. Vendoring a full Lite copy when **MCP** already serves methodology is clutter, not a license violation — drop the duplicate file and use MCP tools instead.
+- **Committing secrets or the wrong artifacts to a public repo.** Do not put API keys, `.env`, or customer-private notes in **`appledger/`** or committed rules. Prefer **`.forgetrail/`** (not repo root) for agent files per §1.5. If you **gitignored** `.forgetrail/` but later need it on GitHub, that is fine — it was intentional. If you **accidentally committed secrets** or sensitive internal URLs, treat the remote as compromised: rotate credentials and rewrite history (`git filter-repo`) if needed; a follow-up delete commit does **not** remove blobs from history. Vendoring a full Lite copy when **MCP** already serves methodology is clutter, not a license violation — drop the duplicate file and use MCP tools instead.
 - **GitHub GH007 / private email on push.** See §4.1.1 — fix noreply identity and repo-local `user.email` before debugging merge or sync UI errors.
 - **Re-running scaffolders in an initialized app folder.** A second `sv create` on top of an existing SvelteKit tree (root or `app/`) typically errors or corrupts config. Detect the presence of `package.json` plus `svelte.config.js` (or `app/package.json` if using the subfolder shortcut) and refuse.
 - **Mixing CommonJS and ESM.** Pick ESM (`"type": "module"`) from day one. Do not sprinkle `require()` in a project that uses `import`.
-- **Opaque backend errors: curl first, version-drift second, SDK source last.** Single-binary and managed backends (PocketBase, SurrealDB, Meilisearch, Supabase stack, and similar) ship the **server binary** and the **JS/TS SDK** on **independent release trains**. When the server tightens a wire rule (e.g. PocketBase 0.37 requires `Authorization: Bearer <token>` on reads; an older SDK still sends a bare token) you often get a **single opaque 400/500** like *Something went wrong while processing your request* with no hint of headers, query shape, or the rule that fired. Worse, the server may be **permissive on writes** and **strict on reads** — `create()` works, `getFullList()` fails — so the bug reads as *"data was never saved."* **Diagnostic:** do not start in SDK source or with retries. Bypass the client with `curl` (e.g. `curl -w "\nHTTP=%{http_code}\n"`), same credentials, and vary **one** dimension at a time: auth header format (`Authorization: <token>` vs `Authorization: Bearer <token>`), query params (drop `sort` / `filter` / `perPage`), HTTP method. The SDK hides the exact bytes on the wire; `curl` shows them — the delta between a 200 and what the SDK sends **is** the bug, usually in **minutes** vs an hour of internals archaeology. **Prevention / fix until the SDK matches:** a client `beforeSend` (or request-interceptor) shim that normalizes headers or query shape; treat any cross-endpoint opaque 400/500 as **wire mismatch until proven otherwise**. **Session hygiene:** log **SDK version + server version** together in `gotchas[]` so the next run checks version drift first.
+- **Opaque backend errors: curl first, version-drift second, SDK source last.** Single-binary and managed backends (PocketBase, SurrealDB, Meilisearch, Supabase stack, and similar) ship the **server binary** and the **JS/TS SDK** on **independent release trains**. When the server tightens a wire rule (e.g. PocketBase 0.37 requires `Authorization: Bearer <token>` on reads; an older SDK still sends a bare token) you often get a **single opaque 400/500** like *Something went wrong while processing your request* with no hint of headers, query shape, or the rule that fired. Worse, the server may be **permissive on writes** and **strict on reads** — `create()` works, `getFullList()` fails — so the bug reads as *"data was never saved."* **Diagnostic:** do not start in SDK source or with retries. Bypass the client with `curl` (e.g. `curl -w "\nHTTP=%{http_code}\n"`), same credentials, and vary **one** dimension at a time: auth header format (`Authorization: <token>` vs `Authorization: Bearer <token>`), query params (drop `sort` / `filter` / `perPage`), HTTP method. The SDK hides the exact bytes on the wire; `curl` shows them — the delta between a 200 and what the SDK sends **is** the bug, usually in **minutes** vs an hour of internals archaeology. **Prevention / fix until the SDK matches:** a client `beforeSend` (or request-interceptor) shim that normalizes headers or query shape; treat any cross-endpoint opaque 400/500 as **wire mismatch until proven otherwise**. **Session hygiene:** record **SDK version + server version** together in a lesson so the next run checks version drift first.
 - **Env secrets in the repo.** Only `.env.example` is committed. Real `.env` is in `.gitignore`. Check before every commit.
 - **Assuming `.env` is loaded without code.** Node/TS entrypoints (`tsx`, `node`, Hono, workers) do **not** read `.env` unless you call **`dotenv`** (or equivalent) at startup — see §4.2.1. Vite loads env for `vite.config.*`, but monorepo layouts need **merged `loadEnv`** from repo root + package with paths derived from **`import.meta.url`**, not `process.cwd()` alone.
 - **pnpm ignored native build scripts.** `better-sqlite3` and similar may install without `prebuild-install` / `node-gyp` on pnpm v9+ — see §4.1 preflight step 5 (`onlyBuiltDependencies` at workspace root).
@@ -1117,8 +1118,9 @@ During Phase 2, create these once the spine is running. Keep them short and hone
   # AGENTS.md
   # CLAUDE.md
   # IDEAS.md
-  # .forgetrail/workflow_tracking.json
   # .cursor/rules/forgetrail-updates-log.mdc
+  # Do not symlink or recreate .forgetrail/workflow_tracking.json.
+  # Project state is appledger/ and is committed with the app.
 
   # Deps
   node_modules/
@@ -1151,7 +1153,7 @@ During Phase 2, create these once the spine is running. Keep them short and hone
 
   **Rule of thumb:** whenever you add a framework, check whether its build-output directory name (`build`, `dist`, `public`, `out`, `target`) could collide with a route or source path in that framework, and **anchor accordingly**. After Phase 2, run `git ls-files | grep routes/ | head` (or equivalent) once to confirm no route directories were swallowed.
 - **Optional JSON data files** — e.g. `data/seed-*.json` or `fixtures/*.json` created by the user (see §4.3) for seed or demo content. The agent validates and imports; the user can regenerate or add files **multiple times** for different tables or domains.
-- **`docs/FORGETRAIL_PROGRESS.md`** — human-readable ForgeTrail phase snapshot (§4.6); refresh when `currentPhase` or exit criteria change, or when the user runs **status.bat** / **forgetrail:status**.
+- **`docs/FORGETRAIL_PROGRESS.md`** — human-readable ForgeTrail phase snapshot (§4.6); refresh when the profile phase or criteria change, or when the user runs **status.bat** / **forgetrail:status**. The durable phase is `appledger/profiles/forgetrail.yaml`.
 - **One-click dev launchers** — **`setup.bat`** / **`setup.sh`**, **`run.bat`** / **`run.sh`**, **`status.bat`** / **`status.sh`** at repo root; logic in **`scripts/forgetrail-dev-launcher.mjs`** (upstream template). See **`ONE_CLICK_DEV_SETUP.md`**.
 - **Isolated health checks** — **`test-pocketbase.bat`** / **`test-ollama.bat`** (and **`setup-ollama.bat`** when local LLM); scripts in **`scripts/`** per **`SYSTEM_HEALTH_CHECKS.md`**.
 
@@ -1164,7 +1166,7 @@ Phases 3–7 add documents as the project grows (test plan, design notes, deploy
 The user wins. This is a default protocol, not a law. When the user overrides a rule:
 
 1. Acknowledge the override briefly.
-2. Record it in `decisions[]` with **`date`**, **`phase`** (current lifecycle number), **`decision`**, **`why`**, and optional **`alternatives`** so future sessions see the exception.
+2. Record it as a decision in `appledger/` with the date, phase, choice, rationale, and optional alternatives so future sessions see the exception.
 3. Proceed.
 
 The one exception: **do not** skip logging the override itself — that is how Lite stays coherent across sessions.
@@ -1177,4 +1179,4 @@ ForgeTrail Lite covers the shape of a project. The full **ForgeTrail MCP server*
 
 ---
 
-**ForgeTrail Lite v2.1.0** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+**ForgeTrail Lite v2.2.0** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

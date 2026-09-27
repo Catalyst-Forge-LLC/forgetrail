@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-09-26 | **FORGETRAIL_LITE v2.2.0:** live steps write `appledger/`. §11 stays the do-not-copy `lite-1` shape. WORKFLOW records a subject disposition when a subject exists and leaves a missing family `not_applicable`. |
 | 2026-09-18 | **Host safety hooks + FORGETRAIL_LITE v2.1.0:** deterministic enforcement in `.forgetrail/hooks/` with Cursor and Claude Code adapters. Lite §0 backed by tool-level deny/ask/validate guards. New MCP tool `getForgeTrailHooks`. CLI installer and kickoff generate hooks. Companion mapping gains `never-do` situation. |
 | 2026-09-15 | **FORGETRAIL_LITE v2.0.2:** LocalSlip FilePress/Vite recipes in §2 (intake + A-local FilePress one-liners). Lite-only agents get the how without the mapping file. |
 | 2026-09-15 | **LocalSlip how:** companion mapping now includes FilePress and Vite recipes. Drop leftover `ensure-lease.mjs` mentions. Do not add the `localslip` package just to read a port. |
@@ -60,6 +61,14 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-09-26: FORGETRAIL_LITE v2.2.0
+
+Live instructions now name `appledger/` as the system of record. The header no longer says the body still tells an agent to write JSON.
+
+- **`content/FORGETRAIL_LITE.md`**: v2.2.0 in the header, the §12 `AGENTS.md` snippet, and the footer. Phase, decisions, lessons, and sessions are profile and record writes. `schemaVersion` stays `lite-1`. §11 remains the legacy JSON example for `appledger migrate` and is marked do not copy. A subject that exists gets a disposition. A family with no subject is `not_applicable`. Labels are not generated.
+- **`WORKFLOW.md`**: explicit write-the-JSON steps now write `appledger/`. Companion outcomes persist as `data.companion_outcomes` on the session. §1f and Phase 7 record a disposition when an applicable subject exists and offer a published xFacts label only when the user asks at public handoff.
+- **Checklist:** version strings moved together. `schemaVersion` was not bumped. §4.3, §4.4, and §7.1 were not rewritten, so README was not part of this pass.
 
 ### 2026-09-18: Host safety hooks + FORGETRAIL_LITE v2.1.0
 

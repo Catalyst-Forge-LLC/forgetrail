@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, writeFileSync, mkdirSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -67,4 +67,26 @@ test("session start warns on a legacy file and does not quote it as the live pha
   const payload = JSON.parse(result.stdout);
   assert.match(payload.additional_context, /not the system of record/);
   assert.doesNotMatch(payload.additional_context, /Current Phase: 4-feature-iteration/);
+});
+
+test("Lite and workflow instructions name the ledger", () => {
+  const lite = readFileSync(join(root, "content", "FORGETRAIL_LITE.md"), "utf8");
+  const legacyAt = lite.indexOf("## 11. Legacy");
+  const resumeAt = lite.indexOf("## 12. `AGENTS.md`");
+  assert.ok(legacyAt > 0 && resumeAt > legacyAt);
+  const instructional = `${lite.slice(0, legacyAt)}\n${lite.slice(resumeAt)}`;
+  assert.match(lite.slice(legacyAt, resumeAt), /"schemaVersion": "lite-1"/);
+  assert.match(instructional, /ForgeTrail Lite v2\.2\.0/);
+  for (const line of instructional.split("\n")) {
+    if (!line.includes("workflow_tracking.json")) continue;
+    assert.match(line, /[Dd]o not|does not|not the live phase|not recreate/, line);
+  }
+  const workflow = readFileSync(join(root, "WORKFLOW.md"), "utf8");
+  assert.match(workflow, /not_applicable/);
+  assert.match(workflow, /data\.companion_outcomes/);
+  assert.doesNotMatch(workflow, /Where this file names that JSON/);
+  for (const line of workflow.split("\n")) {
+    if (!line.includes("workflow_tracking.json")) continue;
+    assert.match(line, /[Dd]o not|does not|not the system of record|not the live phase/, line);
+  }
 });

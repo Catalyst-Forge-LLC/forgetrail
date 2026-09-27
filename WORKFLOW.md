@@ -4,7 +4,7 @@
 
 A persistent development system for building software with AI agents. A structured 7-phase workflow for solo developers building non-trivial full-stack apps with coding agents. Derived from 7 sessions and ~78,000 lines of real-world app development.
 
-**System of record:** Phase, decisions, sessions, and gotchas live in `appledger/` (`profiles/forgetrail.yaml` and records). Do not create or update `.forgetrail/workflow_tracking.json`. Where this file names that JSON file, `decisions[]`, `gotchas[]`, `sessions[]`, or `currentPhase`, write the ledger instead. If the JSON file already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep a second decision log. `.forgetrail/` is hooks and host integration.
+**System of record:** Phase, decisions, lessons, and sessions live in `appledger/` (`profiles/forgetrail.yaml` and records). Do not create or update `.forgetrail/workflow_tracking.json`. If that file already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep a second decision log. `.forgetrail/` is hooks and host integration.
 
 ---
 
@@ -18,7 +18,7 @@ These phases emerged from the actual build sequence across all sessions. They're
 
 **Entry criteria:** You have a clear problem to solve and know your preferred tech stack.
 
-**Exit criteria:** You've confirmed tech choices, folder structure, data model shape, and the first batch of features to build. Claude has summarized its understanding back to you, and you've corrected any misunderstandings. **`PHASE_1_BRIEF.md` is complete and locked** (see §1a), and major commitments are in **`.forgetrail/workflow_tracking.json` → `decisions[]`** so Phase 2 can start without chat context.
+**Exit criteria:** You've confirmed tech choices, folder structure, data model shape, and the first batch of features to build. Claude has summarized its understanding back to you, and you've corrected any misunderstandings. **`PHASE_1_BRIEF.md` is complete and locked** (see §1a), and major commitments are decision records in **`appledger/`** so Phase 2 can start without chat context.
 
 **What actually happened:** Session 1 opened with full context (existing job search system, 44 jobs, DOCX templates, preferred stack). Claude proposed Playwright over Puppeteer, docxtemplater for Word preservation, Kanban UI, filesystem-based storage, and an import migration path. All confirmed in a single exchange before any code was written.
 
@@ -104,7 +104,7 @@ These phases emerged from the actual build sequence across all sessions. They're
 
 **Principle:** **Phase 2** still means the **full app spine** in one pass — project init, dependencies, data path, routes, components, import/migration if needed, **hero flow end-to-end**. That spine should not be deferred.
 
-**ForgeTrail workspace:** All lifecycle/agent artifacts live in **`.forgetrail/`** at the repo root — **`.forgetrail/workflow_tracking.json`**, **`.forgetrail/IDEAS.md`**, platform rules (`AGENTS.md`, `CLAUDE.md`, optional `FORGETRAIL_LITE.md`). Product docs (`docs/PHASE_1_BRIEF.md`, `CONTEXT_PROMPT.md`, `README.md`, `TODO.md`, **`docs/FORGETRAIL_PROGRESS.md`**) stay outside `.forgetrail/`. Optionally gitignore `.forgetrail/` for a cleaner public repo or MCP-only boots (no vendored Lite). See **`FORGETRAIL_LITE.md` §1.5** and **`NEW_PROJECT_BOOTSTRAP.md`**.
+**ForgeTrail workspace:** Protocol, rules, and hooks live in **`.forgetrail/`** at the repo root — **`.forgetrail/IDEAS.md`**, platform rules (`AGENTS.md`, `CLAUDE.md`, optional `FORGETRAIL_LITE.md`). Project state lives in **`appledger/`**. Do not create `.forgetrail/workflow_tracking.json`. Product docs (`docs/PHASE_1_BRIEF.md`, `CONTEXT_PROMPT.md`, `README.md`, `TODO.md`, **`docs/FORGETRAIL_PROGRESS.md`**) stay outside `.forgetrail/`. Optionally gitignore `.forgetrail/` for a cleaner public repo or MCP-only boots (no vendored Lite). Commit `appledger/` with the app. See **`FORGETRAIL_LITE.md` §1.5** and **`NEW_PROJECT_BOOTSTRAP.md`**.
 
 **Non-technical operators:** Phase 2 should add **setup/run/status** launchers (**`ONE_CLICK_DEV_SETUP.md`**) and **test-*** launchers per dependency (**`SYSTEM_HEALTH_CHECKS.md`**). Avoid hardcoded PocketBase versions (**§4.2.2**). Local Ollama: Granite 4.1 / Gemma 3 defaults, not thinking models unless required (**§4.8**).
 
@@ -112,7 +112,7 @@ These phases emerged from the actual build sequence across all sessions. They're
 
 | Phase | App / code | Docs to create or substantially extend (from ForgeTrail templates — or MCP `getTemplate`) |
 | ----- | ---------- | ------------------------------------------------------------------------------------------- |
-| **1 — Architecture** | Conversation only — no app code | **`PHASE_1_BRIEF.md`** (structured planning handoff). Log major commitments in **`.forgetrail/workflow_tracking.json`** (`decisions[]`, phase notes). |
+| **1 — Architecture** | Conversation only — no app code | **`PHASE_1_BRIEF.md`** (structured planning handoff). Record major commitments as decision records in **`appledger/`**, and note the sign-off on the session record. |
 | **2 — Scaffolding** | Entire runnable skeleton + hero flow | **`CONTEXT_PROMPT.md`** populated by **merging `PHASE_1_BRIEF.md`** into it (see CONTEXT_PROMPT template “Handoff from Phase 1”), then **`README.md`**, **`TODO.md`**, **`.forgetrail/IDEAS.md`**. **Do not** generate the rest of the `docs/` template set in Phase 2 unless the user explicitly needs a file for the spine (rare). |
 | **3 — Stabilization** | Reliability, env, errors | Update **`CONTEXT_PROMPT.md`** / **`README.md`** when behavior, env, or patterns change. No new template types required. |
 | **4 — Feature iteration** | Features, specs | Per complex feature: write **`specs/[feature].md`** from **`SPEC_FEATURE_TEMPLATE`** before multi-file work (lifecycle: `specs/` → `partial/` → `completed/`). Add **`TECHNICAL_REFERENCE.md`** when the API/data model surface is non-trivial; **`TEST_PLAN.md`** when manual QA paths deserve a written walkthrough; **`DESIGN_SYSTEM.md`** for layout, a11y, and repeated UI patterns as the UI grows. Optional: **`DEV_ESTIMATE.md`**. When a release adds **new user-facing capabilities** (not only refactors), extend **`TECHNICAL_REFERENCE.md` → Feature Documentation** with a stub for each area (routes, data, discovery → import parity) and add **`TEST_PLAN.md`** scenarios — don’t capture the work only as 💡 lesson callouts in **`CONTEXT_PROMPT.md`**. |
@@ -130,24 +130,24 @@ These phases emerged from the actual build sequence across all sessions. They're
 
 If the project repo has [gstack](https://github.com/garrytan/gstack) installed (slash-command skills for Claude Code), ForgeTrail and gstack are **complementary layers** rather than competing systems. They solve different problems:
 
-- **ForgeTrail** = **lifecycle methodology + project memory.** Phases, exit criteria, progressive docs, `.forgetrail/workflow_tracking.json`, business/brand strategy, lessons, and audits.
+- **ForgeTrail** = **lifecycle methodology + project memory.** Phases, exit criteria, progressive docs, `appledger/`, business/brand strategy, lessons, and audits.
 - **gstack** = **sprint execution + automation.** Slash-command skills that act as virtual team roles (engineering review, QA, security, deploy) within the current coding session.
 
-**The integration model:** ForgeTrail owns the *what* and *when* (which phase, which docs, which exit criteria). gstack skills accelerate the *how* (build faster, review better, test more thoroughly, deploy safely). After every meaningful gstack sprint, persist outcomes in ForgeTrail's tracking system — gstack has no cross-session memory.
+**The integration model:** ForgeTrail owns the *what* and *when* (which phase, which docs, which exit criteria). gstack skills accelerate the *how* (build faster, review better, test more thoroughly, deploy safely). After every meaningful gstack sprint, persist outcomes in `appledger/` — gstack has no cross-session memory.
 
 ### Phase-by-phase integration
 
 **Phase 1 — Plan:**
-Use gstack's `/office-hours` for product framing conversations and `/plan-ceo-review` for scope validation. Capture all outputs in **`PHASE_1_BRIEF.md`** and `.forgetrail/workflow_tracking.json → decisions[]` — these are ForgeTrail artifacts that gstack doesn't produce. Example: after `/office-hours` surfaces a risk, add it to the brief's §8 (Risks & Mitigations) and log the decision in tracking.
+Use gstack's `/office-hours` for product framing conversations and `/plan-ceo-review` for scope validation. Capture all outputs in **`PHASE_1_BRIEF.md`** and as decision records in `appledger/` — these are ForgeTrail artifacts that gstack doesn't produce. Example: after `/office-hours` surfaces a risk, add it to the brief's §8 (Risks & Mitigations) and record the decision.
 
 **Phase 2 — Build:**
 Use `/plan-eng-review` to validate the technical spine before committing. After building the skeleton, run `/review` on the initial commit to catch structural issues early. ForgeTrail handles the brief → `CONTEXT_PROMPT.md` merge and progressive doc creation (`README`, `TODO`, `.forgetrail/IDEAS.md`).
 
 **Phase 3 — Stabilize:**
-Use `/investigate` for systematic root-cause debugging when errors are non-obvious. Log every gotcha found in `.forgetrail/workflow_tracking.json → gotchas[]` and update `CONTEXT_PROMPT.md` — gstack fixes the bug but ForgeTrail ensures the lesson persists so the next session doesn't repeat it.
+Use `/investigate` for systematic root-cause debugging when errors are non-obvious. Record every lesson in `appledger/` and update `CONTEXT_PROMPT.md` — gstack fixes the bug but ForgeTrail ensures the lesson persists so the next session doesn't repeat it.
 
 **Phase 4 — Iterate:**
-This is where gstack's inner loop shines. Per feature: `/plan-eng-review` (design) → build → `/review` (code quality) → `/qa` (browser-based testing with Playwright) → `/ship` (commit + changelog). After each shipped feature, update `TODO.md` (mark done), `CONTEXT_PROMPT.md` (if patterns changed), and `.forgetrail/workflow_tracking.json` (exit criteria progress, session notes). For complex features, write a ForgeTrail `specs/[feature].md` *before* starting the gstack build cycle.
+This is where gstack's inner loop shines. Per feature: `/plan-eng-review` (design) → build → `/review` (code quality) → `/qa` (browser-based testing with Playwright) → `/ship` (commit + changelog). After each shipped feature, update `TODO.md` (mark done), `CONTEXT_PROMPT.md` (if patterns changed), and `appledger/` (criteria that have evidence, and the session record). For complex features, write a ForgeTrail `specs/[feature].md` *before* starting the gstack build cycle.
 
 **Phase 5 — Refine:**
 Use `/review` on refactor branches to verify no regressions. After refactoring, update `CONTEXT_PROMPT.md` and `TECHNICAL_REFERENCE.md` to reflect the new file structure — gstack's review catches broken imports but doesn't update your documentation.
@@ -160,7 +160,7 @@ Run **both** ForgeTrail's `runAudit("black-hat")` and gstack's `/cso` — they'r
 
 ### Key rule
 
-After every gstack sprint that completes meaningful work, **update `.forgetrail/workflow_tracking.json`** (advance exit criteria, add decisions/gotchas, update session notes). gstack does persist some sprint-level artifacts — design docs from `/office-hours` live in `~/.gstack/projects/`, retro snapshots in `.context/retros/`, review gate overrides per branch, and skill usage analytics. But gstack has **no lifecycle state** (what phase are we in?), **no decision rationale log** (why did we choose PocketBase over Supabase?), **no gotcha capture** (what burned us and how did we fix it?), and **no architecture context document** (what does the file tree look like, what patterns do we use?). ForgeTrail's `.forgetrail/workflow_tracking.json` + `CONTEXT_PROMPT.md` fill exactly this gap — they are the system of record that lets the next session pick up where this one left off without replaying context from chat history.
+After every gstack sprint that completes meaningful work, **update `appledger/`** (criteria that have evidence, decision records, lessons, and the session record). Do not write `.forgetrail/workflow_tracking.json`. gstack does persist some sprint-level artifacts — design docs from `/office-hours` live in `~/.gstack/projects/`, retro snapshots in `.context/retros/`, review gate overrides per branch, and skill usage analytics. But gstack has **no lifecycle state** (what phase are we in?), **no decision rationale log** (why did we choose PocketBase over Supabase?), **no lesson capture** (what burned us and how did we fix it?), and **no architecture context document** (what does the file tree look like, what patterns do we use?). ForgeTrail's `appledger/` + `CONTEXT_PROMPT.md` fill exactly this gap — they are the system of record that lets the next session pick up where this one left off without replaying context from chat history.
 
 ---
 
@@ -168,10 +168,10 @@ After every gstack sprint that completes meaningful work, **update `.forgetrail/
 
 When the host agent supports **parallel subagents** (Grok Build `spawn_subagent`, Cursor Task/subagents, Claude agent teams, etc.), ForgeTrail and subagents are **complementary layers** — same relationship as ForgeTrail + gstack in §1b:
 
-- **ForgeTrail** = **lifecycle methodology + project memory.** Phases, exit criteria, progressive docs, `.forgetrail/workflow_tracking.json`, audits, and lessons.
+- **ForgeTrail** = **lifecycle methodology + project memory.** Phases, exit criteria, progressive docs, `appledger/`, audits, and lessons.
 - **Subagents** = **parallel, context-isolated execution** within a phase — audits, research, spikes, and deep exploration without bloating the parent thread.
 
-**The integration model:** ForgeTrail owns the *what* and *when* (which phase, which docs, which exit criteria). Subagents multiply throughput on the parts of ForgeTrail that are most context-heavy and parallelizable. The **parent agent** always synthesizes subagent output into ForgeTrail artifacts and updates tracking — subagents have no cross-session memory.
+**The integration model:** ForgeTrail owns the *what* and *when* (which phase, which docs, which exit criteria). Subagents multiply throughput on the parts of ForgeTrail that are most context-heavy and parallelizable. The **parent agent** always synthesizes subagent output into ForgeTrail artifacts and updates `appledger/` — subagents have no cross-session memory.
 
 ### Phase-by-phase integration
 
@@ -182,7 +182,7 @@ Main agent only (or one **read-only** explore subagent for competitive/market re
 Main agent builds the full spine in one pass. Optional: one read-only subagent to research integration edge cases — do not split the hero-flow build across subagents unless the host explicitly supports coordinated merge.
 
 **Phase 3 — Stabilize:**
-Optional read-only explore subagent for stubborn root-cause analysis; parent logs every gotcha in `.forgetrail/workflow_tracking.json → gotchas[]` and updates `CONTEXT_PROMPT.md`.
+Optional read-only explore subagent for stubborn root-cause analysis; the parent records every lesson in `appledger/` and updates `CONTEXT_PROMPT.md`.
 
 **Phase 4 — Iterate:**
 Strong fit. Call **`suggestSubagentDecomposition`** then spawn parallel explore subagents for feature research and tradeoff analysis; optional **worktree-isolated** spike for prototyping. Parent picks the approach and implements (or delegates to a single write-capable subagent).
@@ -194,14 +194,14 @@ Worktree-isolated subagents for exploratory refactors; parent reviews, merges, a
 Optional read-only subagents for market/competitor research; synthesis targets ForgeTrail templates (`BRAND_AND_PRODUCT`, strategic `TODO`).
 
 **Phase 7 — Harden:**
-Strong fit. Spawn parallel **read-only** subagents per audit type (security/black-hat, UX cohesion, code quality). Each subagent runs **`runAudit`** + **`searchLessons`** as appropriate. Parent synthesizes into `BLACK_HAT_REPORT.md`, `CODE_QUALITY.md`, triages into `TODO.md`, and updates tracking.
+Strong fit. Spawn parallel **read-only** subagents per audit type (security/black-hat, UX cohesion, code quality). Each subagent runs **`runAudit`** + **`searchLessons`** as appropriate. Parent synthesizes into `BLACK_HAT_REPORT.md`, `CODE_QUALITY.md`, triages into `TODO.md`, and updates `appledger/`.
 
 ### Recommended pattern
 
 1. Call **`suggestSubagentDecomposition`** with current phase + task description.
 2. Spawn subagents with **`background: true`** (or equivalent) when the host supports it.
-3. Parent collects outputs → progressive docs + `.forgetrail/workflow_tracking.json`.
-4. Run **`validateTracking`** after synthesis.
+3. Parent collects outputs → progressive docs + `appledger/`.
+4. Run **`validateTracking`** after synthesis. A pointer is accepted. A writable tracking document is a conflict.
 
 ### Concrete example (Phase 7 — Grok-style hosts)
 
@@ -213,14 +213,14 @@ Spawn three read-only subagents in parallel:
 2. UX: ux-cohesion or panel-usability audit against current UI flows.
 3. Code quality: audit against CODE_QUALITY template + getAntiPatterns.
 
-Parent: synthesize into BLACK_HAT_REPORT.md + CODE_QUALITY.md, update tracking gotchas/decisions, present prioritized next actions.
+Parent: synthesize into BLACK_HAT_REPORT.md + CODE_QUALITY.md, record lessons and decisions in appledger/, present prioritized next actions.
 ```
 
 Hosts differ in spawn syntax — call **`getAgentIntegrationGuide`** (`grok`, `cursor`, `claude`, or `generic`) for tailored commands.
 
 ### Key rule
 
-After subagent results return, the **parent must** update `.forgetrail/workflow_tracking.json` (advance exit criteria, add decisions/gotchas, update session notes) and relevant progressive docs. Subagents fix or explore in isolation but **do not** replace ForgeTrail as the system of record for lifecycle state, decision rationale, or gotcha capture.
+After subagent results return, the **parent must** update `appledger/` (criteria that have evidence, decision records, lessons, and the session record) and relevant progressive docs. Do not write `.forgetrail/workflow_tracking.json`. Subagents fix or explore in isolation but **do not** replace ForgeTrail as the system of record for lifecycle state, decision rationale, or lesson capture.
 
 ---
 
@@ -228,7 +228,7 @@ After subagent results return, the **parent must** update `.forgetrail/workflow_
 
 The 7 phases were extracted from a commercial SaaS build, and the default exit criteria assume one — payments, brand pillars, business plan, security audit. Many ForgeTrail projects are **not** that: a gift app for a birthday, an internal dashboard, a weekend tool. Forcing a one-time-use trivia game through "Payment flow works end to end" produces noise (endless `N/A` annotations) and, worse, teaches agents to rubber-stamp criteria instead of reading them.
 
-**Fix: choose an archetype in Phase 1 and prune the tracking template at bootstrap.** The archetype is a product-shape question, same class as state persistence — ask it early, record it in **`PHASE_1_BRIEF.md`** (§1 or §3) and **`decisions[]`**, and store it as **`project.archetype`** in **`.forgetrail/workflow_tracking.json`** (see `TRACKING_SCHEMA.md`).
+**Fix: choose an archetype in Phase 1 and prune the profile at bootstrap.** The archetype is a product-shape question, same class as state persistence — ask it early, record it in **`PHASE_1_BRIEF.md`** (§1 or §3) and as a decision, and store it as **`archetype`** on **`appledger/profiles/forgetrail.yaml`**.
 
 | Archetype | What it is | Phase adjustments |
 |-----------|-----------|-------------------|
@@ -238,26 +238,26 @@ The 7 phases were extracted from a commercial SaaS build, and the default exit c
 
 **Agent duties when archetype ≠ `product`:**
 
-1. **Prune, don't annotate.** At bootstrap (or as soon as the archetype is decided), remove non-applicable exit criteria from the tracking file's phase arrays and replace collapsed phases with the archetype's gate criteria. A criterion that survives pruning must be genuinely checkable — the goal is that every remaining item is real.
-2. **Log the pruning as a decision** (`decisions[]`) so a later session knows the missing criteria were removed intentionally, not lost.
+1. **Prune, don't annotate.** At bootstrap (or as soon as the archetype is decided), remove non-applicable criteria from the profile and replace collapsed phases with the archetype's gate criteria. A criterion that survives pruning must be genuinely checkable — the goal is that every remaining item is real.
+2. **Record the pruning as a decision** in `appledger/` so a later session knows the missing criteria were removed intentionally, not lost.
 3. **Escalate on drift.** If a `one-shot` starts growing accounts, or an `internal-tool` gets external users, say so explicitly and propose re-promoting to `product` — restoring the pruned criteria for the phases still ahead. Archetypes scale the lifecycle down; they are not a permanent exemption.
 
-For quick throwaway spikes (an experiment you may delete tomorrow), consider skipping ForgeTrail entirely — a tracking file for a two-hour prototype is overhead, not discipline. The archetypes above are for projects that will be **finished**, however small.
+For quick throwaway spikes (an experiment you may delete tomorrow), consider skipping ForgeTrail entirely — a ledger for a two-hour prototype is overhead, not discipline. The archetypes above are for projects that will be **finished**, however small.
 
 ---
 
 ## 1e. Wrap protocol (closing a project and harvesting its lessons)
 
-ForgeTrail's tracking schema collects `gotchas[]` and `decisions[]` all project long — but nothing consumed them systematically at the end. A small project could log two genuinely reusable gotchas and have them die in the repo because no propagation pass ever ran. The wrap protocol closes that loop: **finishing a project includes harvesting it.**
+The ledger collects lessons and decisions all project long — but nothing consumed them systematically at the end. A small project could record two genuinely reusable lessons and have them die in the repo because no propagation pass ever ran. The wrap protocol closes that loop: **finishing a project includes harvesting it.**
 
 **When to run:** the project is done (shipped, delivered, handed off) or being intentionally shelved. For `one-shot` projects this is a natural, expected step — the project ends, ForgeTrail keeps the lessons. For long-lived products, run the same harvest step at major milestones (launch, ownership change) rather than waiting for a "wrap" that may never come.
 
 **Steps:**
 
-1. **Sweep the tracking file.** Read every `gotchas[]` and `decisions[]` entry plus `CONTEXT_PROMPT.md`'s gotcha/pattern sections. For each, ask: *is this generalizable beyond this app?* Framework traps, CLI behavior changes, and integration surprises usually are; app-specific content decisions usually are not.
-2. **Run the propagation prompt** (`prompts/propagate-to-forgetrail.md`) with the harvest list as input — see its **Harvest mode** section, designed for exactly this sweep. Small projects without a product journal or full doc set use the tracking file as the primary discovery source.
-3. **Close the tracking file.** Set `project.status` to `"wrapped"` (see `TRACKING_SCHEMA.md`), add a final `sessions[]` entry summarizing end state and where things live (deploy URL, handoff notes), and make a final commit. Optionally tag the repo (`v1.0`, `shipped`).
-4. **Log the propagation** in ForgeTrail's `update-log.md` as usual. A wrap with zero propagable lessons is legitimate — note "wrapped, nothing to propagate" in the final session entry and skip steps 2 and 4.
+1. **Sweep the ledger.** Read every lesson and decision record plus `CONTEXT_PROMPT.md`'s lesson and pattern sections. For each, ask: *is this generalizable beyond this app?* Framework traps, CLI behavior changes, and integration surprises usually are; app-specific content decisions usually are not.
+2. **Run the propagation prompt** (`prompts/propagate-to-forgetrail.md`) with the harvest list as input — see its **Harvest mode** section, designed for exactly this sweep. Small projects without a product journal or full doc set use `appledger/` as the primary discovery source.
+3. **Close the ledger.** Set `project_status` to `wrapped` on `appledger/profiles/forgetrail.yaml`, add a final session record summarizing end state and where things live (deploy URL, handoff notes), and make a final commit. Optionally tag the repo (`v1.0`, `shipped`). Do not write `.forgetrail/workflow_tracking.json`.
+4. **Log the propagation** in ForgeTrail's `update-log.md` as usual. A wrap with zero propagable lessons is legitimate — note "wrapped, nothing to propagate" in the final session record and skip steps 2 and 4.
 
 **Why this is a protocol and not a suggestion:** the compounding loop (README) only compounds if lessons actually flow back. One flagship project propagating regularly plus a dozen small projects propagating never is a leak — the small projects are often where the freshest scaffolding and framework gotchas surface, because they exercise the newest tool versions.
 
@@ -270,7 +270,9 @@ Catalyst Forge siblings (and Cloudflare as a default DNS/hosting suggestion) are
 - **ForgeTrail** = lifecycle + project memory.
 - **Companions** = one bounded job (publish Markdown, named ports, editorial review, quality score, labels, backup, voice journal).
 
-They are **never required**. Decline is success. Do not dump the shelf at kickoff. Suggest when a trigger is true; persist outcomes in `.forgetrail/workflow_tracking.json`.
+They are **never required**. Decline is success. Do not dump the shelf at kickoff. Suggest when a trigger is true; persist the outcome on the appledger session as `data.companion_outcomes`. Do not write `workflow_tracking.json`.
+
+**Subjects:** When an applicable subject exists — an application, a tool server, a skill package, an agent configuration, or a model variant — record a disposition with `appledger subjects`. A family with no subject is `not_applicable`, not a missing label. Do not generate or rewrite a label. A published xFacts label remains an offer when the product goes public or changes hands, and only if the user asks.
 
 **Agents:** `getCompanionSuggestions` (`phase` or `situation`) plus the optional footer on `getPhaseGuidance`. Mapping: `content/COMPANION_TOOLS.md`. Shelf: [catalystforge.com/tools](https://catalystforge.com/tools/).
 
@@ -286,7 +288,8 @@ They are **never required**. Decline is success. Do not dump the shelf at kickof
 - Hard-to-undo work → TemperPass
 - Pre-launch newcomer check → Cold-eye
 - Quality / presentation of a tool, site, or page → CraftAssay
-- Product going public or handed off → xFacts
+- An applicable subject exists → record a disposition (`appledger subjects`). A missing family stays `not_applicable`. Do not generate a label.
+- Product going public or handed off, and the user asks → offer an xFacts label
 - Unpushed work you cannot lose → IngotVault
 - Spoken idea capture → DictaWhisper
 
@@ -300,8 +303,8 @@ ForgeTrail includes deterministic host hooks (`.forgetrail/hooks/` with `.cursor
 
 - **Shell guards:** Runs pre-commit verification (`pnpm run verify`), prevents package manager divergence (e.g. `npm`/`yarn` when `pnpm-lock.yaml` is present), gates `git push` on explicit user approval, and flags destructive operations (`git reset --hard`, `rm -rf`).
 - **Edit guards:** Requires user confirmation before mutating environment secrets (`.env*`) or canonical/completed specs (`specs/completed/**`).
-- **Session start injection:** Dynamically injects project name, current phase, open exit criteria, and last session notes on session start, retiring always-on static phase rules.
-- **Tracking validation:** Validates `.forgetrail/workflow_tracking.json` on save, returning issues immediately.
+- **Session start injection:** Points the session at `appledger/` (profile phase and the latest session). It does not treat `.forgetrail/workflow_tracking.json` as the live phase.
+- **Tracking validation:** A pointer to `appledger/` is accepted. A writable `workflow_tracking.json` is a conflict and is not the system of record.
 
 Where the host supports hooks, tool-level denial and injection take the load off agent context budgets.
 
@@ -324,29 +327,29 @@ Where the host supports hooks, tool-level denial and injection take the load off
 - Identify the hardest integration points (in Exec Foundry: DOCX XML manipulation)
 - Suggest a migration path for existing data
 - Recommend what to skip for v1
-- **If your agent supports a native plan mode** (Grok `/plan`, Cursor Plan mode, extended plan-before-code): use it for all Phase 1 work. Include **`getGreenfieldIntakePrompt`** questions in the plan context. Do **not** write app code or heavy docs until the user approves the plan. On approval, map the plan into **`PHASE_1_BRIEF.md`** (`getTemplate`) and log commitments in **`decisions[]`**. See **`getPlanModePatterns`** (MCP) or WORKFLOW §1c for handoff details.
-- **Classify the project archetype** (`product` | `internal-tool` | `one-shot`) per **§1d** and prune the tracking template's exit criteria to match. Record it in **`PHASE_1_BRIEF.md`**, **`decisions[]`**, and **`project.archetype`** in the tracking file. Default to `product` when unsure.
-- **If this is a web app**, answer the state-persistence sub-question **before** locking PocketBase + auth: *"Does any state need to outlive this browser — accounts, cross-device sync, shared data — or is state per-user local?"* If local-only → drop PocketBase + auth, target `adapter-static`, persist via `localStorage` / `IndexedDB`. If persistent → full backend stack. Record the answer in **`PHASE_1_BRIEF.md` §4 (`State persistence:`)** and **`decisions[]`**. See **ForgeTrail Lite** §7 (A-local vs A-persistent) and **GREENFIELD_INTAKE.md** §7.
-- **Hosting / DNS / git (if still open):** ask registrar, DNS, git host, and production host. If the user has not already named providers, default to **GitHub** + **Cloudflare DNS** (free plan) and **Cloudflare Pages** for a static site. A DigitalOcean (or similar) origin stays valid when the app needs a server. Record in the brief and `decisions[]`.
+- **If your agent supports a native plan mode** (Grok `/plan`, Cursor Plan mode, extended plan-before-code): use it for all Phase 1 work. Include **`getGreenfieldIntakePrompt`** questions in the plan context. Do **not** write app code or heavy docs until the user approves the plan. On approval, map the plan into **`PHASE_1_BRIEF.md`** (`getTemplate`) and record commitments as decisions in **`appledger/`**. See **`getPlanModePatterns`** (MCP) or WORKFLOW §1c for handoff details.
+- **Classify the project archetype** (`product` | `internal-tool` | `one-shot`) per **§1d** and prune the profile's criteria to match. Record it in **`PHASE_1_BRIEF.md`**, as a decision, and as **`archetype`** on the profile. Default to `product` when unsure.
+- **If this is a web app**, answer the state-persistence sub-question **before** locking PocketBase + auth: *"Does any state need to outlive this browser — accounts, cross-device sync, shared data — or is state per-user local?"* If local-only → drop PocketBase + auth, target `adapter-static`, persist via `localStorage` / `IndexedDB`. If persistent → full backend stack. Record the answer in **`PHASE_1_BRIEF.md` §4 (`State persistence:`)** and as a decision in **`appledger/`**. See **ForgeTrail Lite** §7 (A-local vs A-persistent) and **GREENFIELD_INTAKE.md** §7.
+- **Hosting / DNS / git (if still open):** ask registrar, DNS, git host, and production host. If the user has not already named providers, default to **GitHub** + **Cloudflare DNS** (free plan) and **Cloudflare Pages** for a static site. A DigitalOcean (or similar) origin stays valid when the app needs a server. Record in the brief and as a decision in `appledger/`.
 - **Optional companions** (never required): TemperPass before hard-to-undo locks; FilePress if the product is a Markdown site; DictaWhisper if they capture ideas by voice; LocalSlip/LocalHelm if this machine already runs other local apps. Call **`getCompanionSuggestions`**. See §1f.
 - **If any content is produced by an LLM** (not hand-authored, not from a conventional non-LLM API), pick one of three content-generation patterns **in Phase 1** — it drives deploy model, cost, and secret management:
   - **Runtime LLM API** — server route calls the provider per request; needs rate-limit + streaming UX. **Cloud** (OpenAI, Anthropic, …): API keys in `.env`. **Local Ollama:** `OLLAMA_BASE_URL` + `OLLAMA_MODEL`; Phase 2 **`setup:ollama`** / **`test:ollama`** (see **SYSTEM_HEALTH_CHECKS.md**, Lite §4.8) — default **Granite 4.1** / **Gemma 3**, not thinking models unless required.
   - **Build-time LLM generation** — `scripts/seed.ts` calls the provider once, writes JSON into `data/`, commits it; no runtime cost; pairs well with A-local + `adapter-static`. Seed may use cloud APIs or the same Ollama env as local dev.
   - **BYO-LLM paste** — ship a prompt in the repo; the user runs it in their own LLM chat (including a local Ollama UI) and pastes JSON into `data/seed.json`; Zod validates at app start; zero project-level keys.
 
-  Record pattern, provider, and env vars in **`PHASE_1_BRIEF.md`** (content-generation section) and **`decisions[]`**. See **ForgeTrail Lite** §7.1 for minimal reference skeletons.
+  Record pattern, provider, and env vars in **`PHASE_1_BRIEF.md`** (content-generation section) and as a decision in **`appledger/`**. See **ForgeTrail Lite** §7.1 for minimal reference skeletons.
 
 **Artifacts to create:**
 
 - **`PHASE_1_BRIEF.md`** in `docs/` (from `_forgetrail/docs/PHASE_1_BRIEF.md` template or ForgeTrail MCP `getTemplate({ name: "PHASE_1_BRIEF" })`). Fill every section; mark **locked** when accurate.
-- **`.forgetrail/workflow_tracking.json`**: append **`decisions[]`** entries for each major architectural commitment (with rationale); update **`phases["1-architecture"].notes`** with sign-off summary.
+- **`appledger/`**: a decision record for each major architectural commitment (with rationale); the session record carries the sign-off summary. Do not create `.forgetrail/workflow_tracking.json`.
 
 **Verify before moving on:**
 
 - You've confirmed or rejected every architectural suggestion
 - Claude has acknowledged your tech stack preferences (not just its defaults)
 - The data model handles your existing data, not just new data
-- **`PHASE_1_BRIEF.md` is complete and locked** — Phase 2 can start from this file + `.forgetrail/workflow_tracking.json` without the Phase 1 chat
+- **`PHASE_1_BRIEF.md` is complete and locked** — Phase 2 can start from this file + `appledger/` without the Phase 1 chat
 
 **Example prompt (this worked):**
 
@@ -359,7 +362,7 @@ Where the host supports hooks, tool-level denial and injection take the load off
 - Confirmed architecture decisions from Phase 1
 - Access to any existing data/templates that need importing
 - **Optional — JSON from another LLM chat:** If you are generating **seed, fixture, or import data** as JSON, you can use any LLM (ChatGPT, Claude, Gemini, etc.) with a **structured prompt**, save the reply to a file in the repo (e.g. `data/seed-catalog.json`), then hand it to the coding agent. You can do this **multiple times** for different datasets or iterations. The agent should **validate** the JSON at the boundary (e.g. Zod / JSON Schema) before import — same caution as any LLM-produced structured content. A ready-to-customize prompt template lives in **ForgeTrail Lite** (`content/FORGETRAIL_LITE.md` §4.3) for copy-paste use.
-- **Optional — web search for live internet data:** If the product needs **current web results** (not only static seed JSON), the human typically **signs up** for a search API, adds a key to **`.env`**, and hands off to the agent. Common developer-friendly options include **[Tavily](https://tavily.com/)** and the **[Brave Search API](https://api-dashboard.search.brave.com/)** (both offer **entry-level or free monthly credits** — verify on [Tavily pricing](https://tavily.com/pricing) and [Brave API pricing](https://api-dashboard.search.brave.com/documentation/pricing)). See **ForgeTrail Lite** §4.4; record provider and env var names in **`decisions[]`** and **`CONTEXT_PROMPT.md`**.
+- **Optional — web search for live internet data:** If the product needs **current web results** (not only static seed JSON), the human typically **signs up** for a search API, adds a key to **`.env`**, and hands off to the agent. Common developer-friendly options include **[Tavily](https://tavily.com/)** and the **[Brave Search API](https://api-dashboard.search.brave.com/)** (both offer **entry-level or free monthly credits** — verify on [Tavily pricing](https://tavily.com/pricing) and [Brave API pricing](https://api-dashboard.search.brave.com/documentation/pricing)). See **ForgeTrail Lite** §4.4; record provider and env var names as a decision in **`appledger/`** and in **`CONTEXT_PROMPT.md`**.
 - **Content-generation pattern (if the Phase 1 choice applies):** scaffold whichever of the three patterns was locked — **Runtime LLM API** (server route + provider config: cloud keys or **Ollama** `OLLAMA_*` + **`setup-ollama`** / **`test-ollama`** launchers), **Build-time LLM generation** (`scripts/seed.ts` + `data/*.json` committed; seed may call Ollama or cloud), or **BYO-LLM paste** (prompt file in repo + `data/seed.json` + Zod validator). **ForgeTrail Lite** §7.1 has minimal reference skeletons (OpenAI route, Ollama route, seed script, import-time validator) to copy. Validate all LLM-produced JSON at the boundary; treat the model's output as untrusted.
 - **External URL → record (if applicable):** When the hero flow imports from **listing or article URLs**, follow **ForgeTrail Lite** §7.2 — layered fetch/parse, honest failure typing when **DOM drift** empties extraction, optional single **verbatim** LLM recover behind an env gate — and mirror detail in **`docs/TECHNICAL_REFERENCE.md`** as the project grows.
 
@@ -373,7 +376,7 @@ Where the host supports hooks, tool-level denial and injection take the load off
 
 - `.env.example` with all required variables (for **PocketBase** stacks: include the **public API URL and port** — e.g. `PUBLIC_POCKETBASE_URL=…` — so local dev does not assume default **8090** when other PocketBase servers or projects are already using it; the serve script, app client, and schema tools must all agree on the same value. See **ForgeTrail Lite** §14 and **`POCKETBASE_SCHEMA_SCRIPT.md`**.)
 - `.gitignore`
-- **Phase 2 doc set only** (see **§1a Progressive documentation**): First read **`PHASE_1_BRIEF.md`** and **`.forgetrail/workflow_tracking.json`**. Create **`CONTEXT_PROMPT.md`** and **merge** the brief into it using the mapping in the CONTEXT_PROMPT template (“Handoff from Phase 1”). Then **`README.md`**, **`TODO.md`** (seed from brief §11), **`.forgetrail/IDEAS.md`** from `_forgetrail/docs/` templates (or ForgeTrail MCP `getTemplate` name `IDEAS`).
+- **Phase 2 doc set only** (see **§1a Progressive documentation**): First read **`PHASE_1_BRIEF.md`** and **`appledger/profiles/forgetrail.yaml`**. Create **`CONTEXT_PROMPT.md`** and **merge** the brief into it using the mapping in the CONTEXT_PROMPT template (“Handoff from Phase 1”). Then **`README.md`**, **`TODO.md`** (seed from brief §11), **`.forgetrail/IDEAS.md`** from `_forgetrail/docs/` templates (or ForgeTrail MCP `getTemplate` name `IDEAS`).
 - **Do not** create the rest of the ForgeTrail doc templates in Phase 2 (e.g. `BRAND_AND_PRODUCT`, `CODE_QUALITY`, `DEPLOYMENT`) unless the user explicitly requires one to complete the spine.
 
 **Verify before moving on:**
@@ -407,7 +410,7 @@ Where the host supports hooks, tool-level denial and injection take the load off
 - No **new** doc files. However:
   - Update **`CONTEXT_PROMPT.md`** with any patterns, env quirks, or workarounds discovered during stabilization.
   - Update **`README.md`** if setup steps changed (new env vars, revised install, required services).
-  - Add **`gotchas[]`** entries to **`.forgetrail/workflow_tracking.json`** for every surprise (env, path, auth, integration) so the same mistake is never repeated.
+  - Record a lesson in **`appledger/`** for every surprise (env, path, auth, integration) so the same mistake is never repeated. Do not write `.forgetrail/workflow_tracking.json`.
 
 **Verify before moving on:**
 
@@ -417,7 +420,7 @@ Where the host supports hooks, tool-level denial and injection take the load off
 
 **Anti-pattern:** Reporting "it doesn't work" without the error message. The fix: always include the exact output.
 
-**Optional companion:** when the cause is not yet earned, offer **Gap Last** (`getCompanionSuggestions` situation `unclear-cause`). Log remaining questions in `gotchas[]`.
+**Optional companion:** when the cause is not yet earned, offer **Gap Last** (`getCompanionSuggestions` situation `unclear-cause`). Record remaining questions in `appledger/`.
 
 ### Phase 4: Feature Iteration + Value Delivery
 
@@ -564,7 +567,7 @@ Where the host supports hooks, tool-level denial and injection take the load off
 - No silent failures in core workflows
 - Docs alignment audit passed (MCP `runAudit({ type: "docs-alignment" })` or `_forgetrail/prompts/docs-alignment-audit.md`)
 
-**Optional companions:** Cold-eye for newcomer readiness; CraftAssay for a quality score of the presented work; xFacts label when the product goes public or changes hands; FilePress + Cloudflare Pages for a Markdown or docs site; IngotVault before a rewrite. See §1f.
+**Optional companions:** Cold-eye for newcomer readiness; CraftAssay for a quality score of the presented work; FilePress + Cloudflare Pages for a Markdown or docs site; IngotVault before a rewrite. If an applicable subject exists, record a disposition; a missing family is `not_applicable`. Offer an xFacts label only when the product goes public or changes hands and the user asks. Do not generate a label. See §1f.
 
 ---
 
@@ -799,7 +802,7 @@ Print this and work through it sequentially for each new project.
 
 - [ ] Open with full context + "summarize your understanding and make suggestions before building"
 - [ ] Create and complete **`PHASE_1_BRIEF.md`**; lock it before treating Phase 1 as done
-- [ ] Record major decisions in **`.forgetrail/workflow_tracking.json`** (`decisions[]` + phase 1 notes)
+- [ ] Record major decisions in **`appledger/`** (decision records and the session record)
 - [ ] Confirm or reject every architectural suggestion explicitly
 - [ ] Say "Make it so" only after all decisions are locked
 - [ ] Verify the app runs and shows real data
@@ -899,7 +902,7 @@ Full templates for each document live in `_forgetrail/docs/` (or ForgeTrail MCP 
 
 ### Document Lifecycle
 
-**Phase 1 (Architecture):** Complete and lock **`PHASE_1_BRIEF.md`**; mirror commitments in **`.forgetrail/workflow_tracking.json`**.
+**Phase 1 (Architecture):** Complete and lock **`PHASE_1_BRIEF.md`**; mirror commitments as decision records in **`appledger/`**. Do not write `.forgetrail/workflow_tracking.json`.
 
 **Phase 2 (Scaffold):** Full **app spine** in one pass. **Docs:** Merge brief → **`CONTEXT_PROMPT.md`**, then **`TODO.md`**, **`README.md`**, **`.forgetrail/IDEAS.md`** only (§1a). Minimal extra prose at first beyond the merge.
 
