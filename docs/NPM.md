@@ -8,14 +8,14 @@ You run `pnpm publish`. The gate does not log in or publish.
 
 Two public unscoped packages:
 
-| Package | Version | From | What it is |
-| --- | --- | --- | --- |
-| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | 0.3.0 | repo root | CLI + Lite + templates. `npx forgetrail install --lite` |
-| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | 0.2.2 | `mcp-server/` | MCP bin. `npx -y forgetrail-mcp` |
+| Package | This tree | On npm until you publish | From | What it is |
+| --- | --- | --- | --- | --- |
+| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | 0.5.0 | 0.4.20 | repo root | CLI + Lite + templates. `pnpm dlx forgetrail install --lite` |
+| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | 0.4.0 | 0.3.10 | `mcp-server/` | MCP bin. `pnpm dlx forgetrail-mcp` |
 
 These are **installer and MCP channels**, not a library. App repos should not add `forgetrail` to `dependencies`.
 
-`pnpm run pack:check` already passed on this tree (2026-08-20). Root dry-run packed `forgetrail@0.3.0` (98 files, no `site/` or `specs/`).
+`0.5.0` stops installing `workflow_tracking.json`. `0.4.0` tells kickoff to run `appledger init`. The registry copies above do not include that cutover. `pnpm run pack:check` is the gate. It does not publish.
 
 ---
 
@@ -59,11 +59,11 @@ The `Debugger listening` line on MCP `prepack` is Cursor attaching to a one-line
 
 ```bash
 # Prefer pnpm dlx. npm 12 `npx forgetrail --help` on Windows failed to spawn the bin.
-pnpm dlx forgetrail@0.3.0 --help
-pnpm dlx forgetrail@0.3.0 install --lite --dry-run
+pnpm dlx forgetrail@0.5.0 --help
+pnpm dlx forgetrail@0.5.0 install --lite --dry-run
 
 # MCP starts; needs content via FORGETRAIL_ROOT or a sibling forgetrail install
-pnpm dlx forgetrail-mcp@0.2.2
+pnpm dlx forgetrail-mcp@0.4.0
 ```
 
 Optional Cursor MCP (content from a `forgetrail` install, or set the path):

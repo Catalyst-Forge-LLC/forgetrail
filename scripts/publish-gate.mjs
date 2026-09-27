@@ -98,11 +98,13 @@ for (const needed of ["WORKFLOW.md", "README.md", "LICENSE", "content/FORGETRAIL
 console.log("\n✓ forgetrail pack check passed");
 console.log(`  forgetrail@${root.version}`);
 console.log(`  forgetrail-mcp@${mcp.version} (build ok at ${MCP_ENTRY})`);
-console.log("\nPublish (you run these):");
-console.log("  pnpm publish --access public");
-console.log("  pnpm --dir mcp-server publish --access public");
-console.log("\nDry-run first if you want:");
+console.log("\nPublish (you run these, from a clean tree, after pushing if the tarball should match GitHub):");
 console.log("  pnpm publish --dry-run --access public");
+console.log("  pnpm publish --access public");
+console.log("  cd mcp-server");
+console.log("  pnpm publish --access public");
+console.log("  cd ..");
+console.log("Do not use pnpm --dir mcp-server publish. npm 12 treats leftover --dir as an extra package spec.");
 
 const here = fileURLToPath(import.meta.url);
 if (resolve(process.argv[1] ?? "") === resolve(here)) {

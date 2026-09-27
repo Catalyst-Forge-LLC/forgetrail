@@ -2,7 +2,7 @@
 tool_facts_version: "0.1.0"
 name: ForgeTrail MCP Server
 developer: Catalyst Forge
-version: "0.3.10"
+version: "0.4.0"
 status: active
 license: Apache-2.0
 kind: mcp-server
@@ -66,7 +66,7 @@ tools:
       processes: false
     idempotent: true
   - name: getTrackingSchema
-    purpose: "Return the workflow_tracking.json schema reference"
+    purpose: "Return the project-record reference. The legacy tracking shape is for migration, not a new file."
     side_effects: none
     reach:
       filesystem: none
@@ -186,7 +186,7 @@ tools:
       processes: false
     idempotent: true
   - name: getInitialWorkflowTracking
-    purpose: "Return starter .forgetrail/workflow_tracking.json for a new repo"
+    purpose: "Tell the agent to initialize appledger/ and not to create workflow_tracking.json."
     side_effects: none
     reach:
       filesystem: none
@@ -210,7 +210,7 @@ tools:
       processes: false
     idempotent: true
   - name: validateTracking
-    purpose: "Validate .forgetrail/workflow_tracking.json (inline JSON or optional filesystem path) against schema and phase rules"
+    purpose: "Classify a workflow_tracking.json file. A pointer is accepted. A writable document is a conflict."
     side_effects: read
     reach:
       filesystem: scoped
@@ -275,7 +275,7 @@ tools:
     idempotent: true
 generated:
   date: 2026-09-16
-  generator: hand-authored (tools inventory from forgetrail-mcp 0.3.10)
+  generator: hand-authored (tools inventory from forgetrail-mcp 0.4.0)
 credits:
   generated_with: https://toolfacts.dev
   built_by: "Catalyst Forge - https://www.catalystforge.com/"
@@ -286,15 +286,15 @@ credits:
 | | |
 |---|---|
 | **Developer** | Catalyst Forge |
-| **Version** | 0.3.10 |
+| **Version** | 0.4.0 |
 | **Status** | active |
 | **License** | Apache-2.0 |
 | **Kind** | mcp-server |
-| **Reviewed** | 2026-09-16 against forgetrail-mcp 0.3.10 (`tools/list` inventory, hand-authored) |
+| **Reviewed** | 2026-09-26 against forgetrail-mcp 0.4.0. Three tool purposes were aligned with the server text. The rest of the inventory was not re-listed. |
 
 `runAudit` returns a structured audit prompt. It does not scan the workspace or perform the audit. Following those instructions is a later host or agent action, and that later action is outside this tool's labeled side effects.
 
-This file is bound to server version 0.3.10 and the 2026-09-16 review. A later package can change tools or implementations while an old copy of this file remains. Comparing a live `tools/list` can show added, removed, or renamed tools. It cannot prove that a same-named tool still does what this label says.
+This file is bound to server version 0.4.0. Tool names are unchanged from 0.3.10. `getInitialWorkflowTracking` does not return a starter JSON file. Comparing a live `tools/list` can show added, removed, or renamed tools. It cannot prove that a same-named tool still does what this label says.
 
 ## Runtime
 
@@ -361,7 +361,7 @@ None required.
 | `getTemplate` | Return a ForgeTrail document template from docs/*.md |
 | `runAudit` | Return a structured audit prompt for the current project (does not scan the workspace itself) |
 | `getChecklist` | Return a project checklist for a milestone or the full checklist |
-| `getTrackingSchema` | Return the workflow_tracking.json schema reference |
+| `getTrackingSchema` | Return the project-record reference. The legacy tracking shape is for migration, not a new file. |
 | `getAntiPatterns` | Return documented anti-patterns from the methodology |
 | `getProgressiveDocSchedule` | Return which doc templates to create in each phase |
 | `getNewProjectKickoff` | Return greenfield bootstrap payload for appledger/ initialization and optional Cursor rules |
@@ -376,10 +376,10 @@ None required.
 | `getGenesisSpecPrompt` | Return a copy-paste prompt for producing docs/GENESIS.md in an external LLM |
 | `getGreenfieldIntakePrompt` | Return Phase 1 structured questions about exports, tenancy, and delivery gaps |
 | `getResumeSessionInstructions` | Return instructions for continuing work in a later MCP-only session |
-| `getInitialWorkflowTracking` | Return starter .forgetrail/workflow_tracking.json for a new repo |
+| `getInitialWorkflowTracking` | Tell the agent to initialize appledger/ and not to create workflow_tracking.json. |
 | `getPostBootstrapUserMessage` | Return canonical short first-reply guidance after bootstrap files are written |
 | `getUserReplyFormat` | Return guidance for formatting options and next steps to users |
-| `validateTracking` | Validate .forgetrail/workflow_tracking.json (inline JSON or optional filesystem path) against schema and phase rules |
+| `validateTracking` | Classify a workflow_tracking.json file. A pointer is accepted. A writable document is a conflict. |
 | `suggestSubagentDecomposition` | Return recommended subagent spawn parameters for a phase and task |
 | `ingestPlanArtifact` | Map an approved plan artifact into a PHASE_1_BRIEF.md draft plus decisions[] entries |
 | `getCompanionSuggestions` | Return optional Catalyst Forge companion tools for a ForgeTrail phase or situation |

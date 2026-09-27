@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-09-26 | **Versions for the ledger cutover:** `forgetrail` 0.5.0 and `forgetrail-mcp` 0.4.0. Not published. Registry remains 0.4.20 and 0.3.10 until that publish. |
 | 2026-09-26 | **Kickoff names `appledger init`.** Plan mode, the Genesis stub, and greenfield intake record decisions on the ledger. They do not create `workflow_tracking.json`. |
 | 2026-09-26 | **FORGETRAIL_LITE v2.2.0:** live steps write `appledger/`. §11 stays the do-not-copy `lite-1` shape. WORKFLOW records a subject disposition when a subject exists and leaves a missing family `not_applicable`. |
 | 2026-09-18 | **Host safety hooks + FORGETRAIL_LITE v2.1.0:** deterministic enforcement in `.forgetrail/hooks/` with Cursor and Claude Code adapters. Lite §0 backed by tool-level deny/ask/validate guards. New MCP tool `getForgeTrailHooks`. CLI installer and kickoff generate hooks. Companion mapping gains `never-do` situation. |
@@ -62,6 +63,10 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-09-26: Versions for the ledger cutover
+
+`package.json` is `0.5.0`. `mcp-server/package.json` is `0.4.0`. `docs/NPM.md` lists those as this tree and leaves `0.4.20` and `0.3.10` as the registry copies. ToolFacts purposes for `getTrackingSchema`, `getInitialWorkflowTracking`, and `validateTracking` match the server text. The rest of that inventory was not re-listed. Nothing was published.
 
 ### 2026-09-26: Kickoff names appledger init
 
