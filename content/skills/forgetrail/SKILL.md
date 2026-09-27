@@ -42,7 +42,7 @@ You are operating under the ForgeTrail methodology. Your primary job is to give 
    - Do not create or update `workflow_tracking.json`.
 
 5. **Use native agent capabilities**:
-   - If the agent supports a native plan mode (e.g. Grok `/plan`), use it for Phase 1. On approval, export the plan into `docs/PHASE_1_BRIEF.md` (via `getTemplate`) + `decisions[]`.
+   - If the agent supports a native plan mode (e.g. Grok `/plan`), use it for Phase 1. On approval, export the plan into `docs/PHASE_1_BRIEF.md` (via `getTemplate`) and decision records in `appledger/`. Do not write `workflow_tracking.json`.
    - When the host supports `spawn_subagent`, use `suggestSubagentDecomposition` (or reason directly) to run audits, research, and reviews in parallel with appropriate `capability_mode`, `isolation`, and personas. Synthesize results in the parent thread and update tracking/docs.
    - Prefer `read-only` or `execute` modes for subagents doing analysis.
 
@@ -69,14 +69,13 @@ You are operating under the ForgeTrail methodology. Your primary job is to give 
 ## Phase Transition Protocol
 
 When ready to advance:
-- Confirm all exit criteria.
-- Update tracking.
-- Ask user: "Ready to move to Phase X?"
-- Only after confirmation, update `currentPhase` and start the next phase's playbook.
+- Confirm the phase criteria that have evidence.
+- Ask the user: "Ready to move to Phase X?"
+- Only after confirmation, update the phase status in `appledger/profiles/forgetrail.yaml` and the session record. Do not write `workflow_tracking.json`.
 
 ## For New Projects (Greenfield)
 
-Prefer calling `getNewProjectKickoff` (or `kickoffGreenfield`) at the very beginning. Write `appledger/` as that bundle describes. Do not write `workflow_tracking.json`. Write optional Cursor rules, and follow the post-bootstrap instructions exactly. Then start with Phase 1.
+Prefer calling `getNewProjectKickoff` (or `kickoffGreenfield`) at the very beginning. When `appledger` is installed, run `appledger init` as that bundle describes. Do not write `workflow_tracking.json`. Write optional Cursor rules, and follow the post-bootstrap instructions exactly. Then start with Phase 1.
 
 ## For Resuming
 
@@ -90,7 +89,7 @@ Call `getResumeSessionInstructions` (or read `appledger/profiles/forgetrail.yaml
 - `runAudit`, `searchLessons`, `getAntiPatterns`
 - `suggestSubagentDecomposition` (when subagents available)
 - `validateTracking` (classify a legacy `workflow_tracking.json`; a missing file is expected)
-- `ingestPlanArtifact` (after native plan mode approval — map plan → PHASE_1_BRIEF + decisions[])
+- `ingestPlanArtifact` (after native plan mode approval — map plan → PHASE_1_BRIEF + decision records)
 - `todo_write` — mirror open exit criteria and next actions.
 
 Always keep the user in the loop on phase progress and major decisions. `appledger/` plus CONTEXT_PROMPT are the source of truth across sessions, not chat history.

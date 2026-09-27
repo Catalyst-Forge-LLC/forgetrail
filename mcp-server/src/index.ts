@@ -93,11 +93,12 @@ function listDir(dir: string, ext = ".md"): string[] {
 
 const LEDGER_INIT =
   "Do **not** write `.forgetrail/workflow_tracking.json`.\n\n" +
-  "Create an AppLedger at `appledger/`:\n\n" +
+  "If the `appledger` command is installed, run `appledger init`. Pass `--name` when the application name is known. Then run `appledger check`. Init writes the manifest, `profiles/forgetrail.yaml`, an application record, and a session record. It does not overwrite those files when they already exist. The default archetype is `product` and is not a confirmed classification; set `archetype` on the profile when the user confirms it. Criteria stay `pending` until evidence exists.\n\n" +
+  "If the command is not installed, create `appledger/` by hand:\n\n" +
   "1. `appledger/manifest.yaml` — `format: appledger`, `format_version: 0.1.0`, a `ledger_id`, an `application_id`, `repositories` with `root: .`, `record_roots: [records]`, and profile `forgetrail` version `0.1.0` at `profiles/forgetrail.yaml`.\n" +
   "2. `appledger/profiles/forgetrail.yaml` — `profile: forgetrail`, `profile_version: 0.1.0`, `archetype` (`product`, `internal-tool`, or `one-shot`), `project_status: active`, and one `plan` phase instance with `status: in_progress`. Criteria stay `pending` until evidence exists. Do not mark later phases completed.\n" +
   "3. An application record and a session record under `appledger/records/`. Decisions are decision records, not a JSON array.\n\n" +
-  "If the `appledger` command is installed, run `appledger check` after writing. There is no separate init command. If a legacy `workflow_tracking.json` already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep both.\n";
+  "If a legacy `workflow_tracking.json` already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep both. Do not create that file for a new project.\n";
 
 /**
  * Single-call greenfield kickoff: bootstrap, ledger initialization, post-bootstrap

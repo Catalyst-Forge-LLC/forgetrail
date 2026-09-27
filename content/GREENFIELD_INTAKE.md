@@ -19,7 +19,7 @@ Use alongside **`getChecklist`** section `before-session-1`. That checklist cove
 
 - **Is this a product, an internal tool, or a one-shot?** (product: others will use it, possibly pay; internal-tool: real recurring users, no market; one-shot: gift, event page, demo: one occasion, then done). Often obvious from the problem statement; confirm rather than interrogate.
 - The archetype **prunes the lifecycle**: internal tools make Phase 6 optional and drop payments/business-plan criteria from Phase 7; one-shots collapse phases 5–7 into a single polish-and-ship gate. See **WORKFLOW.md §1d**.
-- Record in **`PHASE_1_BRIEF.md`**, **`decisions[]`**, and **`project.archetype`** in the tracking file, then prune the tracking template's exit criteria to match (log the pruning as a decision).
+- Record it in **`PHASE_1_BRIEF.md`**, as a decision record, and as **`archetype`** on **`appledger/profiles/forgetrail.yaml`**. Prune non-applicable criteria on that profile. Do not write `workflow_tracking.json`.
 
 ## 1. Outputs and formats
 
@@ -53,7 +53,7 @@ Use alongside **`getChecklist`** section `before-session-1`. That checklist cove
 - If **yes**, the human will likely need a **search API** key before the spine can return real data. **Common developer starting points** (verify current free tiers and limits on the vendor site):
   - **[Tavily](https://tavily.com/)** — built for LLM/agent retrieval; [docs](https://docs.tavily.com/) · [pricing](https://tavily.com/pricing)
   - **[Brave Search API](https://api-dashboard.search.brave.com/)** — web, news, and more; [pricing](https://api-dashboard.search.brave.com/documentation/pricing) (renewable **monthly credits** for new accounts — set usage caps in the dashboard)
-- Record **which provider** and **env var names** in `PHASE_1_BRIEF` / `decisions[]`. **ForgeTrail Lite** §4.4 mirrors this for copy-paste (`content/FORGETRAIL_LITE.md`).
+- Record **which provider** and **env var names** in `PHASE_1_BRIEF` and as a decision record. **ForgeTrail Lite** §4.4 mirrors this for copy-paste (`content/FORGETRAIL_LITE.md`).
 
 ## 7. State persistence (web apps only)
 
@@ -62,7 +62,7 @@ Ask this **before** locking PocketBase + auth into the stack. Wrong answer here 
 - **Does any state need to outlive the current browser?** Accounts, cross-device sync, shared data between users, admin/curator editing a catalog multiple users read — **yes**. Personal notes, offline-first tools, a single-user dashboard that reloads the same local data — **no**.
 - If **no** (A-local): drop PocketBase + auth; `localStorage` / `IndexedDB` for persistence; **`adapter-static`** is viable; no runtime secrets; deploy on free static hosts. An **interactive** A-local app still uses SvelteKit. **FilePress** is for a Markdown site (docs, writing, event page) or an optional `site/` beside the app, not a replacement for the app.
 - If **yes** (A-persistent): full Default-A stack — SvelteKit + PocketBase + `adapter-node`; accounts, sessions, server-only writes.
-- Record the choice in **`PHASE_1_BRIEF.md` §4** (`State persistence:` row) and **`decisions[]`**. **ForgeTrail Lite** §7 (A-local vs A-persistent) has the longer write-up.
+- Record the choice in **`PHASE_1_BRIEF.md` §4** (`State persistence:` row) and as a decision record. **ForgeTrail Lite** §7 (A-local vs A-persistent) has the longer write-up.
 
 ## 8. Content-generation pattern (only if content is produced by an LLM)
 
@@ -74,7 +74,7 @@ Skip this section entirely if content is hand-authored or pulled from a conventi
 - **Build-time LLM generation** — `scripts/seed.ts` via `pnpm run seed` calls the provider once, writes JSON into `data/`, commits it. Zero runtime LLM cost; pairs well with A-local + `adapter-static`. Seed script may use **cloud** or **Ollama** (same env vars; only needed when running seed).
 - **BYO-LLM paste pattern** — prompt in the repo; user runs it in **their own** LLM (ChatGPT, Claude, local Ollama chat, etc.); pastes JSON into e.g. `data/seed.json`; Zod validates at app start. Zero project-level API keys.
 
-Ask which **provider and model** (e.g. `ollama/ibm/granite4.1:8b`, `openai/gpt-4o-mini`, or BYO only). Record pattern, provider, env var names, paths, and validator in **`PHASE_1_BRIEF.md`** (content-generation section) and **`decisions[]`**. **ForgeTrail Lite** §7.1 has skeletons for OpenAI, Ollama, seed, and BYO-LLM.
+Ask which **provider and model** (e.g. `ollama/ibm/granite4.1:8b`, `openai/gpt-4o-mini`, or BYO only). Record pattern, provider, env var names, paths, and validator in **`PHASE_1_BRIEF.md`** (content-generation section) and as a decision record. **ForgeTrail Lite** §7.1 has skeletons for OpenAI, Ollama, seed, and BYO-LLM.
 
 If the choice is **local Ollama**, you may offer **ollanet** (host manager) and later **Finetuna** (runtime tuner). Keep **`setup-ollama`** / **`test-ollama`** as the in-repo health path. Optional: `getCompanionSuggestions` situations `local-ollama` / `ollama-vram`.
 
@@ -89,7 +89,7 @@ Ask only what is still open. If the user already named a provider, record it and
 - **DNS** — if unspecified, prefer **Cloudflare** (free plan: DNS, edge TLS, basic protection). Typical pattern: domain at any registrar, nameservers pointed at Cloudflare.
 - **Production host** — static site (FilePress or `adapter-static`): **Cloudflare Pages** + Wrangler, $0. App that needs a server: DigitalOcean (or similar) origin **behind** Cloudflare DNS.
 
-Record git host, DNS, registrar, and deploy target in **`PHASE_1_BRIEF.md` §4** and **`decisions[]`**.
+Record git host, DNS, registrar, and deploy target in **`PHASE_1_BRIEF.md` §4** and as a decision record.
 
 ---
 

@@ -90,3 +90,20 @@ test("Lite and workflow instructions name the ledger", () => {
     assert.match(line, /[Dd]o not|does not|not the system of record|not the live phase/, line);
   }
 });
+
+test("kickoff names appledger init and does not require the tracking file", () => {
+  const kickoff = readFileSync(join(root, "mcp-server", "src", "index.ts"), "utf8");
+  assert.match(kickoff, /appledger init/);
+  assert.doesNotMatch(kickoff, /no separate init command/);
+  const plan = readFileSync(join(root, "content", "PLAN_MODE_PATTERNS.md"), "utf8");
+  assert.match(plan, /decision record/);
+  assert.doesNotMatch(plan, /decisions\[\]/);
+  assert.match(plan, /Do not create `\.forgetrail\/workflow_tracking\.json`/);
+  const genesis = readFileSync(join(root, "content", "GENESIS_STUB.md"), "utf8");
+  assert.match(genesis, /appledger init/);
+  assert.doesNotMatch(genesis, /Create `\.forgetrail\/workflow_tracking\.json`/);
+  const intake = readFileSync(join(root, "content", "GREENFIELD_INTAKE.md"), "utf8");
+  assert.doesNotMatch(intake, /tracking file/);
+  assert.doesNotMatch(intake, /decisions\[\]/);
+  assert.match(intake, /archetype/);
+});

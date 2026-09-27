@@ -24,7 +24,7 @@ npm: [`forgetrail@0.3.0`](https://www.npmjs.com/package/forgetrail) and [`forget
 
 - **`pnpm ship`** so forgetrail.dev picks up `/docs` and the current home/Try pages. Site source now describes `appledger/` and migration. It has not been redeployed, so the live site can still show the older tracking-file pages.
 - Optional M4: MCP finds content without `FORGETRAIL_ROOT` when both packages are present ([specs/completed/npm-distribution.md](specs/completed/npm-distribution.md)).
-- Tracking cutover: new installs do not write `workflow_tracking.json`. Project state is `appledger/`. Lite v2.2.0 and WORKFLOW tell an agent to write `appledger/`, record a disposition when a subject exists, and leave a missing family `not_applicable`. They do not generate labels.
+- Tracking cutover: new installs do not write `workflow_tracking.json`. Project state is `appledger/`. Kickoff runs `appledger init` when that command is installed. Lite v2.2.0 and WORKFLOW tell an agent to write `appledger/`, record a disposition when a subject exists, and leave a missing family `not_applicable`. They do not generate labels.
 
 ## Do not
 

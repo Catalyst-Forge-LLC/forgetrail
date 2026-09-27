@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-09-26 | **Kickoff names `appledger init`.** Plan mode, the Genesis stub, and greenfield intake record decisions on the ledger. They do not create `workflow_tracking.json`. |
 | 2026-09-26 | **FORGETRAIL_LITE v2.2.0:** live steps write `appledger/`. §11 stays the do-not-copy `lite-1` shape. WORKFLOW records a subject disposition when a subject exists and leaves a missing family `not_applicable`. |
 | 2026-09-18 | **Host safety hooks + FORGETRAIL_LITE v2.1.0:** deterministic enforcement in `.forgetrail/hooks/` with Cursor and Claude Code adapters. Lite §0 backed by tool-level deny/ask/validate guards. New MCP tool `getForgeTrailHooks`. CLI installer and kickoff generate hooks. Companion mapping gains `never-do` situation. |
 | 2026-09-15 | **FORGETRAIL_LITE v2.0.2:** LocalSlip FilePress/Vite recipes in §2 (intake + A-local FilePress one-liners). Lite-only agents get the how without the mapping file. |
@@ -61,6 +62,10 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-09-26: Kickoff names appledger init
+
+A new project is told to run `appledger init` when the command is installed, then `appledger check`. Hand-written ledger files remain the fallback. Plan-mode approval, the Genesis stub, and greenfield intake write decision records and set `archetype` on the profile. They do not create `workflow_tracking.json`.
 
 ### 2026-09-26: FORGETRAIL_LITE v2.2.0
 

@@ -6,7 +6,7 @@ Grok Build (the agentic TUI/CLI from xAI) has excellent native primitives that m
 
 | Grok Primitive              | ForgeTrail Phase(s)          | How to Use |
 |-----------------------------|----------------------------|------------|
-| `/plan` + enter/exit_plan_mode + plan.md | Phase 1 (Architecture)    | Use native plan mode for all Phase 1 work. On approval, export to `PHASE_1_BRIEF.md` + `decisions[]`. See `PLAN_MODE_PATTERNS.md`. |
+| `/plan` + enter/exit_plan_mode + plan.md | Phase 1 (Architecture)    | Use native plan mode for all Phase 1 work. On approval, export to `PHASE_1_BRIEF.md` and decision records in `appledger/`. Do not write `workflow_tracking.json`. See `PLAN_MODE_PATTERNS.md`. |
 | `spawn_subagent` (explore/plan/general, capability_mode, isolation: worktree, background, resume_from, personas) | All phases, especially 4, 5, 7 | Use for parallel audits (black-hat, UX, code quality), research, stabilize debugging, and exploratory spikes. Call `suggestSubagentDecomposition` first. Prefer read-only for analysis subagents. |
 | `todo_write` + TODO panel   | All phases                 | Mirror open criteria and next actions from `appledger/profiles/forgetrail.yaml`. The ledger is the durable record. Do not write `workflow_tracking.json`. |
 | Skills (`/create-skill`, SKILL.md) | All sessions             | Install the `forgetrail` skill (see `SKILL.md` in content/skills/forgetrail). It keeps phase discipline, tracking rules, and subagent patterns always active. |

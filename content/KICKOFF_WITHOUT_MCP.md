@@ -7,7 +7,7 @@ Some Cursor sessions **do not expose MCP tools** to the agent (or only a subset)
 **If you must replicate the kickoff bundle from this repo** (same sources as `buildNewProjectKickoff` in `mcp-server/src/index.ts`), read and apply in order:
 
 1. `content/NEW_PROJECT_BOOTSTRAP.md` — methodology and next steps  
-2. Initialize **`appledger/`** in the customer repo (manifest, `profiles/forgetrail.yaml`, application record, session record). Do **not** copy root `workflow_tracking.json`. `getInitialWorkflowTracking` does not return a file to write.  
+2. If `appledger` is installed, run **`appledger init`** in the customer repo (pass **`--name`** when the name is known). Otherwise create the manifest, `profiles/forgetrail.yaml`, an application record, and a session record by hand. Do **not** copy root `workflow_tracking.json`. `getInitialWorkflowTracking` does not return a file to write.  
 3. `content/POST_BOOTSTRAP_USER_MESSAGE.md` — how the first user-facing reply should read  
 4. `content/cursor-rules/forgetrail-phase-status.mdc` — write to `.cursor/rules/forgetrail-phase-status.mdc` in the customer repo (Cursor only)  
 5. `content/cursor-rules/forgetrail-lessons-gate.mdc` and `forgetrail-lessons-mcp.mdc` — write to `.cursor/rules/` (lessons + anti-patterns gate before large work)  

@@ -35,7 +35,7 @@ Prefer **read-only** subagents for analysis; parent or a single write-capable wo
 
 ## When the host supports plan mode
 
-Use native plan mode for **Phase 1** only. On approval, export to `PHASE_1_BRIEF.md` + `decisions[]`. See **`getPlanModePatterns`**.
+Use native plan mode for **Phase 1** only. On approval, export to `PHASE_1_BRIEF.md` and decision records in `appledger/`. Do not write `workflow_tracking.json`. See **`getPlanModePatterns`**.
 
 ## Persistent discipline
 
