@@ -18,7 +18,7 @@ GitHub slug is **`Catalyst-Forge-LLC/forgetrail`**. The old `forge-kit` URL redi
 
 The marketing site lives in **`site/`**. Preview: `pnpm site:dev`. Redeploy: `pnpm ship`.
 
-npm registry, until the next publish: [`forgetrail@0.4.20`](https://www.npmjs.com/package/forgetrail) and [`forgetrail-mcp@0.3.10`](https://www.npmjs.com/package/forgetrail-mcp). This tree is `forgetrail@0.5.0` and `forgetrail-mcp@0.4.0`, not yet published. See [docs/NPM.md](docs/NPM.md). On Windows, prefer `pnpm dlx forgetrail` over npm 12 `npx`.
+npm: [`forgetrail@0.5.1`](https://www.npmjs.com/package/forgetrail) is published. This tree's [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) is `0.4.1` and is not published yet; the registry copy is `0.4.0`. See [docs/NPM.md](docs/NPM.md). On Windows, prefer `pnpm dlx forgetrail` over npm 12 `npx`.
 
 ## Remaining
 

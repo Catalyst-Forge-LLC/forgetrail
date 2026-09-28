@@ -10,12 +10,12 @@ Two public unscoped packages:
 
 | Package | This tree | On npm until you publish | From | What it is |
 | --- | --- | --- | --- | --- |
-| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | 0.5.0 | 0.4.20 | repo root | CLI + Lite + templates. `pnpm dlx forgetrail install --lite` |
-| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | 0.4.0 | 0.3.10 | `mcp-server/` | MCP bin. `pnpm dlx forgetrail-mcp` |
+| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | 0.5.1 | 0.5.1 | repo root | CLI + Lite + templates. `pnpm dlx forgetrail install --lite` |
+| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | 0.4.1 | 0.4.0 | `mcp-server/` | MCP bin. `pnpm dlx forgetrail-mcp` |
 
 These are **installer and MCP channels**, not a library. App repos should not add `forgetrail` to `dependencies`.
 
-`0.5.0` stops installing `workflow_tracking.json`. `0.4.0` tells kickoff to run `appledger init`. The registry copies above do not include that cutover. `pnpm run pack:check` is the gate. It does not publish.
+`forgetrail@0.5.1` is already on npm. `forgetrail-mcp@0.4.1` is this tree and is not published yet. `0.4.0` remains the registry copy until you publish from `mcp-server/`. `pnpm run pack:check` is the gate. It does not publish.
 
 ---
 
@@ -63,7 +63,7 @@ pnpm dlx forgetrail@0.5.0 --help
 pnpm dlx forgetrail@0.5.0 install --lite --dry-run
 
 # MCP starts; needs content via FORGETRAIL_ROOT or a sibling forgetrail install
-pnpm dlx forgetrail-mcp@0.4.0
+pnpm dlx forgetrail-mcp@0.4.1
 ```
 
 Optional Cursor MCP (content from a `forgetrail` install, or set the path):
