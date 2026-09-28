@@ -30,7 +30,8 @@ The user should **never** have to ask you to commit. Treat “here is what I did
 
 ## Push and merge
 
-- If IngotVault is setup (or a local `backup` mirror remote is configured), pushing to it is automatic after committing in order to preserve work.
+- After a commit in this repo, run `ingotvault --repo .` from the repo root. That is the only local vault command. Do not `git push backup` or `git push` a mirror path.
+- If `ingotvault` is not installed, or it exits `2` (vault unplugged or not a vault), say so and stop. Do not invent another push. Do not pass `--force-with-lease` unless the user explicitly asked.
 - **Do not** run `git push` to `origin` or upstream remotes, merge/rebase, or publish flows unless the user **explicitly** asks.
 - Read-only git is always fine: `git status`, `git diff`, `git log`, `git show`, blame, etc.
 

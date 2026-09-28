@@ -74,6 +74,24 @@ function main() {
     }
   }
 
+  // Local vault updates go through the ingotvault command. Force still asks.
+  if (/\bingotvault\b/.test(command)) {
+    if (/\s--force-with-lease\b/.test(command)) {
+      console.log(
+        JSON.stringify({
+          permission: "ask",
+          user_message:
+            "ForgeTrail Safety: ingotvault --force-with-lease rewrites mirror history. Confirm to proceed.",
+          agent_message:
+            "ingotvault --force-with-lease requires explicit user confirmation.",
+        })
+      );
+      return;
+    }
+    console.log(JSON.stringify({ permission: "allow" }));
+    return;
+  }
+
   // 2. Check for git push (Do not push to upstream remote unless explicitly requested by user)
   if (/\bgit\s+push\b/.test(command)) {
     if (/\s+(-f|--force|--force-with-lease)\b/.test(command)) {
@@ -89,23 +107,13 @@ function main() {
       return;
     }
 
-    // Pushing to IngotVault or local backup mirrors is automatic to preserve work
-    const isIngotVaultOrBackup =
-      /\bgit\s+push\b.*?\b(backup|ingotvault)\b/i.test(command) ||
-      /\bgit\s+push\b.*?(?:[a-zA-Z]:[\\/]|file:\/\/|\.\/|\.\.\/)/i.test(command);
-
-    if (isIngotVaultOrBackup) {
-      console.log(JSON.stringify({ permission: "allow" }));
-      return;
-    }
-
     console.log(
       JSON.stringify({
         permission: "ask",
         user_message:
-          "ForgeTrail Safety: git push to upstream remote requires explicit user approval per project rules. Would you like to push?",
+          "ForgeTrail Safety: git push requires explicit user approval. Local vault updates use ingotvault --repo .",
         agent_message:
-          "git push to upstream remote requires explicit user approval per project rules.",
+          "git push requires explicit user approval. Mirror this repo with ingotvault --repo . instead of git push backup.",
       })
     );
     return;

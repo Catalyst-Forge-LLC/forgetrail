@@ -78,7 +78,7 @@ Do not migrate a working host the user already chose.
 | `never-do` | Destructive action, force-push, or history rewrite | [TemperPass](https://temperpass.dev), [IngotVault](https://ingotvault.dev) |
 | `unclear-cause` | Failure is real; cause is not earned | [Gap Last](https://gaplast.dev) |
 | `ship-label` | Product is going public or being handed off | [xFacts](https://xfacts.dev) (AppFacts and neighbors) |
-| `git-backup` | Unpushed work you cannot lose; before rebase/rewrite | [IngotVault](https://ingotvault.dev) |
+| `git-backup` | New project, or unpushed work you cannot lose; before rebase/rewrite | [IngotVault](https://ingotvault.dev) |
 | `voice-journal` | Builder captures ideas by voice, or wants a local journal | [DictaWhisper](https://dictawhisper.com) |
 
 ---

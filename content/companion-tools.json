@@ -177,7 +177,7 @@
         {
           "name": "IngotVault",
           "homepage": "https://ingotvault.dev",
-          "offer": "IngotVault takes an immutable local snapshot before risky git operations or rewrites."
+          "offer": "Before a history rewrite, run ingotvault --repo . so the vault has the current covered refs. Do not git push the backup remote."
         }
       ]
     },
@@ -210,13 +210,13 @@
     {
       "id": "git-backup",
       "tier": "A",
-      "phases": ["5", "7"],
-      "trigger": "Unpushed local branches or tags the operator cannot afford to lose, or a rebase/rewrite is about to start.",
+      "phases": ["1", "5", "7"],
+      "trigger": "A new project should ask whether this repo is already inside an IngotVault workspace. Also: unpushed local branches or tags the operator cannot afford to lose, or a rebase/rewrite is about to start.",
       "tools": [
         {
           "name": "IngotVault",
           "homepage": "https://ingotvault.dev",
-          "offer": "IngotVault mirrors covered local branches and tags to a drive you control. It never modifies origin. It does not replace commit discipline."
+          "offer": "IngotVault mirrors covered local branches and tags to a drive you control. It does not run by itself and it does not hook git push. If this repo is already under the vault's workspaceRoot, run ingotvault --repo . after commits. If it is outside, too deep, or excluded, say which and ask before changing config. Do not git push the backup remote. It never modifies origin."
         }
       ]
     },

@@ -153,7 +153,7 @@ const FOOTER_LIMIT = 6;
 
 /** Situation ids to lead with on the getPhaseGuidance footer (signature jobs). */
 const PHASE_FOOTER_SITUATIONS: Record<string, string[]> = {
-  "1": ["dns-hosting", "markdown-site", "hard-to-undo", "voice-journal", "multi-app-local"],
+  "1": ["git-backup", "dns-hosting", "markdown-site", "hard-to-undo", "voice-journal", "multi-app-local"],
   "2": ["multi-app-local", "local-ollama", "ollama-vram", "static-publish"],
   "3": ["unclear-cause", "ollama-vram"],
   "4": ["docs-drift", "ship-label", "voice-journal"],

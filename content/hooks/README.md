@@ -4,7 +4,7 @@ Enforces ForgeTrail rules and guards at the host tool level, rather than relying
 
 ## What is in this directory
 
-- `guard-shell.mjs`: runs pre-commit verification (`pnpm run verify`), prevents npm/yarn when `pnpm-lock.yaml` is present, gates `git push` to upstream remotes (pushing to IngotVault or local backup mirrors is allowed automatically), and prompts on destructive git or filesystem operations.
+- `guard-shell.mjs`: runs pre-commit verification (`pnpm run verify`), prevents npm/yarn when `pnpm-lock.yaml` is present, allows `ingotvault` (asks before `--force-with-lease`), asks before any `git push`, and prompts on destructive git or filesystem operations.
 - `guard-edit.mjs`: guards `.env*` secrets files and `specs/completed/**` or `specs/canonical/**` records against accidental mutation.
 - `session-start.mjs`: on session start, points the session at `appledger/`. A writable `workflow_tracking.json` is reported as a legacy conflict, not the live phase.
 - `validate-tracking.mjs`: after editing `workflow_tracking.json`, runs structural validation. A pointer is accepted. A legacy writable document is a conflict.
