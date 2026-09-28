@@ -13,18 +13,17 @@ Installer and MCP bins are on npm. This is a channel, not a library.
   "mcpServers": {
     "forgetrail": {
       "command": "npx",
-      "args": ["-y", "forgetrail-mcp"],
-      "env": {
-        "FORGETRAIL_ROOT": "/absolute/path/to/forgetrail"
-      }
+      "args": ["-y", "forgetrail-mcp"]
     }
   }
 }
 ```
 
-`FORGETRAIL_ROOT` must contain `WORKFLOW.md` and `content/`. Point it at a clone or at an installed `forgetrail` package. Omit it only when `forgetrail` is resolvable next to the MCP package.
+`forgetrail-mcp` 0.4.2 and later depends on `forgetrail` and reads the methodology from that package. `FORGETRAIL_ROOT` is optional. Set it only to use a clone or another copy that contains `WORKFLOW.md` and `content/`. `forgetrail mcp cursor-config` prints this block from an npm install.
 
-From a clone instead: `pnpm run mcp:build`, then `forgetrail mcp cursor-config`.
+Check with `ping`. If it reports `content missing`, the server did not find the methodology. Every other tool then returns an error rather than an answer about phases or lessons.
+
+From a clone instead: `pnpm run mcp:build`, then `forgetrail mcp cursor-config`. That prints a `node …/mcp-server/dist/index.js` config for the clone.
 
 ## First chats
 

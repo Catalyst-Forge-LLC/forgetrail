@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-09-28 | **Suite review P0 fixes + FORGETRAIL_LITE v2.2.1:** Lite step 4 and the installer name `appledger init` and `appledger check`. `forgetrail-mcp` 0.4.2 depends on `forgetrail`, and a missing content root returns an error instead of an answer. `forgetrail mcp cursor-config` prints a working config from an npm install. README and install docs name the ledger. Not published. |
 | 2026-09-28 | **`forgetrail-mcp` 0.4.1:** version bump for the IngotVault offer. Not published. Registry remains `0.4.0`. |
 | 2026-09-26 | **Versions for the ledger cutover:** | `forgetrail` 0.5.0 and `forgetrail-mcp` 0.4.0. Not published. Registry remains 0.4.20 and 0.3.10 until that publish. |
 | 2026-09-26 | **Kickoff names `appledger init`.** Plan mode, the Genesis stub, and greenfield intake record decisions on the ledger. They do not create `workflow_tracking.json`. |
@@ -64,6 +65,18 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-09-28: Suite review P0 fixes
+
+From [specs/suite-cohesion-prelaunch-review.md](specs/suite-cohesion-prelaunch-review.md) P0-1, P0-2, P0-3, and P0-5.
+
+- `content/FORGETRAIL_LITE.md` v2.2.1: §4.2 step 4 runs `pnpm dlx appledger init --name` and `appledger check`, writes the purpose that init leaves as not supplied, and keeps a hand-written fallback that points at the minimal example ledger. §4.3, §4.4, and §7.1 did not change. `schemaVersion` stays `lite-1`.
+- `scripts/install.mjs`: Lite and full installs end with the two `appledger` commands and the Try link.
+- `mcp-server`: `forgetrail` is a dependency. Without content, `ping` says `content missing` and every other tool returns one error. Version `0.4.2`.
+- `scripts/mcp-lib.mjs`, `scripts/mcp-status.mjs`: `cursor-config` prints `npx -y forgetrail-mcp` when `mcp-server/dist` is absent, sets `FORGETRAIL_ROOT` only for a stable install path, and the clone-only subcommands say so.
+- `README.md`, `site/docs/install.md`, `site/docs/mcp.md`, `mcp-server/README.md`: name the ledger, the `appledger` commands, and the optional root.
+
+Nothing was published or deployed.
 
 ### 2026-09-28: forgetrail-mcp 0.4.1
 

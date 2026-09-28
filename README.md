@@ -12,9 +12,9 @@
 
 ForgeTrail gives your next coding session a place to start. It keeps the phase, decisions, and handoff in your repository so an agent can read them when you resume. Start with Lite for a small project. You do not have to run all seven phases to try the method.
 
-ForgeTrail instructs the agent to read tracking, preserve approved decisions, and pause at approval gates. The agent must write the handoff. Those updates are not automatic. Optional hooks enforce the checks documented for their supported host.
+ForgeTrail instructs the agent to read the ledger, preserve approved decisions, and pause at approval gates. The agent must write the handoff. Those updates are not automatic. Optional hooks enforce the checks documented for their supported host.
 
-In session one, the agent drafts a Phase 1 brief, you approve it, and the agent logs the stack decision and a note for next time. In session two, a fresh chat reads that record, skips the settled questions, finishes the open Phase 1 item, and asks to move into Phase 2 with that phase's guidance. The record is `.forgetrail/workflow_tracking.json`. Labeled walk-through: [`content/examples/two-session-continuity.md`](content/examples/two-session-continuity.md).
+In session one, the agent drafts a Phase 1 brief, you approve it, and the agent logs the stack decision and a note for next time. In session two, a fresh chat reads that record, skips the settled questions, finishes the open Phase 1 item, and asks to move into Phase 2 with that phase's guidance. The record is the [AppLedger](https://appledger.dev) ledger in `appledger/`: the phase in `profiles/forgetrail.yaml`, plus decision, lesson, and session records. `pnpm dlx appledger init` creates it. Labeled walk-through: [`content/examples/two-session-continuity.md`](content/examples/two-session-continuity.md).
 
 **Docs:** [forgetrail.dev/docs](https://forgetrail.dev/docs) · **Site:** [forgetrail.dev](https://forgetrail.dev)
 
@@ -38,9 +38,10 @@ The shortest supported first task is: create `appledger/`, draft `docs/PHASE_1_B
 
 ```bash
 pnpm dlx forgetrail install --lite --with-genesis-stub
+pnpm dlx appledger init --name "Your app name"
 ```
 
-MCP: `npx -y forgetrail-mcp` with `FORGETRAIL_ROOT` set. Prefer `pnpm dlx` on Windows. Do not add `forgetrail` to an app's `dependencies`. Do not merge the two packages.
+MCP: `npx -y forgetrail-mcp` (0.4.2 or later finds the methodology without `FORGETRAIL_ROOT`). Prefer `pnpm dlx` on Windows. Do not add `forgetrail` to an app's `dependencies`. Do not merge the two packages.
 
 ## What you get
 

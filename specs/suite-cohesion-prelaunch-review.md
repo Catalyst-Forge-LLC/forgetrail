@@ -1,7 +1,7 @@
 # ForgeTrail, AppLedger, and xFacts — suite cohesion review before promotion
 
 **Spec kind:** Delivery
-**Status:** Draft. Findings recorded. No fix in this document has been applied.
+**Status:** Draft. P0 fixes are committed locally and are not published or deployed. See §9. P1 and P2 are open.
 **Date:** 2026-09-28
 **Related:** [`app-ledger-spec-pack-v0.1.0/`](app-ledger-spec-pack-v0.1.0/), [`partial/companion-tools.md`](partial/companion-tools.md), [`canonical/forgetrail-prelaunch-review.md`](canonical/forgetrail-prelaunch-review.md), root [`TODO.md`](../TODO.md)
 **Surfaces:** `README.md`, `content/FORGETRAIL_LITE.md`, `content/companion-tools.json`, `scripts/forgetrail-cli.mjs`, `scripts/mcp-status.mjs`, `mcp-server/`, `content/hooks/`, `site/`; sibling repos `appledger`, `x-facts`, `app-facts`, `feature-facts`, `tool-facts`, `skill-facts`, `agent-facts`, `model-facts`; catalystforge.com tools shelf
@@ -337,3 +337,18 @@ If only one day is available, do steps 1 and 2, and use the narrower promotion w
 ## 8. Acceptance for this review
 
 This spec is complete when each P0 finding is either fixed, with its acceptance check re-run and the result dated here, or explicitly accepted by the operator with the promotion wording adjusted. P1 and P2 findings move to root `TODO.md` or the owning repository's backlog.
+
+## 9. P0 fix record (2026-09-28)
+
+Decisions taken for §7: `forgetrail-mcp` depends on `forgetrail` (`^0.5.2`). `forgetrail install` prints the `appledger init` and `appledger check` commands and does not run them.
+
+| Item | Fix | Check re-run |
+| --- | --- | --- |
+| P0-1 | `forgetrail-mcp` 0.4.2 resolves content from the `forgetrail` dependency. When no content is found, `ping` says `content missing` and every other tool returns an error that names the missing root instead of an answer. | Packed 0.4.2 in a temporary project with no `FORGETRAIL_ROOT`: `getPhaseGuidance` and the kickoff returned content. With a bad root, every tool except `ping` returned the error. |
+| P0-2 | From an npm install, `forgetrail mcp cursor-config` prints `npx -y forgetrail-mcp`, with `FORGETRAIL_ROOT` only for a lasting install path. The other `mcp` subcommands say they need a clone. | Packed `forgetrail` in a temporary project: `cursor-config` printed the npx form. `scripts/tracking-cutover.test.mjs` covers it. |
+| P0-3 | Lite v2.2.1 step 4, the installer's `Next:` lines, the README, and `site/docs/install.md` name `pnpm dlx appledger init` and `pnpm dlx appledger check`. | `scripts/tracking-cutover.test.mjs`: 8 passed at 14:25 local time (UTC-4). |
+| P0-4 | appledger.dev pages, `llms.txt`, and the AppLedger READMEs say the package is on npm and the site is deployed. | AppLedger commit `965320e`. The live site changes only after a redeploy. |
+| P0-5 | The README names the AppLedger ledger in `appledger/` as the record. | Text check. |
+| P0-6 | AppLedger 0.1.2 adds `appledger bind`. An unbound `APP_FACTS.md` or FeatureFacts register is `needs_review`, an absent one is `not_applicable`, and a bound one is `unchanged`. | AppLedger `pnpm test`: 62 passed. A temporary filepress clone bound `APP_FACTS.md` in one command, validated it against pinned AppFacts, and left its bytes unchanged. No local ledger was bound. |
+
+Still required from the operator: bump and publish `forgetrail` (the tree is 0.5.2, which is already on npm), then publish `forgetrail-mcp` 0.4.2 and `appledger` 0.1.2, and redeploy both sites. Until `forgetrail` is republished, the published Lite and installer lack the P0-3 text. The 27 migrated ledgers have no bindings until `appledger bind --apply` runs in each.

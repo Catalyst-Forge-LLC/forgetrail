@@ -45,6 +45,12 @@ function resolveForgetrailRoot(): string {
 }
 
 const FORGETRAIL_ROOT = resolveForgetrailRoot();
+const CONTENT_FOUND = looksLikeForgetrailRoot(FORGETRAIL_ROOT);
+const MISSING_CONTENT_HELP =
+  "Install forgetrail beside forgetrail-mcp, or set FORGETRAIL_ROOT to a folder that contains WORKFLOW.md and content/ (a forgetrail clone or an installed forgetrail package), then restart the MCP server.";
+const MISSING_CONTENT_TEXT =
+  `ForgeTrail content was not found at ${FORGETRAIL_ROOT}. This tool did not run, so this is not an answer about phases, lessons, or templates. ` +
+  MISSING_CONTENT_HELP;
 
 const DOCS_DIR = join(FORGETRAIL_ROOT, "docs");
 const PROMPTS_DIR = join(FORGETRAIL_ROOT, "prompts");
@@ -314,6 +320,20 @@ const server = new McpServer({
   version: pkgVersion === "unknown" ? "0.0.0" : pkgVersion,
 });
 
+// Without content, a tool would answer "phase not found" or "no lessons", which an agent reads as fact.
+if (!CONTENT_FOUND) {
+  const registerTool = server.tool.bind(server) as (...args: unknown[]) => unknown;
+  (server as unknown as { tool: (...args: unknown[]) => unknown }).tool = (...args: unknown[]) => {
+    if (args[0] !== "ping") {
+      args[args.length - 1] = async () => ({
+        content: [{ type: "text" as const, text: MISSING_CONTENT_TEXT }],
+        isError: true,
+      });
+    }
+    return registerTool(...args);
+  };
+}
+
 /** Packaged methodology and local validation. No writes, no open-world I/O. */
 const PACKAGED = {
   readOnlyHint: true,
@@ -338,7 +358,9 @@ server.tool(
   async ({ format }) => {
     const workflowOk = Boolean(readFile(WORKFLOW_PATH));
     const text = [
-      "ForgeTrail MCP: ok",
+      CONTENT_FOUND
+        ? "ForgeTrail MCP: ok"
+        : `ForgeTrail MCP: content missing. No ForgeTrail content at ${FORGETRAIL_ROOT}. Every other tool returns an error until this is fixed. ${MISSING_CONTENT_HELP}`,
       `forgetrail-mcp version: ${pkgVersion}`,
       `FORGETRAIL_ROOT: ${FORGETRAIL_ROOT}`,
       `WORKFLOW.md: ${workflowOk ? "readable" : "missing (check FORGETRAIL_ROOT)"}`,
@@ -350,7 +372,8 @@ server.tool(
     return toolResult(format, {
       text,
       json: {
-        ok: true,
+        ok: CONTENT_FOUND,
+        contentFound: CONTENT_FOUND,
         version: pkgVersion,
         forgetrailRoot: FORGETRAIL_ROOT,
         workflowReadable: workflowOk,
@@ -1589,6 +1612,7 @@ function printStartupHintsToStderr(): void {
     "",
     "[ForgeTrail MCP] Server listening on stdio (JSON-RPC on stdout). Content root:",
     `  FORGETRAIL_ROOT=${FORGETRAIL_ROOT}`,
+    ...(CONTENT_FOUND ? [] : ["", `  WARNING: no ForgeTrail content at that path. ${MISSING_CONTENT_HELP}`]),
     "",
     "Cursor starts this process when MCP is configured — you do not run a separate server.",
     "Client setup JSON: forgetrail mcp build  or  forgetrail mcp cursor-config",

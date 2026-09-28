@@ -8,6 +8,7 @@ import {
   MCP_SERVER_DIR,
   analyzeCursorMcpConfig,
   findCursorMcpJson,
+  isClone,
   staticMcpChecks,
   printCursorConfigTemplate,
   runMcpBuild,
@@ -119,6 +120,12 @@ export function runMcpCommand(argv) {
   if (!cmd || cmd === "--help" || cmd === "-h") {
     console.log(HELP);
     return;
+  }
+
+  if (cmd !== "cursor-config" && !isClone()) {
+    console.error(`forgetrail mcp ${cmd} runs from a ForgeTrail clone. This npm install does not include mcp-server/.`);
+    console.error("Use the published server instead: forgetrail mcp cursor-config prints a config that starts forgetrail-mcp.");
+    process.exit(1);
   }
 
   switch (cmd) {

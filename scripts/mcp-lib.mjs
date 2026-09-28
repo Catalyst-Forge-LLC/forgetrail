@@ -125,21 +125,36 @@ export function posixPath(p) {
   return p.replace(/\\/g, "/");
 }
 
+/** True when this CLI runs from a clone that has mcp-server/ (the npm package does not ship it). */
+export function isClone() {
+  return existsSync(join(MCP_SERVER_DIR, "package.json"));
+}
+
+/** pnpm dlx and npx unpack into a cache that can be removed, so its path is not a stable FORGETRAIL_ROOT. */
+export function isTemporaryInstall(p = FORGETRAIL_ROOT) {
+  return /[\\/](dlx|_npx)[\\/]/i.test(p);
+}
+
 export function mcpClientConfigObject() {
-  return {
-    mcpServers: {
-      forgetrail: {
-        command: "node",
-        args: [posixPath(MCP_ENTRY)],
-        env: { FORGETRAIL_ROOT: posixPath(FORGETRAIL_ROOT) },
+  if (existsSync(MCP_ENTRY)) {
+    return {
+      mcpServers: {
+        forgetrail: {
+          command: "node",
+          args: [posixPath(MCP_ENTRY)],
+          env: { FORGETRAIL_ROOT: posixPath(FORGETRAIL_ROOT) },
+        },
       },
-    },
-  };
+    };
+  }
+  const server = { command: "npx", args: ["-y", "forgetrail-mcp"] };
+  if (!isTemporaryInstall()) server.env = { FORGETRAIL_ROOT: posixPath(FORGETRAIL_ROOT) };
+  return { mcpServers: { forgetrail: server } };
 }
 
 /** Copy-paste MCP client setup — shown after `forgetrail mcp build`. */
 export function printMcpClientSetupBanner({ showBuildComplete = true } = {}) {
-  const entry = posixPath(MCP_ENTRY);
+  const fromClone = existsSync(MCP_ENTRY);
 
   if (showBuildComplete) {
     console.log("\n✓ Build complete.\n");
@@ -149,8 +164,21 @@ export function printMcpClientSetupBanner({ showBuildComplete = true } = {}) {
   console.log("  Cursor — project .cursor/mcp.json or Settings → MCP → add server:");
   console.log(JSON.stringify(mcpClientConfigObject(), null, 2));
   console.log("");
+  if (!fromClone) {
+    if (isTemporaryInstall()) {
+      console.log("  This forgetrail copy is in a temporary pnpm dlx or npx cache, so FORGETRAIL_ROOT is not set.");
+      console.log("  forgetrail-mcp finds the forgetrail package it depends on. For a fixed path: pnpm add -g forgetrail, then rerun this command.");
+    } else {
+      console.log(`  FORGETRAIL_ROOT is this installed forgetrail package: ${posixPath(FORGETRAIL_ROOT)}`);
+    }
+    console.log("");
+  }
   console.log("  Claude Desktop — %APPDATA%\\Claude\\claude_desktop_config.json (same mcpServers block)");
-  console.log(`  Claude Code — claude mcp add forgetrail node ${entry}`);
+  console.log(
+    fromClone
+      ? `  Claude Code — claude mcp add forgetrail node ${posixPath(MCP_ENTRY)}`
+      : "  Claude Code — claude mcp add forgetrail -- npx -y forgetrail-mcp"
+  );
   console.log("");
   console.log("  Then reload MCP in Cursor (Settings → MCP) or restart Cursor.");
   console.log("  Verify: forgetrail mcp ping   |   Reprint: forgetrail mcp cursor-config");

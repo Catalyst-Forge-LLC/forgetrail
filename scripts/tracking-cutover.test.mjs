@@ -44,7 +44,32 @@ test("install does not create workflow_tracking.json", () => {
     assert.equal(result.status, 0, result.stderr || result.stdout);
     assert.doesNotMatch(result.stdout, /\\workflow_tracking\.json/);
     assert.match(result.stdout, /Project record: appledger/);
+    assert.match(result.stdout, /pnpm dlx appledger init --name/);
+    assert.match(result.stdout, /pnpm dlx appledger check/);
   }
+});
+
+test("Lite step 4 runs appledger init and check", () => {
+  const lite = readFileSync(join(root, "content", "FORGETRAIL_LITE.md"), "utf8");
+  const step = lite.split("\n").find((line) => line.startsWith("4. **Create `appledger/`**"));
+  assert.ok(step);
+  assert.match(step, /pnpm dlx appledger init --name/);
+  assert.match(step, /appledger check/);
+  assert.match(step, /examples\/minimal\/appledger/);
+});
+
+test("cursor-config from an npm install starts forgetrail-mcp, not a missing dist file", async () => {
+  const { mcpClientConfigObject, isTemporaryInstall } = await import("./mcp-lib.mjs");
+  const server = mcpClientConfigObject().mcpServers.forgetrail;
+  const hasDist = spawnSync(process.execPath, ["-e", "process.exit(require('node:fs').existsSync(process.argv[1]) ? 0 : 1)", join(root, "mcp-server", "dist", "index.js")]).status === 0;
+  if (hasDist) {
+    assert.equal(server.command, "node");
+  } else {
+    assert.deepEqual([server.command, ...server.args], ["npx", "-y", "forgetrail-mcp"]);
+  }
+  assert.equal(isTemporaryInstall("C:/Users/u/AppData/Local/pnpm-cache/dlx/abc/node_modules/forgetrail"), true);
+  assert.equal(isTemporaryInstall("/home/u/.npm/_npx/abc/node_modules/forgetrail"), true);
+  assert.equal(isTemporaryInstall("C:/Users/u/AppData/Local/pnpm/global/5/node_modules/forgetrail"), false);
 });
 
 test("session start warns on a legacy file and does not quote it as the live phase", () => {
@@ -76,7 +101,7 @@ test("Lite and workflow instructions name the ledger", () => {
   assert.ok(legacyAt > 0 && resumeAt > legacyAt);
   const instructional = `${lite.slice(0, legacyAt)}\n${lite.slice(resumeAt)}`;
   assert.match(lite.slice(legacyAt, resumeAt), /"schemaVersion": "lite-1"/);
-  assert.match(instructional, /ForgeTrail Lite v2\.2\.0/);
+  assert.match(instructional, /ForgeTrail Lite v2\.2\.1/);
   for (const line of instructional.split("\n")) {
     if (!line.includes("workflow_tracking.json")) continue;
     assert.match(line, /[Dd]o not|does not|not the live phase|not recreate/, line);

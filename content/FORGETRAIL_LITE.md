@@ -1,6 +1,6 @@
 # ForgeTrail Lite — portable kickoff for any agentic chat
 
-> **ForgeTrail Lite v2.2.0**
+> **ForgeTrail Lite v2.2.1**
 > © Catalyst Forge, LLC — [www.catalystforge.com](https://www.catalystforge.com)
 > Part of the **ForgeTrail** open-source methodology ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) in the upstream ForgeTrail repo).
 >
@@ -320,7 +320,7 @@ Record anything non-obvious as a lesson in **`appledger/`** (for example, Playwr
    2. **`.forgetrail/cursor/rules/forgetrail-updates-log.mdc`** — use the §12.5 snippet verbatim. **Symlink or copy** into `.cursor/rules/` so Cursor reminds agents when to update `FORGETRAIL_LITE_UPDATES.md` (§1.6). Optional: copy the upstream **`FORGETRAIL_LITE_UPDATES.md`** starter into `.forgetrail/` when you expect protocol feedback during the project.
    3. **`.forgetrail/hooks/` and `.cursor/hooks.json`** — install host safety hooks (`content/hooks/`) into `.forgetrail/hooks/` and copy `cursor-hooks.json` to `.cursor/hooks.json`. On Cursor, this runs pre-commit verification, enforces pnpm lock consistency, gates git push at the tool level, and injects live phase context at session start. For Claude Code, add `claude-settings-hooks.json` into `.claude/settings.json`.
    If any of these already exists and its content conflicts with the Lite defaults, **do not overwrite** — flag the conflict to the user and ask how to reconcile. Record the reconciliation as a decision in `appledger/`.
-4. **Create `appledger/`** if it does not exist: `manifest.yaml`, `profiles/forgetrail.yaml` with the `plan` phase `in_progress`, an application record, and a session record. Do **not** create `.forgetrail/workflow_tracking.json`. Fill the application name and a one-line description from whatever the user has already said. Criteria stay `pending` until evidence exists.
+4. **Create `appledger/`** if it does not exist. Run `pnpm dlx appledger init --name "<application name>"` (or `appledger init` when it is installed globally), then `pnpm dlx appledger check`. Init writes `manifest.yaml`, `profiles/forgetrail.yaml` with the `plan` phase `in_progress`, an application record, and a session record. It does not overwrite existing files. Init leaves the purpose as "Not supplied." Write the one-line purpose into the application record from what the user has already said, then run `check` again. Do **not** create `.forgetrail/workflow_tracking.json`. Criteria stay `pending` until evidence exists. **Without Node:** write the same four files by hand in the shape of the [minimal example ledger](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/examples/minimal/appledger), and run `appledger check` once Node is available. A hand-written ledger is not checked until then.
 5. **If git was initialized in step 2**, make the first commit now so the user has a clean baseline. **What lands in the commit depends on §1.5:** if **committing `.forgetrail/`**, steps 3–4 artifacts are included; if **gitignoring `.forgetrail/`**, only `.gitignore` (and any `.cursor/rules/` copies) — the workspace stays local-only and that is expected, not a mistake. Example: `git add -A && git commit -m "chore: ForgeTrail Lite bootstrap"`. Skip this step if the repo already had history — do not squash or amend what's there. Skip entirely if the user is in no-git mode (§4.1).
 6. **Ask the §5 intake questions.** Do not write any project code yet. For the first user-facing reply, follow §9 (plain product language, one clear "reply with," no methodology jargon).
 7. **Create `docs/`** (if missing) and **draft `docs/PHASE_1_BRIEF.md`** from the §6 template using the user's answers. Show it to the user, iterate, then **lock it**: mark the brief criteria met in `appledger/profiles/forgetrail.yaml` only when the user has approved them, and record major commitments as decision records.
@@ -1003,7 +1003,7 @@ Save this as `.forgetrail/AGENTS.md` so agents that auto-load it (Codex, Cursor,
 
 ```markdown
 <!--
-  Agent protocol based on ForgeTrail Lite v2.2.0.
+  Agent protocol based on ForgeTrail Lite v2.2.1.
   © Catalyst Forge, LLC — www.catalystforge.com
   Licensed under Apache License 2.0 (upstream ForgeTrail repo).
 -->
@@ -1179,4 +1179,4 @@ ForgeTrail Lite covers the shape of a project. The full **ForgeTrail MCP server*
 
 ---
 
-**ForgeTrail Lite v2.2.0** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+**ForgeTrail Lite v2.2.1** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

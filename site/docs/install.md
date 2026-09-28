@@ -23,7 +23,14 @@ forgetrail install --lite
 
 That writes into the **current app folder**: `.forgetrail/FORGETRAIL_LITE.md`, hook scripts in `.forgetrail/hooks/`, and `.cursor/hooks.json`. It does not write a tracking JSON file. `--skip-tracking` is accepted and ignored. Existing files are skipped unless you pass `--force`. Preview with `--dry-run`. Use a new empty project. Do not run it inside a clone of this methodology repo.
 
-The agent creates `appledger/` (manifest, profile, application record, session record). If a project already has a writable `.forgetrail/workflow_tracking.json`, `appledger migrate preview` then `apply` replaces that file with a pointer. The `appledger` CLI is in the [appledger repository](https://github.com/Catalyst-Forge-LLC/appledger). It is not a published npm release.
+Then create the ledger. The agent can run these:
+
+```bash
+pnpm dlx appledger init --name "Your app name"
+pnpm dlx appledger check
+```
+
+`init` writes `appledger/` (manifest, profile, application record, session record) and does not overwrite existing files. Global: `pnpm add -g appledger`. If a project already has a writable `.forgetrail/workflow_tracking.json`, `appledger migrate preview` then `apply` replaces that file with a pointer. The `appledger` CLI is [on npm](https://www.npmjs.com/package/appledger). Source: [appledger repository](https://github.com/Catalyst-Forge-LLC/appledger).
 
 ## MCP
 
@@ -32,16 +39,13 @@ The agent creates `appledger/` (manifest, profile, application record, session r
   "mcpServers": {
     "forgetrail": {
       "command": "npx",
-      "args": ["-y", "forgetrail-mcp"],
-      "env": {
-        "FORGETRAIL_ROOT": "/absolute/path/to/forgetrail"
-      }
+      "args": ["-y", "forgetrail-mcp"]
     }
   }
 }
 ```
 
-`FORGETRAIL_ROOT` must point at a tree that contains `WORKFLOW.md` and `content/` (a clone, or the installed `forgetrail` package). Omit it only when `forgetrail` is resolvable next to the MCP package. Details: [MCP](/docs/mcp).
+`forgetrail-mcp` 0.4.2 and later installs `forgetrail` as a dependency and reads the methodology from it, so `FORGETRAIL_ROOT` is optional. Set it only to use a clone or another copy. The folder must contain `WORKFLOW.md` and `content/`. `forgetrail mcp cursor-config` prints this block. Call `ping` to confirm: it reports `content missing` when the server cannot find the methodology, and the other tools then return an error instead of an answer. Details: [MCP](/docs/mcp).
 
 ## From a checkout
 

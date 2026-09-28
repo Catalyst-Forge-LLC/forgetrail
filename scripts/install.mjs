@@ -88,6 +88,7 @@ export function runInstallForgetrail(rawArgv, { defaultToCwd = false } = {}) {
   console.log("  First chat:   _forgetrail/INITIAL_PROMPT.md");
   console.log("  Project record: appledger/ (not workflow_tracking.json)");
   console.log("  Hooks:        .forgetrail/hooks/ (enforced via .cursor/hooks.json)");
+  printLedgerNext();
   return { target, mode: "full" };
 }
 
@@ -145,9 +146,16 @@ export function runInstallLite(rawArgv, { defaultToCwd = false } = {}) {
   console.log("  Hooks:     .forgetrail/hooks/ (enforced via .cursor/hooks.json)");
   if (args.withGenesisStub) {
     console.log("  Genesis:   docs/GENESIS.md (stub — replace with your spec)");
-    console.log("  Next:      see TRY_FORGETRAIL.md in the ForgeTrail repo");
   }
+  printLedgerNext();
   return { target, mode: "lite", withGenesisStub: !!args.withGenesisStub };
+}
+
+function printLedgerNext() {
+  console.log("\nNext, create the ledger in the app folder (the agent can run these):");
+  console.log('  pnpm dlx appledger init --name "Your app name"');
+  console.log("  pnpm dlx appledger check");
+  console.log("Then paste the kickoff line from https://forgetrail.dev/docs/try");
 }
 
 export const INSTALL_FULL_HELP = `
