@@ -3,7 +3,7 @@
 /**
  * ForgeTrail Shell Guard
  * Hook event: beforeShellExecution (Cursor) / PreToolUse (Claude Code)
- * Enforces Lite §0, git commit attribution rules, pnpm consistency, and git push guards.
+ * Enforces Lite §0, verify-before-commit, pnpm consistency, and git push guards.
  */
 
 import { readFileSync, existsSync } from "node:fs";
