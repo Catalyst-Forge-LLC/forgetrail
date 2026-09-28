@@ -132,7 +132,7 @@ _Testable binary pass/fail checks. Avoid vague qualifiers ("performant", "clean"
 
 ## 10. Decisions (optional)
 
-_Lock choices here (and mirror major ones into `.forgetrail/workflow_tracking.json` → `decisions[]` when they are architectural)._
+_Lock choices here (and record major ones as decision records in `appledger/` when they are architectural)._
 
 **D1.**
 

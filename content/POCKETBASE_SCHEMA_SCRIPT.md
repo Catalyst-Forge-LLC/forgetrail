@@ -18,7 +18,7 @@ Manual admin-UI collection setup (click-through wizards) does not scale across m
 4. **Schema (agent or one terminal):** `pnpm run pocketbase:schema` after PocketBase is up — idempotent; replaces manual Admin UI collection wizards.
 5. **PocketBase broken?** double-click **`test-pocketbase.bat`** / **`pnpm run test:pocketbase`** — isolated health check (**`SYSTEM_HEALTH_CHECKS.md`**).
 6. **Check progress:** double-click **`status.bat`** / **`status.sh`** or open **`docs/FORGETRAIL_PROGRESS.md`**.
-7. Walk the hero flow; tick Phase 2 exit items in `.forgetrail/workflow_tracking.json` when dev runs, data appears, CRUD works, and the full journey passes.
+7. Walk the hero flow; mark Phase 2 criteria met in `appledger/profiles/forgetrail.yaml`, with evidence, when dev runs, data appears, CRUD works, and the full journey passes.
 
 ---
 

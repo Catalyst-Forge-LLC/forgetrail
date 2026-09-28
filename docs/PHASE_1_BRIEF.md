@@ -4,7 +4,7 @@ _Structured capture of planning and architecture **before** code scaffolding. Go
 
 **Status:** `[draft | locked]`  
 **Last updated:** `[ISO date]`  
-**Phase 1 exit:** Do not mark the `plan` phase complete in `appledger/profiles/forgetrail.yaml` until this brief is **locked** and major commitments are decision records. Do not write `workflow_tracking.json`.
+**Phase 1 exit:** Do not mark the `plan` phase complete in `appledger/profiles/forgetrail.yaml` until this brief is **locked** and major commitments are decision records.
 
 ---
 
@@ -158,7 +158,7 @@ _Ordered list of what to build after the spine runs — aligns with initial `TOD
 
 - [ ] User has confirmed stack, folder shape, data sketch, hero flow, and v1 boundaries
 - [ ] This brief is **locked** (no `[draft]` ambiguity) or remaining items are only in §9 Open questions
-- [ ] `appledger/` updated: a decision record for each major D#, and the session records the sign-off. Do not write `workflow_tracking.json`.
+- [ ] `appledger/` updated: a decision record for each major D#, and the session records the sign-off.
 - [ ] Phase 2 opener will read **this file**, `appledger/profiles/forgetrail.yaml`, and the latest session record first
 
 > 💡 **Lesson learned:** Treat the brief and the decision records as a pair. The brief is what the next human or agent reads in one pass. Duplicated rationale is OK — drift between them is not. After Phase 2 starts, **merge** this content into `CONTEXT_PROMPT.md` per the mapping in that template’s “Handoff from Phase 1” section.

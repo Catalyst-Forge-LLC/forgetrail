@@ -4,7 +4,7 @@ Use alongside **`getChecklist`** section `before-session-1`. That checklist cove
 
 **Already have a written spec (e.g. `docs/GENESIS.md`)?** Feed it into **`ingestPlanArtifact`** first, then use this document only to fill gaps (delivery, tenancy, compliance, live search) it may not cover. If the user has only an idea, **`getGenesisSpecPrompt`** (or human recipe **`TRY_FORGETRAIL.md`**) produces a portable spec via an external LLM chat before you run through these questions.
 
-**Agent:** Walk through these with the user (or infer from context and confirm). Record answers in **`docs/PHASE_1_BRIEF.md`** (§1–3, §6–8 as needed) and as **decision records in `appledger/`**. Do not write `workflow_tracking.json`.
+**Agent:** Walk through these with the user (or infer from context and confirm). Record answers in **`docs/PHASE_1_BRIEF.md`** (§1–3, §6–8 as needed) and as **decision records in `appledger/`**.
 
 ---
 
@@ -19,7 +19,7 @@ Use alongside **`getChecklist`** section `before-session-1`. That checklist cove
 
 - **Is this a product, an internal tool, or a one-shot?** (product: others will use it, possibly pay; internal-tool: real recurring users, no market; one-shot: gift, event page, demo: one occasion, then done). Often obvious from the problem statement; confirm rather than interrogate.
 - The archetype **prunes the lifecycle**: internal tools make Phase 6 optional and drop payments/business-plan criteria from Phase 7; one-shots collapse phases 5–7 into a single polish-and-ship gate. See **WORKFLOW.md §1d**.
-- Record it in **`PHASE_1_BRIEF.md`**, as a decision record, and as **`archetype`** on **`appledger/profiles/forgetrail.yaml`**. Prune non-applicable criteria on that profile. Do not write `workflow_tracking.json`.
+- Record it in **`PHASE_1_BRIEF.md`**, as a decision record, and as **`archetype`** on **`appledger/profiles/forgetrail.yaml`**. Prune non-applicable criteria on that profile.
 
 ## 1. Outputs and formats
 

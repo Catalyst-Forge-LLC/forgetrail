@@ -1,6 +1,6 @@
 # Post-bootstrap: first reply to the user
 
-**When:** Right after `appledger/` exists (and, for Cursor, the phase rule file if you use it). Do not mention `workflow_tracking.json` to the user.
+**When:** Right after `appledger/` exists (and, for Cursor, the phase rule file if you use it).
 
 **Purpose:** Confirm what happened in **plain language** and give **one clear ask**—what the human should do or answer next. This is not an implementation report.
 
@@ -12,7 +12,7 @@ Assume the reader is a **product owner**, not a methodology engineer. They shoul
 
 - MCP or ForgeTrail server/tool names (`getChecklist`, `getGreenfieldIntakePrompt`, “bundle”, “methodology stays on the MCP side”, etc.)
 - Paths like `.cursor/rules/…` unless they need to edit something themselves
-- Field-by-field descriptions of `workflow_tracking.json` or other “for your reference only” inventories
+- Field-by-field descriptions of `appledger/` files or other “for your reference only” inventories
 - ForgeTrail **footers** (phase · exit criteria · “Next: …”)—those are for **agent** orientation in later turns, not for this first message
 
 Agents keep planning steps **internal** until they turn user answers into `docs/PHASE_1_BRIEF.md`.

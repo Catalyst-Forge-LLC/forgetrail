@@ -98,13 +98,12 @@ function listDir(dir: string, ext = ".md"): string[] {
 }
 
 const LEDGER_INIT =
-  "Do **not** write `.forgetrail/workflow_tracking.json`.\n\n" +
   "If the `appledger` command is installed, run `appledger init`. Pass `--name` when the application name is known. Then run `appledger check`. Init writes the manifest, `profiles/forgetrail.yaml`, an application record, and a session record. It does not overwrite those files when they already exist. The default archetype is `product` and is not a confirmed classification; set `archetype` on the profile when the user confirms it. Criteria stay `pending` until evidence exists.\n\n" +
   "If the command is not installed, create `appledger/` by hand:\n\n" +
   "1. `appledger/manifest.yaml` — `format: appledger`, `format_version: 0.1.0`, a `ledger_id`, an `application_id`, `repositories` with `root: .`, `record_roots: [records]`, and profile `forgetrail` version `0.1.0` at `profiles/forgetrail.yaml`.\n" +
   "2. `appledger/profiles/forgetrail.yaml` — `profile: forgetrail`, `profile_version: 0.1.0`, `archetype` (`product`, `internal-tool`, or `one-shot`), `project_status: active`, and one `plan` phase instance with `status: in_progress`. Criteria stay `pending` until evidence exists. Do not mark later phases completed.\n" +
   "3. An application record and a session record under `appledger/records/`. Decisions are decision records, not a JSON array.\n\n" +
-  "If a legacy `workflow_tracking.json` already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep both. Do not create that file for a new project.\n";
+  "If a legacy `workflow_tracking.json` already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep both.\n";
 
 /**
  * Single-call greenfield kickoff: bootstrap, ledger initialization, post-bootstrap
@@ -820,7 +819,7 @@ server.tool(
 
 server.tool(
   "getNewProjectKickoff",
-  "One-call greenfield setup: bootstrap + appledger/ initialization (no workflow_tracking.json) + post-bootstrap user-message guidance + optional Cursor rules " +
+  "One-call greenfield setup: bootstrap + appledger/ initialization + post-bootstrap user-message guidance + optional Cursor rules " +
     "(phase status + lessons gate + lessons MCP detail). " +
     "Prefer this over calling getNewProjectBootstrap, getInitialWorkflowTracking, getPostBootstrapUserMessage, getForgeTrailCursorPhaseRule, and getForgeTrailCursorLessonsRules separately. " +
     "If your client does not list this tool, call kickoffGreenfield (identical bundle, no parameters).",
@@ -1148,7 +1147,7 @@ server.tool(
   "getGreenfieldIntakePrompt",
   "Phase 1 helper: structured questions about exports (PDF/DOCX/PPTX, etc.), tenancy (e.g. consultants with many clients), " +
     "hybrid vs full spec, compliance tier, hero flow, and registrar/DNS/git/hosting. Complements getChecklist(before-session-1). " +
-    "Agent should capture answers in PHASE_1_BRIEF.md and appledger decision records. Do not write workflow_tracking.json. " +
+    "Agent should capture answers in PHASE_1_BRIEF.md and appledger decision records. " +
     "For a pre-written portable spec instead of in-session Q&A, see getGenesisSpecPrompt.",
   {},
   PACKAGED,
@@ -1194,7 +1193,7 @@ server.tool(
 
 server.tool(
   "getInitialWorkflowTracking",
-  "Deprecated name. Does not return a tracking file to write. Tells the agent to initialize appledger/ and not to create workflow_tracking.json.",
+  "Deprecated name. Does not return a tracking file to write. Tells the agent to initialize appledger/.",
   {},
   PACKAGED,
   async () => {
@@ -1341,7 +1340,7 @@ server.tool(
       );
     }
 
-    const synthesis = "Parent: Collect all subagent outputs. Record gotchas and decisions in appledger/. Do not write workflow_tracking.json. Synthesize into the appropriate doc (BLACK_HAT_REPORT.md, etc.). Present prioritized next actions to user.";
+    const synthesis = "Parent: Collect all subagent outputs. Record gotchas and decisions in appledger/. Synthesize into the appropriate doc (BLACK_HAT_REPORT.md, etc.). Present prioritized next actions to user.";
 
     const text =
       `Recommended decomposition for Phase ${phase} — task: "${taskDescription}"\n\n` +
@@ -1369,7 +1368,7 @@ server.tool(
 
 server.tool(
   "ingestPlanArtifact",
-  "Map an approved native plan artifact (plan.md, a GENESIS.md from getGenesisSpecPrompt, etc.) into a PHASE_1_BRIEF.md draft plus decision records for appledger/. Call after exit_plan_mode / user approval. Agent should review and lock the brief before Phase 2. Do not write workflow_tracking.json.",
+  "Map an approved native plan artifact (plan.md, a GENESIS.md from getGenesisSpecPrompt, etc.) into a PHASE_1_BRIEF.md draft plus decision records for appledger/. Call after exit_plan_mode / user approval. Agent should review and lock the brief before Phase 2.",
   {
     planContent: z.string().describe("Full text of the approved plan.md or equivalent planning artifact"),
     projectName: z.string().optional().describe("App/project name for the brief title"),
@@ -1403,7 +1402,7 @@ server.tool(
       `## Section mapping (plan → brief)\n\n${Object.entries(result.sectionMapping)
         .map(([k, v]) => `- ${k} → ${v}`)
         .join("\n")}\n\n` +
-      `## Decision records (write into appledger/, not workflow_tracking.json)\n\n` +
+      `## Decision records (write into appledger/)\n\n` +
       "```json\n" +
       JSON.stringify(result.trackingDecisions, null, 2) +
       "\n```\n\n" +

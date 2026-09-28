@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync, mkdirSync, utimesSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -101,10 +101,10 @@ test("Lite and workflow instructions name the ledger", () => {
   assert.ok(legacyAt > 0 && resumeAt > legacyAt);
   const instructional = `${lite.slice(0, legacyAt)}\n${lite.slice(resumeAt)}`;
   assert.match(lite.slice(legacyAt, resumeAt), /"schemaVersion": "lite-1"/);
-  assert.match(instructional, /ForgeTrail Lite v2\.2\.1/);
+  assert.match(instructional, /ForgeTrail Lite v2\.2\.2/);
   for (const line of instructional.split("\n")) {
     if (!line.includes("workflow_tracking.json")) continue;
-    assert.match(line, /[Dd]o not|does not|not the live phase|not recreate/, line);
+    assert.match(line, /legacy/, line);
   }
   const workflow = readFileSync(join(root, "WORKFLOW.md"), "utf8");
   assert.match(workflow, /not_applicable/);
@@ -112,8 +112,70 @@ test("Lite and workflow instructions name the ledger", () => {
   assert.doesNotMatch(workflow, /Where this file names that JSON/);
   for (const line of workflow.split("\n")) {
     if (!line.includes("workflow_tracking.json")) continue;
-    assert.match(line, /[Dd]o not|does not|not the system of record|not the live phase/, line);
+    assert.match(line, /legacy/, line);
   }
+});
+
+test("fresh-project instructions do not name the tracking file", () => {
+  const files = [
+    "INITIAL_PROMPT.md",
+    "CONTINUATION_PROMPT.md",
+    "content/AGENT_INTEGRATION_claude.md",
+    "content/AGENT_INTEGRATION_cursor.md",
+    "content/AGENT_INTEGRATION_generic.md",
+    "content/AGENT_INTEGRATION_grok.md",
+    "content/COMPANION_TOOLS.md",
+    "content/FORGETRAIL_PROGRESS.md",
+    "content/GENESIS_SPEC_PROMPT.md",
+    "content/GENESIS_STUB.md",
+    "content/GREENFIELD_INTAKE.md",
+    "content/KICKOFF_WITHOUT_MCP.md",
+    "content/NEW_PROJECT_BOOTSTRAP.md",
+    "content/PLAN_MODE_PATTERNS.md",
+    "content/POCKETBASE_SCHEMA_SCRIPT.md",
+    "content/POST_BOOTSTRAP_USER_MESSAGE.md",
+    "content/SESSION_RESUME_MCP.md",
+    "content/companion-tools.json",
+    "content/cursor-rules/forgetrail-phase-status.mdc",
+    "content/skills/forgetrail/SKILL.md",
+    "docs/PHASE_1_BRIEF.md",
+    "docs/SPEC_FEATURE_TEMPLATE.md",
+  ];
+  for (const file of files) {
+    for (const line of readFileSync(join(root, file), "utf8").split("\n")) {
+      if (!line.includes("workflow_tracking.json")) continue;
+      assert.match(line, /legacy|exists|validateTracking/, `${file}: ${line}`);
+    }
+  }
+});
+
+function stopHook(dir, input) {
+  const result = spawnSync(process.execPath, [join(root, "content", "hooks", "session-stop.mjs")], {
+    cwd: dir,
+    input: JSON.stringify(input),
+    encoding: "utf8",
+  });
+  assert.equal(result.status, 0, result.stderr);
+  return JSON.parse(result.stdout);
+}
+
+test("session stop reminds only after work newer than the session record", () => {
+  const dir = mkdtempSync(join(tmpdir(), "ft-stop-"));
+  mkdirSync(join(dir, "appledger", "records", "session"), { recursive: true });
+  writeFileSync(join(dir, "appledger", "manifest.yaml"), "format: appledger\n");
+  const session = join(dir, "appledger", "records", "session", "session-1.md");
+  writeFileSync(session, "session\n");
+  spawnSync("git", ["init", "-q"], { cwd: dir });
+  const old = new Date(Date.now() - 60_000);
+  utimesSync(session, old, old);
+  assert.deepEqual(stopHook(dir, { status: "completed", loop_count: 0 }), {});
+  writeFileSync(join(dir, "app.ts"), "export {};\n");
+  const reminder = stopHook(dir, { status: "completed", loop_count: 0 });
+  assert.match(reminder.followup_message, /session record/);
+  assert.doesNotMatch(reminder.followup_message, /workflow_tracking/);
+  assert.deepEqual(stopHook(dir, { status: "completed", loop_count: 1 }), {});
+  writeFileSync(session, "session updated\n");
+  assert.deepEqual(stopHook(dir, { status: "completed", loop_count: 0 }), {});
 });
 
 test("kickoff names appledger init and does not require the tracking file", () => {
@@ -123,7 +185,7 @@ test("kickoff names appledger init and does not require the tracking file", () =
   const plan = readFileSync(join(root, "content", "PLAN_MODE_PATTERNS.md"), "utf8");
   assert.match(plan, /decision record/);
   assert.doesNotMatch(plan, /decisions\[\]/);
-  assert.match(plan, /Do not create `\.forgetrail\/workflow_tracking\.json`/);
+  assert.doesNotMatch(plan, /workflow_tracking/);
   const genesis = readFileSync(join(root, "content", "GENESIS_STUB.md"), "utf8");
   assert.match(genesis, /appledger init/);
   assert.doesNotMatch(genesis, /Create `\.forgetrail\/workflow_tracking\.json`/);

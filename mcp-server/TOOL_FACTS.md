@@ -186,7 +186,7 @@ tools:
       processes: false
     idempotent: true
   - name: getInitialWorkflowTracking
-    purpose: "Tell the agent to initialize appledger/ and not to create workflow_tracking.json."
+    purpose: "Tell the agent to initialize appledger/."
     side_effects: none
     reach:
       filesystem: none
@@ -376,7 +376,7 @@ None required.
 | `getGenesisSpecPrompt` | Return a copy-paste prompt for producing docs/GENESIS.md in an external LLM |
 | `getGreenfieldIntakePrompt` | Return Phase 1 structured questions about exports, tenancy, and delivery gaps |
 | `getResumeSessionInstructions` | Return instructions for continuing work in a later MCP-only session |
-| `getInitialWorkflowTracking` | Tell the agent to initialize appledger/ and not to create workflow_tracking.json. |
+| `getInitialWorkflowTracking` | Tell the agent to initialize appledger/. |
 | `getPostBootstrapUserMessage` | Return canonical short first-reply guidance after bootstrap files are written |
 | `getUserReplyFormat` | Return guidance for formatting options and next steps to users |
 | `validateTracking` | Classify a workflow_tracking.json file. A pointer is accepted. A writable document is a conflict. |

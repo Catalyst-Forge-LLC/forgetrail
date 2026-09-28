@@ -9,12 +9,12 @@ You are helping me build a full-stack web application. I use ForgeTrail, a struc
 
 ### MCP-first (recommended — no `_forgetrail/` copy in this repo)
 
-If **ForgeTrail is connected as an MCP server**, do **not** require a local `_forgetrail/` folder. Methodology, templates, and audits stay in the MCP server (open-source ForgeTrail install). Persist project state in **`appledger/`**. Do **not** create **`.forgetrail/workflow_tracking.json`**. Optional Cursor rules may live in this repo.
+If **ForgeTrail is connected as an MCP server**, do **not** require a local `_forgetrail/` folder. Methodology, templates, and audits stay in the MCP server (open-source ForgeTrail install). Persist project state in **`appledger/`**. Optional Cursor rules may live in this repo.
 
 **Before doing anything else:**
 
 0. If **`docs/GENESIS.md`** exists, call **`ingestPlanArtifact`** with its contents and review the draft brief before scaffolding. If the user only has an idea, offer **`getGenesisSpecPrompt`** (they save as `docs/GENESIS.md`) or point them at **TRY_FORGETRAIL.md** when MCP is not the entry path.
-1. Call the ForgeTrail MCP tool **`getNewProjectKickoff`** (set **`includeCursorRule`** to **false** if not using Cursor). When `appledger` is installed, run **`appledger init`** as that bundle describes. Do **not** write **`workflow_tracking.json`**. Write the Cursor rule when included. Keep the **first reply to the user** short per the bundle’s post-bootstrap section (no MCP tool list or raw JSON dump). **Alternatively:** call **`getNewProjectBootstrap`**, **`getInitialWorkflowTracking`**, **`getPostBootstrapUserMessage`**, and **`getForgeTrailCursorPhaseRule`** separately. `getInitialWorkflowTracking` does not return a JSON file to save.
+1. Call the ForgeTrail MCP tool **`getNewProjectKickoff`** (set **`includeCursorRule`** to **false** if not using Cursor). When `appledger` is installed, run **`appledger init`** as that bundle describes. Write the Cursor rule when included. Keep the **first reply to the user** short per the bundle’s post-bootstrap section (no MCP tool list or raw JSON dump). **Alternatively:** call **`getNewProjectBootstrap`**, **`getInitialWorkflowTracking`**, **`getPostBootstrapUserMessage`**, and **`getForgeTrailCursorPhaseRule`** separately. `getInitialWorkflowTracking` does not return a JSON file to save.
 2. In Phase 1, call **`getGreenfieldIntakePrompt`** alongside **`getChecklist`** (`before-session-1`) so exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier, and hero flow are captured early in **`PHASE_1_BRIEF.md`** and as decision records (skip questions already answered in Genesis).
 3. Use **`getProgressiveDocSchedule`**, **`getPhaseGuidance`**, **`getChecklist`**, **`getTemplate`** (include **`PHASE_1_BRIEF`** in Phase 1; use `mode: "shell"` or `full` as needed), **`getTrackingSchema`**, **`runAudit`**, **`searchLessons`**, and **`getAntiPatterns`** as that bootstrap describes.
 4. We're starting with Phase 1 (Architecture + Planning).
@@ -27,7 +27,7 @@ If **ForgeTrail is connected as an MCP server**, do **not** require a local `_fo
 
 **Optional — web search (live data):** If the app needs **up-to-date web search**, the user can sign up for **[Tavily](https://tavily.com/)** and/or the **[Brave Search API](https://api-dashboard.search.brave.com/)** (free or entry-level credits — see vendor pricing), add the key to **`.env`**, and ask you to wire **server-side** calls only. **`FORGETRAIL_LITE.md` §4.4** has the full note; log the provider choice as a decision record.
 
-**Phase 1 — project archetype:** classify the project as **`product`** (default — full 7-phase lifecycle), **`internal-tool`** (Phase 6 optional; Phase 7 drops payments/business-plan/marketing criteria), or **`one-shot`** (gift / event / demo — phases 5–7 collapse into one polish-and-ship gate). Infer from my description and confirm rather than interrogate. Record it in **`PHASE_1_BRIEF.md`**, as a decision record, and as **`archetype`** on **`appledger/profiles/forgetrail.yaml`**. Prune the non-applicable criteria on that profile and log the pruning as a decision. Do not write `workflow_tracking.json`. See **WORKFLOW.md §1d**. When the project **ends**, run the **wrap protocol** (WORKFLOW.md §1e): harvest lesson and decision records, propagate the generalizable ones, and set **`project_status`** to **`wrapped`** on the profile.
+**Phase 1 — project archetype:** classify the project as **`product`** (default — full 7-phase lifecycle), **`internal-tool`** (Phase 6 optional; Phase 7 drops payments/business-plan/marketing criteria), or **`one-shot`** (gift / event / demo — phases 5–7 collapse into one polish-and-ship gate). Infer from my description and confirm rather than interrogate. Record it in **`PHASE_1_BRIEF.md`**, as a decision record, and as **`archetype`** on **`appledger/profiles/forgetrail.yaml`**. Prune the non-applicable criteria on that profile and log the pruning as a decision. See **WORKFLOW.md §1d**. When the project **ends**, run the **wrap protocol** (WORKFLOW.md §1e): harvest lesson and decision records, propagate the generalizable ones, and set **`project_status`** to **`wrapped`** on the profile.
 
 **Phase 1 — state persistence (web apps):** before locking PocketBase + auth, ask me *"Does any state need to outlive this browser — accounts, cross-device sync, shared data — or is per-user state fine in `localStorage`?"* If **local-only**: drop PocketBase + auth, target `adapter-static`, no deploy-time secrets. If **persistent**: full Default-A stack. Record the answer in **`PHASE_1_BRIEF.md` §4 (`State persistence:`)** and as a decision record. See **`FORGETRAIL_LITE.md` §7** (A-local vs A-persistent).
 
@@ -55,7 +55,7 @@ Skip the **“copy-paste paths”** section below unless we are using a **local*
 
 1. Read `_forgetrail/WORKFLOW.md` to understand the full phase map, playbooks, and patterns.
 2. Read `_forgetrail/TRACKING_SCHEMA.md` for where project state lives. The legacy JSON shape in that file is for migration only.
-3. Read **`appledger/profiles/forgetrail.yaml`** and the latest session record. Do **not** create **`.forgetrail/workflow_tracking.json`**.
+3. Read **`appledger/profiles/forgetrail.yaml`** and the latest session record.
 4. If using **Cursor**, copy **`_forgetrail/content/cursor-rules/forgetrail-phase-status.mdc`** to **`.cursor/rules/forgetrail-phase-status.mdc`** (create folders if needed) so agents surface phase / next actions from `appledger/profiles/forgetrail.yaml`.
 5. We're starting with Phase 1 (Architecture + Planning).
 
@@ -63,7 +63,7 @@ Skip the **“copy-paste paths”** section below unless we are using a **local*
 
 - At the start of each session, read `appledger/profiles/forgetrail.yaml`, the latest session record, and `CONTEXT_PROMPT.md` (if it exists).
 - When you believe a phase's exit criteria are met, tell me explicitly: "I think we've completed [Phase X]. The exit criteria are met because [reasons]. Ready to move to [Phase Y]?" Wait for my confirmation.
-- After completing work, update **`appledger/`**: move satisfied criteria only when evidence exists, add decision records (with rationale), log lessons or questions, and update the session record. Do not write **`workflow_tracking.json`**.
+- After completing work, update **`appledger/`**: move satisfied criteria only when evidence exists, add decision records (with rationale), log lessons or questions, and update the session record.
 - During Phase 1, create and lock **`docs/PHASE_1_BRIEF.md`**; mirror major decisions as decision records.
 - When we create `CONTEXT_PROMPT.md` (Phase 2), **merge `PHASE_1_BRIEF.md` into it** first (see template), then keep it updated as the source of truth.
 - If something isn't working after 5 turns, propose a fundamentally different approach rather than continuing to patch.
@@ -174,12 +174,12 @@ Phase 1 (Architecture + Planning):
 - Recommend what to skip for v1.
 - Wait for my confirmation on every architectural decision.
 - Create **`docs/PHASE_1_BRIEF.md`** from the ForgeTrail template (`_forgetrail/docs/` or MCP **`getTemplate("PHASE_1_BRIEF")`**). Fill and **lock** it before we exit Phase 1.
-- Record major commitments as **decision records in `appledger/`** so the next session does not depend on chat history. Do not write **`workflow_tracking.json`**.
+- Record major commitments as **decision records in `appledger/`** so the next session does not depend on chat history.
 
 Phase 2 (Scaffolding + Core Build):
 
 - Only after I've confirmed the architecture and the brief is locked.
-- Read **`PHASE_1_BRIEF.md`**, **`appledger/profiles/forgetrail.yaml`**, and the latest session record first. Do not treat **`workflow_tracking.json`** as the live record.
+- Read **`PHASE_1_BRIEF.md`**, **`appledger/profiles/forgetrail.yaml`**, and the latest session record first.
 - Build the **entire app skeleton in one pass**: project init, dependencies, services, routes, components — **do not defer the runnable spine or hero flow**.
 - Include an import script if there's existing data.
 - Wire up the hero flow end to end.

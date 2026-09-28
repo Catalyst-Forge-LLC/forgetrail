@@ -19,7 +19,7 @@ Do **not** require `_forgetrail/WORKFLOW.md` or `_forgetrail/TRACKING_SCHEMA.md`
 ## Rules for this session
 
 - When exit criteria for the current phase appear met, say so explicitly and **wait for user confirmation** before changing `current_phase_instance`.
-- After work, update the **session record** and any new **decision records** in **`appledger/`**. Do not write **`workflow_tracking.json`**.
+- After work, update the **session record** and any new **decision records** in **`appledger/`**.
 - Keep **`CONTEXT_PROMPT.md`** the source of truth for architecture; edit it when decisions change.
 - If stuck after **~5 turns** on one issue, propose a **fundamentally different approach**.
 - If the repo has **gstack** installed, use its skills for sprint execution (build/review/qa/ship) within ForgeTrail phases — see **WORKFLOW.md §1b** or call **`getPhaseGuidance`** for phase-specific gstack integration. After each gstack sprint, update the **appledger** session.

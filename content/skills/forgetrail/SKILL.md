@@ -1,6 +1,6 @@
 ---
 name: forgetrail
-description: "Enforce the ForgeTrail 7-phase lifecycle (Plan → Build → Stabilize → Iterate → Refine → Align → Harden), maintain appledger/ as the system of record, pause at explicit phase transitions for user approval, prefer native plan modes when available, and use subagents for parallel audits/research where the host agent supports it. Do not write workflow_tracking.json. Activate for any non-trivial full-stack app development. Follow progressive documentation rules and propagate lessons back."
+description: "Enforce the ForgeTrail 7-phase lifecycle (Plan → Build → Stabilize → Iterate → Refine → Align → Harden), maintain appledger/ as the system of record, pause at explicit phase transitions for user approval, prefer native plan modes when available, and use subagents for parallel audits/research where the host agent supports it. Activate for any non-trivial full-stack app development. Follow progressive documentation rules and propagate lessons back."
 user-invocable: true
 argument-hint: "kickoff new project | resume session | Phase 4 feature work | run black-hat audit | stabilize current issues"
 allowed-tools: "read_file, search_replace, run_terminal_command, todo_write, spawn_subagent, getPhaseGuidance, getCompanionSuggestions, runAudit, searchLessons, validateTracking, suggestSubagentDecomposition, getTemplate, getNewProjectKickoff, getResumeSessionInstructions"
@@ -21,7 +21,7 @@ You are operating under the ForgeTrail methodology. Your primary job is to give 
    - 6. Align (map to brand/strategy)
    - 7. Harden (security, perf, docs, production readiness)
 
-   Phases 4 and 5 commonly alternate. Update `current_phase_instance` and criteria in `appledger/profiles/forgetrail.yaml`. Do not write `workflow_tracking.json`.
+   Phases 4 and 5 commonly alternate. Update `current_phase_instance` and criteria in `appledger/profiles/forgetrail.yaml`.
 
 2. **At the start of every session or major turn**:
    - Read `appledger/profiles/forgetrail.yaml` and the latest session record.
@@ -39,10 +39,9 @@ You are operating under the ForgeTrail methodology. Your primary job is to give 
    - Mark a criterion `met` only when an evidence ref exists.
    - Add a lesson or question record when something surprising or painful happens.
    - Update the session record at natural breaks.
-   - Do not create or update `workflow_tracking.json`.
 
 5. **Use native agent capabilities**:
-   - If the agent supports a native plan mode (e.g. Grok `/plan`), use it for Phase 1. On approval, export the plan into `docs/PHASE_1_BRIEF.md` (via `getTemplate`) and decision records in `appledger/`. Do not write `workflow_tracking.json`.
+   - If the agent supports a native plan mode (e.g. Grok `/plan`), use it for Phase 1. On approval, export the plan into `docs/PHASE_1_BRIEF.md` (via `getTemplate`) and decision records in `appledger/`.
    - When the host supports `spawn_subagent`, use `suggestSubagentDecomposition` (or reason directly) to run audits, research, and reviews in parallel with appropriate `capability_mode`, `isolation`, and personas. Synthesize results in the parent thread and update tracking/docs.
    - Prefer `read-only` or `execute` modes for subagents doing analysis.
 
@@ -71,11 +70,11 @@ You are operating under the ForgeTrail methodology. Your primary job is to give 
 When ready to advance:
 - Confirm the phase criteria that have evidence.
 - Ask the user: "Ready to move to Phase X?"
-- Only after confirmation, update the phase status in `appledger/profiles/forgetrail.yaml` and the session record. Do not write `workflow_tracking.json`.
+- Only after confirmation, update the phase status in `appledger/profiles/forgetrail.yaml` and the session record.
 
 ## For New Projects (Greenfield)
 
-Prefer calling `getNewProjectKickoff` (or `kickoffGreenfield`) at the very beginning. When `appledger` is installed, run `appledger init` as that bundle describes. Do not write `workflow_tracking.json`. Write optional Cursor rules, and follow the post-bootstrap instructions exactly. Then start with Phase 1.
+Prefer calling `getNewProjectKickoff` (or `kickoffGreenfield`) at the very beginning. When `appledger` is installed, run `appledger init` as that bundle describes. Write optional Cursor rules, and follow the post-bootstrap instructions exactly. Then start with Phase 1.
 
 ## For Resuming
 

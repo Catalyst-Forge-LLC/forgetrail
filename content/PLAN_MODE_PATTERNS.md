@@ -14,7 +14,7 @@ When your host agent supports a first-class plan mode (Grok Build `/plan` + ente
 3. On user approval (the agent's `exit_plan_mode` or equivalent):
    - Immediately call `getTemplate({ name: "PHASE_1_BRIEF", mode: "full" })`.
    - Map/synthesize the approved plan content into the brief template (especially sections on architecture, data model, state persistence, content generation, and v1 scope).
-   - Write each major decision as a decision record in `appledger/`. Do not write `.forgetrail/workflow_tracking.json`.
+   - Write each major decision as a decision record in `appledger/`.
    - Optionally call `ingestPlanArtifact` with the full approved plan text to produce a `PHASE_1_BRIEF.md` draft and decision records (review and lock before Phase 2).
 
 4. The approved `docs/PHASE_1_BRIEF.md` and those decision records become the handoff so Phase 2 can begin "cold" without replaying the entire planning conversation.
@@ -35,7 +35,7 @@ When your host agent supports a first-class plan mode (Grok Build `/plan` + ente
 ## Artifacts That Must Result from Phase 1 (Plan or Not)
 
 - `docs/PHASE_1_BRIEF.md` (locked)
-- `appledger/` with the `plan` phase in progress and those decision records. Do not create `.forgetrail/workflow_tracking.json`.
+- `appledger/` with the `plan` phase in progress and those decision records.
 - (Later) `CONTEXT_PROMPT.md` will merge the brief in Phase 2
 
 Never proceed to scaffolding until the user confirms the plan/brief is locked.

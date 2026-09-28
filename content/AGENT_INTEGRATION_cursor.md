@@ -23,7 +23,7 @@ Use plan mode for Phase 1 if available. Lock PHASE_1_BRIEF.md before scaffolding
 
 **Resume:**
 ```
-Call getResumeSessionInstructions. Read appledger/profiles/forgetrail.yaml, the latest session record, and CONTEXT_PROMPT.md. Do not update workflow_tracking.json.
+Call getResumeSessionInstructions. Read appledger/profiles/forgetrail.yaml, the latest session record, and CONTEXT_PROMPT.md.
 ```
 
 ## Subagent patterns
@@ -41,7 +41,7 @@ Use `run_in_background` for long subagents when appropriate.
 ## Tracking sync
 
 After subagent or feature work:
-- Update `appledger/` (criteria, decision records, lessons, the session). Do not write `workflow_tracking.json`.
+- Update `appledger/` (criteria, decision records, lessons, the session).
 - Run **`validateTracking`** only when a legacy tracking file is present. A missing file is expected.
 - Update `CONTEXT_PROMPT.md` when architecture or patterns change.
 

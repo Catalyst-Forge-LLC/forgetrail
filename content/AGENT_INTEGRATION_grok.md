@@ -6,25 +6,25 @@ Grok Build (the agentic TUI/CLI from xAI) has excellent native primitives that m
 
 | Grok Primitive              | ForgeTrail Phase(s)          | How to Use |
 |-----------------------------|----------------------------|------------|
-| `/plan` + enter/exit_plan_mode + plan.md | Phase 1 (Architecture)    | Use native plan mode for all Phase 1 work. On approval, export to `PHASE_1_BRIEF.md` and decision records in `appledger/`. Do not write `workflow_tracking.json`. See `PLAN_MODE_PATTERNS.md`. |
+| `/plan` + enter/exit_plan_mode + plan.md | Phase 1 (Architecture)    | Use native plan mode for all Phase 1 work. On approval, export to `PHASE_1_BRIEF.md` and decision records in `appledger/`. See `PLAN_MODE_PATTERNS.md`. |
 | `spawn_subagent` (explore/plan/general, capability_mode, isolation: worktree, background, resume_from, personas) | All phases, especially 4, 5, 7 | Use for parallel audits (black-hat, UX, code quality), research, stabilize debugging, and exploratory spikes. Call `suggestSubagentDecomposition` first. Prefer read-only for analysis subagents. |
-| `todo_write` + TODO panel   | All phases                 | Mirror open criteria and next actions from `appledger/profiles/forgetrail.yaml`. The ledger is the durable record. Do not write `workflow_tracking.json`. |
+| `todo_write` + TODO panel   | All phases                 | Mirror open criteria and next actions from `appledger/profiles/forgetrail.yaml`. The ledger is the durable record. |
 | Skills (`/create-skill`, SKILL.md) | All sessions             | Install the `forgetrail` skill (see `SKILL.md` in content/skills/forgetrail). It keeps phase discipline, tracking rules, and subagent patterns always active. |
 | Native MCP (search_tool + use_tool) | Methodology delivery    | Register the ForgeTrail MCP server. Tools appear as `forgetrail__*`. Use `getNewProjectKickoff`, `getPhaseGuidance`, `getCompanionSuggestions`, `runAudit`, `searchLessons`, `validateTracking`, etc. |
 | Headless (`grok -p ... --output-format json`) | Automation / CI       | Call kickoff/resume tools and have the agent produce structured phase state. Add exit-criteria validation in pipelines. |
 | `docx` / `pptx` / `xlsx` skills + image/video gen | Phase 1 intake, Phase 6/7 deliverables | Use for exports (PDF/DOCX/PPTX), landing pages, brand assets, and marketing materials called out in greenfield intake. |
-| Sessions + memory + AGENTS.md | Cross-session continuity | `appledger/` plus `CONTEXT_PROMPT.md` are the ForgeTrail equivalents. Update the session record at session end. Do not write `workflow_tracking.json`. |
+| Sessions + memory + AGENTS.md | Cross-session continuity | `appledger/` plus `CONTEXT_PROMPT.md` are the ForgeTrail equivalents. Update the session record at session end. |
 
 ## Recommended Session Openers in Grok
 
 For a new project:
 ```
-Call ForgeTrail getNewProjectKickoff (includeCursorRule false), write appledger/, then start Phase 1 using native /plan mode. Read the generated plan on approval and produce PHASE_1_BRIEF.md plus decision records. Do not write workflow_tracking.json.
+Call ForgeTrail getNewProjectKickoff (includeCursorRule false), write appledger/, then start Phase 1 using native /plan mode. Read the generated plan on approval and produce PHASE_1_BRIEF.md plus decision records.
 ```
 
 For resuming:
 ```
-Call ForgeTrail getResumeSessionInstructions. Read appledger/profiles/forgetrail.yaml, the latest session record, and CONTEXT_PROMPT.md. Continue from the current phase. Do not update workflow_tracking.json.
+Call ForgeTrail getResumeSessionInstructions. Read appledger/profiles/forgetrail.yaml, the latest session record, and CONTEXT_PROMPT.md. Continue from the current phase.
 ```
 
 ## Subagent Patterns (Grok-specific)
@@ -45,7 +45,7 @@ Use `background: true` for long-running subagents and retrieve with `get_command
 ## Ledger sync
 
 After meaningful work (especially subagent results or feature completion):
-- Update `appledger/` (criteria, decision records, lessons, the session). Do not write `workflow_tracking.json`.
+- Update `appledger/` (criteria, decision records, lessons, the session).
 - Use `todo_write` to surface the next 3–5 open items from the profile.
 - Update `CONTEXT_PROMPT.md` when patterns or architecture change.
 

@@ -15,14 +15,14 @@ ForgeTrail owns **what** and **when**. The host agent owns **execution**.
 
 **New project:**
 ```
-Call ForgeTrail getNewProjectKickoff, write appledger/, then getPhaseGuidance("1"). Do not write workflow_tracking.json.
+Call ForgeTrail getNewProjectKickoff, write appledger/, then getPhaseGuidance("1").
 Lock architecture in docs/PHASE_1_BRIEF.md before any app code.
 ```
 
 **Resume:**
 ```
 Call getResumeSessionInstructions. Read appledger/profiles/forgetrail.yaml, the latest session record, and CONTEXT_PROMPT.md.
-Continue from the current phase. Do not update workflow_tracking.json.
+Continue from the current phase.
 ```
 
 ## When the host supports subagents
@@ -35,7 +35,7 @@ Prefer **read-only** subagents for analysis; parent or a single write-capable wo
 
 ## When the host supports plan mode
 
-Use native plan mode for **Phase 1** only. On approval, export to `PHASE_1_BRIEF.md` and decision records in `appledger/`. Do not write `workflow_tracking.json`. See **`getPlanModePatterns`**.
+Use native plan mode for **Phase 1** only. On approval, export to `PHASE_1_BRIEF.md` and decision records in `appledger/`. See **`getPlanModePatterns`**.
 
 ## Persistent discipline
 

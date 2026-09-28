@@ -2,7 +2,7 @@
 
 This is a labeled example. The project is fictional. It shows how ForgeTrail Lite state survives a closed chat, and how the next session is supposed to consume it.
 
-Nothing here is a benchmark, an adoption claim, or a client record. The record shape matches `appledger/` records, not the legacy `workflow_tracking.json` starter.
+Nothing here is a benchmark, an adoption claim, or a client record. The record shape matches `appledger/` records.
 
 ## The job
 
@@ -14,7 +14,7 @@ The human created an empty folder, wrote `docs/GENESIS.md`, and added Lite by co
 
 The human pasted the kickoff line from [TRY_FORGETRAIL.md](../../TRY_FORGETRAIL.md). The **agent** (not the CLI) then:
 
-1. Created `appledger/` with a manifest, a ForgeTrail profile, an application record, and a session record. It did not create `.forgetrail/workflow_tracking.json`.
+1. Created `appledger/` with a manifest, a ForgeTrail profile, an application record, and a session record.
 2. Drafted `docs/PHASE_1_BRIEF.md`.
 3. Recorded one decision and one lesson.
 4. Stopped after the human approved the brief. No application scaffold yet.

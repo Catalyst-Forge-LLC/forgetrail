@@ -1,6 +1,6 @@
 # ForgeTrail progress
 
-_Human-readable snapshot for non-technical operators. **Source of truth:** `appledger/profiles/forgetrail.yaml` and the latest session record. The agent updates those. Do not write `.forgetrail/workflow_tracking.json`. This page is a snapshot, not the record._
+_Human-readable snapshot for non-technical operators. **Source of truth:** `appledger/profiles/forgetrail.yaml` and the latest session record. The agent updates those. This page is a snapshot, not the record._
 
 ## Current phase
 

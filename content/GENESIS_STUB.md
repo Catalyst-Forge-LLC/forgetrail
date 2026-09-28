@@ -13,6 +13,6 @@ Replace this file with your **what, not how** build spec.
 
 See **TRY_FORGETRAIL.md** in the ForgeTrail repo for the full recipe. Short version:
 
-> Follow `.forgetrail/FORGETRAIL_LITE.md` as the project protocol. Treat `docs/GENESIS.md` as the product spec (what, not how). If `appledger` is installed, run `appledger init`. Otherwise create `appledger/` (manifest, profile, application record, session record). Draft `docs/PHASE_1_BRIEF.md` from the Genesis file, asking me only about gaps. Do not create `workflow_tracking.json`. Do not scaffold application code until I explicitly approve the Phase 1 brief.
+> Follow `.forgetrail/FORGETRAIL_LITE.md` as the project protocol. Treat `docs/GENESIS.md` as the product spec (what, not how). If `appledger` is installed, run `appledger init`. Otherwise create `appledger/` (manifest, profile, application record, session record). Draft `docs/PHASE_1_BRIEF.md` from the Genesis file, asking me only about gaps. Do not scaffold application code until I explicitly approve the Phase 1 brief.
 
 Keep this file at **`docs/GENESIS.md`** (this path). Do not move it to the repo root.

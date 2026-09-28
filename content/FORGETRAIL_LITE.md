@@ -1,6 +1,6 @@
 # ForgeTrail Lite — portable kickoff for any agentic chat
 
-> **ForgeTrail Lite v2.2.1**
+> **ForgeTrail Lite v2.2.2**
 > © Catalyst Forge, LLC — [www.catalystforge.com](https://www.catalystforge.com)
 > Part of the **ForgeTrail** open-source methodology ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) in the upstream ForgeTrail repo).
 >
@@ -8,7 +8,7 @@
 
 A single self-contained file for starting a new project in **any** agent: Cursor, Claude Code, Claude Cowork, OpenAI Codex, Cline, Aider, Continue, Windsurf, etc. **No MCP server, no vendored methodology tree, no external fetches.** Drop this file into the repo (or paste it into chat), and the agent has enough structure to run a real project end to end.
 
-**System of record:** Phase, decisions, lessons, and sessions live in `appledger/` (`profiles/forgetrail.yaml` and records). Do not create or update `.forgetrail/workflow_tracking.json`. §11 is the legacy shape for `appledger migrate` only. If that file already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep a second decision log. `.forgetrail/` is the protocol, rules, and hooks.
+**System of record:** Phase, decisions, lessons, and sessions live in `appledger/` (`profiles/forgetrail.yaml` and records). §11 is the legacy shape for `appledger migrate` only. If a legacy `.forgetrail/workflow_tracking.json` exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep a second decision log. `.forgetrail/` is the protocol, rules, and hooks.
 
 > **Maintainers:** Optional onboarding blocks in **§4.3**, **§4.4**, and **§7.1** are intentionally duplicated in root **`README.md`** and **`WORKFLOW.md`**. When you edit one, sync the others (see **`update-log.md`** — FORGETRAIL_LITE release checklist, item 3).
 
@@ -107,7 +107,7 @@ When a boot surfaces a gap in **ForgeTrail Lite itself** (not a one-off app bug)
 
 ### Who creates what
 
-The **human** only needs to do two things: copy ForgeTrail Lite into **`.forgetrail/`** (or paste this doc into chat), and tell the agent to follow it. **Everything else is created by the agent** as it works through the phases. You should never be asked to hand-write `appledger/`, `.forgetrail/AGENTS.md`, the brief, `CONTEXT_PROMPT.md`, or the Phase 2 baseline files — the agent writes them and shows them to you for review. Do not create `.forgetrail/workflow_tracking.json`.
+The **human** only needs to do two things: copy ForgeTrail Lite into **`.forgetrail/`** (or paste this doc into chat), and tell the agent to follow it. **Everything else is created by the agent** as it works through the phases. You should never be asked to hand-write `appledger/`, `.forgetrail/AGENTS.md`, the brief, `CONTEXT_PROMPT.md`, or the Phase 2 baseline files — the agent writes them and shows them to you for review.
 
 | File / folder | Who creates it | When |
 |---|---|---|
@@ -307,7 +307,7 @@ Record anything non-obvious as a lesson in **`appledger/`** (for example, Playwr
 
 ### 4.2 Ordered first actions
 
-1. **Read** `.forgetrail/FORGETRAIL_LITE.md` top to bottom. Also read `appledger/profiles/forgetrail.yaml`, the latest session record, `.forgetrail/AGENTS.md`, and `CONTEXT_PROMPT.md` if they already exist. Do not read a writable `workflow_tracking.json` as the live phase.
+1. **Read** `.forgetrail/FORGETRAIL_LITE.md` top to bottom. Also read `appledger/profiles/forgetrail.yaml`, the latest session record, `.forgetrail/AGENTS.md`, and `CONTEXT_PROMPT.md` if they already exist.
 2. **Ensure the folder is a git repo.** *(Skip this step if the user opted into no-git mode in §4.1.)* Check with `git rev-parse --is-inside-work-tree`. If it returns false or errors, run `git init -b main` (or `git init` + `git branch -m main` on older git) at the repo root. Never re-init an existing repo. **Apply §1.5 git policy** (default: **commit `.forgetrail/`** for Lite). Write a minimal `.gitignore` containing at least:
    ```
    node_modules/
@@ -320,7 +320,7 @@ Record anything non-obvious as a lesson in **`appledger/`** (for example, Playwr
    2. **`.forgetrail/cursor/rules/forgetrail-updates-log.mdc`** — use the §12.5 snippet verbatim. **Symlink or copy** into `.cursor/rules/` so Cursor reminds agents when to update `FORGETRAIL_LITE_UPDATES.md` (§1.6). Optional: copy the upstream **`FORGETRAIL_LITE_UPDATES.md`** starter into `.forgetrail/` when you expect protocol feedback during the project.
    3. **`.forgetrail/hooks/` and `.cursor/hooks.json`** — install host safety hooks (`content/hooks/`) into `.forgetrail/hooks/` and copy `cursor-hooks.json` to `.cursor/hooks.json`. On Cursor, this runs pre-commit verification, enforces pnpm lock consistency, gates git push at the tool level, and injects live phase context at session start. For Claude Code, add `claude-settings-hooks.json` into `.claude/settings.json`.
    If any of these already exists and its content conflicts with the Lite defaults, **do not overwrite** — flag the conflict to the user and ask how to reconcile. Record the reconciliation as a decision in `appledger/`.
-4. **Create `appledger/`** if it does not exist. Run `pnpm dlx appledger init --name "<application name>"` (or `appledger init` when it is installed globally), then `pnpm dlx appledger check`. Init writes `manifest.yaml`, `profiles/forgetrail.yaml` with the `plan` phase `in_progress`, an application record, and a session record. It does not overwrite existing files. Init leaves the purpose as "Not supplied." Write the one-line purpose into the application record from what the user has already said, then run `check` again. Do **not** create `.forgetrail/workflow_tracking.json`. Criteria stay `pending` until evidence exists. **Without Node:** write the same four files by hand in the shape of the [minimal example ledger](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/examples/minimal/appledger), and run `appledger check` once Node is available. A hand-written ledger is not checked until then.
+4. **Create `appledger/`** if it does not exist. Run `pnpm dlx appledger init --name "<application name>"` (or `appledger init` when it is installed globally), then `pnpm dlx appledger check`. Init writes `manifest.yaml`, `profiles/forgetrail.yaml` with the `plan` phase `in_progress`, an application record, and a session record. It does not overwrite existing files. Init leaves the purpose as "Not supplied." Write the one-line purpose into the application record from what the user has already said, then run `check` again. Criteria stay `pending` until evidence exists. **Without Node:** write the same four files by hand in the shape of the [minimal example ledger](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/examples/minimal/appledger), and run `appledger check` once Node is available. A hand-written ledger is not checked until then.
 5. **If git was initialized in step 2**, make the first commit now so the user has a clean baseline. **What lands in the commit depends on §1.5:** if **committing `.forgetrail/`**, steps 3–4 artifacts are included; if **gitignoring `.forgetrail/`**, only `.gitignore` (and any `.cursor/rules/` copies) — the workspace stays local-only and that is expected, not a mistake. Example: `git add -A && git commit -m "chore: ForgeTrail Lite bootstrap"`. Skip this step if the repo already had history — do not squash or amend what's there. Skip entirely if the user is in no-git mode (§4.1).
 6. **Ask the §5 intake questions.** Do not write any project code yet. For the first user-facing reply, follow §9 (plain product language, one clear "reply with," no methodology jargon).
 7. **Create `docs/`** (if missing) and **draft `docs/PHASE_1_BRIEF.md`** from the §6 template using the user's answers. Show it to the user, iterate, then **lock it**: mark the brief criteria met in `appledger/profiles/forgetrail.yaml` only when the user has approved them, and record major commitments as decision records.
@@ -461,7 +461,7 @@ Output requirements
 
 ### 4.6 ForgeTrail phase progress (human-readable)
 
-**Source of truth:** **`appledger/profiles/forgetrail.yaml`** and the latest session record (agents update every session). Do not write `workflow_tracking.json`.
+**Source of truth:** **`appledger/profiles/forgetrail.yaml`** and the latest session record (agents update every session).
 
 **For humans who are not in Cursor:**
 
@@ -839,7 +839,7 @@ Full ForgeTrail expands this under **`docs/TECHNICAL_REFERENCE.md`** (*URL impor
    - **Letters** (A/B/C) = pick-one / "which first?" — avoids collision with numbered steps.
 6. **No interactive CLIs** in scripted commands. Pass non-interactive flags. Examples: `npm create vite@latest -- --template ...`, `gh repo create --confirm`. For SvelteKit in Lite, **prefer the manual scaffold** (§4.2 step 10 A.1) over `sv create` — by the time Phase 2 runs, the repo root is never empty and `sv create .` will hit an un-skippable **`Directory not empty. Continue?`** prompt and hang. If you do use `sv create` as a shortcut, target a **new empty subfolder** (`sv create app`), never `.`. A hanging prompt in an agent terminal is a dead session.
 7. **Five-turn rule.** If a bug or design problem has not converged in ~5 turns, **stop patching** and propose a different approach (different library, different data model, different scope cut). Announce the pivot explicitly.
-8. **Update the ledger after substantive work.** Move criteria that have evidence, and update the session record. A stale `appledger/` after a busy session is a bug. Do not write `workflow_tracking.json`.
+8. **Update the ledger after substantive work.** Move criteria that have evidence, and update the session record. A stale `appledger/` after a busy session is a bug.
 9. **Git commits — clean messages and natural stopping points.** See **§8.9** for guidelines. Commit with phase-prefixed or descriptive messages (`git commit -m "phase-2: wire hero flow"` or `git commit -F path/to/msg.txt`). Always verify that types and checks pass cleanly before committing. Never leave uncommitted broken states across session boundaries.
 
 10. **Install/bootstrap scripts must branch on `process.platform` before shelling out to archive, network, or text tools.** Treat `tar`, `unzip`, `curl`, `sed`, `awk`, `openssl`, and similar as **platform-dependent on Windows** — never a drop-in from a Unix-only recipe. On `win32`, prefer PowerShell (`Expand-Archive`, `Invoke-WebRequest`) or call `C:\Windows\System32\tar.exe` by absolute path to bypass PATH shadowing; keep `tar` / `unzip` / `curl` for macOS/Linux branches. Layer fallbacks and end with a clear error that points the user at manual steps (e.g. “Extract All”) if automation cannot run. Full failure modes: §13 (Engineering).
@@ -862,7 +862,7 @@ Ensure that automated checks pass (`pnpm run verify` or project test suite) befo
 
 ## 9. First user-facing reply after bootstrap
 
-After you create `.forgetrail/AGENTS.md`, `appledger/`, and the git baseline, your **first message to the human** should be **short, plain-English, and ask only the opening round** of §5. Do not create `.forgetrail/workflow_tracking.json`. Do **not** dump the full intake checklist. Do **not** list MCP tools, internal file paths, ForgeTrail terms ("hero workflow," "architecture," "spine," "exit criteria," "brief," "phase"), or file inventories. Target **~80 words or fewer** — this is a conversation starter, not a form.
+After you create `.forgetrail/AGENTS.md`, `appledger/`, and the git baseline, your **first message to the human** should be **short, plain-English, and ask only the opening round** of §5. Do **not** dump the full intake checklist. Do **not** list MCP tools, internal file paths, ForgeTrail terms ("hero workflow," "architecture," "spine," "exit criteria," "brief," "phase"), or file inventories. Target **~80 words or fewer** — this is a conversation starter, not a form.
 
 **The anchor round is always Round 1:** three small, numbered questions — project name, what it is, who it's for. Nothing else. Stagger the rest of §5 across follow-up messages once they answer.
 
@@ -1003,7 +1003,7 @@ Save this as `.forgetrail/AGENTS.md` so agents that auto-load it (Codex, Cursor,
 
 ```markdown
 <!--
-  Agent protocol based on ForgeTrail Lite v2.2.1.
+  Agent protocol based on ForgeTrail Lite v2.2.2.
   © Catalyst Forge, LLC — www.catalystforge.com
   Licensed under Apache License 2.0 (upstream ForgeTrail repo).
 -->
@@ -1034,7 +1034,7 @@ This repository uses **ForgeTrail Lite** as its project kickoff and operating pr
 Initial `git init`, `pnpm init` / scaffolder, `pnpm install`, and the initial commit are all done by the agent per `.forgetrail/FORGETRAIL_LITE.md` §4. Do not ask the user to run setup commands by hand. If `git`, **Node.js**, **npm**, or **pnpm** are missing, follow §4.1 preflight (concrete install path; no-git mode for git only — never silently skip).
 
 ## Session start
-1. Read `appledger/profiles/forgetrail.yaml` and `CONTEXT_PROMPT.md` (if present). Do not treat `.forgetrail/workflow_tracking.json` as the live phase.
+1. Read `appledger/profiles/forgetrail.yaml` and `CONTEXT_PROMPT.md` (if present).
 2. Check the current profile phase and the latest session record.
 3. Verify `.git/` and `package.json` exist if the phase calls for them; if missing, re-read `.forgetrail/FORGETRAIL_LITE.md` §4 (preflight + ordered actions) and catch up before proceeding. If a decision records that source control is deferred, respect no-git mode and remind the user git is still pending.
 4. If the previous session left exit criteria unmet, resume there — do not jump ahead.
@@ -1056,7 +1056,7 @@ These are the failures ForgeTrail sees most often. The agent should re-read this
 - **Skipping the Phase 1 brief.** Rewrites compound. If the user says "just start coding," offer to write a 10-line brief in 2 minutes first — it still pays off.
 - **Half-built spine.** Scaffolding a UI with mock data, or wiring a DB with no UI, and calling it Phase 2. The spine is end-to-end or it is not a spine.
 - **Silent stack swap.** Choosing a framework, DB, or language the user did not confirm. Always name the stack and get a "yes" before Phase 2.
-- **Ledger rot.** Creating `appledger/` once and never updating it. Update the session record at the end of every substantive turn. Do not recreate `.forgetrail/workflow_tracking.json`.
+- **Ledger rot.** Creating `appledger/` once and never updating it. Update the session record at the end of every substantive turn.
 - **Turning the first reply into a methodology dump.** Users want a product answer, not a tour of decision records and exit criteria.
 
 **Engineering**
@@ -1119,7 +1119,6 @@ During Phase 2, create these once the spine is running. Keep them short and hone
   # CLAUDE.md
   # IDEAS.md
   # .cursor/rules/forgetrail-updates-log.mdc
-  # Do not symlink or recreate .forgetrail/workflow_tracking.json.
   # Project state is appledger/ and is committed with the app.
 
   # Deps
@@ -1179,4 +1178,4 @@ ForgeTrail Lite covers the shape of a project. The full **ForgeTrail MCP server*
 
 ---
 
-**ForgeTrail Lite v2.2.1** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+**ForgeTrail Lite v2.2.2** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

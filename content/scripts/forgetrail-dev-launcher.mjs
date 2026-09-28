@@ -144,7 +144,7 @@ async function cmdRun() {
 function renderProgress() {
   if (!existsSync(trackingPath)) {
     return {
-      text: "No workflow_tracking.json. Phase state belongs in appledger/profiles/forgetrail.yaml.",
+      text: "Phase state: appledger/profiles/forgetrail.yaml.",
       md: null,
     };
   }

@@ -86,7 +86,7 @@ export function runInstallForgetrail(rawArgv, { defaultToCwd = false } = {}) {
   console.log("\nDone.");
   console.log("  Methodology:  _forgetrail/WORKFLOW.md");
   console.log("  First chat:   _forgetrail/INITIAL_PROMPT.md");
-  console.log("  Project record: appledger/ (not workflow_tracking.json)");
+  console.log("  Project record: appledger/");
   console.log("  Hooks:        .forgetrail/hooks/ (enforced via .cursor/hooks.json)");
   printLedgerNext();
   return { target, mode: "full" };
