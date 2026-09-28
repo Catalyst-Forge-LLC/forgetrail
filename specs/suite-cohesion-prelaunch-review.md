@@ -1,7 +1,7 @@
 # ForgeTrail, AppLedger, and xFacts — suite cohesion review before promotion
 
 **Spec kind:** Delivery
-**Status:** Draft. P0 fixes are committed locally and are not published or deployed. See §9. P1 and P2 are open.
+**Status:** Draft. P0 fixes are published and forgetrail.dev is redeployed. appledger.dev still serves the old text. See §9. P1 and P2 are open.
 **Date:** 2026-09-28
 **Related:** [`app-ledger-spec-pack-v0.1.0/`](app-ledger-spec-pack-v0.1.0/), [`partial/companion-tools.md`](partial/companion-tools.md), [`canonical/forgetrail-prelaunch-review.md`](canonical/forgetrail-prelaunch-review.md), root [`TODO.md`](../TODO.md)
 **Surfaces:** `README.md`, `content/FORGETRAIL_LITE.md`, `content/companion-tools.json`, `scripts/forgetrail-cli.mjs`, `scripts/mcp-status.mjs`, `mcp-server/`, `content/hooks/`, `site/`; sibling repos `appledger`, `x-facts`, `app-facts`, `feature-facts`, `tool-facts`, `skill-facts`, `agent-facts`, `model-facts`; catalystforge.com tools shelf
@@ -352,3 +352,11 @@ Decisions taken for §7: `forgetrail-mcp` depends on `forgetrail` (`^0.5.2`). `f
 | P0-6 | AppLedger 0.1.2 adds `appledger bind`. An unbound `APP_FACTS.md` or FeatureFacts register is `needs_review`, an absent one is `not_applicable`, and a bound one is `unchanged`. | AppLedger `pnpm test`: 62 passed. A temporary filepress clone bound `APP_FACTS.md` in one command, validated it against pinned AppFacts, and left its bytes unchanged. No local ledger was bound. |
 
 Still required from the operator: bump and publish `forgetrail` (the tree is 0.5.2, which is already on npm), then publish `forgetrail-mcp` 0.4.2 and `appledger` 0.1.2, and redeploy both sites. Until `forgetrail` is republished, the published Lite and installer lack the P0-3 text. The 27 migrated ledgers have no bindings until `appledger bind --apply` runs in each.
+
+Later on 2026-09-28 the operator published `forgetrail` 0.5.3, `forgetrail-mcp` 0.4.2, and `appledger` 0.1.2. The local MCP server's `ping` reported `ok` and version 0.4.2 with the clone as its root. forgetrail.dev/docs/install/ names `appledger init` and `appledger check`. appledger.dev still says "name hold" and "not deployed", and /docs/quickstart/ returns 404, so AppLedger commit `965320e` is not deployed.
+
+Fleet binding with the published `appledger@0.1.2`: 18 of the 27 migrated repositories had a label at the root. `bind --apply` added 22 bindings, 8 for `APP_FACTS.md` and 14 for `.featurefacts/features.yaml`. In each repository the label digests were unchanged, `check` reported no errors, `subjects --operation validate` accepted every bound label, and only `appledger/manifest.yaml` changed. Each repository has one local commit, vaulted and not pushed. The other 9 have no label, and their application families are `not_applicable`.
+
+### New finding from the binding run
+
+**Most FeatureFacts registers are unfilled starters.** 13 of the 14 bound registers have `scan_id: scan-init`, product type `unknown`, and `features: []`. They validate because an empty selection is valid. Only `feature-facts` lists a feature. Do not use one of these repositories as a FeatureFacts demo until its register has been scanned and reviewed.
