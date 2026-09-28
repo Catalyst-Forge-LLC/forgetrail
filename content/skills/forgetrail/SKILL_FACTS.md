@@ -33,7 +33,7 @@ egress:
   telemetry: none
   destinations: []
 generated:
-  date: 2026-08-20
+  date: 2026-09-26
   generator: hand-authored
 credits:
   generated_with: https://skillfacts.dev

@@ -448,7 +448,7 @@ server.tool(
       result +=
         "\n\n---\n\n## Native plan mode (when available)\n\n" +
         "Prefer the host's plan mode for all Phase 1 work. On user approval, call **`ingestPlanArtifact`** with the approved plan text " +
-        "to map into `docs/PHASE_1_BRIEF.md` + `decisions[]`, or call **`getPlanModePatterns`** for the full handoff flow. " +
+        "to map into `docs/PHASE_1_BRIEF.md` and decision records in `appledger/`, or call **`getPlanModePatterns`** for the full handoff flow. " +
         "Do not scaffold until the brief is locked.";
     }
 
@@ -1619,7 +1619,7 @@ function printStartupHintsToStderr(): void {
     "",
     "Tell your agent — new project (easiest):",
     '  "Call ForgeTrail getNewProjectKickoff or kickoffGreenfield, then set up the project per that bundle."',
-    "  (Granular: getNewProjectBootstrap + getInitialWorkflowTracking + getPostBootstrapUserMessage + getForgeTrailCursorPhaseRule + getForgeTrailCursorLessonsRules.)",
+    "  (Granular: getNewProjectBootstrap + getPostBootstrapUserMessage + getForgeTrailCursorPhaseRule + getForgeTrailCursorLessonsRules. The ledger starts with appledger init.)",
     "",
     "Tell your agent — resume a session:",
     '  "Call ForgeTrail getResumeSessionInstructions and continue from appledger/."',
@@ -1636,7 +1636,7 @@ function printStartupHintsToStderr(): void {
     '  searchLessons with a keyword',
     "  validateTracking (classify a legacy workflow_tracking.json; do not treat it as the live record)",
     "  suggestSubagentDecomposition (parallel audits/research for spawn_subagent hosts)",
-    "  ingestPlanArtifact (approved plan → PHASE_1_BRIEF + decisions[])",
+    "  ingestPlanArtifact (approved plan → PHASE_1_BRIEF draft + appledger decision records)",
     "  getPlanModePatterns (native plan mode as Phase 1)",
     "  getAgentIntegrationGuide (grok | cursor | claude | generic)",
     "  getForgeTrailSkill (installable skill definition)",

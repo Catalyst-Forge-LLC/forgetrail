@@ -16,7 +16,7 @@ After substantive work, if you find something that **should be fixed or clarifie
 - Errors in the Lite defaults for **pnpm + TypeScript + monorepos** or **Cursor/agent** workflows.
 - Doc structure suggestions (which § to patch).
 
-**Do not** log routine bug fixes or product-only notes; use `.forgetrail/workflow_tracking.json → gotchas[]` for session-local incidents. **Do** log items a **future agent bootstrapping any ForgeTrail Lite project** would benefit from if the upstream file were updated.
+**Do not** log routine bug fixes or product-only notes; record a session-local incident as a lesson or open question record in `appledger/`. **Do** log items a **future agent bootstrapping any ForgeTrail Lite project** would benefit from if the upstream file were updated.
 
 ## How to write an entry
 

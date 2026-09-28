@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { readFileSync } from "node:fs";
 import { cwd } from "node:process";
 import {
   INSTALL_FULL_HELP,
@@ -39,6 +40,7 @@ Install options:
   --skip-tracking    Accepted and ignored. A tracking JSON file is not installed.
   --path, -p <dir>   Install elsewhere (default: current directory)
   --help, -h         Show help
+  --version, -v      Print the forgetrail version
 
 First-time prove-it (no MCP): see TRY_FORGETRAIL.md in the ForgeTrail repo.
 Run \`forgetrail mcp --help\` for all MCP subcommands.
@@ -53,6 +55,12 @@ function main() {
   }
 
   const cmd = argv[0];
+
+  if (cmd === "--version" || cmd === "-v") {
+    const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+    console.log(pkg.version);
+    process.exit(0);
+  }
 
   if (cmd === "mcp") {
     runMcpCommand(argv.slice(1));

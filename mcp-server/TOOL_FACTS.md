@@ -2,7 +2,7 @@
 tool_facts_version: "0.1.0"
 name: ForgeTrail MCP Server
 developer: Catalyst Forge
-version: "0.4.2"
+version: "0.4.3"
 status: active
 license: Apache-2.0
 kind: mcp-server
@@ -226,7 +226,7 @@ tools:
       processes: false
     idempotent: true
   - name: ingestPlanArtifact
-    purpose: "Map an approved plan artifact into a PHASE_1_BRIEF.md draft plus decisions[] entries"
+    purpose: "Map an approved plan artifact into a PHASE_1_BRIEF.md draft plus decision records for appledger/"
     side_effects: none
     reach:
       filesystem: none
@@ -274,8 +274,8 @@ tools:
       processes: false
     idempotent: true
 generated:
-  date: 2026-09-16
-  generator: hand-authored (tools inventory from forgetrail-mcp 0.4.2)
+  date: 2026-09-28
+  generator: hand-authored (tools inventory from forgetrail-mcp 0.4.3)
 credits:
   generated_with: https://toolfacts.dev
   built_by: "Catalyst Forge - https://www.catalystforge.com/"
@@ -286,7 +286,7 @@ credits:
 | | |
 |---|---|
 | **Developer** | Catalyst Forge |
-| **Version** | 0.4.2 |
+| **Version** | 0.4.3 |
 | **Status** | active |
 | **License** | Apache-2.0 |
 | **Kind** | mcp-server |
@@ -294,7 +294,7 @@ credits:
 
 `runAudit` returns a structured audit prompt. It does not scan the workspace or perform the audit. Following those instructions is a later host or agent action, and that later action is outside this tool's labeled side effects.
 
-This file is bound to server version 0.4.2. Tool names are unchanged from 0.4.0. `0.4.1` changes the IngotVault offer text only. `0.4.2` depends on the `forgetrail` package for content, and when content is missing every tool except `ping` returns an error instead of running. The tool purposes were not re-listed. `getInitialWorkflowTracking` does not return a starter JSON file. Comparing a live `tools/list` can show added, removed, or renamed tools. It cannot prove that a same-named tool still does what this label says.
+This file is bound to server version 0.4.3. Tool names are unchanged from 0.4.0. `0.4.1` changes the IngotVault offer text only. `0.4.2` depends on the `forgetrail` package for content, and when content is missing every tool except `ping` returns an error instead of running. `0.4.3` changes the startup banner and the `ingestPlanArtifact` purpose to name decision records in `appledger/`. The tool purposes were not otherwise re-listed. `getInitialWorkflowTracking` does not return a starter JSON file. Comparing a live `tools/list` can show added, removed, or renamed tools. It cannot prove that a same-named tool still does what this label says.
 
 ## Runtime
 
@@ -381,7 +381,7 @@ None required.
 | `getUserReplyFormat` | Return guidance for formatting options and next steps to users |
 | `validateTracking` | Classify a workflow_tracking.json file. A pointer is accepted. A writable document is a conflict. |
 | `suggestSubagentDecomposition` | Return recommended subagent spawn parameters for a phase and task |
-| `ingestPlanArtifact` | Map an approved plan artifact into a PHASE_1_BRIEF.md draft plus decisions[] entries |
+| `ingestPlanArtifact` | Map an approved plan artifact into a PHASE_1_BRIEF.md draft plus decision records for appledger/ |
 | `getCompanionSuggestions` | Return optional Catalyst Forge companion tools for a ForgeTrail phase or situation |
 | `getPlanModePatterns` | Return guidance for using native agent plan modes as Phase 1 |
 | `getAgentIntegrationGuide` | Return tailored ForgeTrail bootstrap mappings for a specific agent host |

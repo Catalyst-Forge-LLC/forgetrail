@@ -1,7 +1,7 @@
 # ForgeTrail, AppLedger, and xFacts — suite cohesion review before promotion
 
 **Spec kind:** Delivery
-**Status:** Draft. P0 fixes are published and forgetrail.dev is redeployed. appledger.dev still serves the old text. See §9. P1 and P2 are open.
+**Status:** Draft. P0 fixes are published. P1 fixes are committed locally and are not published or deployed, and P1-5 and P1-6 wait on operator decisions. See §9 and §10. P2 is open.
 **Date:** 2026-09-28
 **Related:** [`app-ledger-spec-pack-v0.1.0/`](app-ledger-spec-pack-v0.1.0/), [`partial/companion-tools.md`](partial/companion-tools.md), [`canonical/forgetrail-prelaunch-review.md`](canonical/forgetrail-prelaunch-review.md), root [`TODO.md`](../TODO.md)
 **Surfaces:** `README.md`, `content/FORGETRAIL_LITE.md`, `content/companion-tools.json`, `scripts/forgetrail-cli.mjs`, `scripts/mcp-status.mjs`, `mcp-server/`, `content/hooks/`, `site/`; sibling repos `appledger`, `x-facts`, `app-facts`, `feature-facts`, `tool-facts`, `skill-facts`, `agent-facts`, `model-facts`; catalystforge.com tools shelf
@@ -360,3 +360,20 @@ Fleet binding with the published `appledger@0.1.2`: 18 of the 27 migrated reposi
 ### New finding from the binding run
 
 **Most FeatureFacts registers are unfilled starters.** 13 of the 14 bound registers have `scan_id: scan-init`, product type `unknown`, and `features: []`. They validate because an empty selection is valid. Only `feature-facts` lists a feature. Do not use one of these repositories as a FeatureFacts demo until its register has been scanned and reviewed.
+
+## 10. P1 fix record (2026-09-28)
+
+Local commits in each repository, vaulted and not pushed. Nothing below is published or deployed.
+
+| Item | Fix | Check re-run | Still needed |
+| --- | --- | --- | --- |
+| P1-1 | The ToolFacts and SkillFacts examples are copies of ForgeTrail's current labels. The flat `tool-facts/examples/TOOL_FACTS.md` copy (0.3.5) was replaced too. The AgentFacts reference counts 32 tools, and the illustrative wider host counts 34. Both are label version 0.1.1 and describe `validateTracking` as classifying a legacy tracking file. Viewer links were regenerated with each repository's `encode-viewer`. The toolfacts.dev and agentfacts.dev pages, ForgeTrail's README, and `site/filepress.config.ts` use the new links. The xFacts Panel files were regenerated from the live 0.4.3 server and the current label, and the xfacts.dev Panel link was re-encoded. | Each family validator accepted every changed label. Panel `validate` and native `integrity` passed. The README links decode to ToolFacts 0.4.3 and SkillFacts 0.3.0 with `appledger/` in the purpose. | Redeploy toolfacts.dev, skillfacts.dev, agentfacts.dev, and xfacts.dev. The ToolFacts example names 0.4.3, so publish `forgetrail-mcp` 0.4.3 first. |
+| P1-2 | The same "One system, three parts" paragraph is on the forgetrail.dev, appledger.dev, and xfacts.dev home pages and in xfacts.dev `llms.txt`. appledger.dev's footer links xFacts. AppLedger is on the Catalyst Forge shelf in "Practice & standards" and the "Guide agent work" shortcut. ForgeTrail's shelf entry names the ledger instead of the tracking file. | catalyst-forge `check:facts`: 25 tools agree, 0 warnings. `build` and `check:build` passed. Both filepress sites built. | Redeploy all four sites and catalystforge.com. |
+| P1-3 | Gap Last records leftovers as open question records in `appledger/`. The xFacts offer says to offer a label when the product ships and to record the disposition either way. `COMPANION_TOOLS.md` and the shipped `forgetrail-updates-log.mdc` rule no longer name `gotchas[]` or the house standard. | `rg 'gotchas\[\]\|house standard' content/companion-tools.json` returns nothing. | `getCompanionSuggestions` reads the installed `forgetrail`, so publish `forgetrail` after a version bump. |
+| P1-4 | The startup banner no longer lists `getInitialWorkflowTracking` among the kickoff pieces. The banner, Phase 1 guidance, and ToolFacts purpose say `ingestPlanArtifact` produces decision records in `appledger/`. `forgetrail-mcp` is 0.4.3. | `rg 'decisions\[\]' mcp-server/src/index.ts mcp-server/TOOL_FACTS.md` returns nothing. MCP build passed. | Publish `forgetrail-mcp` 0.4.3. |
+| P1-5 | `orient` counts the work list against the budget and summarizes the rest as "N more in progress, blocked, or ready." The session `left_off` matches the published and deployed state. | AppLedger `pnpm test`: 63 passed. `orient --budget 300` printed 298 words. | Operator decision: close shipped work records with their evidence, and whether to advance the profile phase. Publish `appledger` 0.1.3. |
+| P1-6 | Not changed. | — | Operator decision on the xFacts npm names. |
+| P1-7 | `site/static/llms.txt` lists Lite first, then WORKFLOW, the docs pages, AppLedger, and xFacts. | Every link returned 200. The site build copies it to `build/llms.txt`. | Redeploy forgetrail.dev. |
+| P1-8 | `forgetrail --version` and `-v` print 0.5.3. `appledger --version` and `-v` print 0.1.3. | Run from both trees. | Publish both packages. |
+
+The AppLedger `diff` test timed out twice at vitest's 5-second default while other builds ran. It now has a 20-second limit.

@@ -17,7 +17,7 @@ Public shelf (current versions and install): [catalystforge.com/tools](https://c
 3. FilePress publishes **Markdown**. It does not replace an interactive SvelteKit app.
 4. LocalSlip and LocalHelm are for **two or more** local apps, not a first single project. If they accept LocalSlip, use the recipes below. Do not write `ensure-lease.mjs`.
 5. Practice skills: install the one that matches the current job, not the set.
-6. xFacts is the house standard for a **shipped** product (public URL or handoff). One-shots may skip.
+6. Offer an xFacts label when a product ships (public URL or handoff). Generate one only if the user accepts. Record the subject disposition in `appledger/` either way.
 
 ---
 

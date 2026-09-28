@@ -37,6 +37,10 @@ next_steps:
 
 ForgeTrail instructs the agent to read that ledger, preserve approved decisions, and pause at approval gates. The agent must write the handoff. Those updates are not automatic. Optional hooks point a new session at `appledger/` and remind it to update the session record. If an older project still has a writable tracking file, `appledger migrate preview` then `apply` replaces that file with a pointer. The full example is on [Continuity](/docs/continuity).
 
+## One system, three parts
+
+[ForgeTrail](https://forgetrail.dev) guides the work through phases with approval gates. [AppLedger](https://appledger.dev) keeps the record of that work in `appledger/`. [xFacts](https://xfacts.dev) labels describe what was built. Each works on its own.
+
 ## Start with Lite
 
 The recommended first path is [Try](/try): write a what-not-how spec, drop in ForgeTrail Lite, and paste one kickoff line. No Node and no MCP required if you copy the Lite file by hand.

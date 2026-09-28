@@ -1,0 +1,18 @@
+# ForgeTrail
+
+> A development method for agent-assisted builds: seven phases with approval gates. The project record is an AppLedger ledger in `appledger/`. This file is an index. It is not the method.
+
+Start with ForgeTrail Lite. It is one file an agent can follow without MCP. Install it with `pnpm dlx forgetrail install --lite`, then create the ledger with `pnpm dlx appledger init --name "Your app name"` and `pnpm dlx appledger check`.
+
+- [ForgeTrail Lite](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/content/FORGETRAIL_LITE.md)
+- [WORKFLOW](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/WORKFLOW.md)
+- [Try it in one sitting](https://forgetrail.dev/docs/try/)
+- [Install](https://forgetrail.dev/docs/install/)
+- [Phases](https://forgetrail.dev/docs/phases/)
+- [Continuity between sessions](https://forgetrail.dev/docs/continuity/)
+- [MCP server](https://forgetrail.dev/docs/mcp/)
+- [CLI](https://forgetrail.dev/docs/cli/)
+- [AppLedger](https://appledger.dev/llms.txt)
+- [xFacts](https://xfacts.dev/llms.txt)
+
+Do not load WORKFLOW into always-on agent context. Read Lite, or the phase page that matches the task.

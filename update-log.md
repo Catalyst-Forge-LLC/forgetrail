@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-09-28 | **Suite review P1 fixes:** `forgetrail --version`, forgetrail.dev `llms.txt`, the shared three-part paragraph on the home page, companion text that names `appledger/`, and `forgetrail-mcp` 0.4.3 banner and `ingestPlanArtifact` text. Current ToolFacts and SkillFacts viewer links. Not published. See `specs/suite-cohesion-prelaunch-review.md` §10. |
 | 2026-09-28 | **Suite review P0 fixes + FORGETRAIL_LITE v2.2.1:** Lite step 4 and the installer name `appledger init` and `appledger check`. `forgetrail-mcp` 0.4.2 depends on `forgetrail`, and a missing content root returns an error instead of an answer. `forgetrail mcp cursor-config` prints a working config from an npm install. README and install docs name the ledger. Not published. |
 | 2026-09-28 | **`forgetrail-mcp` 0.4.1:** version bump for the IngotVault offer. Not published. Registry remains `0.4.0`. |
 | 2026-09-26 | **Versions for the ledger cutover:** | `forgetrail` 0.5.0 and `forgetrail-mcp` 0.4.0. Not published. Registry remains 0.4.20 and 0.3.10 until that publish. |

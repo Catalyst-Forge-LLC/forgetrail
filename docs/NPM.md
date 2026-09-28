@@ -10,12 +10,12 @@ Two public unscoped packages:
 
 | Package | This tree | On npm until you publish | From | What it is |
 | --- | --- | --- | --- | --- |
-| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | 0.5.2 | 0.5.2 | repo root | CLI + Lite + templates. `pnpm dlx forgetrail install --lite` |
-| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | 0.4.2 | 0.4.1 | `mcp-server/` | MCP bin. Depends on `forgetrail` for content. `pnpm dlx forgetrail-mcp` |
+| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | 0.5.3 | 0.5.3 | repo root | CLI + Lite + templates. `pnpm dlx forgetrail install --lite` |
+| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | 0.4.3 | 0.4.2 | `mcp-server/` | MCP bin. Depends on `forgetrail` for content. `pnpm dlx forgetrail-mcp` |
 
 These are **installer and MCP channels**, not a library. App repos should not add `forgetrail` to `dependencies`.
 
-`forgetrail@0.5.2` is on npm. This tree has Lite v2.2.1 and a new installer `Next:` step that are not in `0.5.2`, so `forgetrail` needs a version bump before its next publish. `forgetrail-mcp@0.4.2` is this tree and is not published yet. It adds `forgetrail` as a dependency and returns an explicit error when content is missing. `0.4.1` remains the registry copy until you publish from `mcp-server/`. `pnpm run pack:check` is the gate. It does not publish.
+`forgetrail@0.5.3` and `forgetrail-mcp@0.4.2` are on npm. This tree adds `forgetrail --version`, forgetrail.dev `llms.txt`, and companion text that names `appledger/`, so `forgetrail` needs a version bump before its next publish. `forgetrail-mcp@0.4.3` changes the startup banner and the `ingestPlanArtifact` description, and is not published yet. `getCompanionSuggestions` reads its text from the installed `forgetrail`, so the new companion text reaches MCP users only after `forgetrail` is published. `pnpm run pack:check` is the gate. It does not publish.
 
 ---
 
@@ -63,7 +63,7 @@ pnpm dlx forgetrail@<version> --help
 pnpm dlx forgetrail@<version> install --lite --dry-run
 
 # MCP starts and reads content from its forgetrail dependency. ping should not say "content missing".
-pnpm dlx forgetrail-mcp@0.4.2
+pnpm dlx forgetrail-mcp@0.4.3
 ```
 
 Optional Cursor MCP (content from a `forgetrail` install, or set the path):

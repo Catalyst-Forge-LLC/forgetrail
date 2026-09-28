@@ -190,7 +190,7 @@
         {
           "name": "Gap Last",
           "homepage": "https://gaplast.dev",
-          "offer": "Gap Last separates observations, constraints, and remaining questions, then proposes hypotheses. A hypothesis is not the established cause. Log leftovers in gotchas[]."
+          "offer": "Gap Last separates observations, constraints, and remaining questions, then proposes hypotheses. A hypothesis is not the established cause. Record leftovers as open question records in appledger/."
         }
       ]
     },
@@ -203,7 +203,7 @@
         {
           "name": "xFacts",
           "homepage": "https://xfacts.dev",
-          "offer": "xFacts labels (AppFacts and neighbors) are the house standard for shipped products. Write a label when the product is public or handed off. A validator checks shape, not truth."
+          "offer": "When the product is public or handed off, offer an xFacts label (AppFacts and neighbors). Record the subject disposition either way, and bind an existing label with appledger bind. A validator checks shape, not truth."
         }
       ]
     },
