@@ -37,7 +37,7 @@ Install options:
   --with-genesis-stub  With --lite: also create docs/GENESIS.md stub
   --force, -f        Overwrite existing files
   --dry-run          Preview without writing
-  --skip-tracking    Accepted and ignored. A tracking JSON file is not installed.
+  --skip-tracking    Accepted and ignored.
   --path, -p <dir>   Install elsewhere (default: current directory)
   --help, -h         Show help
   --version, -v      Print the forgetrail version

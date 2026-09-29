@@ -62,7 +62,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 3. Call **`getProgressiveDocSchedule`** and keep it in mind for every phase transition.
 4. Call **`getChecklist`** with section `before-session-1` — complete those items with the user (problem statement, stack, assets, hero flow).
 5. Call **`getGreenfieldIntakePrompt`** — product/delivery questions: exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier (even if “none yet”), hero flow, and registrar/DNS/git/hosting if still open. Capture answers in **`PHASE_1_BRIEF.md`** and as decision records. If using native plan mode, include these questions in the plan context (`getPlanModePatterns`). When a companion trigger is true later, call **`getCompanionSuggestions`**. Do not name companions in the first user-facing message.
-6. Call **`getTrackingSchema`** — you will maintain **`appledger/`**. Do not maintain a tracking JSON file. Optionally call **`getAgentIntegrationGuide`** for your host (`grok`, `cursor`, `claude`, `generic`) and **`getForgeTrailSkill`** if the agent supports persistent skills.
+6. Call **`getTrackingSchema`** — you will maintain **`appledger/`**. Optionally call **`getAgentIntegrationGuide`** for your host (`grok`, `cursor`, `claude`, `generic`) and **`getForgeTrailSkill`** if the agent supports persistent skills.
 7. Call **`getPhaseGuidance`** with phase `1` (architecture). Summarize understanding and propose structure, data model, integrations, and v1 scope **before** writing app code.
 8. During Phase 1, create **`docs/PHASE_1_BRIEF.md`** from **`getTemplate({ name: "PHASE_1_BRIEF" })`**, fill every section, and **lock** it; mirror major decisions as **appledger decision records**.
 9. After architecture is confirmed and the brief is locked, call **`getPhaseGuidance`** with phase `2` (scaffolding). Read the brief and **`appledger/profiles/forgetrail.yaml`**, **merge the brief into `CONTEXT_PROMPT.md`**, then execute a **single-pass app skeleton** and the rest of the Phase 2 doc set (`README`, `TODO`, `.forgetrail/IDEAS.md`).
@@ -76,7 +76,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 | **Pre-Phase-1 build spec (external LLM chat)** | **`getGenesisSpecPrompt`** → user saves **`docs/GENESIS.md`**; or human recipe **`TRY_FORGETRAIL.md`** (no MCP) |
 | **Feature delivery SPEC template (Phase 4+)** | **`getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`** → write `specs/[feature].md`; lifecycle in WORKFLOW Phase 4 |
 | **Approved Genesis / plan → brief + decisions** | **`ingestPlanArtifact`** — after plan approval or when `docs/GENESIS.md` exists |
-| **One-call greenfield setup** (bootstrap + tracking JSON + post-bootstrap guidance + optional Cursor rules) | **`getNewProjectKickoff`** — prefer over calling the granular tools separately |
+| **One-call greenfield setup** (bootstrap + ledger + post-bootstrap guidance + optional Cursor rules) | **`getNewProjectKickoff`** — prefer over calling the granular tools separately |
 | **Which docs in which phase** | **`getProgressiveDocSchedule`** (WORKFLOW §1a) |
 | Phase playbooks, entry/exit criteria, patterns | `getPhaseGuidance` (phases 1–7 or keywords like `scaffolding`, `hardening`) |
 | Milestone checklists | `getChecklist` (`before-session-1`, `session-1`, `session-2`, `full`, …) |
@@ -89,7 +89,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 | **Native plan mode as Phase 1** | **`getPlanModePatterns`** — use before scaffolding when the host supports plan-before-code |
 | **Agent-specific integration** (Grok, Cursor, Claude) | **`getAgentIntegrationGuide`** — primitive mappings and session openers |
 | **Installable forgetrail skill** (Grok etc.) | **`getForgeTrailSkill`** — copy to host skill directory |
-| **Legacy tracking classification** | **`validateTracking`** — reports a writable `workflow_tracking.json` as a conflict. A missing file is expected |
+| **Ledger check** | **`validateTracking`** — a missing file is expected |
 | **Optional companion tools** (FilePress, LocalSlip, skills, xFacts, …) | **`getCompanionSuggestions`** — `phase` or `situation`; never required; not in the first user-facing message (WORKFLOW §1f) |
 | **Parallel subagent recommendations** | **`suggestSubagentDecomposition`** — before spawning audits/research (WORKFLOW §1c) |
 | **Ledger initialization** for a greenfield repo | `getInitialWorkflowTracking` — does **not** return JSON. Create **`appledger/`** |
@@ -140,7 +140,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 
 - At **each session start**, read **`appledger/profiles/forgetrail.yaml`**, the latest session record, and `CONTEXT_PROMPT.md` (if present). Use **`getPhaseGuidance`** for the current phase.
 - When exit criteria for a phase appear satisfied, **state that explicitly** and **wait for user confirmation** before treating the next phase as active; change `current_phase_instance` only after approval.
-- After substantive work, update **`appledger/`** (criteria, decision records, lessons, the session). If a legacy `.forgetrail/workflow_tracking.json` exists and is not a pointer, **`validateTracking`** reports the conflict.
+- After substantive work, update **`appledger/`** (criteria, decision records, lessons, the session).
 - If a problem does not converge after **~5 turns**, propose a **different approach**, not more patches.
 - **When the project ends** (shipped, delivered, shelved), run the **wrap protocol** (WORKFLOW §1e): sweep lesson and decision records for generalizable lessons, run the propagation prompt in **Harvest mode**, set **`project_status`** to **`wrapped`** on the profile, and add a final session record with end state and handoff pointers.
 - **Git commits:** `git commit -F <file>` or plain `-m` at natural stopping points with concise summaries. Run verification checks prior to commit.

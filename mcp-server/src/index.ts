@@ -102,8 +102,7 @@ const LEDGER_INIT =
   "If the command is not installed, create `appledger/` by hand:\n\n" +
   "1. `appledger/manifest.yaml` — `format: appledger`, `format_version: 0.1.0`, a `ledger_id`, an `application_id`, `repositories` with `root: .`, `record_roots: [records]`, and profile `forgetrail` version `0.1.0` at `profiles/forgetrail.yaml`.\n" +
   "2. `appledger/profiles/forgetrail.yaml` — `profile: forgetrail`, `profile_version: 0.1.0`, `archetype` (`product`, `internal-tool`, or `one-shot`), `project_status: active`, and one `plan` phase instance with `status: in_progress`. Criteria stay `pending` until evidence exists. Do not mark later phases completed.\n" +
-  "3. An application record and a session record under `appledger/records/`. Decisions are decision records, not a JSON array.\n\n" +
-  "If a legacy `workflow_tracking.json` already exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep both.\n";
+  "3. An application record and a session record under `appledger/records/`. Decisions are decision records, not a JSON array.\n";
 
 /**
  * Single-call greenfield kickoff: bootstrap, ledger initialization, post-bootstrap
@@ -764,7 +763,7 @@ server.tool(
 
 server.tool(
   "getTrackingSchema",
-  "Get the project-record reference. Phase, decisions, sessions, and gotchas live in appledger/. The legacy workflow_tracking.json shape is documented only so an existing file can be migrated, not so a new one is written.",
+  "Get the project-record reference. Phase, decisions, sessions, and lessons live in appledger/.",
   {},
   PACKAGED,
   async () => {
@@ -1196,7 +1195,7 @@ server.tool(
 
 server.tool(
   "getInitialWorkflowTracking",
-  "Deprecated name. Does not return a tracking file to write. Tells the agent to initialize appledger/.",
+  "Deprecated name. Tells the agent to initialize appledger/.",
   {},
   PACKAGED,
   async () => {
@@ -1262,10 +1261,10 @@ server.tool(
 
 server.tool(
   "validateTracking",
-  "Classify a workflow_tracking.json file. A pointer to appledger/ is accepted. A legacy writable tracking document is reported as a conflict, not updated. A missing file is expected. Pass format=json for structured output.",
+  "The live record is appledger/. A missing file is expected. Pass format=json for structured output.",
   {
-    trackingJson: z.string().optional().describe("Raw JSON string of the tracking file (if not supplying path)"),
-    path: z.string().optional().describe("Filesystem path to .forgetrail/workflow_tracking.json (server will attempt to read)"),
+    trackingJson: z.string().optional().describe("Optional raw JSON"),
+    path: z.string().optional().describe("Optional filesystem path"),
     format: z.enum(["text", "json"]).optional().describe("text (default) or json"),
   },
   PACKAGED,
@@ -1283,7 +1282,7 @@ server.tool(
       return {
         content: [{
           type: "text" as const,
-          text: "No workflow_tracking.json was supplied. A new project does not have that file. Read appledger/profiles/forgetrail.yaml and the latest session record. Pass path only to classify an existing file.",
+          text: "Read appledger/profiles/forgetrail.yaml and the latest session record.",
         }],
       };
     }
@@ -1636,7 +1635,7 @@ function printStartupHintsToStderr(): void {
     "  getCompanionSuggestions (phase or situation: optional sibling tools)",
     '  getTemplate with name "list", then a template name (e.g. PHASE_1_BRIEF)',
     '  searchLessons with a keyword',
-    "  validateTracking (classify a legacy workflow_tracking.json; do not treat it as the live record)",
+    "  validateTracking (the live record is appledger/)",
     "  suggestSubagentDecomposition (parallel audits/research for spawn_subagent hosts)",
     "  ingestPlanArtifact (approved plan → PHASE_1_BRIEF draft + appledger decision records)",
     "  getPlanModePatterns (native plan mode as Phase 1)",

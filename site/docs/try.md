@@ -17,7 +17,7 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to
 3. Add Lite: save [FORGETRAIL_LITE.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/content/FORGETRAIL_LITE.md) as `.forgetrail/FORGETRAIL_LITE.md`, or `pnpm dlx forgetrail install --lite --with-genesis-stub`.
 4. Paste this kickoff line into your coding agent:
 
-> Follow `.forgetrail/FORGETRAIL_LITE.md` as the project protocol. Treat `docs/GENESIS.md` as the product spec (what, not how). Create `appledger/` (manifest, profile, application record, session record) and draft `docs/PHASE_1_BRIEF.md` from the Genesis file, asking me only about gaps. Do not create `workflow_tracking.json`. Do not scaffold application code until I explicitly approve the Phase 1 brief.
+> Follow `.forgetrail/FORGETRAIL_LITE.md` as the project protocol. Treat `docs/GENESIS.md` as the product spec (what, not how). Create `appledger/` (manifest, profile, application record, session record) and draft `docs/PHASE_1_BRIEF.md` from the Genesis file, asking me only about gaps. Do not scaffold application code until I explicitly approve the Phase 1 brief.
 
 5. Approve the Phase 1 brief before any app scaffold.
 
@@ -35,7 +35,7 @@ The same recipe lives in [TRY_FORGETRAIL.md](https://github.com/Catalyst-Forge-L
 
 Required on this path: the Lite file, a Genesis spec or the §5 intake, an `appledger/` ledger, and a Phase 1 brief you approve. Situational: Node (only if you use the CLI), MCP, and a full template tree.
 
-The CLI can place the Lite file and hooks. It does not place a tracking JSON file. The agent creates the ledger. Those writes are not automatic.
+The CLI can place the Lite file and hooks. The agent creates the ledger. Those writes are not automatic.
 
 ## Graduation
 

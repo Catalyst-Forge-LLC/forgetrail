@@ -42,7 +42,6 @@ Use `run_in_background` for long subagents when appropriate.
 
 After subagent or feature work:
 - Update `appledger/` (criteria, decision records, lessons, the session).
-- Run **`validateTracking`** only when a legacy tracking file is present. A missing file is expected.
 - Update `CONTEXT_PROMPT.md` when architecture or patterns change.
 
 ## Skills alternative

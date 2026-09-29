@@ -18,7 +18,7 @@ After a first sitting you should see:
 - `appledger/` with a profile and a session record
 - `docs/GENESIS.md` and, once drafted, `docs/PHASE_1_BRIEF.md`
 
-The installer can place the Lite file and hooks. It does not place a tracking JSON file. The agent writes the ledger, the brief, decision records, and the session. Those updates are not automatic. An empty ledger after a busy session is a protocol miss.
+The installer can place the Lite file and hooks. The agent writes the ledger, the brief, decision records, and the session. Those updates are not automatic. An empty ledger after a busy session is a protocol miss.
 
 A labeled two-session walk-through is on [Continuity](/docs/continuity).
 
@@ -34,7 +34,7 @@ A labeled two-session walk-through is on [Continuity](/docs/continuity).
 | Path | Who uses it | Host needs | What runs |
 | --- | --- | --- | --- |
 | **Lite** | First-time and small-project users | A coding agent that can read files. Node is optional. | You copy or install one protocol file. The agent follows it and writes `appledger/`. |
-| **CLI** (`forgetrail`) | People who want files placed by a command | Node.js 20+ | An installer. Lite, or the full template tree. It does not write a tracking JSON file and it does not run the agent. |
+| **CLI** (`forgetrail`) | People who want files placed by a command | Node.js 20+ | An installer. Lite, or the full template tree. It does not run the agent. |
 | **MCP** (`forgetrail-mcp`) | People who want methodology tools in the IDE | Node.js 20+, an MCP client, `FORGETRAIL_ROOT` | Tools for kickoff, resume, and lessons. The app still owns `appledger/`. |
 
 Recommended first path: [Try](/docs/try). Stay on Lite until you want IDE tools or a vendored template tree.

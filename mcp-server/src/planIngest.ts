@@ -339,9 +339,8 @@ export function ingestPlanArtifact(args: {
     "1. Review `briefMarkdown` — edit every section; remove '_From approved plan artifact_' blocks after merging.\n" +
     "2. Write `docs/PHASE_1_BRIEF.md` and mark **locked** when accurate.\n" +
     "3. Write each `trackingDecisions` entry as an appledger decision record.\n" +
-    "4. Record the sign-off on the plan phase in `appledger/profiles/forgetrail.yaml` or a session record. Do not update a tracking JSON file.\n" +
-    "5. If a legacy workflow_tracking.json exists, `validateTracking` reports it as a legacy writer. Do not keep writing it. Run `appledger check` when the CLI is installed.\n" +
-    "6. Phase 2: merge brief into CONTEXT_PROMPT per template handoff table.";
+    "4. Record the sign-off on the plan phase in `appledger/profiles/forgetrail.yaml` or a session record. Run `appledger check` when the CLI is installed.\n" +
+    "5. Phase 2: merge brief into CONTEXT_PROMPT per template handoff table.";
 
   return {
     briefMarkdown,

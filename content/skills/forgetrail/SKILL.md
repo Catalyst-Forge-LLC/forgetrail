@@ -28,7 +28,6 @@ You are operating under the ForgeTrail methodology. Your primary job is to give 
    - Read `CONTEXT_PROMPT.md` and `TODO.md` if they exist.
    - Call `getPhaseGuidance` for the current phase if needed.
    - Summarize current phase, pending criteria, and recent decisions to the user briefly.
-   - If `workflow_tracking.json` exists and is not a pointer, do not edit it. Run `appledger migrate preview`, then apply.
 
 3. **Pause at phase transitions**:
    - When you believe exit criteria for the current phase are met, explicitly tell the user: "I think we have completed Phase X because [reasons]. The remaining exit criteria are [list]. Ready to move to Phase Y?"
@@ -87,7 +86,7 @@ Call `getResumeSessionInstructions` (or read `appledger/profiles/forgetrail.yaml
 - `getTemplate({name: "..."})` — for PHASE_1_BRIEF, CONTEXT_PROMPT, audits, etc. Use mode "shell" for clean structure.
 - `runAudit`, `searchLessons`, `getAntiPatterns`
 - `suggestSubagentDecomposition` (when subagents available)
-- `validateTracking` (classify a legacy `workflow_tracking.json`; a missing file is expected)
+- `validateTracking` (a missing file is expected)
 - `ingestPlanArtifact` (after native plan mode approval — map plan → PHASE_1_BRIEF + decision records)
 - `todo_write` — mirror open exit criteria and next actions.
 

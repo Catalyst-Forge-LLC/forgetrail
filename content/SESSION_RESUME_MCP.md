@@ -10,7 +10,6 @@ The user is **continuing** a project that uses ForgeTrail via the **MCP server**
 2. If the current phase is **`plan`**, read **`docs/PHASE_1_BRIEF.md`** and continue planning toward a locked brief. Otherwise read **`CONTEXT_PROMPT.md`**. If a later phase is current but CONTEXT is missing and **`PHASE_1_BRIEF.md`** exists, **merge the brief into CONTEXT** first (see CONTEXT_PROMPT template).
 3. Call **`getPhaseGuidance`** for that phase (`plan` through `harden`, or `1`–`7`). When a companion trigger is true, call **`getCompanionSuggestions`** for that phase or situation. Do not install unless the user asked.
 4. If you need checklist context, call **`getChecklist`** (e.g. `every-session` or `full`).
-5. If a **`workflow_tracking.json`** file exists and is not a pointer, do not update it. Run **`appledger migrate preview`**, then apply. Call **`validateTracking`** only to classify that file.
 
 Do **not** require `_forgetrail/WORKFLOW.md` or `_forgetrail/TRACKING_SCHEMA.md` on disk — use the MCP tools above.
 

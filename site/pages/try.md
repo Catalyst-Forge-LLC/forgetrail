@@ -12,7 +12,7 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to
 
 **Important:** Use a **new empty project folder**. Do not run this inside a clone of the ForgeTrail methodology repo.
 
-The first project-state artifact to look for is `appledger/profiles/forgetrail.yaml`, plus a session record. A new install does not create `.forgetrail/workflow_tracking.json`. How a second session uses the ledger: [Continuity](/docs/continuity).
+The first project-state artifact to look for is `appledger/profiles/forgetrail.yaml`, plus a session record. How a second session uses the ledger: [Continuity](/docs/continuity).
 
 ## Kickoff
 

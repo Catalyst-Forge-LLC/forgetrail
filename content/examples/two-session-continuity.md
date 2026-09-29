@@ -19,7 +19,7 @@ The human pasted the kickoff line from [TRY_FORGETRAIL.md](../../TRY_FORGETRAIL.
 3. Recorded one decision and one lesson.
 4. Stopped after the human approved the brief. No application scaffold yet.
 
-The CLI, if used instead of a hand copy, writes the Lite file, hook scripts, and an optional Genesis stub. It does not write a tracking JSON file and it does not fill in the phase, decisions, or session. Those writes depend on the agent following the protocol.
+The CLI, if used instead of a hand copy, writes the Lite file, hook scripts, and an optional Genesis stub. It does not fill in the phase, decisions, or session. Those writes depend on the agent following the protocol.
 
 ### What was left unfinished
 
@@ -66,8 +66,6 @@ That is the trail: a phase, a decision, a lesson, and a next step. The next chat
 | Decision, lesson, and session records | The agent | No. The protocol tells the agent to write them. The host does not enforce the prose. |
 
 MCP tools can hand the agent the same protocol and a lessons search. They do not replace the files in the app repo.
-
-An existing writable `.forgetrail/workflow_tracking.json` is legacy. `appledger migrate preview` writes nothing. `apply` imports decisions, sessions, resolved gotchas as lessons, unresolved gotchas as open questions, and `IDEAS.md` / `BUGS.md` from the repository root and from `.forgetrail/`, then replaces the file with a pointer. The `appledger` package is not a published npm release. Use the [repository](https://github.com/Catalyst-Forge-LLC/appledger).
 
 ## Catalog excerpt
 

@@ -33,7 +33,7 @@ The shortest supported first task is: create `appledger/`, draft `docs/PHASE_1_B
 | Path | Who uses it | What it is |
 | --- | --- | --- |
 | **Lite** | First path | One protocol file. The agent writes `appledger/`. |
-| **CLI** (`forgetrail`) | Node.js 20+ | Installer. Writes Lite and Cursor hooks, or the full template tree. It does not write a tracking JSON file. Skips files that already exist. Does not run the agent. |
+| **CLI** (`forgetrail`) | Node.js 20+ | Installer. Writes Lite and Cursor hooks, or the full template tree. Skips files that already exist. Does not run the agent. |
 | **MCP** (`forgetrail-mcp`) | Cursor or Claude | Phase guidance, templates, and lessons search. The ledger still lives in the app repo. |
 
 ```bash
@@ -45,9 +45,9 @@ MCP: `npx -y forgetrail-mcp` (0.4.2 or later finds the methodology without `FORG
 
 ## What you get
 
-A 7-phase playbook, a ledger in `appledger/`, and templates pre-loaded with first-party production lessons. Each project leaves decisions, lessons, and a session handoff that future work follows. Those lesson notes are not independent adoption evidence. A new install does not create `.forgetrail/workflow_tracking.json`.
+A 7-phase playbook, a ledger in `appledger/`, and templates pre-loaded with first-party production lessons. Each project leaves decisions, lessons, and a session handoff that future work follows. Those lesson notes are not independent adoption evidence.
 
-Optional hooks in [`content/hooks/`](content/hooks/README.md) load the current phase at session start in Cursor or Claude Code, validate tracking edits, and check for a session note at session stop. The agent still does the writing. Flags, MCP, and the phase table live in the [docs](https://forgetrail.dev/docs).
+Optional hooks in [`content/hooks/`](content/hooks/README.md) load the current phase at session start in Cursor or Claude Code, check ledger edits, and check for a session note at session stop. The agent still does the writing. Flags, MCP, and the phase table live in the [docs](https://forgetrail.dev/docs).
 
 <!-- xfacts-label -->
 

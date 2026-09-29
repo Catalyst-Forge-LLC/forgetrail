@@ -17,7 +17,6 @@ forgetrail mcp <subcommand>
 | `--with-genesis-stub` | With `--lite`: also create `docs/GENESIS.md` stub |
 | `--force`, `-f` | Overwrite existing files |
 | `--dry-run` | Preview without writing |
-| `--skip-tracking` | Accepted and ignored. A tracking JSON file is not installed. |
 | `--path`, `-p <dir>` | Install elsewhere (default: current directory) |
 
 Examples:

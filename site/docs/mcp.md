@@ -32,7 +32,7 @@ From a clone instead: `pnpm run mcp:build`, then `forgetrail mcp cursor-config`.
 - Existing Genesis: call `ingestPlanArtifact` before locking Phase 1.
 - Companions: call `getCompanionSuggestions` when a job matches. Never required.
 
-The app repo keeps **your code**, **your docs**, and **`appledger/`**. Do not create `.forgetrail/workflow_tracking.json`. If that file already exists and is not a pointer, run `appledger migrate preview`, then apply.
+The app repo keeps **your code**, **your docs**, and **`appledger/`**.
 
 ## Full tool list
 

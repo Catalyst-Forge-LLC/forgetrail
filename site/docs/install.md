@@ -2,7 +2,7 @@
 title: Install
 ---
 
-The first useful outcome is files in your app folder. The protocol is `.forgetrail/FORGETRAIL_LITE.md`. Project state belongs in `appledger/`. A new install does not write `.forgetrail/workflow_tracking.json`. See [Continuity](/docs/continuity) before you pick an installer.
+The first useful outcome is files in your app folder. The protocol is `.forgetrail/FORGETRAIL_LITE.md`. Project state belongs in `appledger/`. See [Continuity](/docs/continuity) before you pick an installer.
 
 Requires **Node.js 20+** for the CLI and MCP. The [Try](/docs/try) path does not require Node. Copy Lite by hand if you want zero install.
 
@@ -21,7 +21,7 @@ pnpm add -g forgetrail
 forgetrail install --lite
 ```
 
-That writes into the **current app folder**: `.forgetrail/FORGETRAIL_LITE.md`, hook scripts in `.forgetrail/hooks/`, and `.cursor/hooks.json`. It does not write a tracking JSON file. `--skip-tracking` is accepted and ignored. Existing files are skipped unless you pass `--force`. Preview with `--dry-run`. Use a new empty project. Do not run it inside a clone of this methodology repo.
+That writes into the **current app folder**: `.forgetrail/FORGETRAIL_LITE.md`, hook scripts in `.forgetrail/hooks/`, and `.cursor/hooks.json`. Existing files are skipped unless you pass `--force`. Preview with `--dry-run`. Use a new empty project. Do not run it inside a clone of this methodology repo.
 
 Then create the ledger. The agent can run these:
 
@@ -30,7 +30,7 @@ pnpm dlx appledger init --name "Your app name"
 pnpm dlx appledger check
 ```
 
-`init` writes `appledger/` (manifest, profile, application record, session record) and does not overwrite existing files. Global: `pnpm add -g appledger`. If a project already has a writable `.forgetrail/workflow_tracking.json`, `appledger migrate preview` then `apply` replaces that file with a pointer. The `appledger` CLI is [on npm](https://www.npmjs.com/package/appledger). Source: [appledger repository](https://github.com/Catalyst-Forge-LLC/appledger).
+`init` writes `appledger/` (manifest, profile, application record, session record) and does not overwrite existing files. Global: `pnpm add -g appledger`. The `appledger` CLI is [on npm](https://www.npmjs.com/package/appledger). Source: [appledger repository](https://github.com/Catalyst-Forge-LLC/appledger).
 
 ## MCP
 

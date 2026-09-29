@@ -22,8 +22,6 @@ my-app/
   src/
 ```
 
-`.forgetrail/workflow_tracking.json` is not part of a new install. An older copy is either a pointer to `appledger/` or a legacy file to migrate.
-
 Later phases add docs only when needed (`TECHNICAL_REFERENCE`, `DESIGN_SYSTEM`, `BRAND_AND_PRODUCT`, hardening docs).
 
 ## What's in the methodology repo

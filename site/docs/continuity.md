@@ -18,9 +18,7 @@ ForgeTrail keeps state in the **app** repo, not in a hosted project database.
 | `docs/GENESIS.md` | What to build, not how |
 | `docs/PHASE_1_BRIEF.md` | Locked plan the next session must not silently reopen |
 
-A new install does not create `.forgetrail/workflow_tracking.json`. ForgeTrail instructs the agent to read the ledger, preserve approved decisions, and pause at approval gates. The agent must write the handoff. The CLI can write the Lite file, the hook scripts, and an optional Genesis stub. The agent writes the ledger, the brief, decisions, and session notes. Those updates are not automatic. Optional hooks point the session at `appledger/` and check for a session note at stop.
-
-If a project already has a writable tracking file, `appledger migrate preview` writes nothing and shows the mapping. `appledger migrate apply` imports it and replaces the file with a pointer. Rollback restores only that migration's paths and refuses a later edit. The CLI is in the [appledger repository](https://github.com/Catalyst-Forge-LLC/appledger). It is not a published npm release.
+ForgeTrail instructs the agent to read the ledger, preserve approved decisions, and pause at approval gates. The agent must write the handoff. The CLI can write the Lite file, the hook scripts, and an optional Genesis stub. The agent writes the ledger, the brief, decisions, and session notes. Those updates are not automatic. Optional hooks point the session at `appledger/` and check for a session note at stop.
 
 ## Session 1, then a closed chat
 
@@ -72,7 +70,7 @@ The files above are the product. The three install paths are ways to get the pro
 | Path | Who uses it | Host needs | What it writes |
 | --- | --- | --- | --- |
 | **Lite** (recommended first) | Anyone with a coding agent that can read files | A new empty project folder. Node is optional. | A protocol file you copy, or the same file via the CLI. The agent then creates `appledger/`. |
-| **CLI** (`forgetrail`) | People who want the installer to place files | Node.js 20+ | Lite and Cursor hooks, or the full template tree. It does not write a tracking JSON file, it skips files that already exist, and it does not run the agent. |
+| **CLI** (`forgetrail`) | People who want the installer to place files | Node.js 20+ | Lite and Cursor hooks, or the full template tree. It skips files that already exist, and it does not run the agent. |
 | **MCP** (`forgetrail-mcp`) | People who want methodology tools inside Cursor or Claude | Node.js 20+, an MCP client, and `FORGETRAIL_ROOT` | Nothing in the app except what the agent writes after calling tools. The ledger still lives in `appledger/`. |
 
 Stay on Lite for a small tool. Add MCP when you want searchable lessons and phase playbooks in the IDE. Use a full `forgetrail install` (no `--lite`) only when you want the whole template tree on disk.

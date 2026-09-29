@@ -143,7 +143,7 @@ export function runInstallLite(rawArgv, { defaultToCwd = false } = {}) {
 
   console.log("\nDone.");
   console.log("  Protocol:  .forgetrail/FORGETRAIL_LITE.md");
-  console.log("  Project record: appledger/ (a tracking JSON file is not installed)");
+  console.log("  Project record: appledger/");
   console.log("  Hooks:     .forgetrail/hooks/ (enforced via .cursor/hooks.json)");
   if (args.withGenesisStub) {
     console.log("  Genesis:   docs/GENESIS.md (stub — replace with your spec)");
@@ -169,7 +169,7 @@ Usage:
 Options:
   --path, -p <dir>   Target project root (default: current directory for \`forgetrail\` CLI)
   --force, -f        Overwrite existing files
-  --skip-tracking    Accepted and ignored. A tracking JSON file is not installed.
+  --skip-tracking    Accepted and ignored.
   --dry-run          Print actions only
 
 Installs:
@@ -187,7 +187,7 @@ Usage:
 Options:
   --path, -p <dir>        Target project root (default: current directory for \`forgetrail\` CLI)
   --force, -f             Overwrite existing files
-  --skip-tracking         Accepted and ignored. A tracking JSON file is not installed.
+  --skip-tracking         Accepted and ignored.
   --with-genesis-stub     Also create docs/GENESIS.md stub (for the Try path)
   --dry-run               Print actions only
 

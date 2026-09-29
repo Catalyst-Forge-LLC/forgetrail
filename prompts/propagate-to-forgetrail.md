@@ -8,7 +8,7 @@ Run this prompt after implementing a new feature, pattern, plan, or significant 
 
 Use this when the source project is **small** (no product journal, minimal doc set) or you are running the **wrap protocol** (WORKFLOW.md §1e) at project end. The primary discovery source is the **ledger**, not the doc tree:
 
-1. **Read appledger decision records and lesson records**, plus `CONTEXT_PROMPT.md`'s gotcha/pattern sections and any `FORGETRAIL_LITE_UPDATES.md`. If a legacy `.forgetrail/workflow_tracking.json` exists and is not a pointer, run `appledger migrate preview`, then apply, and read the imported records.
+1. **Read appledger decision records and lesson records**, plus `CONTEXT_PROMPT.md`'s gotcha/pattern sections and any `FORGETRAIL_LITE_UPDATES.md`.
 2. **Classify each entry:** *generalizable* (framework traps, CLI behavior changes, scaffolding surprises, integration lessons — anything a different project on the same stack could hit) vs *app-specific* (content decisions, domain rules). Only the first group propagates.
 3. **For each generalizable entry**, run the normal Step 2 dedupe (grep ForgeTrail for existing coverage) and Step 3 mapping (which template gets it). Ledger lessons usually land as **pattern memory** (`CONTEXT_PROMPT.md` callouts, `FORGETRAIL_LITE.md` scaffolding notes); occasionally a decision reveals a **feature shape** worth a stub.
 4. **Zero-yield is fine.** If nothing generalizes, say so and skip the update-log entry — do not pad.
@@ -109,7 +109,7 @@ Do **not** rely only on the immediate trigger. Skim **multiple signal sources** 
 
 | Source | What to extract |
 |--------|-----------------|
-| **`appledger/` decision and lesson records** | Framework traps, CLI/scaffolding surprises, and integration lessons logged during the build — the primary source for small projects (see **Harvest mode**), and an easy-to-miss one for large projects where docs lag the ledger. If a legacy `.forgetrail/workflow_tracking.json` exists, migrate it before this scan. |
+| **`appledger/` decision and lesson records** | Framework traps, CLI/scaffolding surprises, and integration lessons logged during the build — the primary source for small projects (see **Harvest mode**), and an easy-to-miss one for large projects where docs lag the ledger. |
 | **`git log` / recent commits** | Subjects and paths; cluster related work; compare to the last `update-log.md` propagation date. |
 | **`docs/PRODUCT_JOURNAL.md`** (or git-derived changelog) | Day-level themes across UX, infra, and docs. Map **`Added`** / major **`Improved`** items to Step 3: new **feature-area** stubs in **`TECHNICAL_REFERENCE.md`**, **`TEST_PLAN.md`** checks, **`BRAND_AND_PRODUCT.md`** / **`DESIGN_SYSTEM.md`** when IA or positioning changes—not only **`CONTEXT_PROMPT.md`** bullets. |
 | **Recently touched `specs/`** | Durable architecture and copy decisions, including WIP specs. |

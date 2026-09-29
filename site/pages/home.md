@@ -24,7 +24,7 @@ A fictional example: **desk-stamp**, a weekend CLI that stamps today's date on m
 
 ## What the agent writes
 
-The record is `appledger/` in your project: `profiles/forgetrail.yaml` for the phase, and records for decisions, lessons, and the session handoff. A new install does not create `.forgetrail/workflow_tracking.json`. The ForgeTrail repository is the template source, and its backlog stays in `RESUME.md` and `TODO.md`. Application repositories carry the ledger. A shortened excerpt from the end of session one:
+The record is `appledger/` in your project: `profiles/forgetrail.yaml` for the phase, and records for decisions, lessons, and the session handoff. The ForgeTrail repository is the template source, and its backlog stays in `RESUME.md` and `TODO.md`. Application repositories carry the ledger. A shortened excerpt from the end of session one:
 
 ```yaml
 phase: plan
@@ -35,7 +35,7 @@ next_steps:
   - Agree the first stamp command, then scaffold.
 ```
 
-ForgeTrail instructs the agent to read that ledger, preserve approved decisions, and pause at approval gates. The agent must write the handoff. Those updates are not automatic. Optional hooks point a new session at `appledger/` and remind it to update the session record. If an older project still has a writable tracking file, `appledger migrate preview` then `apply` replaces that file with a pointer. The full example is on [Continuity](/docs/continuity).
+ForgeTrail instructs the agent to read that ledger, preserve approved decisions, and pause at approval gates. The agent must write the handoff. Those updates are not automatic. Optional hooks point a new session at `appledger/` and remind it to update the session record. The full example is on [Continuity](/docs/continuity).
 
 ## One system, three parts
 
@@ -52,7 +52,7 @@ You do not have to run all seven phases. Lite is enough for a small tool. The sh
 | Path | Who uses it | What it is |
 | --- | --- | --- |
 | **Lite** | Anyone with a coding agent that reads files | One protocol file. The agent writes `appledger/`. |
-| **CLI** (`forgetrail`) | People with Node.js 20+ who want files placed | Installer. Writes Lite and Cursor hooks, or the full template tree. It does not write a tracking JSON file. Skips files that already exist. Does not run the agent. |
+| **CLI** (`forgetrail`) | People with Node.js 20+ who want files placed | Installer. Writes Lite and Cursor hooks, or the full template tree. Skips files that already exist. Does not run the agent. |
 | **MCP** (`forgetrail-mcp`) | Cursor or Claude users who want tools in the IDE | Phase guidance, templates, and lessons search. The ledger still lives in the app repo. |
 
 Do not add `forgetrail` to an app's `dependencies`. The trail is the files in your project.

@@ -1,6 +1,6 @@
 # ForgeTrail Integration Guide (generic agents)
 
-Use this when no agent-specific guide is available. ForgeTrail is **agent-agnostic** — the lifecycle, tracking file, and MCP tools work with any capable coding agent.
+Use this when no agent-specific guide is available. ForgeTrail is **agent-agnostic** — the lifecycle, the ledger, and MCP tools work with any capable coding agent.
 
 ## Core integration model
 

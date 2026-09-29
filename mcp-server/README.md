@@ -38,7 +38,7 @@ If the app already has **`docs/GENESIS.md`**, after MCP is connected call **`ing
 | Tool | Description |
 |---|---|
 | `ping` | **Connectivity check:** returns `ok`, package version, `FORGETRAIL_ROOT`, and whether `WORKFLOW.md` is readable — use to verify the client reaches ForgeTrail |
-| `getNewProjectKickoff` | **One-call greenfield setup:** bootstrap + `appledger init` steps + post-bootstrap user-message guidance + optional Cursor rule (`includeCursorRule: false` if not using Cursor). Does not create `workflow_tracking.json` |
+| `getNewProjectKickoff` | **One-call greenfield setup:** bootstrap + `appledger init` steps + post-bootstrap user-message guidance + optional Cursor rule (`includeCursorRule: false` if not using Cursor). |
 | `kickoffGreenfield` | Same as `getNewProjectKickoff` with Cursor rule included; **no parameters** (use if the client mishandles optional args) |
 | `kickoffGreenfieldNoCursor` | Same bundle **without** the Cursor `.mdc` section; **no parameters** |
 | `getProgressiveDocSchedule` | WORKFLOW §1a: Phase 1 = PHASE_1_BRIEF + tracking; Phase 2 = merge brief → CONTEXT_PROMPT + README + TODO + IDEAS + spine; rest later |
@@ -50,7 +50,7 @@ If the app already has **`docs/GENESIS.md`**, after MCP is connected call **`ing
 | `getForgeTrailCursorPhaseRule` | **Cursor:** optional `.cursor/rules/forgetrail-phase-status.mdc` — agents show phase / next actions from `appledger/profiles/forgetrail.yaml` |
 | `getForgeTrailCursorLessonsRules` | **Cursor:** `.cursor/rules/forgetrail-lessons-gate.mdc` + `forgetrail-lessons-mcp.mdc` — when to call `getAntiPatterns` / `searchLessons` before large work (also bundled in `getNewProjectKickoff`) |
 | `getScaffoldInstallParams` | **Phase 2:** PocketBase (**latest** unless pinned), one-click launchers, **isolated** `test:pocketbase` / `setup:ollama` / `test:ollama` — **SYSTEM_HEALTH_CHECKS.md**, `scripts/*.mjs` |
-| `getInitialWorkflowTracking` | Ledger init steps (`appledger init`, then `appledger check`). Kept under its old name. It does not return a tracking file |
+| `getInitialWorkflowTracking` | Ledger init steps (`appledger init`, then `appledger check`). Kept under its old name. |
 | `getPostBootstrapUserMessage` | **After the ledger exists:** how the first reply to the user should read—short; no tool/JSON dump |
 | `getUserReplyFormat` | **Lists and choices:** numbers vs bullets vs letters when presenting options (matches Cursor `forgetrail-phase-status.mdc`) |
 | `getResumeSessionInstructions` | **MCP-first resume:** session-start steps when ForgeTrail is only on MCP |
@@ -60,7 +60,7 @@ If the app already has **`docs/GENESIS.md`**, after MCP is connected call **`ing
 | `getTemplate` | Doc template from `docs/*.md` (includes **`SPEC_FEATURE_TEMPLATE`**, `PHASE_1_BRIEF`, …). `mode: "shell"` strips 💡/📝/🔧 blockquote callouts. Default: `FORGETRAIL_TEMPLATE_DEFAULT_MODE` or `shell` |
 | `runAudit` | Get a structured audit prompt (security, pre-launch, marketing, competitor, docs, copy) |
 | `getChecklist` | Project checklist by milestone or in full |
-| `getTrackingSchema` | The legacy `workflow_tracking.json` schema, for `appledger migrate`. The live record is `appledger/` |
+| `getTrackingSchema` | Older record schema. The live record is `appledger/` |
 | `getAntiPatterns` | All documented failure modes and how to avoid them |
 
 ## Environment
@@ -175,7 +175,7 @@ pnpm start      # runs compiled version
 
 | Symptom | What to check |
 |--------|----------------|
-| **Cursor shows ForgeTrail connected (green) but the coding agent cannot invoke ForgeTrail tools** | Cursor may expose only **some** MCP servers to the **agent/composer** tool bridge; the full server list in MCP settings can still differ. Try the same request in a chat mode that uses MCP tools directly, update Cursor, or use the **template-in-repo** path (`_forgetrail/` + `INITIAL_PROMPT.md`) so methodology is on disk. You can also paste outputs from running the server tools via another MCP client (e.g. Claude Desktop) or copy content from this repo (`.forgetrail/workflow_tracking.json`, `content/NEW_PROJECT_BOOTSTRAP.md`). |
+| **Cursor shows ForgeTrail connected (green) but the coding agent cannot invoke ForgeTrail tools** | Cursor may expose only **some** MCP servers to the **agent/composer** tool bridge; the full server list in MCP settings can still differ. Try the same request in a chat mode that uses MCP tools directly, update Cursor, or use the **template-in-repo** path (`_forgetrail/` + `INITIAL_PROMPT.md`) so methodology is on disk. You can also paste outputs from running the server tools via another MCP client (e.g. Claude Desktop) or copy `content/NEW_PROJECT_BOOTSTRAP.md` from this repo. |
 | **Agent says it will “replicate” kickoff from the repo** | That is normal when MCP tools are not visible in **that** session. See **`content/KICKOFF_WITHOUT_MCP.md`** for the same file order as `getNewProjectKickoff`, or call **`ping`** where tools work to confirm **`forgetrail-mcp` ≥ 0.2.1** (version/path check; `ping` does not replace **`tools/list`**). |
 | **`getNewProjectKickoff` / `kickoffGreenfield` not found; agent falls back to reading files** | Call **`ping`**. If **`forgetrail-mcp version`** is **below 0.2.1**, rebuild `mcp-server` (`pnpm run build`) and restart MCP / Cursor — older builds omitted the `server.tool("name", …)` name for kickoff/bootstrap. **`ping` text lists expected tool names but does not enumerate the live tool list**; if the version is new but the client still hides tools, it is a client/session bridge issue—see **`KICKOFF_WITHOUT_MCP.md`**. |
 | **`ping` says `content missing`, or a tool says ForgeTrail content was not found** | Use `forgetrail-mcp` 0.4.2 or later, which installs `forgetrail` with it, or set **`FORGETRAIL_ROOT`** to a folder with `WORKFLOW.md` and `content/` (see [Custom ForgeTrail location](#custom-forgetrail-location)). Restart MCP afterward. |
