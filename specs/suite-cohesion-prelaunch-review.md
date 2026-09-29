@@ -1,7 +1,7 @@
 # ForgeTrail, AppLedger, and xFacts — suite cohesion review before promotion
 
 **Spec kind:** Delivery
-**Status:** Draft. P0 and P1 fixes are published. The `@xfacts` packages `0.1.1` and `@xfacts/featurefacts@0.2.1` are on npm and run from `npx`. Family install text in the repositories names those commands and is not redeployed yet. P2-1 through P2-5 are in this tree and are not published yet. P2-6 and P2-7 were checked and did not become code changes. See §9 through §11.
+**Status:** Draft. P0 and P1 fixes are published. The `@xfacts` packages `0.1.1` and `@xfacts/featurefacts@0.2.1` are on npm and run from `npx`. Family install text in the repositories names those commands and is not redeployed yet. On 2026-09-29 `@xfacts/appfacts@0.1.0` is prepared in `app-facts/generator` and is not published; appfacts.dev still says clone. P2-1 through P2-5 are in this tree and are not published yet. P2-6 and P2-7 were checked and did not become code changes. See §9 through §11.
 **Date:** 2026-09-28
 **Related:** [`app-ledger-spec-pack-v0.1.0/`](app-ledger-spec-pack-v0.1.0/), [`partial/companion-tools.md`](partial/companion-tools.md), [`canonical/forgetrail-prelaunch-review.md`](canonical/forgetrail-prelaunch-review.md), root [`TODO.md`](../TODO.md)
 **Surfaces:** `README.md`, `content/FORGETRAIL_LITE.md`, `content/companion-tools.json`, `scripts/forgetrail-cli.mjs`, `scripts/mcp-status.mjs`, `mcp-server/`, `content/hooks/`, `site/`; sibling repos `appledger`, `x-facts`, `app-facts`, `feature-facts`, `tool-facts`, `skill-facts`, `agent-facts`, `model-facts`; catalystforge.com tools shelf
