@@ -69,7 +69,7 @@ OLLAMA_MODEL=ibm/granite4.1:8b
 # SKIP_OLLAMA_INSTALL=1  # skip entire setup
 ```
 
-Pin **`OLLAMA_MODEL`** after a successful **test-ollama** run; log in **`decisions[]`**.
+Pin **`OLLAMA_MODEL`** after a successful **test-ollama** run, and record that pin as an appledger decision record.
 
 ---
 

@@ -10,12 +10,12 @@ Two public unscoped packages:
 
 | Package | This tree | On npm until you publish | From | What it is |
 | --- | --- | --- | --- | --- |
-| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | 0.5.3 | 0.5.3 | repo root | CLI + Lite + templates. `pnpm dlx forgetrail install --lite` |
-| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | 0.4.3 | 0.4.2 | `mcp-server/` | MCP bin. Depends on `forgetrail` for content. `pnpm dlx forgetrail-mcp` |
+| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | 0.5.5 | 0.5.5 | repo root | CLI + Lite + templates. `pnpm dlx forgetrail install --lite` |
+| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | 0.4.3 | 0.4.3 | `mcp-server/` | MCP bin. Depends on `forgetrail` for content. `pnpm dlx forgetrail-mcp` |
 
 These are **installer and MCP channels**, not a library. App repos should not add `forgetrail` to `dependencies`.
 
-`forgetrail@0.5.3` and `forgetrail-mcp@0.4.2` are on npm. This tree adds `forgetrail --version`, forgetrail.dev `llms.txt`, and companion text that names `appledger/`, so `forgetrail` needs a version bump before its next publish. `forgetrail-mcp@0.4.3` changes the startup banner and the `ingestPlanArtifact` description, and is not published yet. `getCompanionSuggestions` reads its text from the installed `forgetrail`, so the new companion text reaches MCP users only after `forgetrail` is published. `pnpm run pack:check` is the gate. It does not publish.
+`forgetrail@0.5.5` and `forgetrail-mcp@0.4.3` are on npm and match these `package.json` versions as of 2026-09-29. A later content change needs a version bump before it publishes. `getCompanionSuggestions` reads its text from the installed `forgetrail`. `pnpm run pack:check` is the gate. It does not publish.
 
 ---
 

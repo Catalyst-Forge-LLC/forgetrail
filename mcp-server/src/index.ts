@@ -399,13 +399,16 @@ server.tool(
 
 // -- Tool: getPhaseGuidance ------------------------------------------------
 
+const phaseArg = z.union([z.string(), z.number()]);
+
 server.tool(
   "getPhaseGuidance",
   "Get ForgeTrail methodology guidance for a specific development phase (1-7). " +
     "Returns entry/exit criteria, playbook, prompt patterns, anti-patterns, and an optional companions footer.",
-  { phase: z.string().describe("Phase number (1-7) or keyword like 'architecture', 'scaffolding', 'hardening'") },
+  { phase: phaseArg.describe("Phase number (1-7) or keyword like 'architecture', 'scaffolding', 'hardening'") },
   PACKAGED,
   async ({ phase }) => {
+    const phaseText = String(phase);
     const phaseMap: Record<string, string> = {
       architecture: "1", planning: "1",
       scaffolding: "2", scaffold: "2", build: "2",
@@ -416,7 +419,7 @@ server.tool(
       hardening: "7", production: "7", launch: "7", "production prep": "7",
     };
 
-    const num = phaseMap[phase.toLowerCase()] ?? phase.replace(/\D/g, "");
+    const num = phaseMap[phaseText.toLowerCase()] ?? phaseText.replace(/\D/g, "");
     const content = phases.get(num);
 
     if (!content) {
@@ -1313,14 +1316,14 @@ server.tool(
   "suggestSubagentDecomposition",
   "Given a phase and task, returns recommended subagent spawn parameters (type, capability_mode, isolation, persona hints, and prompt seeds) plus a parent synthesis step. Designed for agents like Grok that support spawn_subagent. Pass format=json for structured output.",
   {
-    phase: z.string().describe("Current ForgeTrail phase (1-7 or name like 'hardening')"),
+    phase: phaseArg.describe("Current ForgeTrail phase (1-7 or name like 'hardening')"),
     taskDescription: z.string().describe("What the subagents should accomplish"),
     maxSubagents: z.number().optional().default(3),
     format: z.enum(["text", "json"]).optional().describe("text (default) or json"),
   },
   PACKAGED,
   async ({ phase, taskDescription, maxSubagents, format }) => {
-    const category = resolveSubagentPhaseCategory(phase, taskDescription);
+    const category = resolveSubagentPhaseCategory(String(phase), taskDescription);
     const examples: string[] = [];
 
     if (category === "audit") {

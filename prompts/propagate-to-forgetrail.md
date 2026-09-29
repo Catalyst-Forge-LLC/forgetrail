@@ -2,15 +2,15 @@
 
 Run this prompt after implementing a new feature, pattern, plan, or significant enhancement in your app. It generalizes **both** durable **feature shapes** (what to document in **`TECHNICAL_REFERENCE.md`**, **`TEST_PLAN.md`**, brand/design templates) **and** reusable **lessons** (callouts in templates), then updates ForgeTrail so future projects start with that guidance.
 
-**Any ForgeTrail project is a valid source** — not just the flagship app that seeded these templates. A weekend one-shot with two gotchas in its tracking file propagates the same way a mature SaaS does; small projects often exercise the newest tool versions and surface the freshest scaffolding lessons. If your project has only a handful of docs (Lite bootstrap, `one-shot` archetype), skip the doc-inventory ceremony and use **Harvest mode** below.
+**Any ForgeTrail project is a valid source** — not just the flagship app that seeded these templates. A weekend one-shot with two lessons in its ledger propagates the same way a mature SaaS does; small projects often exercise the newest tool versions and surface the freshest scaffolding lessons. If your project has only a handful of docs (Lite bootstrap, `one-shot` archetype), skip the doc-inventory ceremony and use **Harvest mode** below.
 
 ### Harvest mode (small projects and project wrap)
 
-Use this when the source project is **small** (no product journal, minimal doc set) or you are running the **wrap protocol** (WORKFLOW.md §1e) at project end. The primary discovery source is the **tracking file**, not the doc tree:
+Use this when the source project is **small** (no product journal, minimal doc set) or you are running the **wrap protocol** (WORKFLOW.md §1e) at project end. The primary discovery source is the **ledger**, not the doc tree:
 
-1. **Read `.forgetrail/workflow_tracking.json`** — every `gotchas[]` entry and every `decisions[]` entry — plus `CONTEXT_PROMPT.md`'s gotcha/pattern sections and any `FORGETRAIL_LITE_UPDATES.md`.
+1. **Read appledger decision records and lesson records**, plus `CONTEXT_PROMPT.md`'s gotcha/pattern sections and any `FORGETRAIL_LITE_UPDATES.md`. If a legacy `.forgetrail/workflow_tracking.json` exists and is not a pointer, run `appledger migrate preview`, then apply, and read the imported records.
 2. **Classify each entry:** *generalizable* (framework traps, CLI behavior changes, scaffolding surprises, integration lessons — anything a different project on the same stack could hit) vs *app-specific* (content decisions, domain rules). Only the first group propagates.
-3. **For each generalizable entry**, run the normal Step 2 dedupe (grep ForgeTrail for existing coverage) and Step 3 mapping (which template gets it). Tracking-file gotchas usually land as **pattern memory** (`CONTEXT_PROMPT.md` callouts, `FORGETRAIL_LITE.md` scaffolding notes); occasionally a decision reveals a **feature shape** worth a stub.
+3. **For each generalizable entry**, run the normal Step 2 dedupe (grep ForgeTrail for existing coverage) and Step 3 mapping (which template gets it). Ledger lessons usually land as **pattern memory** (`CONTEXT_PROMPT.md` callouts, `FORGETRAIL_LITE.md` scaffolding notes); occasionally a decision reveals a **feature shape** worth a stub.
 4. **Zero-yield is fine.** If nothing generalizes, say so and skip the update-log entry — do not pad.
 
 Harvest mode replaces the Discovery scan and Journal-driven sections for these projects; everything from Step 2 onward applies unchanged.
@@ -44,7 +44,7 @@ When you run a **periodic** propagation (catch-up after a sprint, or anytime **A
 
 ## Context
 
-**Your app** is the live project. Its docs are the source of truth — **whichever of these exist**. A full Phase-7 product will have most of them; a Lite or `one-shot` project may have only `CONTEXT_PROMPT.md`, `README.md`, `TODO.md`, and the tracking file (use **Harvest mode** above in that case). Treat this list as a menu, not a requirement:
+**Your app** is the live project. Its docs are the source of truth — **whichever of these exist**. A full Phase-7 product will have most of them; a Lite or `one-shot` project may have only `CONTEXT_PROMPT.md`, `README.md`, `TODO.md`, and `appledger/` (use **Harvest mode** above in that case). Treat this list as a menu, not a requirement:
 
 - `CONTEXT_PROMPT.md`
 - `docs/PHASE_1_BRIEF.md` (if you improved the Phase 1 handoff template)
@@ -91,7 +91,7 @@ Run after meaningful implementation work **and** after substantive **documentati
 | **Isolated service health checks / local Ollama** (test PB without app; install Ollama + VRAM model + completion test; avoid thinking models by default) | **`SYSTEM_HEALTH_CHECKS.md`**, **`FORGETRAIL_LITE.md`** §4.7–§4.8; **`scripts/test-pocketbase.mjs`**, **`scripts/setup-ollama.mjs`**, **`scripts/test-ollama.mjs`**, **`SCAFFOLD_INSTALL.json`** `systemHealthChecks` |
 | **URL / listing import pipeline** (fetch + HTML parse, refresh-from-source, optional LLM-assisted recover when selectors drift) | `docs/TECHNICAL_REFERENCE.md` (*URL import* — paywalls, **markup drift / optional recover**); `docs/CONTEXT_PROMPT.md`; `docs/TEST_PLAN.md` §2a; **`content/FORGETRAIL_LITE.md` §7.2**; partial spec stub under **`specs/partial/`** when shipped behavior needs follow-up. |
 | **A week+ of shipping without running this prompt** | Use **Journal-driven propagation**: sweep **`docs/PRODUCT_JOURNAL.md`** (e.g. last 10–14 days) so **Added** / **Improved** items get **`TECHNICAL_REFERENCE` / `TEST_PLAN`** stubs, not only **CONTEXT_PROMPT** lessons. |
-| **Project wrap — the source project is finished, delivered, or shelved** | Run **Harvest mode** (top of this prompt) as part of the wrap protocol (**WORKFLOW.md §1e**): sweep the tracking file's `gotchas[]` + `decisions[]` before the project goes quiet. Small projects count. |
+| **Project wrap — the source project is finished, delivered, or shelved** | Run **Harvest mode** (top of this prompt) as part of the wrap protocol (**WORKFLOW.md §1e**): sweep appledger lesson records and decision records before the project goes quiet. Small projects count. |
 | **CI/CD, Node/`engines`, or package-manager pins changed** | Keep workflow, container, and `package.json` in sync — lessons for **DEPLOYMENT.md**, **TECHNICAL_REFERENCE.md**, **CONTEXT_PROMPT.md**. |
 | **Deploy scripts, systemd units, or process stop/restart behavior** | `TimeoutStopSec`, blue-green `systemctl stop`, and graceful-shutdown tradeoffs affect **wall-clock deploy time** as well as request safety — **DEPLOYMENT.md** (and **CONTEXT_PROMPT** if it changes operator expectations). |
 | **New scripts, hooks, or dev-tooling** | Journal/lint/build wrappers → **CONTEXT_PROMPT** (tooling) or **TECHNICAL_REFERENCE** (pipelines). |
@@ -109,7 +109,7 @@ Do **not** rely only on the immediate trigger. Skim **multiple signal sources** 
 
 | Source | What to extract |
 |--------|-----------------|
-| **`.forgetrail/workflow_tracking.json`** (`gotchas[]`, `decisions[]`) | Framework traps, CLI/scaffolding surprises, and integration lessons logged during the build — the primary source for small projects (see **Harvest mode**), and an easy-to-miss one for large projects where docs lag the tracking file. |
+| **`appledger/` decision and lesson records** | Framework traps, CLI/scaffolding surprises, and integration lessons logged during the build — the primary source for small projects (see **Harvest mode**), and an easy-to-miss one for large projects where docs lag the ledger. If a legacy `.forgetrail/workflow_tracking.json` exists, migrate it before this scan. |
 | **`git log` / recent commits** | Subjects and paths; cluster related work; compare to the last `update-log.md` propagation date. |
 | **`docs/PRODUCT_JOURNAL.md`** (or git-derived changelog) | Day-level themes across UX, infra, and docs. Map **`Added`** / major **`Improved`** items to Step 3: new **feature-area** stubs in **`TECHNICAL_REFERENCE.md`**, **`TEST_PLAN.md`** checks, **`BRAND_AND_PRODUCT.md`** / **`DESIGN_SYSTEM.md`** when IA or positioning changes—not only **`CONTEXT_PROMPT.md`** bullets. |
 | **Recently touched `specs/`** | Durable architecture and copy decisions, including WIP specs. |

@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, readFileSync, writeFileSync, mkdirSync, utimesSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync, mkdirSync, utimesSync, chmodSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -94,6 +94,70 @@ test("session start warns on a legacy file and does not quote it as the live pha
   assert.doesNotMatch(payload.additional_context, /Current Phase: 4-feature-iteration/);
 });
 
+function stubAppledger(dir, line) {
+  const stub = join(dir, "bin");
+  mkdirSync(stub, { recursive: true });
+  if (process.platform === "win32") {
+    writeFileSync(join(stub, "appledger.cmd"), `@echo off\r\necho ${line}\r\n`);
+  } else {
+    const file = join(stub, "appledger");
+    writeFileSync(file, `#!/bin/sh\necho ${line}\n`);
+    chmodSync(file, 0o755);
+  }
+  const system = process.env.SystemRoot ? `${process.env.SystemRoot}\\System32` : "/usr/bin";
+  const sep = process.platform === "win32" ? ";" : ":";
+  return { PATH: [stub, system, process.env.PATH].filter(Boolean).join(sep) };
+}
+
+function runHook(script, dir, { input, env } = {}) {
+  return spawnSync(process.execPath, [join(root, "content", "hooks", script)], {
+    cwd: dir,
+    input,
+    encoding: "utf8",
+    env: env ? { ...process.env, ...env } : process.env,
+  });
+}
+
+test("session start includes orient when appledger is on PATH", () => {
+  const dir = mkdtempSync(join(tmpdir(), "ft-orient-"));
+  mkdirSync(join(dir, "appledger"), { recursive: true });
+  writeFileSync(join(dir, "appledger", "manifest.yaml"), "format: appledger\n");
+  const result = runHook("session-start.mjs", dir, { env: stubAppledger(dir, "STUB-ORIENT") });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(JSON.parse(result.stdout).additional_context, /STUB-ORIENT/);
+});
+
+test("session start keeps the ledger text when appledger is absent", () => {
+  const dir = mkdtempSync(join(tmpdir(), "ft-noap-"));
+  mkdirSync(join(dir, "appledger"), { recursive: true });
+  writeFileSync(join(dir, "appledger", "manifest.yaml"), "format: appledger\n");
+  const system = process.env.SystemRoot ? `${process.env.SystemRoot}\\System32` : "/usr/bin";
+  const result = runHook("session-start.mjs", dir, { env: { PATH: system } });
+  assert.equal(result.status, 0, result.stderr);
+  const text = JSON.parse(result.stdout).additional_context;
+  assert.match(text, /Project record: appledger/);
+  assert.doesNotMatch(text, /STUB-ORIENT/);
+});
+
+test("an edit under appledger/ runs check and reports a warning", () => {
+  const dir = mkdtempSync(join(tmpdir(), "ft-check-"));
+  mkdirSync(join(dir, "appledger"), { recursive: true });
+  const manifest = join(dir, "appledger", "manifest.yaml");
+  writeFileSync(manifest, "format: appledger\n");
+  const warned = runHook("validate-tracking.mjs", dir, {
+    input: JSON.stringify({ path: manifest }),
+    env: stubAppledger(dir, "warning missing_source example"),
+  });
+  assert.equal(warned.status, 0, warned.stderr);
+  assert.match(JSON.parse(warned.stdout).additional_context, /warning missing_source example/);
+  const clean = runHook("validate-tracking.mjs", dir, {
+    input: JSON.stringify({ path: manifest }),
+    env: stubAppledger(join(dir, "clean"), "ok ledger"),
+  });
+  assert.equal(clean.status, 0, clean.stderr);
+  assert.deepEqual(JSON.parse(clean.stdout), {});
+});
+
 test("Lite and workflow instructions name the ledger", () => {
   const lite = readFileSync(join(root, "content", "FORGETRAIL_LITE.md"), "utf8");
   const legacyAt = lite.indexOf("## 11. Legacy");
@@ -180,6 +244,7 @@ test("session stop reminds only after work newer than the session record", () =>
 
 test("kickoff names appledger init and does not require the tracking file", () => {
   const kickoff = readFileSync(join(root, "mcp-server", "src", "index.ts"), "utf8");
+  assert.match(kickoff, /z\.union\(\[z\.string\(\), z\.number\(\)\]\)/);
   assert.match(kickoff, /appledger init/);
   assert.doesNotMatch(kickoff, /no separate init command/);
   const plan = readFileSync(join(root, "content", "PLAN_MODE_PATTERNS.md"), "utf8");

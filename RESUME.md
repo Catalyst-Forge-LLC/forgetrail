@@ -18,13 +18,12 @@ GitHub slug is **`Catalyst-Forge-LLC/forgetrail`**. The old `forge-kit` URL redi
 
 The marketing site lives in **`site/`**. Preview: `pnpm site:dev`. Redeploy: `pnpm ship`.
 
-npm: [`forgetrail@0.5.2`](https://www.npmjs.com/package/forgetrail) and [`forgetrail-mcp@0.4.1`](https://www.npmjs.com/package/forgetrail-mcp) are published. This tree's `forgetrail-mcp` is `0.4.2` (depends on `forgetrail`) and is not published yet. The Lite v2.2.1 and installer changes need a `forgetrail` version bump before they publish. P0 fixes from [specs/suite-cohesion-prelaunch-review.md](specs/suite-cohesion-prelaunch-review.md) are in this tree. See [docs/NPM.md](docs/NPM.md). On Windows, prefer `pnpm dlx forgetrail` over npm 12 `npx`.
+npm: [`forgetrail@0.5.5`](https://www.npmjs.com/package/forgetrail) and [`forgetrail-mcp@0.4.3`](https://www.npmjs.com/package/forgetrail-mcp) match this tree and the registry as of 2026-09-29. Later content changes need a version bump before they publish. See [docs/NPM.md](docs/NPM.md). On Windows, prefer `pnpm dlx forgetrail` over npm 12 `npx`.
 
 ## Remaining
 
-- **`pnpm ship`** so forgetrail.dev picks up `/docs` and the current home/Try pages. Site source now describes `appledger/` and migration. It has not been redeployed, so the live site can still show the older tracking-file pages.
-- Optional M4: MCP finds content without `FORGETRAIL_ROOT` when both packages are present ([specs/completed/npm-distribution.md](specs/completed/npm-distribution.md)).
-- Tracking cutover: new installs do not write `workflow_tracking.json`. Project state is `appledger/`. Kickoff runs `appledger init` when that command is installed. Lite v2.2.0 and WORKFLOW tell an agent to write `appledger/`, record a disposition when a subject exists, and leave a missing family `not_applicable`. They do not generate labels.
+- P2 items in [specs/suite-cohesion-prelaunch-review.md](specs/suite-cohesion-prelaunch-review.md). This repository stays the template source. Application repositories carry `appledger/`.
+- xFacts package names wait on the `@xfacts` npm org. The map is in the x-facts repo, `specs/NPM-NAMING.md`.
 
 ## Do not
 

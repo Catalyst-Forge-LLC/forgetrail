@@ -38,6 +38,7 @@ const HOOK_FILES = [
   "guard-shell.mjs",
   "guard-edit.mjs",
   "session-start.mjs",
+  "appledger-bin.mjs",
   "validate-tracking.mjs",
   "validate-tracking-core.mjs",
   "session-stop.mjs",

@@ -1,7 +1,7 @@
 # ForgeTrail, AppLedger, and xFacts — suite cohesion review before promotion
 
 **Spec kind:** Delivery
-**Status:** Draft. P0 fixes are published. P1 fixes are committed locally and are not published or deployed. The P1-5 and P1-6 decisions are made; P1-6 waits on the npm org. See §9 and §10. P2 is open.
+**Status:** Draft. P0 and P1 fixes are published except the xFacts package renames, which wait on the `@xfacts` org. P2-1 through P2-5 are in this tree and are not published yet. P2-6 and P2-7 were checked and did not become code changes. See §9 through §11.
 **Date:** 2026-09-28
 **Related:** [`app-ledger-spec-pack-v0.1.0/`](app-ledger-spec-pack-v0.1.0/), [`partial/companion-tools.md`](partial/companion-tools.md), [`canonical/forgetrail-prelaunch-review.md`](canonical/forgetrail-prelaunch-review.md), root [`TODO.md`](../TODO.md)
 **Surfaces:** `README.md`, `content/FORGETRAIL_LITE.md`, `content/companion-tools.json`, `scripts/forgetrail-cli.mjs`, `scripts/mcp-status.mjs`, `mcp-server/`, `content/hooks/`, `site/`; sibling repos `appledger`, `x-facts`, `app-facts`, `feature-facts`, `tool-facts`, `skill-facts`, `agent-facts`, `model-facts`; catalystforge.com tools shelf
@@ -332,7 +332,7 @@ If only one day is available, do steps 1 and 2, and use the narrower promotion w
 - Should `forgetrail-mcp` depend on `forgetrail`, or ship the content itself? (P0-1)
 - Which npm naming approach for the xFacts families, and what to say about the third-party `agentfacts` package? (P1-6)
 - Should shipped work records in the AppLedger ledger be closed with their evidence? (P1-5)
-- Should the ForgeTrail repository carry its own ledger? (P2-2)
+- Should the ForgeTrail repository carry its own ledger? Resolved: no. This repo is the template source, and application repositories carry `appledger/`. Said on the home page. (P2-2)
 
 ## 8. Acceptance for this review
 
@@ -377,3 +377,18 @@ Local commits in each repository, vaulted and not pushed. Nothing below is publi
 | P1-8 | `forgetrail --version` and `-v` print 0.5.3. `appledger --version` and `-v` print 0.1.3. | Run from both trees. | Publish both packages. |
 
 The AppLedger `diff` test timed out twice at vitest's 5-second default while other builds ran. It now has a 20-second limit.
+## 11. P2 fix record (2026-09-29)
+
+Local commits. The ForgeTrail package is still 0.5.5, which is the published version, so these content changes need a bump before they publish. forgetrail-mcp is still 0.4.3. The numeric phase change is in the server source and is not on npm until the next mcp bump.
+
+| Item | Result | Check |
+| --- | --- | --- |
+| P2-1 | session-start runs appledger orient --budget 300 when the command is on PATH. afterFileEdit runs appledger check for a path under appledger/ and reports warnings. A missing command leaves the previous text. appledger-bin.mjs is in the install hook list. | scripts/tracking-cutover.test.mjs: 13 passed. A stub command produced the orient line and the check warning. A PATH without appledger kept the ledger text. |
+| P2-2 | No ledger was added to this repo. The home page says this repository is the template source and application repositories carry appledger/. | Text check. |
+| P2-3 | RESUME.md, docs/NPM.md, TODO.md, and specs/README.md match forgetrail 0.5.5, forgetrail-mcp 0.4.3, and appledger 0.1.5. specs/README.md no longer says xFacts phase maintenance is open. docs/rel-01.md in the appledger repo gained a 2026-09-29 sentence. The 0.1.0 table and its test counts were not rewritten. | npm view on 2026-09-29: forgetrail 0.5.5, forgetrail-mcp 0.4.3, appledger 0.1.5. |
+| P2-4 | getPhaseGuidance and suggestSubagentDecomposition accept a numeric phase as well as a string. | mcp-server tsc --noEmit passed. The schema is z.union of string and number. |
+| P2-5 | SYSTEM_HEALTH_CHECKS.md, ONE_CLICK_DEV_SETUP.md, prompts/propagate-to-forgetrail.md, and prompts/second-family-critique.md name appledger decision and lesson records. The PocketBase script and docs/SPEC_FEATURE_TEMPLATE.md already pointed at the ledger. Harvest mode migrates a legacy tracking file before reading it. | rg decisions[] in those six paths returns nothing. |
+| P2-6 | README.md and the ForgeTrail and AppLedger home pages do not say the format is fully conformance-tested. Source locators stay unimplemented. | Text search. |
+| P2-7 | Spot-check on 2026-09-29. ingotvault.dev has pnpm add -g ingotvault. toolfacts.dev, appfacts.dev, and agentfacts.dev show git clone, which matches packages that are not on npm. coldeye 0.1.17 has no bin. coldeye.dev says "Install in your agent" and does not show a package command. No site was edited. | Homepage text. |
+
+AppLedger skills/appledger/SKILL_FACTS.md is a SkillFacts 0.1.0 label at version 0.1.5. The SkillFacts validator accepted it. subjects --operation validate reports the skill unchanged. The orientation-budget work record is done because 0.1.5, which contains it, is published.

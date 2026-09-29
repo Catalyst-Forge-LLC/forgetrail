@@ -24,7 +24,7 @@ A fictional example: **desk-stamp**, a weekend CLI that stamps today's date on m
 
 ## What the agent writes
 
-The record is `appledger/` in your project: `profiles/forgetrail.yaml` for the phase, and records for decisions, lessons, and the session handoff. A new install does not create `.forgetrail/workflow_tracking.json`. A shortened excerpt from the end of session one:
+The record is `appledger/` in your project: `profiles/forgetrail.yaml` for the phase, and records for decisions, lessons, and the session handoff. A new install does not create `.forgetrail/workflow_tracking.json`. The ForgeTrail repository is the template source, and its backlog stays in `RESUME.md` and `TODO.md`. Application repositories carry the ledger. A shortened excerpt from the end of session one:
 
 ```yaml
 phase: plan

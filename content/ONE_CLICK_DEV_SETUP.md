@@ -137,6 +137,6 @@ if errorlevel 1 pause
 See **FORGETRAIL_LITE.md** §4.2.2 and **`SCAFFOLD_INSTALL.json`** (`versionPolicy`). Install scripts read `POCKETBASE_VERSION` from `.env`:
 
 - unset or `latest` → resolve from GitHub **releases/latest** at setup time
-- `0.26.2` (example) → pin that release; record in `decisions[]` when the user confirms a good boot
+- `0.26.2` (example) → pin that release; record it as an appledger decision record when the user confirms a good boot
 
 Never ship a stale semver only in methodology docs without an env override path.

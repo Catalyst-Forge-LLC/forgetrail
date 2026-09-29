@@ -8,6 +8,7 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { runAppledger } from "./appledger-bin.mjs";
 
 function walkUp(startDir, found) {
   let curr = resolve(startDir || process.cwd());
@@ -54,6 +55,11 @@ function main() {
     lines.push("Project record: appledger/");
     lines.push("Read appledger/profiles/forgetrail.yaml for the current phase.");
     lines.push("Read the latest session record for left_off and next_steps.");
+    const orient = runAppledger(["orient", "--budget", "300"], ledgerRoot);
+    if (!orient.absent && orient.text) {
+      lines.push("");
+      lines.push(orient.text);
+    }
   }
 
   if (trackingPath) {

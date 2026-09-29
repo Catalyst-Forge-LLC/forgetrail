@@ -40,4 +40,4 @@ When the second model returns its review:
 
 1. **Verify observations against codebase reality:** Not all critiques apply if the opposing model lacked local file context.
 2. **Update the spec:** Add newly discovered edge cases to the Edge Cases section; tighten acceptance criteria.
-3. **Log architectural pivots:** If a critique exposes an unviable path, log the alternative in `decisions[]` in `workflow_tracking.json`.
+3. **Log architectural pivots:** If a critique exposes an unviable path, record the alternative as an appledger decision record.

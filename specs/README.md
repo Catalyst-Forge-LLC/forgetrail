@@ -19,8 +19,8 @@ Canonical docs use `**Spec kind:** Canonical reference` in the header and track 
 
 | Document | Summary |
 |----------|---------|
-| `suite-cohesion-prelaunch-review.md` | Pre-promotion review of ForgeTrail, AppLedger, xFacts, and the companion offers as one system. Six P0 findings, with acceptance checks and open operator decisions. No fixes applied. |
-| `app-ledger-spec-pack-v0.1.0/` | AppLedger format plus ForgeTrail and xFacts adoption. Format checker lives in sibling repo [appledger](https://github.com/Catalyst-Forge-LLC/appledger). Tracking cutover no longer installs a writable `workflow_tracking.json`. xFacts maintenance inside ForgeTrail phases is still open. |
+| `suite-cohesion-prelaunch-review.md` | Pre-promotion review of ForgeTrail, AppLedger, xFacts, and the companion offers as one system. P0 and P1 are fixed. P2 is in progress. |
+| `app-ledger-spec-pack-v0.1.0/` | AppLedger format plus ForgeTrail and xFacts adoption. Format checker lives in sibling repo [appledger](https://github.com/Catalyst-Forge-LLC/appledger). Tracking cutover no longer installs a writable `workflow_tracking.json`. xFacts maintenance inside ForgeTrail phases landed in `ac8576c`. |
 
 ## In progress
 
