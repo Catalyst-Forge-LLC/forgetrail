@@ -1,6 +1,6 @@
 ---
 skill_facts_version: "0.1.0"
-name: forgetrail
+name: ForgeTrail
 developer: Catalyst Forge
 version: "0.3.0"
 status: active
@@ -40,7 +40,7 @@ credits:
   built_by: "Catalyst Forge - https://www.catalystforge.com/"
 ---
 
-# Skill Facts - forgetrail
+# Skill Facts - ForgeTrail
 
 | | |
 |---|---|
@@ -97,4 +97,4 @@ Enforce the ForgeTrail 7-phase lifecycle and maintain appledger/ as the system o
 ---
 *Generated with [SkillFacts](https://skillfacts.dev) · Built by [Catalyst Forge](https://www.catalystforge.com/)*
 
-[skillfacts-label]: https://skillfacts.dev/v#sf1.eNqdk0-L2zAQxb-K0Tm2t-2hkFtIu6U0dJcmt6UEWR7b2uiPkUZJw7LfvU8yZXehl_ZgsEdPM29-M34SZ7F-txJOWhJrMfgwEgepjViJns5k_EwBB1vJ0lwjV7dZgcMzhai9w9FN86G5QSSy5BQRkIr1OWuMVuRizruZpZqofl-EJ-16xFQK0Yc6nrTJ1eYUZl_Enx1sKKp4oqXcIRuqPtbzJCNVRg-krspQJV1fWakd46maF-_txYfTYPzliE-FcmPzGL2rZCw5I_ogW_mhCqR86HPx4M_kpFOo_ySiTyG_iYl5juu2HTVPqWuUt-0fEHVxVu922_YNtDl1Rsfpb9CeV0K7yCGBj3fxGAhQSr2JgGAt6NcMZJqRxhHnJhDUFkHKJgdtaPGOMC739SVoLnnZe5MTDhQITQDvwz-bbzvjuzbzbK2a60gBM24Pd3e74-1me9g3NpuA-D6P4UvSfeG1EiG5TeqL7UgyqGlHEbhj3hJpIOM8wTKHLEnjSJH3qZMjOf6EEVgMXmcmS_4DoWVcWr6-0-U--EdS_E2rkx-GJfyDYrK0RyXc-_oKq_i5El1yvaH-KAPrAeuIrXxAmMYAfSbOZMii7StIOu-obHtk7eSSA3JQnbylGS5fbcILrga_R26einlfUv3HvsC3U2gWI8MrPf8GOlRERg
+[skillfacts-label]: https://skillfacts.dev/v#sf1.eNqdUstu2zAQ_BVhz3qk7aEAb0HaFEWNJmh8CwJjTa0kxhQp7C7lGoH_vSCNIjn0kt5EYTAzOzMvsIL5UEPAmcDAbeSRtozOQw09reTjQgwGblDRn0SrgoAaVmJxMYCBq_ZTewU1iKImAQNo1a0Z452lIJn3ekE7UfOxAA8u9GDAJpbIjRycz2pL4iUW8NcwRLZU6UTVq6Hqc7NMKFR5N5A9WU8Vhr6a0QVFF6p2yFDN0O4Y-TD4eNwpoz24MLbPEkOFUjjlJEpzFYeKyUbuszjHlQIGS2BeQGLi_AWT6iKm60anU9q3Ns7d3yCa4qzZbG66V-Fyxt47mf4V2rkGF0Q5WXUxyI4J7VT0JvIeDNDvxTvrFGoIpPkIMODmxTvKJgfn6eIdDDBh3xzZaeHVGH0mHIgpWOrBPL7bfLf3cd_lPLvZLo0Qr8Td9u5us7u9vtk-tHM2MZLe5xq-JdeXvGrgFK5TX2wLIdtpQyIxSF4Jetej5gZLDxmSxpFEH9IeRwr6hWyclyguZ3Lh39K8eFS6vH7S8Z7jM1n94ewhDsPl9y-SNNMDSV7h9zexwlMN-xR6T_0OWd2AVgXM41MNNDKJ5MSVPM2kfAIDIQYqaxd1AS8c5vHpXMMUZ1pwfLuE17jantZ8PBXzsVD9x16UU7CouTLlROc_WmVEBg
