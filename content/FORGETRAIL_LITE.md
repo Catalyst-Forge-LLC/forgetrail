@@ -8,7 +8,7 @@
 
 A single self-contained file for starting a new project in **any** agent: Cursor, Claude Code, Claude Cowork, OpenAI Codex, Cline, Aider, Continue, Windsurf, etc. **No MCP server, no vendored methodology tree, no external fetches.** Drop this file into the repo (or paste it into chat), and the agent has enough structure to run a real project end to end.
 
-**System of record:** Phase, decisions, lessons, and sessions live in `appledger/` (`profiles/forgetrail.yaml` and records). §11 is the legacy shape for `appledger migrate` only. If a legacy `.forgetrail/workflow_tracking.json` exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep a second decision log. `.forgetrail/` is the protocol, rules, and hooks.
+**System of record:** Phase, decisions, lessons, and sessions live in `appledger/` (`profiles/forgetrail.yaml` and records). `.forgetrail/` is the protocol, rules, and hooks.
 
 > **Maintainers:** Optional onboarding blocks in **§4.3**, **§4.4**, and **§7.1** are intentionally duplicated in root **`README.md`** and **`WORKFLOW.md`**. When you edit one, sync the others (see **`update-log.md`** — FORGETRAIL_LITE release checklist, item 3).
 
@@ -49,7 +49,7 @@ Any of the three works. A + C together is best. For a written pre-Phase-1 spec, 
 
 ForgeTrail agent artifacts (protocol, tracking, platform rules) live in **`.forgetrail/`** at the repo root — **whether you bootstrap via ForgeTrail Lite file copy or MCP greenfield.**
 
-**Upstream ForgeTrail is open source** (Apache 2.0). In your app repo, **`.forgetrail/`** holds the protocol, rules, and hooks. Project state lives in **`appledger/`**. **MCP greenfield** does not need a tracking JSON file. **Lite file bootstrap** may copy `FORGETRAIL_LITE.md` here; you may **commit** `.forgetrail/` under the same license or **gitignore** it to keep the public repo focused on app code and to avoid duplicating a large protocol when MCP already serves updates. Never commit **secrets** (`.env`, API keys) inside the ledger or rules.
+**Upstream ForgeTrail is open source** (Apache 2.0). In your app repo, **`.forgetrail/`** holds the protocol, rules, and hooks. Project state lives in **`appledger/`**. **Lite file bootstrap** may copy `FORGETRAIL_LITE.md` here; you may **commit** `.forgetrail/` under the same license or **gitignore** it to keep the public repo focused on app code and to avoid duplicating a large protocol when MCP already serves updates. Never commit **secrets** (`.env`, API keys) inside the ledger or rules.
 
 ```
 .forgetrail/
@@ -101,7 +101,7 @@ When a boot surfaces a gap in **ForgeTrail Lite itself** (not a one-off app bug)
 
 **Optional companions:** when a job matches (Markdown site, two or more local apps, local Ollama, copy review), you may offer a sibling from the Catalyst Forge shelf. Never required. Do not list them in the first message to the human. MCP: `getCompanionSuggestions`. Full mapping lives with ForgeTrail, not in this file.
 
-**Subjects:** When the project has an application, a tool server, a skill package, an agent configuration, or a model variant, record a disposition with `appledger subjects`. A family with no subject is `not_applicable`, not a missing label. Do not generate or publish a label unless the user asks. Offering an xFacts label when the product goes public or changes hands stays optional.
+**Subjects:** When the project has an application, a tool server, a skill package, an agent configuration, or a model variant, record a disposition with `appledger subjects`. A family with no subject is `not_applicable`, not a missing label. Do not generate or publish a label unless the user asks. Offering an xFacts label when the product goes public or changes hands stays optional. An [Efficacy](https://efficacy.dev) chain in `.efficacy/` is the same kind of offer when a later agent should record a measured use of that version. The chain is not the project record.
 
 **Named ports (if they accept):** [LocalSlip](https://localslip.dev). FilePress: lease name = site `package.json` `name`. `localslip claim NAME --port N && filepress dev`. Do not pass `--port`. Vite: `localslip get` in `vite.config`, `strictPort`. Claim once. Do not write `ensure-lease.mjs`. Do not add the `localslip` package just to read a port.
 
@@ -161,7 +161,7 @@ Every project flows through these phases. The agent **pauses at every phase tran
 
 When archetype ≠ `product`, **prune** the non-applicable criteria in the profile once (and record that pruning as a decision) instead of annotating them "N/A" forever. If the project outgrows its archetype (a one-shot grows accounts), flag it and propose re-promoting to `product`.
 
-**Wrap (when the project ends):** Finishing a project includes **harvesting** it. When the app ships, is delivered, or is intentionally shelved: sweep lesson and decision records for lessons that generalize beyond this app (framework traps, CLI changes, integration surprises), record them in `FORGETRAIL_LITE_UPDATES.md` (§1.6) or propagate to the upstream ForgeTrail repo if you have one, set `project_status` to `wrapped`, and add a final session record with the end state (deploy URL, handoff notes). Small projects often surface the freshest tooling lessons — do not let them die in the repo. Optional: Cold-eye for a newcomer-readiness pass. A public xFacts label is still optional and only when the user asks. The subject disposition from the **Subjects** note above is already recorded.
+**Wrap (when the project ends):** Finishing a project includes **harvesting** it. When the app ships, is delivered, or is intentionally shelved: sweep lesson and decision records for lessons that generalize beyond this app (framework traps, CLI changes, integration surprises), record them in `FORGETRAIL_LITE_UPDATES.md` (§1.6) or propagate to the upstream ForgeTrail repo if you have one, set `project_status` to `wrapped`, and add a final session record with the end state (deploy URL, handoff notes). Small projects often surface the freshest tooling lessons — do not let them die in the repo. Optional: Cold-eye for a newcomer-readiness pass. A public xFacts label is still optional and only when the user asks. An Efficacy chain is the same kind of offer. The subject disposition from the **Subjects** note above is already recorded.
 
 ### 3.1 Feature specs (Phase 4+)
 
@@ -469,7 +469,7 @@ Output requirements
 |-----------|----------------|
 | **`status.bat`** / **`status.sh`** / **`pnpm run forgetrail:status`** | Anyone — prints phase name, open exit criteria, last session; refreshes **`docs/FORGETRAIL_PROGRESS.md`** |
 | **`docs/FORGETRAIL_PROGRESS.md`** | Plain-language snapshot (template: upstream **`FORGETRAIL_PROGRESS.md`**) |
-| **`.cursor/rules/forgetrail-phase-status.mdc`** | Cursor agent footers from tracking JSON |
+| **`.cursor/rules/forgetrail-phase-status.mdc`** | Cursor agent footers from `appledger/profiles/forgetrail.yaml` |
 | **Ask the agent** | *"What's our ForgeTrail phase and what's next?"* — it should read tracking first |
 
 **Agent:** After locking a phase or completing exit criteria, update tracking **and** either refresh **`docs/FORGETRAIL_PROGRESS.md`** or remind the user to run **status.bat**. On phase transitions, pause for explicit approval (§8 rule 1) — **status** output should not replace that conversation.

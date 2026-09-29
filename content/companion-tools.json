@@ -204,6 +204,11 @@
           "name": "xFacts",
           "homepage": "https://xfacts.dev",
           "offer": "When the product is public or handed off, offer an xFacts label (AppFacts and neighbors). Record the subject disposition either way, and bind an existing label with appledger bind. A validator checks shape, not truth."
+        },
+        {
+          "name": "Efficacy",
+          "homepage": "https://efficacy.dev",
+          "offer": "When a later agent should inspect a measured use of this exact version, offer an Efficacy chain in .efficacy/. The chain is optional. Verify shows the record is intact and bound to its evidence. It does not show the claim is true."
         }
       ]
     },

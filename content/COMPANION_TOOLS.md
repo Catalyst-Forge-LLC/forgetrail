@@ -17,7 +17,7 @@ Public shelf (current versions and install): [catalystforge.com/tools](https://c
 3. FilePress publishes **Markdown**. It does not replace an interactive SvelteKit app.
 4. LocalSlip and LocalHelm are for **two or more** local apps, not a first single project. If they accept LocalSlip, use the recipes below. Do not write `ensure-lease.mjs`.
 5. Practice skills: install the one that matches the current job, not the set.
-6. Offer an xFacts label when a product ships (public URL or handoff). Generate one only if the user accepts. Record the subject disposition in `appledger/` either way.
+6. Offer an xFacts label when a product ships (public URL or handoff). Generate one only if the user accepts. Record the subject disposition in `appledger/` either way. Offer an [Efficacy](https://efficacy.dev) chain in `.efficacy/` when a later agent should record a measured use of that version. The chain is optional, and a passing verify does not make the claim true.
 
 ---
 
@@ -77,7 +77,7 @@ Do not migrate a working host the user already chose.
 | `hard-to-undo` | Delete data, lock persistence, rewrite git, lock a stack | [TemperPass](https://temperpass.dev) |
 | `never-do` | Destructive action, force-push, or history rewrite | [TemperPass](https://temperpass.dev), [IngotVault](https://ingotvault.dev) |
 | `unclear-cause` | Failure is real; cause is not earned | [Gap Last](https://gaplast.dev) |
-| `ship-label` | Product is going public or being handed off | [xFacts](https://xfacts.dev) (AppFacts and neighbors) |
+| `ship-label` | Product is going public or being handed off | [xFacts](https://xfacts.dev) (AppFacts and neighbors), [Efficacy](https://efficacy.dev) |
 | `git-backup` | New project, or unpushed work you cannot lose; before rebase/rewrite | [IngotVault](https://ingotvault.dev) |
 | `voice-journal` | Builder captures ideas by voice, or wants a local journal | [DictaWhisper](https://dictawhisper.com) |
 

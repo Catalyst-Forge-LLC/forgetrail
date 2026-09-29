@@ -4,7 +4,7 @@
 
 A persistent development system for building software with AI agents. A structured 7-phase workflow for solo developers building non-trivial full-stack apps with coding agents. Derived from 7 sessions and ~78,000 lines of real-world app development.
 
-**System of record:** Phase, decisions, lessons, and sessions live in `appledger/` (`profiles/forgetrail.yaml` and records). If a legacy `.forgetrail/workflow_tracking.json` exists and is not a pointer, run `appledger migrate preview` and then apply. Do not keep a second decision log. `.forgetrail/` is hooks and host integration.
+**System of record:** Phase, decisions, lessons, and sessions live in `appledger/` (`profiles/forgetrail.yaml` and records). `.forgetrail/` is hooks and host integration.
 
 ---
 
@@ -272,7 +272,7 @@ Catalyst Forge siblings (and Cloudflare as a default DNS/hosting suggestion) are
 
 They are **never required**. Decline is success. Do not dump the shelf at kickoff. Suggest when a trigger is true; persist the outcome on the appledger session as `data.companion_outcomes`.
 
-**Subjects:** When an applicable subject exists — an application, a tool server, a skill package, an agent configuration, or a model variant — record a disposition with `appledger subjects`. A family with no subject is `not_applicable`, not a missing label. Do not generate or rewrite a label. A published xFacts label remains an offer when the product goes public or changes hands, and only if the user asks.
+**Subjects:** When an applicable subject exists — an application, a tool server, a skill package, an agent configuration, or a model variant — record a disposition with `appledger subjects`. A family with no subject is `not_applicable`, not a missing label. Do not generate or rewrite a label. A published xFacts label remains an offer when the product goes public or changes hands, and only if the user asks. An [Efficacy](https://efficacy.dev) chain in `.efficacy/` is the same kind of offer when a later agent should record a measured use of that version.
 
 **Agents:** `getCompanionSuggestions` (`phase` or `situation`) plus the optional footer on `getPhaseGuidance`. Mapping: `content/COMPANION_TOOLS.md`. Shelf: [catalystforge.com/tools](https://catalystforge.com/tools/).
 
@@ -289,7 +289,7 @@ They are **never required**. Decline is success. Do not dump the shelf at kickof
 - Pre-launch newcomer check → Cold-eye
 - Quality / presentation of a tool, site, or page → CraftAssay
 - An applicable subject exists → record a disposition (`appledger subjects`). A missing family stays `not_applicable`. Do not generate a label.
-- Product going public or handed off, and the user asks → offer an xFacts label
+- Product going public or handed off, and the user asks → offer an xFacts label, and an [Efficacy](https://efficacy.dev) chain if a later agent should inspect a measured use
 - Unpushed work you cannot lose → IngotVault
 - Spoken idea capture → DictaWhisper
 
@@ -303,8 +303,8 @@ ForgeTrail includes deterministic host hooks (`.forgetrail/hooks/` with `.cursor
 
 - **Shell guards:** Runs pre-commit verification (`pnpm run verify`), prevents package manager divergence (e.g. `npm`/`yarn` when `pnpm-lock.yaml` is present), gates `git push` on explicit user approval, and flags destructive operations (`git reset --hard`, `rm -rf`).
 - **Edit guards:** Requires user confirmation before mutating environment secrets (`.env*`) or canonical/completed specs (`specs/completed/**`).
-- **Session start injection:** Points the session at `appledger/` (profile phase and the latest session). It reports a legacy `.forgetrail/workflow_tracking.json` as a conflict, not the live phase.
-- **Tracking validation:** A pointer to `appledger/` is accepted. A legacy writable `workflow_tracking.json` is a conflict and is not the system of record.
+- **Session start injection:** Points the session at `appledger/` (profile phase and the latest session).
+- **Ledger check:** After an edit under `appledger/`, runs `appledger check` when the command is on PATH.
 
 Where the host supports hooks, tool-level denial and injection take the load off agent context budgets.
 
@@ -567,7 +567,7 @@ Where the host supports hooks, tool-level denial and injection take the load off
 - No silent failures in core workflows
 - Docs alignment audit passed (MCP `runAudit({ type: "docs-alignment" })` or `_forgetrail/prompts/docs-alignment-audit.md`)
 
-**Optional companions:** Cold-eye for newcomer readiness; CraftAssay for a quality score of the presented work; FilePress + Cloudflare Pages for a Markdown or docs site; IngotVault before a rewrite. If an applicable subject exists, record a disposition; a missing family is `not_applicable`. Offer an xFacts label only when the product goes public or changes hands and the user asks. Do not generate a label. See §1f.
+**Optional companions:** Cold-eye for newcomer readiness; CraftAssay for a quality score of the presented work; FilePress + Cloudflare Pages for a Markdown or docs site; IngotVault before a rewrite. If an applicable subject exists, record a disposition; a missing family is `not_applicable`. Offer an xFacts label only when the product goes public or changes hands and the user asks. Do not generate a label. An Efficacy chain in `.efficacy/` is optional in that same moment. See §1f.
 
 ---
 
