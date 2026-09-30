@@ -10,12 +10,26 @@ Two public unscoped packages:
 
 | Package | This tree | On npm until you publish | From | What it is |
 | --- | --- | --- | --- | --- |
-| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | 0.5.5 | 0.5.5 | repo root | CLI + Lite + templates. `pnpm dlx forgetrail install --lite` |
-| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | 0.4.3 | 0.4.3 | `mcp-server/` | MCP bin. Depends on `forgetrail` for content. `pnpm dlx forgetrail-mcp` |
+| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | 0.5.8 | 0.5.7 | repo root | CLI + Lite + templates. `pnpm dlx forgetrail install --lite` |
+| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | 0.4.4 | 0.4.3 | `mcp-server/` | MCP bin. Depends on `forgetrail` for content. `pnpm dlx forgetrail-mcp` |
 
 These are **installer and MCP channels**, not a library. App repos should not add `forgetrail` to `dependencies`.
 
-`forgetrail@0.5.5` and `forgetrail-mcp@0.4.3` are on npm and match these `package.json` versions as of 2026-09-29. A later content change needs a version bump before it publishes. `getCompanionSuggestions` reads its text from the installed `forgetrail`. `pnpm run pack:check` is the gate. It does not publish.
+The registry versions above were checked on 2026-09-30. The new tree versions are prepared and unpublished. `getCompanionSuggestions` reads its text from the installed `forgetrail`. `pnpm run pack:check` is the gate. It does not publish.
+
+## September ecosystem release
+
+The CLI release removes writable legacy tracking templates and structural compatibility readers, preserves ledger pointer/conflict diagnosis, and clarifies when an agent creates AGENTS.md. AppLedger remains the application record; its completed one-time migration is retired separately.
+
+Publish CLI `0.5.8` first. Before publishing MCP `0.4.4`, update its dependency and lockfile to require the new content:
+
+```powershell
+Set-Location Z:\workspace\forgetrail\mcp-server
+pnpm add "forgetrail@^0.5.8"
+pnpm build
+```
+
+Review and commit those files, then test the packaged MCP against that dependency. This update is pending until CLI `0.5.8` exists in the registry; the currently installed/locked dependency is still `0.5.2`. Do not publish the MCP preparation unchanged. Preserve independent package versions.
 
 ---
 
