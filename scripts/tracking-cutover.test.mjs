@@ -28,7 +28,7 @@ test("a legacy tracking document is a conflict", () => {
     sessions: [],
   });
   assert.match(result.issues.join("\n"), /not the system of record/);
-  assert.match(result.issues.join("\n"), /appledger migrate preview/);
+  assert.match(result.issues.join("\n"), /Legacy migration is retired/);
 });
 
 test("install does not create workflow_tracking.json", () => {
@@ -160,11 +160,11 @@ test("an edit under appledger/ runs check and reports a warning", () => {
 
 test("Lite and workflow instructions name the ledger", () => {
   const lite = readFileSync(join(root, "content", "FORGETRAIL_LITE.md"), "utf8");
-  const legacyAt = lite.indexOf("## 11. Legacy");
+  const legacyAt = lite.indexOf("## 11. AppLedger record");
   const resumeAt = lite.indexOf("## 12. `AGENTS.md`");
   assert.ok(legacyAt > 0 && resumeAt > legacyAt);
   const instructional = `${lite.slice(0, legacyAt)}\n${lite.slice(resumeAt)}`;
-  assert.match(lite.slice(legacyAt, resumeAt), /"schemaVersion": "lite-1"/);
+  assert.doesNotMatch(lite, /"schemaVersion": "lite-1"/);
   assert.match(instructional, /ForgeTrail Lite v2\.2\.2/);
   for (const line of instructional.split("\n")) {
     if (!line.includes("workflow_tracking.json")) continue;

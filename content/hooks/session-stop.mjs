@@ -125,7 +125,7 @@ function main() {
     console.log(
       JSON.stringify({
         followup_message:
-          "ForgeTrail reminder: workflow_tracking.json is a legacy file. Do not append sessions to it. Run `appledger migrate preview`, then apply, and record this session in appledger/.",
+          "ForgeTrail reminder: workflow_tracking.json is a legacy file. Do not append sessions to it. Legacy migration is retired. Preserve the legacy file; recover from the historical AppLedger revision in an isolated copy. Record current sessions in appledger/.",
       })
     );
     return;

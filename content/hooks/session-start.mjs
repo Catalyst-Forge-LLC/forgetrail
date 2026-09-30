@@ -74,7 +74,7 @@ function main() {
         lines.push("=== Legacy tracking conflict ===");
         lines.push("workflow_tracking.json is not the system of record.");
         lines.push("Do not add decisions, sessions, or phase status to it.");
-        lines.push("Run `appledger migrate preview`, then apply once, and write only in appledger/.");
+        lines.push("Legacy migration is retired. Preserve the legacy file; use an isolated copy and the historical AppLedger revision for recovery. See https://appledger.dev/docs/migration-retirement.");
       }
     } catch {
       lines.push("workflow_tracking.json could not be read. Do not recreate it. Use appledger/.");

@@ -15,7 +15,6 @@
     "prompts/",
     "WORKFLOW.md",
     "TRACKING_SCHEMA.md",
-    "workflow_tracking.json",
     "INITIAL_PROMPT.md",
     "CONTINUATION_PROMPT.md",
     "TRY_FORGETRAIL.md",

@@ -55,33 +55,10 @@ function scanWorkspace(workspaceRoot) {
     if (trackingPath) {
       try {
         const tracking = JSON.parse(readFileSync(trackingPath, "utf-8"));
-        projectName = tracking.project?.name || entry;
-        phase = String(tracking.currentPhase || "-");
-        archetype = tracking.project?.archetype || "product";
-
-        if (Array.isArray(tracking.sessions) && tracking.sessions.length > 0) {
-          const s = tracking.sessions[tracking.sessions.length - 1];
-          const date = s.date || s.timestamp?.slice(0, 10) || "";
-          const note = s.leftOff ? ` (${s.leftOff.slice(0, 30)}...)` : "";
-          lastSession = date ? `${date}${note}` : "-";
-        }
-
-        const isLite = tracking.schemaVersion === "lite-1";
-        if (isLite) {
-          const pObj = tracking.phases?.[phase];
-          if (pObj?.exitCriteria) {
-            openCriteriaCount = Object.values(pObj.exitCriteria).filter((v) => !v).length;
-          }
-        } else {
-          const pObj = tracking.phases?.[phase];
-          if (Array.isArray(pObj?.exitCriteriaRemaining)) {
-            openCriteriaCount = pObj.exitCriteriaRemaining.length;
-          }
-        }
         if (tracking.status === "pointer") {
           phase = ledger ? "appledger" : "pointer";
         } else if (tracking.currentPhase || tracking.phases) {
-          phase = ledger ? `legacy+${phase}` : `legacy:${phase}`;
+          phase = "legacy conflict";
         }
       } catch {}
     }

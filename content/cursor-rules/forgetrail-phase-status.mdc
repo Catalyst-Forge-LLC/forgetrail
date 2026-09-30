@@ -5,7 +5,7 @@ alwaysApply: true
 
 # ForgeTrail phase awareness
 
-This repo uses **ForgeTrail**. **Source of truth:** `appledger/profiles/forgetrail.yaml` and the latest session record. If a legacy `.forgetrail/workflow_tracking.json` exists and is not a pointer, it is a legacy conflict: run `appledger migrate preview`, then apply.
+This repo uses **ForgeTrail**. **Source of truth:** `appledger/profiles/forgetrail.yaml` and the latest session record. If a legacy `.forgetrail/workflow_tracking.json` exists and is not a pointer, it is a legacy conflict: preserve the file and follow the historical recovery procedure at https://appledger.dev/docs/migration-retirement. Current migration is retired.
 
 ## When to surface status
 

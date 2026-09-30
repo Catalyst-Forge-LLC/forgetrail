@@ -945,55 +945,9 @@ Keep it **short** — this is a map, not a monograph. If it grows past ~200 line
 
 ---
 
-## 11. Legacy `.forgetrail/workflow_tracking.json` (do not copy)
+## 11. AppLedger record
 
-Do **not** write this into a project. It is the old Lite shape. `appledger migrate` reads it when a project already has the file. New projects start at `appledger/`.
-
-**Lite vs MCP tracking:** Lite uses **`schemaVersion: "lite-1"`**, numeric **`currentPhase`** (`1`–`7`), and per-phase **`exitCriteria`** objects (boolean flags). The full MCP starter uses string phase keys (`1-architecture`, …) and **`exitCriteriaMet`** / **`exitCriteriaRemaining`** arrays — see **`TRACKING_SCHEMA.md`** (phase ID map + both shapes). **`scripts/forgetrail-dev-launcher.mjs`** `status` understands both.
-
-```json
-{
-  "schemaVersion": "lite-1",
-  "project": {
-    "name": "<project name>",
-    "created": "<YYYY-MM-DD>",
-    "description": "<one-line description>",
-    "sourceControl": "git",
-    "archetype": "product",
-    "status": "active"
-  },
-  "currentPhase": 1,
-  "phases": {
-    "1": { "name": "Plan", "status": "in_progress", "exitCriteria": { "phase1BriefLocked": false, "stackLocked": false, "heroFlowAgreed": false, "v1ScopeAgreed": false } },
-    "2": { "name": "Build", "status": "pending", "exitCriteria": { "runnableSpine": false, "heroFlowEndToEnd": false, "contextPromptWritten": false } },
-    "3": { "name": "Stabilize", "status": "pending", "exitCriteria": {} },
-    "4": { "name": "Iterate", "status": "pending", "exitCriteria": {} },
-    "5": { "name": "Refine", "status": "pending", "exitCriteria": {} },
-    "6": { "name": "Align", "status": "pending", "exitCriteria": {} },
-    "7": { "name": "Harden", "status": "pending", "exitCriteria": {} }
-  },
-  "decisions": [],
-  "gotchas": [],
-  "sessions": [],
-  "openQuestions": []
-}
-```
-
-**Entry shapes** (append-only; include **`phase`** when the decision belongs to a specific lifecycle phase):
-
-```json
-// decisions[] — date, phase, decision, why, alternatives (alternatives may be [])
-{ "date": "2026-04-22", "phase": 1, "decision": "Stack: SvelteKit + PocketBase", "why": "single-binary DB, fast spine", "alternatives": ["Next+Postgres"] }
-
-// gotchas[]
-{ "date": "2026-04-22", "phase": 2, "gotcha": "sv create hung: Directory not empty. Continue?", "fix": "Lite root is never empty by step 10; use manual scaffold (§4.2 step 10 A.1) or sv create into a new empty subfolder (app/); kill stuck process" }
-{ "date": "2026-04-22", "phase": 2, "gotcha": "sv create hangs on Tailwind plugin prompt", "fix": "pass --no-add-ons or explicit --tailwindcss=plugins:none" }
-{ "date": "2026-04-22", "phase": 2, "gotcha": "port 8090 already in use by background process", "fix": "configured PUBLIC_POCKETBASE_URL with port 8096 in .env" }
-{ "date": "2026-04-23", "phase": 2, "gotcha": "tar -xf on Windows: (a) 'Cannot connect to Z: resolve failed' — bsdtar parses drive letters as remote host; (b) 'This does not look like a tar archive' — GNU tar from Git Bash shadowed bsdtar on PATH", "fix": "On win32 branch: PowerShell Expand-Archive (or C:\\Windows\\System32\\tar.exe by absolute path) with cwd + basename, not full X:\\... path; see §13 Engineering" }
-
-// sessions[]
-{ "date": "2026-04-22", "phase": 2, "summary": "wired auth + hero route end-to-end", "nextSession": "seed data + first export" }
-```
+Project phase, decisions, lessons, and sessions live in `appledger/`. Read its manifest, the ForgeTrail profile, and the latest session. Do not create a legacy `workflow_tracking.json`. The old tracking shapes are retained in Git history, not shipped as starter templates. Historical recovery is documented at https://appledger.dev/docs/migration-retirement.
 
 ---
 
