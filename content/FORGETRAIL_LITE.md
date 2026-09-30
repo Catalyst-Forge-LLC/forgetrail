@@ -31,7 +31,7 @@ If your host supports hooks (Cursor `hooks.json`, Claude Code `settings.json`), 
 
 ## 1. How to use this file
 
-**Humans (first time):** Prefer the repo-root recipe **[TRY_FORGETRAIL.md](../TRY_FORGETRAIL.md)**: Genesis spec in any chat app, then this Lite file, then one kickoff line to your coding agent. No MCP required.
+**Humans (first time):** Prefer the upstream ForgeTrail recipe **[TRY_FORGETRAIL.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/TRY_FORGETRAIL.md)**: Genesis spec in any chat app, then this Lite file, then one kickoff line to your coding agent. The recipe lives in the upstream repository; Lite installation does not place it in your app root. No MCP required.
 
 **Option A — drop-in file (preferred).** Save this doc in **`.forgetrail/FORGETRAIL_LITE.md`** (see §1.5). You may commit `.forgetrail/` (same Apache 2.0 license) or gitignore it for a cleaner public app history — see §1.5. Most agents will read it when cited (e.g. *"follow `.forgetrail/FORGETRAIL_LITE.md`"*). Then save the **AGENTS.md snippet** from §12 as **`.forgetrail/AGENTS.md`**. Symlink or copy `.forgetrail/cursor/rules/*.mdc` into `.cursor/rules/` so Cursor loads them (§1.5). If you already have a product idea, pair this file with **`docs/GENESIS.md`** (see TRY_FORGETRAIL.md and `content/GENESIS_SPEC_PROMPT.md`).
 
