@@ -72,6 +72,25 @@ If the project has **not** already locked providers: **GitHub** for git, **Cloud
 | CI/CD      | [e.g., GitHub Actions]             | [free tier]             | $0           |
 | Monitoring | [e.g., UptimeRobot]                | [free tier]             | $0           |
 
+### Repeatable Ship contract
+
+For a FilePress site, complete this during scaffolding and verify before launch.
+See the methodology's `content/COMPANION_TOOLS.md`, "Wire FilePress publishing".
+
+- [ ] Actual site directory: [standalone root, `site/`, or `sites/<name>/`]
+- [ ] Hosting provider and authenticated account: [confirmed account]
+- [ ] Existing hosting project and production branch: [explicit target; do not infer from domain]
+- [ ] Site `package.json` has `ship` that builds then uploads `build/` to that target
+- [ ] Deployment CLI is a site-local dependency and is installed
+- [ ] Nested site has repository-root `ship` delegation, preserving any existing app deployment
+- [ ] Build passes; LocalHelm repository/site Ship discovery verified if enrolled
+- [ ] Missing project/credentials/setup recorded as pending; resource creation and first deployment authorized separately
+
+Example site command: `pnpm build && wrangler pages deploy build --project-name <project> --branch <branch>`.
+Example root command: `pnpm --dir site run ship` (use the actual path).
+Land synchronizes the FilePress engine and calls site Ship; it cannot fill in missing
+deployment commands, a deployment CLI dependency, or a hosting project.
+
 ### DNS delegation order (registrar + Cloudflare + origin)
 
 Typical stack: domain at **Namecheap** (or any registrar), **Cloudflare** for DNS and edge TLS. Origin is **Cloudflare Pages** for static, or **DigitalOcean** (or similar) when the app needs a server.

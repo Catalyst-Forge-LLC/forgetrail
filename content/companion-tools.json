@@ -18,20 +18,22 @@
         {
           "name": "FilePress",
           "homepage": "https://getfilepress.com",
-          "offer": "FilePress turns a Markdown folder into a static site. Cloudflare Pages with Wrangler is a free publish path."
+          "offer": "FilePress turns a Markdown folder into a static site. Cloudflare Pages with Wrangler is a free publish path.",
+          "how": "When selected, record the actual site path, hosting account, project, production branch and URL. Install a site-local deployment CLI. Add site scripts.ship that builds then uploads to the explicit target; for nested sites also add repository-root ship delegation (pnpm --dir site run ship or the actual sites/<name> path). Preserve existing app Ship commands. FilePress external scaffold accepts --pages-project and --production-branch, plus --root-package for delegation. Verify build and both LocalHelm Ship actions if enrolled. Missing hosting setup remains pending; scripts do not authorize provisioning or deployment. Land updates the engine and calls site Ship; it does not create scripts, add a missing deployment CLI dependency or provision hosting. See COMPANION_TOOLS.md: Wire FilePress publishing."
         }
       ]
     },
     {
       "id": "static-publish",
       "tier": "A",
-      "phases": ["1", "7"],
+      "phases": ["1", "2", "7"],
       "trigger": "An interactive app still needs a marketing or docs site beside the product.",
       "tools": [
         {
           "name": "FilePress",
           "homepage": "https://getfilepress.com",
-          "offer": "Keep the app on its own stack. Add a site/ folder with FilePress for docs and marketing, the same pattern forgetrail.dev uses."
+          "offer": "Keep the app on its own stack. Add a site/ folder with FilePress for docs and marketing, the same pattern forgetrail.dev uses.",
+          "how": "During scaffolding follow COMPANION_TOOLS.md: Wire FilePress publishing. Record hosting account/project/production branch and actual site path; install local Wrangler (or chosen provider CLI), add site ship (build then upload), and root ship delegation. Preserve existing app deployment commands. FilePress scaffold supports --pages-project, --production-branch and --root-package. Verify build and LocalHelm root/site Ship discovery if enrolled; unresolved hosting remains pending. Preparing scripts does not provision or deploy; Land cannot fill in missing deployment setup."
         }
       ]
     },

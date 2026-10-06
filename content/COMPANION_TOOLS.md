@@ -45,6 +45,36 @@ Do not write `scripts/ensure-lease.mjs`. Do not add the `localslip` npm package 
 
 Same recipes: [localslip.dev](https://localslip.dev) (FilePress + Vite pages) and FilePress `docs/LOCALSLIP.md`.
 
+## Wire FilePress publishing (agents)
+
+When FilePress is selected, establish the deployment contract during scaffolding
+and verify it before release. A successful build alone does not complete publishing setup.
+
+1. Record the actual site path, hosting account, Pages project (or chosen provider),
+   production branch, output directory and live URL in the brief/decision and deployment runbook.
+   Do not infer the project from the domain or a folder suffix such as `-dev`.
+2. Install the deployment CLI in the site with pnpm. For Pages, use local Wrangler.
+3. Add site `package.json` `scripts.ship`: build first, then upload to the explicit
+   project and production branch. Example: `pnpm build && wrangler pages deploy build --project-name <project> --branch <branch>`.
+4. For a nested site, add repository-root `scripts.ship` delegation, for example
+   `pnpm --dir site run ship` or `pnpm --dir sites/<name> run ship`. Preserve an
+   existing app Ship command; explicitly select or compose targets for multi-site repos.
+   A standalone FilePress site needs only its own root/site command.
+5. Confirm the local dependencies are installed, build succeeds, the authenticated
+   account is correct, and the hosting project exists. Verify LocalHelm discovers
+   the repository Ship and site Ship when enrolled. Mark missing setup as pending.
+
+FilePress's external scaffold supports `--pages-project <project>` together with
+`--production-branch <branch>`, and optional `--root-package <ancestor/package.json>`
+for root delegation. See [FilePress deployment instructions](https://getfilepress.com/deploy).
+For other providers, keep the same two-command contract with their upload command.
+
+Preparing scripts does not create cloud resources or deploy. Perform those actions
+only within the user's authorization. LocalHelm Land updates the FilePress engine
+and calls the site's Ship; it does not supply missing scripts, add a missing deployment
+CLI dependency, or create a hosting project. An exact engine pin must be updated to the selected
+version explicitly rather than relying on an unqualified dependency update.
+
 ---
 
 ## Default DNS and hosting (when unspecified)

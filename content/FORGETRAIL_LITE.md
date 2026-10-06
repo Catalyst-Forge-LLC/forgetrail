@@ -1,6 +1,6 @@
 # ForgeTrail Lite — portable kickoff for any agentic chat
 
-> **ForgeTrail Lite v2.2.2**
+> **ForgeTrail Lite v2.2.3**
 > © Catalyst Forge, LLC — [www.catalystforge.com](https://www.catalystforge.com)
 > Part of the **ForgeTrail** open-source methodology ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) in the upstream ForgeTrail repo).
 >
@@ -365,6 +365,8 @@ Record anything non-obvious as a lesson in **`appledger/`** (for example, Playwr
     **Default B + separate UI (web app + API, not PocketBase):** when the brief is **UI + backend** but not Default A, use a **pnpm workspace** with committed packages — e.g. `backend/` (or `packages/api`) + `frontend/` (or `packages/web`) — instead of fighting `sv create .` at the repo root. The **`sv create app`** shortcut (A.2) into an **empty** subfolder is the first-class path for the frontend; init the API package with `pnpm init` + A.3 in its folder. Record the layout as a decision in `appledger/` and `README.md` (§14). Load env per §4.2.1.
 
     **Both paths:** always use **`pnpm`**, never `npm` or `yarn`. Never hand-edit `package.json` to add deps — use `pnpm add` / `pnpm add -D` so `pnpm-lock.yaml` stays in sync. If `pnpm` is suddenly missing here (it was verified at §4.1 preflight but the machine changed), re-run the preflight rather than silently falling back to `npm`.
+
+    **FilePress publishing (when selected):** during scaffolding, record the actual site path, hosting account, project, production branch and URL. Install the deployment CLI locally in the site. Add site `scripts.ship` that builds then uploads to that explicit target; for Pages: `pnpm build && wrangler pages deploy build --project-name <project> --branch <branch>`. A nested site also needs root `scripts.ship` delegation (`pnpm --dir site run ship`, or the actual `sites/<name>` path). Preserve any existing app deployment command and explicitly choose targets for multi-site repos. FilePress's external scaffold supports `--pages-project`, `--production-branch` and optional `--root-package` for this wiring. Confirm local installation/build, authenticated account and existing hosting project; verify both LocalHelm Ship actions if enrolled. If hosting is undecided, record setup as pending and complete it before release. Preparing scripts does not provision or deploy. LocalHelm Land updates the engine and calls site Ship; it does not create missing scripts, add a missing deployment CLI dependency or provision hosting. Folder suffixes such as `-dev` and domain names do not determine the production target.
 11. **Build the full runnable spine in one pass** (Phase 2 exit criteria in §3). As files are needed, also create the **Phase 2 baseline docs** from §14: `README.md`, `TODO.md` (seeded from brief §11), `.forgetrail/IDEAS.md`, `.env.example`, the full `.gitignore`, **one-click launchers** (§4.5), **`docs/FORGETRAIL_PROGRESS.md`** (§4.6), and PocketBase install scripts per §4.2.2 when Default A uses PocketBase.
 12. **At every subsequent phase transition**, pause for the user's explicit "go" before updating the profile phase. Update the session record at the end of each substantive session. *(If git is enabled)* commit (`git add -A && git commit -m "<phase>: <summary>"`) at natural stopping points so history mirrors the phase log. In no-git mode, skip the commit and note progress in the session record only — and remind the user each session that git is still deferred.
 
@@ -957,7 +959,7 @@ Save this as `.forgetrail/AGENTS.md` so agents that auto-load it (Codex, Cursor,
 
 ```markdown
 <!--
-  Agent protocol based on ForgeTrail Lite v2.2.2.
+  Agent protocol based on ForgeTrail Lite v2.2.3.
   © Catalyst Forge, LLC — www.catalystforge.com
   Licensed under Apache License 2.0 (upstream ForgeTrail repo).
 -->
@@ -1132,4 +1134,4 @@ ForgeTrail Lite covers the shape of a project. The full **ForgeTrail MCP server*
 
 ---
 
-**ForgeTrail Lite v2.2.2** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+**ForgeTrail Lite v2.2.3** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

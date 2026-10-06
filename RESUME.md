@@ -1,5 +1,10 @@
 # Resume ForgeTrail (this repo)
 
+Latest local change (2026-10-06): FilePress publishing setup is explicit in Phase 2,
+Lite v2.2.3, MCP companion recipes and the deployment template. Nested sites need
+site build/upload Ship and repository-root delegation; hosting targets are recorded
+and unresolved setup remains pending. No publication, deployment or push performed.
+
 Use this file after a folder rename or a new chat. Do **not** use `INITIAL_PROMPT.md` or `CONTINUATION_PROMPT.md` here. Those start or resume **app** projects that adopt ForgeTrail.
 
 **Paste this into a new chat:**
