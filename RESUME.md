@@ -1,9 +1,12 @@
 # Resume ForgeTrail (this repo)
 
-Latest local change (2026-10-06): FilePress publishing setup is explicit in Phase 2,
-Lite v2.2.3, MCP companion recipes and the deployment template. Nested sites need
-site build/upload Ship and repository-root delegation; hosting targets are recorded
-and unresolved setup remains pending. No publication, deployment or push performed.
+Latest local change (2026-10-06): npm release contracts are explicit in Lite v2.2.4,
+planning/scaffolding, the release template, and LocalHelm's companion recipe.
+Verify the real public package, version/build/README sources, packed contents,
+and read-only Publish target. Generated releases behind private roots need
+verified target support or a manual path with LocalHelm support pending.
+The preceding FilePress Ship rule remains: nested sites need build/upload plus
+root delegation to recorded hosting targets. No publication, deployment or push.
 
 Use this file after a folder rename or a new chat. Do **not** use `INITIAL_PROMPT.md` or `CONTINUATION_PROMPT.md` here. Those start or resume **app** projects that adopt ForgeTrail.
 

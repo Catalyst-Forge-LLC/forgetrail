@@ -369,6 +369,7 @@ Where the host supports hooks, tool-level denial and injection take the load off
 **What to ask Claude to do:**
 
 - Build the entire skeleton in one pass (project init, deps, services, routes, components)
+- For an npm distribution, establish the release contract: public package directory, version source, build/pack commands, README source, and release command. Follow `content/COMPANION_TOOLS.md`, "Wire npm releases for LocalHelm". If enrolled, verify read-only status and Publish plan target the actual public package. Current LocalHelm reads `package.json` at the enrolled path; it does not infer a generated release behind a private harness. Use a stable publishable package root, or record verified release-target support/manual release and pending LocalHelm support. A quiet/private/skipped row does not prove npm is current.
 - Include an import script for existing data
 - Wire up the happy path end to end
 

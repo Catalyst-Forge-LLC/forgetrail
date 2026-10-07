@@ -1,6 +1,6 @@
 # ForgeTrail Lite — portable kickoff for any agentic chat
 
-> **ForgeTrail Lite v2.2.3**
+> **ForgeTrail Lite v2.2.4**
 > © Catalyst Forge, LLC — [www.catalystforge.com](https://www.catalystforge.com)
 > Part of the **ForgeTrail** open-source methodology ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) in the upstream ForgeTrail repo).
 >
@@ -367,6 +367,8 @@ Record anything non-obvious as a lesson in **`appledger/`** (for example, Playwr
     **Both paths:** always use **`pnpm`**, never `npm` or `yarn`. Never hand-edit `package.json` to add deps — use `pnpm add` / `pnpm add -D` so `pnpm-lock.yaml` stays in sync. If `pnpm` is suddenly missing here (it was verified at §4.1 preflight but the machine changed), re-run the preflight rather than silently falling back to `npm`.
 
     **FilePress publishing (when selected):** during scaffolding, record the actual site path, hosting account, project, production branch and URL. Install the deployment CLI locally in the site. Add site `scripts.ship` that builds then uploads to that explicit target; for Pages: `pnpm build && wrangler pages deploy build --project-name <project> --branch <branch>`. A nested site also needs root `scripts.ship` delegation (`pnpm --dir site run ship`, or the actual `sites/<name>` path). Preserve any existing app deployment command and explicitly choose targets for multi-site repos. FilePress's external scaffold supports `--pages-project`, `--production-branch` and optional `--root-package` for this wiring. Confirm local installation/build, authenticated account and existing hosting project; verify both LocalHelm Ship actions if enrolled. If hosting is undecided, record setup as pending and complete it before release. Preparing scripts does not provision or deploy. LocalHelm Land updates the engine and calls site Ship; it does not create missing scripts, add a missing deployment CLI dependency or provision hosting. Folder suffixes such as `-dev` and domain names do not determine the production target.
+    **npm distributions (when selected):** establish the package release contract during scaffolding, per §8 rule 15: actual public package directory, authoritative version file, build/pack steps, README source, and release command. Keep private harnesses separate. If LocalHelm is selected, verify a read-only status/Publish plan targets the public package; current LocalHelm does not infer generated packages behind a private root. Use a stable publishable package root or record verified target support/manual release and pending LocalHelm support. Packing and release preparation do not authorize publication.
+
 11. **Build the full runnable spine in one pass** (Phase 2 exit criteria in §3). As files are needed, also create the **Phase 2 baseline docs** from §14: `README.md`, `TODO.md` (seeded from brief §11), `.forgetrail/IDEAS.md`, `.env.example`, the full `.gitignore`, **one-click launchers** (§4.5), **`docs/FORGETRAIL_PROGRESS.md`** (§4.6), and PocketBase install scripts per §4.2.2 when Default A uses PocketBase.
 12. **At every subsequent phase transition**, pause for the user's explicit "go" before updating the profile phase. Update the session record at the end of each substantive session. *(If git is enabled)* commit (`git add -A && git commit -m "<phase>: <summary>"`) at natural stopping points so history mirrors the phase log. In no-git mode, skip the commit and note progress in the session record only — and remind the user each session that git is still deferred.
 
@@ -849,6 +851,7 @@ Full ForgeTrail expands this under **`docs/TECHNICAL_REFERENCE.md`** (*URL impor
 12. **PocketBase (and similar binaries) — resolve version at install.** Never hardcode a stale semver in methodology or scripts only; use §4.2.2 (`POCKETBASE_VERSION`, GitHub latest).
 13. **Isolated health checks for key systems.** PocketBase (and Ollama when used) get **`test-*.mjs`** + **`test-*.bat`** (§4.7–§4.8, **`SYSTEM_HEALTH_CHECKS.md`**) — not only "start the whole app and see what breaks."
 14. **Local Ollama — non-thinking defaults.** Install/pull Granite 4.1 or Gemma 3 instruct sizes from VRAM; avoid reasoning models unless **`OLLAMA_USE_THINKING=1`** and the user explicitly needs them.
+15. **npm releases must have an explicit package contract.** Record the public package directory, authoritative version source, build/pack commands, README source, and release command during planning/scaffolding. Prefer a stable checked-in publishable `package.json` at the enrolled directory. When LocalHelm is selected, verify its read-only status and Publish plan match that target. Current LocalHelm reads that directory's `package.json`; an `npm` override does not bypass `private`, and generated release metadata is not inferred. Generated layouts need verified release-target support or a documented manual release path with LocalHelm support pending. Never enroll disposable build output or make a private harness public to force Publish. Inspect the packed contents and compare with npm before release; a quiet row, commit, site Ship, or personal skill update does not mean npm is current. Changed published content requires a new package version. Preparing the release does not authorize publication or push. Recipe: `content/COMPANION_TOOLS.md`, "Wire npm releases for LocalHelm" in the methodology distribution.
 
 ### 8.9 Git commit practices
 
@@ -959,7 +962,7 @@ Save this as `.forgetrail/AGENTS.md` so agents that auto-load it (Codex, Cursor,
 
 ```markdown
 <!--
-  Agent protocol based on ForgeTrail Lite v2.2.3.
+  Agent protocol based on ForgeTrail Lite v2.2.4.
   © Catalyst Forge, LLC — www.catalystforge.com
   Licensed under Apache License 2.0 (upstream ForgeTrail repo).
 -->
@@ -979,6 +982,7 @@ This repository uses **ForgeTrail Lite** as its project kickoff and operating pr
 - **Lists:** numbered = ordered steps or questions, bullets = parallel options, letters (A/B/C) = pick-one. See §8 rule 5.
 - **No interactive CLIs** in scripted commands — pass every flag.
 - **Five-turn rule:** if a problem has not converged in ~5 turns, propose a different approach, not more patches.
+- **npm release layout:** record the actual public package root, version source, build/pack path, and README source. If LocalHelm is selected, verify status/Publish plan targets the public package; a private harness or generated output is not automatically a release target. See §8 rule 15.
 
 ## Conventions
 - Package manager: **pnpm**. Add deps with `pnpm add` / `pnpm add -D` — never hand-edit `package.json`, never `npm`/`yarn`.
@@ -1134,4 +1138,4 @@ ForgeTrail Lite covers the shape of a project. The full **ForgeTrail MCP server*
 
 ---
 
-**ForgeTrail Lite v2.2.3** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+**ForgeTrail Lite v2.2.4** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

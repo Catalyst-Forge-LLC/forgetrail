@@ -165,7 +165,7 @@ test("Lite and workflow instructions name the ledger", () => {
   assert.ok(legacyAt > 0 && resumeAt > legacyAt);
   const instructional = `${lite.slice(0, legacyAt)}\n${lite.slice(resumeAt)}`;
   assert.doesNotMatch(lite, /"schemaVersion": "lite-1"/);
-  assert.match(instructional, /ForgeTrail Lite v2\.2\.2/);
+  assert.match(instructional, /ForgeTrail Lite v2\.2\.4/);
   for (const line of instructional.split("\n")) {
     if (!line.includes("workflow_tracking.json")) continue;
     assert.match(line, /legacy/, line);

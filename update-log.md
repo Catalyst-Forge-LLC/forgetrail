@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-10-06 | **npm release contracts + FORGETRAIL_LITE v2.2.4:** record the actual public package root, version/build/README sources and release path. Verify LocalHelm status/Publish against that target; generated packages behind private harnesses need verified support or an explicit manual release path. Packed changes require a new npm version; quiet rows, site Ship and personal installs do not establish registry freshness. Not published. |
 | 2026-10-06 | **FilePress Ship setup + FORGETRAIL_LITE v2.2.3:** Phase 2, Lite, MCP companion recipes and deployment template require site build/upload plus root delegation for nested sites. Record explicit hosting targets, preserve existing app commands, verify installation/discovery, and keep unresolved hosting pending. Preparing scripts does not provision or deploy. Not published. |
 | 2026-09-29 | **Suite review P2:** session start runs appledger orient when the command is on PATH, and an edit under appledger/ runs appledger check. getPhaseGuidance accepts a numeric phase. Later templates name appledger records. The home page says this repo is the template source. RESUME, NPM, and the spec index match the published versions. Not published until the next version bump. See specs/suite-cohesion-prelaunch-review.md section 11. |
 | 2026-09-28 | **FORGETRAIL_LITE v2.2.2 and a quieter stop hook:** fresh-project instructions no longer name `workflow_tracking.json`. Only legacy and migration text does. `session-stop.mjs` reminds only when project files changed after the latest session record, and never on a follow-up turn. `POCKETBASE_SCHEMA_SCRIPT.md` and `docs/SPEC_FEATURE_TEMPLATE.md` no longer tell the agent to write the file. Not published. |
@@ -69,6 +70,34 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-10-06: npm package layouts and LocalHelm
+
+The UXcalibur release uses a generated public package while its enrolled root is
+a private development harness. LocalHelm correctly skips the private root but
+does not discover that separate release, so a quiet row missed unpublished
+README, method, and installer changes. The operator requested a ForgeTrail rule.
+
+- Lite v2.2.4 adds the contract to Phase 2, agent rule 15, and the
+  AGENTS snippet. All three version markers agree; no tracking schema change.
+- WORKFLOW and the MCP bootstrap carry the same scaffold guidance. The Phase 1
+  brief template records one contract per npm package; DEPLOYMENT checks the
+  packed artifact, registry version/content, and the read-only Publish target.
+- COMPANION_TOOLS adds the reusable npm recipe, and the LocalHelm MCP companion
+  includes its instructions. Companions remain optional; generated-target
+  support is not presented as an existing LocalHelm capability.
+- Prefer stable checked-in public package roots. Preserve private harnesses;
+  do not enroll disposable artifacts as a workaround. Unsupported automation
+  has a recorded manual path and pending support, rather than silent success.
+- The ecosystem workspace AGENTS instruction applies the rule immediately to
+  existing package work. Existing app Lite copies are separate installations.
+
+Verification: all 13 existing installation/tracking/hook checks passed. A fresh
+isolated Lite installation contains rule 15 and all three v2.2.4 markers; the
+MCP companion formatter delivers the new LocalHelm recipe. The existing test's
+Lite version assertion was advanced to v2.2.4.
+
+No package version, publication, deployment, or push is part of this rule change.
 
 ### 2026-09-28: Suite review P0 fixes
 

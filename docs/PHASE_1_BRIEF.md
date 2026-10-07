@@ -62,6 +62,26 @@ _Confirmed choices only after user sign-off. Mirror the same choices into `CONTE
 
 ---
 
+## 4a. npm release contract (if applicable)
+
+_Skip for products not distributed through npm. Fill one row per public package.
+Keep private development harnesses separate from the package consumers install._
+
+| Public npm name | Stable package directory | Version source | Build / pack and artifact | README source | Release command |
+| --- | --- | --- | --- | --- | --- |
+| | | | | | |
+
+**LocalHelm, if selected:** record the enrolled package path and verify its
+read-only status and Publish plan. Current LocalHelm reads `package.json` at that
+path; a private root with a separately generated release is not discovered by an
+`npm` name override. Prefer a stable publishable package root. Generated layouts
+need verified release-target support or a documented manual release path with
+LocalHelm support pending. See the methodology's `content/COMPANION_TOOLS.md`,
+"Wire npm releases for LocalHelm". Do not change a harness to public just to
+expose Publish.
+
+---
+
 ## 5. Data model (sketch)
 
 _Entities and relationships — not full schemas. Enough for Phase 2 scaffolding._

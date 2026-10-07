@@ -91,6 +91,25 @@ Example root command: `pnpm --dir site run ship` (use the actual path).
 Land synchronizes the FilePress engine and calls site Ship; it cannot fill in missing
 deployment commands, a deployment CLI dependency, or a hosting project.
 
+### npm package release contract (if applicable)
+
+See the methodology's `content/COMPANION_TOOLS.md`, "Wire npm releases for
+LocalHelm". Complete one checklist per public package, separate from site Ship.
+
+- [ ] Public npm name and stable package directory recorded
+- [ ] Authoritative version file, build/pack commands, artifact path, and README source recorded
+- [ ] Private development harness distinguished from the public release target
+- [ ] Packed name/version/license/README and allowed contents inspected against the release contract
+- [ ] Current npm version/contents compared; changed published content assigned a new release version
+- [ ] If enrolled, LocalHelm read-only status and Publish plan target the correct directory and version/bump source
+- [ ] Generated layouts have verified release-target support, or a manual release path and LocalHelm support marked pending
+- [ ] Publication and any Git push stay within the user's authorization
+
+A quiet, private, or skipped LocalHelm row does not establish that npm is current.
+Do not enroll disposable generated output or remove `private` from a development
+harness as a workaround. A personal skill update or site Ship does not publish
+the npm package.
+
 ### DNS delegation order (registrar + Cloudflare + origin)
 
 Typical stack: domain at **Namecheap** (or any registrar), **Cloudflare** for DNS and edge TLS. Origin is **Cloudflare Pages** for static, or **DigitalOcean** (or similar) when the app needs a server.

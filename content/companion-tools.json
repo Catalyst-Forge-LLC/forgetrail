@@ -65,7 +65,8 @@
         {
           "name": "LocalHelm",
           "homepage": "https://localhelm.dev",
-          "offer": "LocalHelm shows status across the repos you enroll. Inspection does not publish."
+          "offer": "LocalHelm shows status across the repos you enroll. Inspection does not publish.",
+          "how": "For npm products follow COMPANION_TOOLS.md: Wire npm releases for LocalHelm. Record the actual public package directory, name, version source, build/pack path and README source in the brief/release runbook. Current LocalHelm reads package.json at the enrolled directory; an npm name override does not bypass private, and generated release.json/artifacts are not inferred. Prefer a stable checked-in publishable package root. Generated layouts require verified release-target support or an explicit manual release path with LocalHelm support pending; do not enroll disposable build output or make a harness public to force Publish. Inspect packed contents and run read-only status/Publish plan against the real target. A quiet/private/skipped row does not prove npm is current. README/skill changes require a new version and package release; site Ship and personal installs do not update npm. Publication and pushes require existing user authorization."
         }
       ]
     },
