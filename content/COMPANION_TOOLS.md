@@ -88,15 +88,22 @@ when it is selected, its enrolled package must be the actual release target.
    private development harness from the package consumers install. Record each
    package separately in a repository with multiple releases.
 2. Prefer a checked-in publishable `package.json` at the enrolled directory,
-   whether the repository root or a stable package subdirectory. Current LocalHelm
-   reads that directory's `package.json` for name, version, and `private` status;
-   it does not infer a generated release from `release.json` or a build script.
+   whether the repository root or a stable package subdirectory. LocalHelm defaults
+   to that directory's `package.json` for name, version, and `private` status;
+   it does not infer a generated release from an arbitrary `release.json` or build script.
    An `npm` name override does not make a private package publishable.
 3. If the chosen layout generates the manifest or tarball elsewhere, provide and
    verify explicit release-target support before relying on LocalHelm Publish.
    Otherwise record the manual release path and the missing LocalHelm support as
    pending. Do not enroll an ignored, disposable build directory as a durable
    substitute, or remove `private` from a harness just to enable Publish.
+   LocalHelm's explicit release-target contract uses a checked-in
+   `localhelm.release.json` with configuration version `1`, `directory`, `manifest`,
+   `readme`, and optional `buildScript`, `kind`, and `executables`. Paths stay within
+   the enrolled checkout. Status/Bump use the authoritative manifest; confirmed
+   Publish builds, packs, verifies, then publishes the exact archive. Verify the
+   installed LocalHelm supports this contract; a newer checkout does not update
+   an older global installation. See [LocalHelm release targets](https://github.com/Catalyst-Forge-LLC/localhelm/blob/main/docs/NPM_RELEASES.md).
 4. Build and inspect the packed package: its name, version, license, README, and
    allowed contents must match the release contract. Compare the version and
    published contents with npm; changed README/skill files need a new package

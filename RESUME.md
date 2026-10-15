@@ -1,5 +1,10 @@
 # Resume ForgeTrail (this repo)
 
+Companion recipe update (2026-10-15): LocalHelm's verified release-target contract
+is now described in `content/COMPANION_TOOLS.md`, including explicit generated
+sources, exact archive publication, and the requirement to verify installed tool
+support before using newer checkout capabilities. No package release or push.
+
 Latest local change (2026-10-06): npm release contracts are explicit in Lite v2.2.4,
 planning/scaffolding, the release template, and LocalHelm's companion recipe.
 Verify the real public package, version/build/README sources, packed contents,
