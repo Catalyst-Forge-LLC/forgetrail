@@ -76,14 +76,17 @@ const build = spawnSync("pnpm", ["run", "build"], {
 if (build.status !== 0) fail("mcp-server build failed");
 mustExist(MCP_ENTRY, "mcp-server/dist/index.js");
 
-const pack = spawnSync("pnpm", ["pack", "--dry-run", "--json"], {
+// pnpm 9 pack has no --dry-run or --json. npm pack is what actually publishes.
+const pack = spawnSync("npm", ["pack", "--dry-run", "--json"], {
   cwd: FORGETRAIL_ROOT,
   encoding: "utf8",
   shell: true,
 });
 if (pack.status !== 0) {
-  console.error(pack.stderr);
-  fail("pnpm pack --dry-run failed for forgetrail");
+  const detail = [pack.stderr, pack.stdout].map((part) => (part ?? "").trim()).filter(Boolean).join("\n");
+  if (detail) console.error(detail);
+  const line = detail.split("\n").find((item) => /error|unknown option/i.test(item));
+  fail(line ? `npm pack --dry-run failed for forgetrail: ${line}` : "npm pack --dry-run failed for forgetrail");
 }
 
 const packed = pack.stdout ?? "";
