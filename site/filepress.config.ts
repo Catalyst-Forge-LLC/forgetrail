@@ -4,12 +4,11 @@ const github = 'https://github.com/Catalyst-Forge-LLC/forgetrail';
 
 export default defineFilepressConfig({
 	title: 'ForgeTrail',
-	description:
-		'A persistent development system for building software with AI agents. Forge the path. Keep the trail.',
+	description: "Keep the current phase, decisions, and next step in your repository. ForgeTrail gives your coding agent a path through the build and a handoff to read when you return.",
 	url: 'https://forgetrail.dev',
 	author: 'Catalyst Forge LLC',
 	tagline: 'Forge the path. Keep the trail.',
-	lede: 'Phase · decisions · next session',
+	lede: "Development method and files for your coding agent",
 	homePage: 'home',
 	logo: '/logo.png',
 	ogImage: '/logo.png',

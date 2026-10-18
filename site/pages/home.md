@@ -1,18 +1,10 @@
 ---
-title: Guide your agent through building solid software, and keep the trail between sessions.
-description: A development method for agent-assisted builds. Seven phases with approval gates, and the project's phase, decisions, and lessons kept in the repository so the next session picks up where the last one stopped.
+title: "Pick up where the last session stopped."
+description: "Keep the current phase, decisions, and next step in your repository. ForgeTrail gives your coding agent a path through the build and a handoff to read when you return."
 order: 0
 ---
 
-ForgeTrail gives your next coding session a place to start. It keeps the phase, decisions, and handoff in your repository so an agent can read them when you resume.
-
-Start with Lite for a small project. Add the full templates or MCP when you need them. You do not have to run all seven phases to try the method. ForgeTrail ships as files your agent reads and follows, plus an optional installer, MCP server, and hooks. It is not a library or a SaaS.
-
-<div class="cta-row">
-  <a class="cta cta-primary" href="/try">Try ForgeTrail Lite</a>
-  <a class="cta cta-secondary" href="/docs">Read the docs</a>
-  <a class="cta cta-secondary" href="https://github.com/Catalyst-Forge-LLC/forgetrail">View on GitHub</a>
-</div>
+<section class="value-hero" aria-label="ForgeTrail overview"><div class="value-intro"><p class="value-kind">Development method and files for your coding agent</p><h1>Pick up where the last session stopped.</h1><p class="value-lede">Keep the current phase, decisions, and next step in your repository. ForgeTrail gives your coding agent a path through the build and a handoff to read when you return.</p><div class="cta-row"><a class="cta cta-primary" href="/try">Try ForgeTrail Lite</a><a class="cta cta-secondary" href="#two-sessions">Read a session handoff</a></div><p class="value-limit">Start with Lite. Manual use needs no Node or MCP. The agent must write the handoff and follow the approval gates.</p></div><figure class="value-proof"><figcaption>Illustrative example</figcaption><p><strong>Starting point</strong><br>A weekend CLI pauses before scaffolding.</p><div class="value-result"><p><strong>What you get</strong><br>Decision: files on disk, no database. Next step: agree the first stamp command.</p></div><p>A new session resumes that question instead of revisiting the data-store decision.</p><p class="value-note">Fictional desk-stamp example. Recording the handoff is an explicit step.</p></figure></section>
 
 ## Two sessions
 
