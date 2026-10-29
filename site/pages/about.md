@@ -24,4 +24,4 @@ Open source under [Apache License 2.0](https://github.com/Catalyst-Forge-LLC/for
 
 ## Works alongside
 
-ForgeTrail stays the lifecycle and memory layer. Optional neighbors on the [Catalyst Forge tools shelf](https://catalystforge.com/tools/) cover jobs such as a Markdown site (FilePress), named local ports (LocalSlip), a local status board (LocalHelm), and editorial or readiness skills. None of those are required to try ForgeTrail.
+ForgeTrail supplies the development method and uses [AppLedger](https://appledger.dev) for the project record. Other tools on the [Catalyst Forge shelf](https://catalystforge.com/tools/) cover publishing Markdown sites (FilePress), managing named local ports (LocalSlip), running and shipping local repositories (LocalHelm), and reviewing the work. Those companion tools are optional.

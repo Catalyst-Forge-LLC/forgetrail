@@ -1,10 +1,20 @@
 ---
-title: "Pick up where the last session stopped."
-description: "Keep the current phase, decisions, and next step in your repository. ForgeTrail gives your coding agent a path through the build and a handoff to read when you return."
+title: "Build software with AI, from idea to release."
+description: "ForgeTrail guides you and your coding agent from defining a project to building a working version, improving it, and preparing it to ship. Phase guidance and review checkpoints make the next step clear; AppLedger keeps the decisions, evidence, lessons, and handoffs with the project."
 order: 0
 ---
 
-<section class="value-hero" aria-label="ForgeTrail overview"><div class="value-intro"><p class="value-kind">Development method and files for your coding agent</p><h1>Pick up where the last session stopped.</h1><p class="value-lede">Keep the current phase, decisions, and next step in your repository. ForgeTrail gives your coding agent a path through the build and a handoff to read when you return.</p><div class="cta-row"><a class="cta cta-primary" href="/try">Try ForgeTrail Lite</a><a class="cta cta-secondary" href="#two-sessions">Read a session handoff</a></div><p class="value-limit">Start with Lite. Manual use needs no Node or MCP. The agent must write the handoff and follow the approval gates.</p></div><figure class="value-proof"><figcaption>Illustrative example</figcaption><p><strong>Starting point</strong><br>A weekend CLI pauses before scaffolding.</p><div class="value-result"><p><strong>What you get</strong><br>Decision: files on disk, no database. Next step: agree the first stamp command.</p></div><p>A new session resumes that question instead of revisiting the data-store decision.</p><p class="value-note">Fictional desk-stamp example. Recording the handoff is an explicit step.</p></figure></section>
+<section class="value-hero" aria-label="ForgeTrail overview"><div class="value-intro"><p class="value-kind">Development system for you and your coding agent</p><h1>Build software with AI, from idea to release.</h1><p class="value-lede">ForgeTrail guides you and your coding agent from defining a project to building a working version, improving it, and preparing it to ship. Phase guidance and review checkpoints make the next step clear; AppLedger keeps the decisions, evidence, lessons, and handoffs with the project.</p><div class="cta-row"><a class="cta cta-primary" href="/try">Try ForgeTrail Lite</a><a class="cta cta-secondary" href="#from-idea-to-working-software">See a project take shape</a></div><p class="value-limit">Start with Lite. Manual use needs no Node or MCP. The agent must write the handoff and follow the approval gates.</p></div><figure class="value-proof"><figcaption>Illustrative project: desk-stamp</figcaption><p><strong>Before: an idea with unresolved choices</strong><br>A CLI to date Markdown notes. What should the first command do? Where should it keep data?</p><div class="value-result"><p><strong>With ForgeTrail: agree, then build</strong><br>Approve a short brief, record the choices in AppLedger, then build the first command end to end with checks.</p></div><p><strong>After: a working core and a next step</strong><br>You can run the command and inspect what passed. Stabilization and release checks have a place in the plan.</p><p class="value-note">Illustrative workflow, not a delivered customer project. You review the work before moving to the next phase.</p></figure></section>
+
+## From idea to working software
+
+Suppose you want **desk-stamp**, a small CLI that adds today's date to Markdown notes. ForgeTrail gives the work a sequence:
+
+1. **Agree what to build.** The agent turns the idea into a brief: the first stamp command, files on disk, no database, and what a successful run must do. You review the choices before scaffolding.
+2. **Build a complete first workflow.** The agent wires input, date stamping, file output, and checks into a runnable version. You can try the core task before adding more features.
+3. **Improve and prepare it to ship.** Later phases cover stability, further features, refinement, product alignment, and release hardening. Exit criteria make unfinished work visible at each review.
+
+The full method has seven phases: **Plan, Build spine, Stabilize, Iterate, Refine, Align, and Harden**. Lite concentrates on agreeing the project and building its first runnable workflow. Scale the process to the project; a weekend tool does not need every phase.
 
 ## Two sessions
 
@@ -16,7 +26,7 @@ A fictional example: **desk-stamp**, a weekend CLI that stamps today's date on m
 
 ## What the agent writes
 
-The record is `appledger/` in your project: `profiles/forgetrail.yaml` for the phase, and records for decisions, lessons, and the session handoff. The ForgeTrail repository is the template source, and its backlog stays in `RESUME.md` and `TODO.md`. Application repositories carry the ledger. A shortened excerpt from the end of session one:
+The record is `appledger/` in your project: `profiles/forgetrail.yaml` for the phase, and records for decisions, lessons, and the session handoff. AppLedger holds the project record; ForgeTrail supplies the development method. A shortened excerpt from the end of session one:
 
 ```yaml
 phase: plan
@@ -31,7 +41,7 @@ ForgeTrail instructs the agent to read that ledger, preserve approved decisions,
 
 ## One system, three parts
 
-[ForgeTrail](https://forgetrail.dev) guides the work through phases with approval gates. [AppLedger](https://appledger.dev) keeps the record of that work in `appledger/`. [xFacts](https://xfacts.dev) labels describe what was built. Each works on its own.
+ForgeTrail uses [AppLedger](https://appledger.dev) as its project record. ForgeTrail defines how the work proceeds; AppLedger keeps what the project is for, how it fits together, and the decisions and evidence behind it. AppLedger can also be used without ForgeTrail. Optional [xFacts](https://xfacts.dev) labels describe the resulting software for readers considering adoption.
 
 ## Start with Lite
 

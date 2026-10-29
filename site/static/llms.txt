@@ -1,6 +1,6 @@
 # ForgeTrail
 
-> A development method for agent-assisted builds: seven phases with approval gates. The project record is an AppLedger ledger in `appledger/`. This file is an index. It is not the method.
+> A development system for building software with AI agents, from idea through a runnable core and release preparation. Phase guidance, exit criteria, and review checkpoints define the path. ForgeTrail uses AppLedger for decisions, evidence, lessons, and handoffs in `appledger/`. This file is an index, not the method.
 
 Start with ForgeTrail Lite. It is one file an agent can follow without MCP. Install it with `pnpm dlx forgetrail install --lite`, then create the ledger with `pnpm dlx appledger init --name "Your app name"` and `pnpm dlx appledger check`.
 

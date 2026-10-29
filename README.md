@@ -10,7 +10,11 @@
 
 **Forge the path. Keep the trail.**
 
-ForgeTrail gives your next coding session a place to start. It keeps the phase, decisions, and handoff in your repository so an agent can read them when you resume. Start with Lite for a small project. You do not have to run all seven phases to try the method.
+**Build software with AI, from idea to release.**
+
+ForgeTrail guides you and your coding agent from defining a project to building a working version, improving it, and preparing it to ship. Phase guidance and review checkpoints make the next step clear; AppLedger keeps the decisions, evidence, lessons, and handoffs with the project.
+
+The full method covers Plan, Build spine, Stabilize, Iterate, Refine, Align, and Harden. Start with Lite to agree what to build and complete the first runnable workflow. A small project does not have to run all seven phases.
 
 ForgeTrail instructs the agent to read the ledger, preserve approved decisions, and pause at approval gates. The agent must write the handoff. Those updates are not automatic. Optional hooks enforce the checks documented for their supported host.
 
@@ -45,7 +49,7 @@ MCP: `npx -y forgetrail-mcp` (0.4.2 or later finds the methodology without `FORG
 
 ## What you get
 
-A 7-phase playbook, a ledger in `appledger/`, and templates pre-loaded with first-party production lessons. Each project leaves decisions, lessons, and a session handoff that future work follows. Those lesson notes are not independent adoption evidence.
+A development path with phase guidance, exit criteria, review checkpoints, and templates informed by first-party production lessons. ForgeTrail uses AppLedger for the project record in `appledger/`. Each project leaves decisions, lessons, and a session handoff that future work follows. Those lesson notes are not independent adoption evidence.
 
 Optional hooks in [`content/hooks/`](content/hooks/README.md) load the current phase at session start in Cursor or Claude Code, check ledger edits, and check for a session note at session stop. The agent still does the writing. Flags, MCP, and the phase table live in the [docs](https://forgetrail.dev/docs).
 

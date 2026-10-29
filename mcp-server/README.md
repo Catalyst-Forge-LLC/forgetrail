@@ -1,6 +1,6 @@
 # ForgeTrail MCP Server
 
-A local MCP server that exposes the ForgeTrail methodology to any MCP-compatible AI agent — Cursor, Claude Desktop, Claude Code, Windsurf, etc.
+A local MCP server that gives your coding agent ForgeTrail phase guidance, templates, and lessons for taking a project from idea to release. The agent follows that development method and keeps the project record in AppLedger. The server supplies methodology tools; your host runs the agent.
 
 ## Setup
 
