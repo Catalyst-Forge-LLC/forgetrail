@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.1",
-    "forgetrail": "^0.5.18",
+    "forgetrail": "^0.5.19",
     "zod": "^3.25.0"
   },
   "devDependencies": {

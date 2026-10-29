@@ -18,8 +18,8 @@ importers:
         specifier: ^1.27.1
         version: 1.27.1(zod@3.25.76)
       forgetrail:
-        specifier: ^0.5.18
-        version: 0.5.18
+        specifier: ^0.5.19
+        version: 0.5.19
       zod:
         specifier: ^3.25.0
         version: 3.25.76
@@ -342,8 +342,8 @@ packages:
     resolution: {integrity: sha512-S8KoZgRZN+a5rNwqTxlZZePjT/4cnm0ROV70LedRHZ0p8u9fRID0hJUZQpkKLzro8LfmC8sx23bY6tVNxv8pQA==}
     engines: {node: '>= 18.0.0'}
 
-  forgetrail@0.5.18:
-    resolution: {integrity: sha512-dsgyCrgDBK67jdXPn5IMuGmCqDyKI+tB5LEsTsZyyUWmVrFxxR+7kqh54hbpQOcp2xGVhxT7RphR6kZAA463pw==}
+  forgetrail@0.5.19:
+    resolution: {integrity: sha512-YG/ym5pHZOjr+MiWDjofLsHsoWEaDmAKmtzL/WpShZVQgYZ9gcilnmbQ631sEbaA8Vg2lcP9hT/nSYqK1PFKSg==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -882,7 +882,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  forgetrail@0.5.18: {}
+  forgetrail@0.5.19: {}
 
   forwarded@0.2.0: {}
 
